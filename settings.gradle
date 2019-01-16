@@ -1,0 +1,6 @@
+rootProject.name = 'licenta'
+include 'gateway-server'
+include 'central-config-server'
+include 'discovery-server'
+include 'test-microservice'
+

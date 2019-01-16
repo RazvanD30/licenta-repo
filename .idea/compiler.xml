@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="CompilerConfiguration">
+    <bytecodeTargetLevel>
+      <module name="en.ubb.licenta-central-config.main" target="1.8" />
+      <module name="en.ubb.licenta-central-config.test" target="1.8" />
+      <module name="en.ubb.licenta-client.main" target="1.8" />
+      <module name="en.ubb.licenta-client.test" target="1.8" />
+      <module name="en.ubb.licenta-discovery.main" target="1.8" />
+      <module name="en.ubb.licenta-discovery.test" target="1.8" />
+      <module name="en.ubb.licenta-gateway.main" target="1.8" />
+      <module name="en.ubb.licenta-gateway.test" target="1.8" />
+      <module name="en.ubb.licenta-server.main" target="1.8" />
+      <module name="en.ubb.licenta-server.test" target="1.8" />
+      <module name="licenta.licenta-server.main" target="1.8" />
+      <module name="licenta.licenta-server.test" target="1.8" />
+      <module name="licenta.test-microservice.main" target="1.8" />
+      <module name="licenta.test-microservice.test" target="1.8" />
+    </bytecodeTargetLevel>
+  </component>
+</project>
