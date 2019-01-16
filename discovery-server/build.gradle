@@ -4,11 +4,8 @@ buildscript {
     }
     dependencies {
         classpath("org.springframework.boot:spring-boot-gradle-plugin:${springBootVersion}")
+        classpath("io.spring.gradle:dependency-management-plugin:${dependencyManagementVersion}")
     }
-}
-
-plugins {
-    id "io.spring.dependency-management" version "1.0.5.RELEASE"
 }
 
 apply plugin: 'java'
@@ -35,15 +32,10 @@ repositories {
 }
 
 dependencies {
-    compile('org.springframework.boot:spring-boot-starter-actuator')
-    compile('org.springframework.cloud:spring-cloud-starter-config')
-    compile('org.springframework.cloud:spring-cloud-starter-netflix-eureka-server')
-    compile('org.springframework.boot:spring-boot-starter-web')
-    
-    // bus to connect all microservices using kafka 
-    // compile('org.springframework.cloud:spring-cloud-starter-bus-amqp')
-    
-    testCompile group: 'junit', name: 'junit', version: '4.12'
+    implementation('org.springframework.boot:spring-boot-starter-actuator')
+    implementation('org.springframework.cloud:spring-cloud-starter-config')
+    implementation('org.springframework.cloud:spring-cloud-starter-netflix-eureka-server')
+    implementation('org.springframework.boot:spring-boot-starter-web')
 }
 
 dependencyManagement {

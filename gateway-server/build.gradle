@@ -4,6 +4,7 @@ buildscript {
     }
     dependencies {
         classpath("org.springframework.boot:spring-boot-gradle-plugin:${springBootVersion}")
+        classpath("io.spring.gradle:dependency-management-plugin:${dependencyManagementVersion}")
     }
 }
 
@@ -35,14 +36,12 @@ dependencyManagement {
 }
 
 dependencies {
-    // compile('org.springframework.cloud:spring-cloud-starter-zuul')
-    compile('org.springframework.cloud:spring-cloud-starter-netflix-eureka-client')
-    compile('org.springframework.boot:spring-boot-starter-web')
-    compile('org.springframework.boot:spring-boot-starter-actuator')
-    compile('org.springframework.cloud:spring-cloud-starter-config')
-
-    // https://mvnrepository.com/artifact/com.netflix.zuul/zuul-netflix
-    compile group: 'com.netflix.zuul', name: 'zuul-netflix', version: '1.3.1'
+    implementation('org.springframework.cloud:spring-cloud-starter-netflix-eureka-client')
+    implementation('org.springframework.boot:spring-boot-starter-web')
+    implementation('org.springframework.boot:spring-boot-starter-actuator')
+    implementation('org.springframework.cloud:spring-cloud-starter-config')
+    implementation('org.springframework.cloud:spring-cloud-starter-bus-kafka')
+    implementation('com.netflix.zuul:zuul-netflix')
 
 }
 

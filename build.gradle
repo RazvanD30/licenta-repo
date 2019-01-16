@@ -13,11 +13,12 @@ repositories {
 }
 
 dependencies {
-    testCompile group: 'junit', name: 'junit', version: '4.12'
+
 }
 
 allprojects {
     ext {
         springBootVersion = '2.1.2.RELEASE'
+        dependencyManagementVersion = '1.0.5.RELEASE'
     }
 }
