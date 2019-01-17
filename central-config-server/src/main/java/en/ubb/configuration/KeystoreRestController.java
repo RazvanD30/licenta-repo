@@ -8,14 +8,30 @@ import org.springframework.web.bind.annotation.RestController;
 class KeystoreRestController {
 
 
-    @Value("${key-store-path}")
+    @Value("${key-store-name}")
     private String keyStorePath;
 
     @Value("${key-store-password}")
     private String keyStorePassword;
 
+    @Value("${message:abc}")
+    private String message;
+
     @RequestMapping("/message")
     public String getMessage() {
+        try {
+            KeystoreConfiguration.makeNewKeystoreEntry("message", "I GOT THE MESSAGE", keyStorePath, keyStorePassword);
+            message = KeystoreConfiguration.getValueFromKeystore("message", keyStorePath, keyStorePassword);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+
+        return message;
+    }
+
+    @RequestMapping("/keystore")
+    public String getKeystore() {
         String entry = "";
         try {
             KeystoreConfiguration.makeNewKeystoreEntry("test", "abc", keyStorePath, keyStorePassword);
@@ -27,4 +43,16 @@ class KeystoreRestController {
         return entry;
     }
 
+}
+
+@RestController
+class OtherController {
+
+    @Value("${message:abc}")
+    private String message;
+
+    @RequestMapping("/message2")
+    public String getMessage2() {
+        return message;
+    }
 }

@@ -2,22 +2,22 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="e464ab5a-f048-420b-8b7a-2cc97f5ae89f" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/central-config-server/src/main/java/en/ubb/configuration/KeystoreConfiguration.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/central-config-server/src/main/java/en/ubb/configuration/KeystoreRestController.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/central-config-server/src/main/resources/bootstrap.properties" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/central-config-server/src/main/java/en/ubb/configuration/EnvironmentConfiguration.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/central-config-server/src/main/java/en/ubb/configuration/Redirect.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/central-config-server/src/main/resources/META-INF/spring.factories" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.gradle/4.10/fileHashes/fileHashes.bin" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/4.10/fileHashes/fileHashes.bin" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.gradle/4.10/fileHashes/fileHashes.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/4.10/fileHashes/fileHashes.lock" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/gradle.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/gradle.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/vcs.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build.gradle" beforeDir="false" afterPath="$PROJECT_DIR$/build.gradle" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/central-config-server/build.gradle" beforeDir="false" afterPath="$PROJECT_DIR$/central-config-server/build.gradle" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/central-config-server/out/production/resources/application.properties" beforeDir="false" afterPath="$PROJECT_DIR$/central-config-server/out/production/resources/application.properties" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/central-config-server/src/main/java/en/ubb/configuration/ConfigurationApplication.java" beforeDir="false" afterPath="$PROJECT_DIR$/central-config-server/src/main/java/en/ubb/configuration/ConfigurationApplication.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/central-config-server/out/production/resources/bootstrap.properties" beforeDir="false" afterPath="$PROJECT_DIR$/central-config-server/out/production/resources/bootstrap.properties" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/central-config-server/out/production/resources/keystore-test" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/central-config-server/src/main/java/en/ubb/configuration/KeystoreConfiguration.java" beforeDir="false" afterPath="$PROJECT_DIR$/central-config-server/src/main/java/en/ubb/configuration/KeystoreConfiguration.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/central-config-server/src/main/java/en/ubb/configuration/KeystoreRestController.java" beforeDir="false" afterPath="$PROJECT_DIR$/central-config-server/src/main/java/en/ubb/configuration/KeystoreRestController.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/central-config-server/src/main/resources/application.properties" beforeDir="false" afterPath="$PROJECT_DIR$/central-config-server/src/main/resources/application.properties" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/discovery-server/build.gradle" beforeDir="false" afterPath="$PROJECT_DIR$/discovery-server/build.gradle" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/gateway-server/build.gradle" beforeDir="false" afterPath="$PROJECT_DIR$/gateway-server/build.gradle" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/test-microservice/build.gradle" beforeDir="false" afterPath="$PROJECT_DIR$/test-microservice/build.gradle" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/central-config-server/src/main/resources/bootstrap.properties" beforeDir="false" afterPath="$PROJECT_DIR$/central-config-server/src/main/resources/bootstrap.properties" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/central-config-server/src/main/resources/keystore-test" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/keystore-test" beforeDir="false" afterPath="$PROJECT_DIR$/keystore-test" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/out/" />
     <ignored path="$PROJECT_DIR$/.gradle/" />
@@ -66,8 +66,8 @@
       <file leaf-file-name="ConfigurationApplication.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/central-config-server/src/main/java/en/ubb/configuration/ConfigurationApplication.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="170">
-              <caret line="10" column="41" selection-start-line="10" selection-start-column="37" selection-end-line="10" selection-end-column="41" />
+            <state relative-caret-position="187">
+              <caret line="11" column="68" selection-start-line="11" selection-start-column="68" selection-end-line="11" selection-end-column="68" />
               <folding>
                 <element signature="imports" expanded="true" />
                 <element signature="e#346#347#0" expanded="true" />
@@ -77,11 +77,11 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="KeystoreRestController.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/central-config-server/src/main/java/en/ubb/configuration/KeystoreRestController.java">
+      <file leaf-file-name="EnvironmentConfiguration.java" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/central-config-server/src/main/java/en/ubb/configuration/EnvironmentConfiguration.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="323">
-              <caret line="19" column="13" lean-forward="true" selection-start-line="19" selection-start-column="13" selection-end-line="19" selection-end-column="13" />
+            <state relative-caret-position="425">
+              <caret line="25" column="12" selection-start-line="25" selection-start-column="12" selection-end-line="25" selection-end-column="12" />
               <folding>
                 <element signature="imports" expanded="true" />
               </folding>
@@ -89,25 +89,65 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="build.gradle" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/central-config-server/build.gradle">
+      <file leaf-file-name="application.properties" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/central-config-server/src/main/resources/application.properties">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="119">
-              <caret line="34" column="7" selection-start-line="34" selection-start-column="7" selection-end-line="34" selection-end-column="7" />
+            <state relative-caret-position="17">
+              <caret line="1" column="85" selection-start-line="1" selection-start-column="72" selection-end-line="1" selection-end-column="85" />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="application.properties" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/central-config-server/src/main/resources/application.properties">
-          <provider selected="true" editor-type-id="text-editor" />
-        </entry>
-      </file>
-      <file leaf-file-name="bootstrap.properties" pinned="false" current-in-tab="true">
+      <file leaf-file-name="bootstrap.properties" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/central-config-server/src/main/resources/bootstrap.properties">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="119">
-              <caret line="7" column="10" selection-start-line="7" selection-start-column="10" selection-end-line="7" selection-end-column="10" />
+            <state relative-caret-position="17">
+              <caret line="1" column="2" selection-start-line="1" selection-start-column="2" selection-end-line="1" selection-end-column="2" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="Properties.java" pinned="false" current-in-tab="false">
+        <entry file="jar://T:/20_TOOLS/jdks/src.zip!/java/util/Properties.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="161">
+              <caret line="967" column="43" lean-forward="true" selection-start-line="967" selection-start-column="43" selection-end-line="967" selection-end-column="43" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="PropertiesPropertySource.java" pinned="false" current-in-tab="false">
+        <entry file="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.springframework/spring-core/5.1.4.RELEASE/8be9ed31f0ad503c96cdbd3063ae4a6f418239c/spring-core-5.1.4.RELEASE-sources.jar!/org/springframework/core/env/PropertiesPropertySource.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="289">
+              <caret line="32" column="26" selection-start-line="32" selection-start-column="26" selection-end-line="32" selection-end-column="26" />
+              <folding>
+                <element signature="e#1468#1469#0" expanded="true" />
+                <element signature="e#1500#1501#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="KeystoreRestController.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/central-config-server/src/main/java/en/ubb/configuration/KeystoreRestController.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="-390">
+              <caret line="12" column="32" lean-forward="true" selection-start-line="12" selection-start-column="32" selection-end-line="12" selection-end-column="32" />
+              <folding>
+                <element signature="imports" expanded="true" />
+                <element signature="e#1567#1568#0" expanded="true" />
+                <element signature="e#1597#1598#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="spring.factories" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/central-config-server/src/main/resources/META-INF/spring.factories">
+          <provider selected="true" editor-type-id="text-editor">
+            <state>
+              <caret column="28" lean-forward="true" selection-start-column="28" selection-end-column="28" />
             </state>
           </provider>
         </entry>
@@ -115,8 +155,8 @@
       <file leaf-file-name="KeystoreConfiguration.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/central-config-server/src/main/java/en/ubb/configuration/KeystoreConfiguration.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="245">
-              <caret line="47" column="55" lean-forward="true" selection-start-line="47" selection-start-column="55" selection-end-line="47" selection-end-column="55" />
+            <state relative-caret-position="161">
+              <caret line="16" selection-start-line="16" selection-end-line="16" />
               <folding>
                 <element signature="imports" expanded="true" />
               </folding>
@@ -124,37 +164,18 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name=".gitignore" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/.gitignore">
-          <provider selected="true" editor-type-id="text-editor" />
-        </entry>
-      </file>
-      <file leaf-file-name="App.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/test-microservice/src/main/java/en/ubb/microservice/App.java">
+      <file leaf-file-name="Redirect.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/central-config-server/src/main/java/en/ubb/configuration/Redirect.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="306">
-              <caret line="18" column="13" selection-start-line="18" selection-start-column="13" selection-end-line="18" selection-end-column="13" />
+            <state relative-caret-position="243">
+              <caret line="43" column="30" selection-start-line="43" selection-start-column="30" selection-end-line="43" selection-end-column="30" />
               <folding>
                 <element signature="imports" expanded="true" />
+                <element signature="e#629#645#1" expanded="true" />
+                <element signature="e#688#713#1" expanded="true" />
+                <element signature="e#675#1216#0" expanded="true" />
+                <element signature="e#1215#1216#0" expanded="true" />
               </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="bootstrap.properties" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/test-microservice/src/main/resources/bootstrap.properties">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="34">
-              <caret line="2" lean-forward="true" selection-start-line="2" selection-end-line="2" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="build.gradle" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/test-microservice/build.gradle">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="884">
-              <caret line="52" column="45" selection-start-line="52" selection-start-column="45" selection-end-line="52" selection-end-column="45" />
             </state>
           </provider>
         </entry>
@@ -172,6 +193,11 @@
     <findStrings>
       <find>eureka</find>
       <find>compile</find>
+      <find>toString</find>
+      <find>key-store-password</find>
+      <find>key-store</find>
+      <find>key-store-path</find>
+      <find>key-store-path2</find>
     </findStrings>
     <replaceStrings>
       <replace>implementation</replace>
@@ -1162,10 +1188,10 @@
     </option>
     <option name="modificationStamps">
       <map>
-        <entry key="$PROJECT_DIR$" value="12381269677058" />
+        <entry key="$PROJECT_DIR$" value="12381346331509" />
         <entry key="$PROJECT_DIR$/.gradle" value="0" />
         <entry key="$PROJECT_DIR$/build.gradle" value="3409387962" />
-        <entry key="$PROJECT_DIR$/central-config-server/build.gradle" value="1242055407" />
+        <entry key="$PROJECT_DIR$/central-config-server/build.gradle" value="839756215" />
         <entry key="$PROJECT_DIR$/discovery-server/build.gradle" value="2045330739" />
         <entry key="$PROJECT_DIR$/gateway-server/build.gradle" value="300153794" />
         <entry key="$PROJECT_DIR$/gradle/wrapper/gradle-wrapper.properties" value="261915471" />
@@ -1375,13 +1401,18 @@
         <option value="$PROJECT_DIR$/build.gradle" />
         <option value="$PROJECT_DIR$/gateway-server/build.gradle" />
         <option value="$PROJECT_DIR$/discovery-server/build.gradle" />
-        <option value="$PROJECT_DIR$/central-config-server/build.gradle" />
-        <option value="$PROJECT_DIR$/central-config-server/src/main/resources/application.properties" />
         <option value="$PROJECT_DIR$/central-config-server/src/main/java/en/ubb/configuration/RestController.java" />
         <option value="$PROJECT_DIR$/central-config-server/src/main/java/en/ubb/configuration/ConfigurationApplication.java" />
-        <option value="$PROJECT_DIR$/central-config-server/src/main/java/en/ubb/configuration/KeystoreRestController.java" />
         <option value="$PROJECT_DIR$/central-config-server/src/main/java/en/ubb/configuration/KeystoreConfiguration.java" />
+        <option value="$PROJECT_DIR$/central-config-server/build.gradle" />
+        <option value="$PROJECT_DIR$/central-config-server/src/main/java/en/ubb/configuration/PropertiesConfiguration.java" />
+        <option value="$PROJECT_DIR$/central-config-server/src/main/java/en/ubb/configuration/EnvironmentPostProcessor.java" />
+        <option value="$PROJECT_DIR$/central-config-server/src/main/resources/META-INF/spring.factories" />
         <option value="$PROJECT_DIR$/central-config-server/src/main/resources/bootstrap.properties" />
+        <option value="$PROJECT_DIR$/central-config-server/src/main/java/en/ubb/configuration/Redirect.java" />
+        <option value="$PROJECT_DIR$/central-config-server/src/main/resources/application.properties" />
+        <option value="$PROJECT_DIR$/central-config-server/src/main/java/en/ubb/configuration/KeystoreRestController.java" />
+        <option value="$PROJECT_DIR$/central-config-server/src/main/java/en/ubb/configuration/EnvironmentConfiguration.java" />
       </list>
     </option>
   </component>
@@ -1405,6 +1436,7 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
+      <pane id="PackagesPane" />
       <pane id="ProjectPane">
         <subPane>
           <expand>
@@ -1453,7 +1485,26 @@
               <item name="central-config-server" type="8a07ba80:GradleTreeStructureProvider$GradleModuleDirectoryNode" />
               <item name="src" type="462c0819:PsiDirectoryNode" />
               <item name="main" type="8a07ba80:GradleTreeStructureProvider$GradleModuleDirectoryNode" />
+              <item name="java" type="462c0819:PsiDirectoryNode" />
+              <item name="configuration" type="462c0819:PsiDirectoryNode" />
+              <item name="KeystoreRestController.java" type="529ef68f:ClassesTreeStructureProvider$PsiClassOwnerTreeNode" />
+            </path>
+            <path>
+              <item name="licenta" type="b2602c69:ProjectViewProjectNode" />
+              <item name="licenta-repo" type="8a07ba80:GradleTreeStructureProvider$GradleModuleDirectoryNode" />
+              <item name="central-config-server" type="8a07ba80:GradleTreeStructureProvider$GradleModuleDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="main" type="8a07ba80:GradleTreeStructureProvider$GradleModuleDirectoryNode" />
               <item name="resources" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="licenta" type="b2602c69:ProjectViewProjectNode" />
+              <item name="licenta-repo" type="8a07ba80:GradleTreeStructureProvider$GradleModuleDirectoryNode" />
+              <item name="central-config-server" type="8a07ba80:GradleTreeStructureProvider$GradleModuleDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="main" type="8a07ba80:GradleTreeStructureProvider$GradleModuleDirectoryNode" />
+              <item name="resources" type="462c0819:PsiDirectoryNode" />
+              <item name="META-INF" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
               <item name="licenta" type="b2602c69:ProjectViewProjectNode" />
@@ -1506,16 +1557,6 @@
               <item name="test-microservice" type="8a07ba80:GradleTreeStructureProvider$GradleModuleDirectoryNode" />
               <item name="src" type="462c0819:PsiDirectoryNode" />
               <item name="main" type="8a07ba80:GradleTreeStructureProvider$GradleModuleDirectoryNode" />
-              <item name="java" type="462c0819:PsiDirectoryNode" />
-              <item name="microservice" type="462c0819:PsiDirectoryNode" />
-              <item name="App.java" type="529ef68f:ClassesTreeStructureProvider$PsiClassOwnerTreeNode" />
-            </path>
-            <path>
-              <item name="licenta" type="b2602c69:ProjectViewProjectNode" />
-              <item name="licenta-repo" type="8a07ba80:GradleTreeStructureProvider$GradleModuleDirectoryNode" />
-              <item name="test-microservice" type="8a07ba80:GradleTreeStructureProvider$GradleModuleDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="main" type="8a07ba80:GradleTreeStructureProvider$GradleModuleDirectoryNode" />
               <item name="resources" type="462c0819:PsiDirectoryNode" />
             </path>
           </expand>
@@ -1524,7 +1565,6 @@
       </pane>
       <pane id="Scope" />
       <pane id="AndroidView" />
-      <pane id="PackagesPane" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -1558,6 +1598,7 @@
         </RuleState>
       </list>
     </option>
+    <option name="contentProportion" value="0.2514905" />
   </component>
   <component name="RunManager" selected="Spring Boot.ConfigurationApplication">
     <configuration name="App" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot">
@@ -1569,7 +1610,7 @@
     <configuration name="ConfigurationApplication" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot">
       <module name="en.ubb.central-config-server.main" />
       <option name="SPRING_BOOT_MAIN_CLASS" value="en.ubb.configuration.ConfigurationApplication" />
-      <option name="PROGRAM_PARAMETERS" value="--key-store-path=keystore-test --key-store-password=12345678" />
+      <option name="VM_PARAMETERS" value="-Dkey-store-name=keystore.p12 -Dkey-store-password=12345678" />
       <option name="ALTERNATIVE_JRE_PATH" />
     </configuration>
     <configuration name="DiscoveryApplication" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot">
@@ -1601,7 +1642,8 @@
       <workItem from="1547397481547" duration="4985000" />
       <workItem from="1547403174186" duration="214000" />
       <workItem from="1547403531721" duration="5233000" />
-      <workItem from="1547658894184" duration="4280000" />
+      <workItem from="1547658894184" duration="4441000" />
+      <workItem from="1547735924854" duration="8836000" />
     </task>
     <task id="LOCAL-00001" summary="s">
       <created>1547388543011</created>
@@ -1663,7 +1705,16 @@
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="27152000" />
+    <option name="totallyTimeSpent" value="36149000" />
+  </component>
+  <component name="TodoView">
+    <todo-panel id="selected-file">
+      <is-autoscroll-to-source value="true" />
+    </todo-panel>
+    <todo-panel id="all">
+      <are-packages-shown value="true" />
+      <is-autoscroll-to-source value="true" />
+    </todo-panel>
   </component>
   <component name="ToolWindowManager">
     <frame x="-8" y="-8" width="1936" height="1056" extended-state="6" />
@@ -1671,33 +1722,33 @@
     <layout>
       <window_info anchor="right" id="Palette" order="5" />
       <window_info anchor="bottom" id="Event Log" order="10" sideWeight="0.5010661" side_tool="true" weight="0.40086675" />
-      <window_info anchor="bottom" id="Application Servers" />
-      <window_info anchor="right" id="Maven Projects" />
-      <window_info anchor="bottom" id="Database Changes" order="13" />
+      <window_info anchor="bottom" id="Application Servers" order="11" />
+      <window_info anchor="right" id="Maven Projects" order="6" />
+      <window_info anchor="bottom" id="Database Changes" order="15" />
       <window_info id="Capture Tool" order="4" />
       <window_info id="Designer" order="2" />
-      <window_info anchor="bottom" id="Build" order="12" sideWeight="0.49946696" weight="0.251634" />
+      <window_info anchor="bottom" id="Build" order="14" sideWeight="0.49946696" weight="0.251634" />
       <window_info anchor="right" id="Database" order="7" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
       <window_info id="UI Designer" order="5" />
       <window_info anchor="bottom" id="Debug" order="3" weight="0.4" />
-      <window_info anchor="bottom" id="TODO" order="6" />
-      <window_info anchor="bottom" id="Messages" order="15" weight="0.32936078" />
+      <window_info anchor="bottom" id="TODO" order="6" weight="0.32897604" />
+      <window_info anchor="bottom" id="Messages" order="17" weight="0.32897604" />
       <window_info anchor="right" id="Palette&#9;" order="4" />
       <window_info id="Image Layers" order="3" />
-      <window_info anchor="bottom" id="Java Enterprise" order="11" />
+      <window_info anchor="bottom" id="Java Enterprise" order="12" />
       <window_info anchor="right" id="Capture Analysis" order="6" />
-      <window_info anchor="bottom" id="Run Dashboard" order="16" sideWeight="0.4989339" visible="true" weight="0.44008714" />
-      <window_info anchor="bottom" id="NativeScript" />
-      <window_info anchor="bottom" id="Version Control" order="14" weight="0.32936078" />
+      <window_info anchor="bottom" id="Run Dashboard" order="18" sideWeight="0.4989339" visible="true" weight="0.46514162" />
+      <window_info anchor="bottom" id="NativeScript" order="13" />
+      <window_info anchor="bottom" id="Version Control" order="16" weight="0.32936078" />
       <window_info anchor="bottom" id="Run" order="2" />
-      <window_info anchor="bottom" id="Spring" order="7" />
+      <window_info anchor="bottom" id="Spring" order="7" weight="0.32897604" />
       <window_info anchor="bottom" id="Terminal" order="8" weight="0.42374727" />
-      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.18496802" />
+      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.18710022" />
       <window_info anchor="right" id="Bean Validation" order="11" />
       <window_info id="Web" order="8" side_tool="true" />
-      <window_info anchor="right" id="Nativescript Palette" />
+      <window_info anchor="right" id="Nativescript Palette" order="6" />
       <window_info anchor="bottom" id="Find" order="1" weight="0.32897604" />
       <window_info anchor="right" id="Gradle" order="8" />
       <window_info anchor="right" id="Theme Preview" order="10" />
@@ -1730,6 +1781,8 @@
           <caret line="16" column="19" selection-start-line="16" selection-start-column="19" selection-end-line="16" selection-end-column="19" />
           <folding>
             <element signature="imports" expanded="true" />
+            <element signature="e#346#347#0" expanded="true" />
+            <element signature="e#421#422#0" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -1752,9 +1805,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="85">
           <caret line="14" column="10" selection-start-line="14" selection-start-column="10" selection-end-line="14" selection-end-column="10" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -1813,9 +1863,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="85">
           <caret line="14" column="10" selection-start-line="14" selection-start-column="10" selection-end-line="14" selection-end-column="10" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -1866,47 +1913,114 @@
     <entry file="file://$PROJECT_DIR$/test-microservice/out/production/resources/bootstrap.properties">
       <provider selected="true" editor-type-id="text-editor" />
     </entry>
-    <entry file="file://$PROJECT_DIR$/test-microservice/build.gradle">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="884">
-          <caret line="52" column="45" selection-start-line="52" selection-start-column="45" selection-end-line="52" selection-end-column="45" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/central-config-server/build.gradle">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="119">
-          <caret line="34" column="7" selection-start-line="34" selection-start-column="7" selection-end-line="34" selection-end-column="7" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/.gitignore">
       <provider selected="true" editor-type-id="text-editor" />
     </entry>
     <entry file="file://$PROJECT_DIR$/test-microservice/src/main/resources/bootstrap.properties">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="34">
-          <caret line="2" lean-forward="true" selection-start-line="2" selection-end-line="2" />
+          <caret line="2" selection-start-line="2" selection-end-line="2" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/central-config-server/src/main/resources/application.properties">
-      <provider selected="true" editor-type-id="text-editor" />
+    <entry file="file://$PROJECT_DIR$/test-microservice/build.gradle">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="447">
+          <caret line="52" column="45" selection-start-line="52" selection-start-column="45" selection-end-line="52" selection-end-column="45" />
+        </state>
+      </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/test-microservice/src/main/java/en/ubb/microservice/App.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="306">
-          <caret line="18" column="13" selection-start-line="18" selection-start-column="13" selection-end-line="18" selection-end-column="13" />
+        <state relative-caret-position="155">
+          <caret line="27" column="6" selection-start-line="27" selection-start-column="6" selection-end-line="27" selection-end-column="6" />
           <folding>
             <element signature="imports" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/central-config-server/build.gradle">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="551">
+          <caret line="34" column="73" selection-start-line="34" selection-start-column="73" selection-end-line="34" selection-end-column="73" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/central-config-server/src/main/java/en/ubb/configuration/EnvironmentPostProcessor.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="34">
+          <caret line="2" selection-start-line="2" selection-end-line="4" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.springframework/spring-core/5.1.4.RELEASE/8be9ed31f0ad503c96cdbd3063ae4a6f418239c/spring-core-5.1.4.RELEASE-sources.jar!/org/springframework/core/env/PropertySource.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="282">
+          <caret line="59" column="22" selection-start-line="59" selection-start-column="22" selection-end-line="59" selection-end-column="22" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.springframework/spring-core/5.1.4.RELEASE/8be9ed31f0ad503c96cdbd3063ae4a6f418239c/spring-core-5.1.4.RELEASE-sources.jar!/org/springframework/core/env/MapPropertySource.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="238">
+          <caret line="31" column="13" selection-start-line="31" selection-start-column="13" selection-end-line="31" selection-end-column="13" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="jar://T:/20_TOOLS/jdks/src.zip!/java/lang/System.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="288">
+          <caret line="719" column="25" selection-start-line="719" selection-start-column="25" selection-end-line="719" selection-end-column="25" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="jar://T:/20_TOOLS/jdks/src.zip!/java/util/Properties.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="161">
+          <caret line="967" column="43" lean-forward="true" selection-start-line="967" selection-start-column="43" selection-end-line="967" selection-end-column="43" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.springframework/spring-core/5.1.4.RELEASE/8be9ed31f0ad503c96cdbd3063ae4a6f418239c/spring-core-5.1.4.RELEASE-sources.jar!/org/springframework/core/env/PropertiesPropertySource.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="289">
+          <caret line="32" column="26" selection-start-line="32" selection-start-column="26" selection-end-line="32" selection-end-column="26" />
+          <folding>
+            <element signature="e#1468#1469#0" expanded="true" />
+            <element signature="e#1500#1501#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/central-config-server/src/main/java/en/ubb/configuration/KeystoreConfiguration.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="161">
+          <caret line="16" selection-start-line="16" selection-end-line="16" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/central-config-server/src/main/java/en/ubb/configuration/Redirect.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="243">
+          <caret line="43" column="30" selection-start-line="43" selection-start-column="30" selection-end-line="43" selection-end-column="30" />
+          <folding>
+            <element signature="imports" expanded="true" />
+            <element signature="e#629#645#1" expanded="true" />
+            <element signature="e#688#713#1" expanded="true" />
+            <element signature="e#675#1216#0" expanded="true" />
+            <element signature="e#1215#1216#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/central-config-server/src/main/java/en/ubb/configuration/ConfigurationApplication.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="170">
-          <caret line="10" column="41" selection-start-line="10" selection-start-column="37" selection-end-line="10" selection-end-column="41" />
+        <state relative-caret-position="187">
+          <caret line="11" column="68" selection-start-line="11" selection-start-column="68" selection-end-line="11" selection-end-column="68" />
           <folding>
             <element signature="imports" expanded="true" />
             <element signature="e#346#347#0" expanded="true" />
@@ -1915,30 +2029,46 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/central-config-server/src/main/java/en/ubb/configuration/KeystoreConfiguration.java">
+    <entry file="file://$PROJECT_DIR$/central-config-server/src/main/resources/application.properties">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="245">
-          <caret line="47" column="55" lean-forward="true" selection-start-line="47" selection-start-column="55" selection-end-line="47" selection-end-column="55" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/central-config-server/src/main/java/en/ubb/configuration/KeystoreRestController.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="323">
-          <caret line="19" column="13" lean-forward="true" selection-start-line="19" selection-start-column="13" selection-end-line="19" selection-end-column="13" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
+        <state relative-caret-position="17">
+          <caret line="1" column="85" selection-start-line="1" selection-start-column="72" selection-end-line="1" selection-end-column="85" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/central-config-server/src/main/resources/bootstrap.properties">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="119">
-          <caret line="7" column="10" selection-start-line="7" selection-start-column="10" selection-end-line="7" selection-end-column="10" />
+        <state relative-caret-position="17">
+          <caret line="1" column="2" selection-start-line="1" selection-start-column="2" selection-end-line="1" selection-end-column="2" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/central-config-server/src/main/resources/META-INF/spring.factories">
+      <provider selected="true" editor-type-id="text-editor">
+        <state>
+          <caret column="28" lean-forward="true" selection-start-column="28" selection-end-column="28" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/central-config-server/src/main/java/en/ubb/configuration/KeystoreRestController.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-390">
+          <caret line="12" column="32" lean-forward="true" selection-start-line="12" selection-start-column="32" selection-end-line="12" selection-end-column="32" />
+          <folding>
+            <element signature="imports" expanded="true" />
+            <element signature="e#1567#1568#0" expanded="true" />
+            <element signature="e#1597#1598#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/central-config-server/src/main/java/en/ubb/configuration/EnvironmentConfiguration.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="425">
+          <caret line="25" column="12" selection-start-line="25" selection-start-column="12" selection-end-line="25" selection-end-column="12" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>

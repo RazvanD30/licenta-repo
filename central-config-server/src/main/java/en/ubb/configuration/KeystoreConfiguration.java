@@ -21,12 +21,9 @@ public class KeystoreConfiguration {
 
         SecretKeyFactory factory = SecretKeyFactory.getInstance("PBE");
 
-        KeyStore.SecretKeyEntry ske =
-                (KeyStore.SecretKeyEntry)ks.getEntry(entry, keyStorePP);
+        KeyStore.SecretKeyEntry ske = (KeyStore.SecretKeyEntry) ks.getEntry(entry, keyStorePP);
 
-        PBEKeySpec keySpec = (PBEKeySpec)factory.getKeySpec(
-                ske.getSecretKey(),
-                PBEKeySpec.class);
+        PBEKeySpec keySpec = (PBEKeySpec) factory.getKeySpec(ske.getSecretKey(), PBEKeySpec.class);
 
         char[] value = keySpec.getPassword();
 
@@ -34,21 +31,17 @@ public class KeystoreConfiguration {
 
     }
 
-    public static void makeNewKeystoreEntry(String entry, String entryValue, String keyStorePath, String keyStorePassword)
-            throws Exception {
+    public static void makeNewKeystoreEntry(String entry, String entryValue, String keyStorePath, String keyStorePassword) throws Exception {
         SecretKeyFactory factory = SecretKeyFactory.getInstance("PBE");
-        SecretKey generatedSecret =
-                factory.generateSecret(new PBEKeySpec(
-                        entryValue.toCharArray()));
+        SecretKey generatedSecret = factory.generateSecret(new PBEKeySpec(entryValue.toCharArray()));
 
         KeyStore ks = KeyStore.getInstance("JCEKS");
         ks.load(null, keyStorePassword.toCharArray());
         KeyStore.PasswordProtection keyStorePP = new KeyStore.PasswordProtection(keyStorePassword.toCharArray());
 
-        ks.setEntry(entry, new KeyStore.SecretKeyEntry(
-                generatedSecret), keyStorePP);
+        ks.setEntry(entry, new KeyStore.SecretKeyEntry(generatedSecret), keyStorePP);
 
-        FileOutputStream fos = new java.io.FileOutputStream(keyStorePath);
+        FileOutputStream fos = new FileOutputStream(keyStorePath);
         ks.store(fos, keyStorePassword.toCharArray());
     }
 }
