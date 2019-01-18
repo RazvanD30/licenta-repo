@@ -2,6 +2,12 @@
 <project version="4">
   <component name="CompilerConfiguration">
     <bytecodeTargetLevel>
+      <module name="en.ubb.central-config-server.main" target="1.8" />
+      <module name="en.ubb.central-config-server.test" target="1.8" />
+      <module name="en.ubb.discovery-server.main" target="1.8" />
+      <module name="en.ubb.discovery-server.test" target="1.8" />
+      <module name="en.ubb.gateway-server.main" target="1.8" />
+      <module name="en.ubb.gateway-server.test" target="1.8" />
       <module name="en.ubb.licenta-central-config.main" target="1.8" />
       <module name="en.ubb.licenta-central-config.test" target="1.8" />
       <module name="en.ubb.licenta-client.main" target="1.8" />
@@ -12,6 +18,10 @@
       <module name="en.ubb.licenta-gateway.test" target="1.8" />
       <module name="en.ubb.licenta-server.main" target="1.8" />
       <module name="en.ubb.licenta-server.test" target="1.8" />
+      <module name="en.ubb.licenta.main" target="1.8" />
+      <module name="en.ubb.licenta.test" target="1.8" />
+      <module name="en.ubb.test-microservice.main" target="1.8" />
+      <module name="en.ubb.test-microservice.test" target="1.8" />
       <module name="licenta.licenta-server.main" target="1.8" />
       <module name="licenta.licenta-server.test" target="1.8" />
       <module name="licenta.test-microservice.main" target="1.8" />

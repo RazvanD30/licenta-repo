@@ -8,51 +8,18 @@ import org.springframework.web.bind.annotation.RestController;
 class KeystoreRestController {
 
 
-    @Value("${key-store-name}")
+    @Value("${keystore.name}")
     private String keyStorePath;
 
-    @Value("${key-store-password}")
+    @Value("${keystore.password}")
     private String keyStorePassword;
 
-    @Value("${message:abc}")
-    private String message;
-
-    @RequestMapping("/message")
-    public String getMessage() {
-        try {
-            KeystoreConfiguration.makeNewKeystoreEntry("message", "I GOT THE MESSAGE", keyStorePath, keyStorePassword);
-            message = KeystoreConfiguration.getValueFromKeystore("message", keyStorePath, keyStorePassword);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-
-
-        return message;
-    }
+    @Value("${github.username}")
+    private String githubUsername;
 
     @RequestMapping("/keystore")
-    public String getKeystore() {
-        String entry = "";
-        try {
-            KeystoreConfiguration.makeNewKeystoreEntry("test", "abc", keyStorePath, keyStorePassword);
-            entry = KeystoreConfiguration.getValueFromKeystore("test", keyStorePath, keyStorePassword);
-            System.out.println(entry);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        return entry;
+    public String getKeystoreDetails() {
+        return keyStorePath + " " + keyStorePassword + " " + githubUsername;
     }
 
-}
-
-@RestController
-class OtherController {
-
-    @Value("${message:abc}")
-    private String message;
-
-    @RequestMapping("/message2")
-    public String getMessage2() {
-        return message;
-    }
 }

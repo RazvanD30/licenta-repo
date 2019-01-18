@@ -21,20 +21,3 @@ public class DiscoveryApplication {
         application.run(args);
     }
 }
-
-
-
-
-@RefreshScope
-@RestController
-class MessageRestController {
-
-    @Value("${message:Hello default}")
-    private String message;
-
-    @RequestMapping("/message")
-    String getMessage() {
-        return this.message;
-    }
-
-}

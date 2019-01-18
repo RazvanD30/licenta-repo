@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ProjectModuleManager">
+    <modules>
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/central-config-server/en.ubb.central-config-server.iml" filepath="$PROJECT_DIR$/.idea/modules/central-config-server/en.ubb.central-config-server.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/central-config-server/en.ubb.central-config-server.main.iml" filepath="$PROJECT_DIR$/.idea/modules/central-config-server/en.ubb.central-config-server.main.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/central-config-server/en.ubb.central-config-server.test.iml" filepath="$PROJECT_DIR$/.idea/modules/central-config-server/en.ubb.central-config-server.test.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/discovery-server/en.ubb.discovery-server.iml" filepath="$PROJECT_DIR$/.idea/modules/discovery-server/en.ubb.discovery-server.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/discovery-server/en.ubb.discovery-server.main.iml" filepath="$PROJECT_DIR$/.idea/modules/discovery-server/en.ubb.discovery-server.main.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/discovery-server/en.ubb.discovery-server.test.iml" filepath="$PROJECT_DIR$/.idea/modules/discovery-server/en.ubb.discovery-server.test.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/gateway-server/en.ubb.gateway-server.iml" filepath="$PROJECT_DIR$/.idea/modules/gateway-server/en.ubb.gateway-server.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/gateway-server/en.ubb.gateway-server.main.iml" filepath="$PROJECT_DIR$/.idea/modules/gateway-server/en.ubb.gateway-server.main.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/gateway-server/en.ubb.gateway-server.test.iml" filepath="$PROJECT_DIR$/.idea/modules/gateway-server/en.ubb.gateway-server.test.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/en.ubb.licenta.iml" filepath="$PROJECT_DIR$/.idea/modules/en.ubb.licenta.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/en.ubb.licenta.main.iml" filepath="$PROJECT_DIR$/.idea/modules/en.ubb.licenta.main.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/en.ubb.licenta.test.iml" filepath="$PROJECT_DIR$/.idea/modules/en.ubb.licenta.test.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/test-microservice/en.ubb.test-microservice.iml" filepath="$PROJECT_DIR$/.idea/modules/test-microservice/en.ubb.test-microservice.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/test-microservice/en.ubb.test-microservice.main.iml" filepath="$PROJECT_DIR$/.idea/modules/test-microservice/en.ubb.test-microservice.main.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/test-microservice/en.ubb.test-microservice.test.iml" filepath="$PROJECT_DIR$/.idea/modules/test-microservice/en.ubb.test-microservice.test.iml" />
+    </modules>
+  </component>
+</project>
