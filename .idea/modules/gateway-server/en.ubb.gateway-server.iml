@@ -1,13 +1,4 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<module external.linked.project.id=":gateway-server" external.linked.project.path="$MODULE_DIR$/../../../gateway-server" external.root.project.path="$MODULE_DIR$/../../.." external.system.id="GRADLE" external.system.module.group="en.ubb" external.system.module.version="1.0-SNAPSHOT" type="JAVA_MODULE" version="4">
-  <component name="NewModuleRootManager" inherit-compiler-output="true">
-    <exclude-output />
-    <content url="file://$MODULE_DIR$/../../../gateway-server">
-      <excludeFolder url="file://$MODULE_DIR$/../../../gateway-server/.gradle" />
-      <excludeFolder url="file://$MODULE_DIR$/../../../gateway-server/build" />
-      <excludeFolder url="file://$MODULE_DIR$/../../../gateway-server/out" />
-    </content>
-    <orderEntry type="inheritedJdk" />
-    <orderEntry type="sourceFolder" forTests="false" />
-  </component>
+<module version="4">
+  <component name="ExternalSystem" externalSystem="GRADLE" externalSystemModuleGroup="en.ubb" externalSystemModuleVersion="1.0-SNAPSHOT" linkedProjectId=":gateway-server" linkedProjectPath="$MODULE_DIR$/../../../gateway-server" rootProjectPath="$MODULE_DIR$/../../.." />
 </module>

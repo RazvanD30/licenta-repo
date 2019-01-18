@@ -1,13 +1,4 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<module external.linked.project.id=":test-microservice" external.linked.project.path="$MODULE_DIR$/../../../test-microservice" external.root.project.path="$MODULE_DIR$/../../.." external.system.id="GRADLE" external.system.module.group="en.ubb" external.system.module.version="1.0-SNAPSHOT" type="JAVA_MODULE" version="4">
-  <component name="NewModuleRootManager" inherit-compiler-output="true">
-    <exclude-output />
-    <content url="file://$MODULE_DIR$/../../../test-microservice">
-      <excludeFolder url="file://$MODULE_DIR$/../../../test-microservice/.gradle" />
-      <excludeFolder url="file://$MODULE_DIR$/../../../test-microservice/build" />
-      <excludeFolder url="file://$MODULE_DIR$/../../../test-microservice/out" />
-    </content>
-    <orderEntry type="inheritedJdk" />
-    <orderEntry type="sourceFolder" forTests="false" />
-  </component>
+<module version="4">
+  <component name="ExternalSystem" externalSystem="GRADLE" externalSystemModuleGroup="en.ubb" externalSystemModuleVersion="1.0-SNAPSHOT" linkedProjectId=":test-microservice" linkedProjectPath="$MODULE_DIR$/../../../test-microservice" rootProjectPath="$MODULE_DIR$/../../.." />
 </module>

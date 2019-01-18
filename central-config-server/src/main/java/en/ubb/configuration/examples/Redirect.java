@@ -1,4 +1,4 @@
-package en.ubb.configuration;
+package en.ubb.configuration.examples;
 
 
 import org.apache.catalina.Context;
@@ -14,11 +14,13 @@ import org.springframework.context.annotation.Configuration;
 @Configuration
 public class Redirect {
 
+    /*
     @Value("${server.port}")
     private String port;
 
     @Value("${server.ssl.key-store}")
     private String keystore;
+
 
     @Bean
     public ServletWebServerFactory servletContainer() {
@@ -47,5 +49,6 @@ public class Redirect {
 
         return connector;
     }
+    */
 
 }

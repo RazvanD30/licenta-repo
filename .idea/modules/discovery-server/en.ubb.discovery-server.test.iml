@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<module external.linked.project.id=":discovery-server:test" external.linked.project.path="$MODULE_DIR$/../../../discovery-server" external.root.project.path="$MODULE_DIR$/../../.." external.system.id="GRADLE" external.system.module.group="en.ubb" external.system.module.type="sourceSet" external.system.module.version="1.0-SNAPSHOT" type="JAVA_MODULE" version="4">
+<module version="4">
+  <component name="ExternalSystem" externalSystem="GRADLE" externalSystemModuleGroup="en.ubb" externalSystemModuleType="sourceSet" externalSystemModuleVersion="1.0-SNAPSHOT" linkedProjectId=":discovery-server:test" linkedProjectPath="$MODULE_DIR$/../../../discovery-server" rootProjectPath="$MODULE_DIR$/../../.." />
   <component name="FacetManager">
     <facet type="Spring" name="Spring">
       <configuration />
@@ -7,17 +8,13 @@
     <facet type="web" name="Web">
       <configuration>
         <webroots />
-        <sourceRoots />
       </configuration>
     </facet>
   </component>
   <component name="NewModuleRootManager" LANGUAGE_LEVEL="JDK_1_8">
     <output-test url="file://$MODULE_DIR$/../../../discovery-server/out/test/classes" />
     <exclude-output />
-    <content url="file://$MODULE_DIR$/../../../discovery-server/src/test">
-      <sourceFolder url="file://$MODULE_DIR$/../../../discovery-server/src/test/java" isTestSource="true" />
-      <sourceFolder url="file://$MODULE_DIR$/../../../discovery-server/src/test/resources" type="java-test-resource" />
-    </content>
+    <content url="file://$MODULE_DIR$/../../../discovery-server/src/test" />
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
     <orderEntry type="module" module-name="en.ubb.discovery-server.main" />

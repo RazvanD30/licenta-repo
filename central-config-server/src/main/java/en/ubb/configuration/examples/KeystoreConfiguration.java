@@ -1,4 +1,4 @@
-package en.ubb.configuration;
+package en.ubb.configuration.examples;
 
 import javax.crypto.SecretKey;
 import javax.crypto.SecretKeyFactory;
