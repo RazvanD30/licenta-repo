@@ -20,10 +20,20 @@
       <module name="en.ubb.licenta-server.test" target="1.8" />
       <module name="en.ubb.licenta.main" target="1.8" />
       <module name="en.ubb.licenta.test" target="1.8" />
+      <module name="en.ubb.statistics-server.main" target="1.8" />
+      <module name="en.ubb.statistics-server.test" target="1.8" />
       <module name="en.ubb.test-microservice.main" target="1.8" />
       <module name="en.ubb.test-microservice.test" target="1.8" />
+      <module name="licenta.central-config-server.main" target="1.8" />
+      <module name="licenta.central-config-server.test" target="1.8" />
+      <module name="licenta.discovery-server.main" target="1.8" />
+      <module name="licenta.discovery-server.test" target="1.8" />
+      <module name="licenta.gateway-server.main" target="1.8" />
+      <module name="licenta.gateway-server.test" target="1.8" />
       <module name="licenta.licenta-server.main" target="1.8" />
       <module name="licenta.licenta-server.test" target="1.8" />
+      <module name="licenta.statistics-server.main" target="1.8" />
+      <module name="licenta.statistics-server.test" target="1.8" />
       <module name="licenta.test-microservice.main" target="1.8" />
       <module name="licenta.test-microservice.test" target="1.8" />
     </bytecodeTargetLevel>

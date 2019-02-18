@@ -1,0 +1,91 @@
+version: '3'
+services:
+
+  central-config-server:
+    container_name: central-config-server
+    build:
+      context: ./central-config-server
+      dockerfile: Dockerfile
+    image: central-config-server:latest
+    expose:
+      - 8801
+    ports:
+      - 8801:8801
+
+  discovery-server:
+    container_name: discovery-server
+    build:
+      context: ./discovery-server
+      dockerfile: Dockerfile
+    image: discovery-server:latest
+    expose:
+      - 8802
+    ports:
+      - 8802:8802
+    links:
+      - central-config-server:central-config-server
+    depends_on:
+      - central-config-server
+    command: >
+      /bin/sh -c "
+        echo Waiting for central-config-server service start...;
+        while ! nc -z central-config-server 8801;
+        do
+          sleep 1;
+        done;
+        java -jar /app/discovery-server.jar
+      "
+  gateway-server:
+    container_name: gateway-server
+    build:
+      context: ./gateway-server
+      dockerfile: Dockerfile
+    image: gateway-server:latest
+    expose:
+      - 8803
+    ports:
+      - 8803:8803
+    links:
+      - central-config-server:central-config-server
+      - discovery-server:discovery-server
+    depends_on:
+      - central-config-server
+      - discovery-server
+    command: >
+      /bin/sh -c "
+        echo Waiting for discovery-server service start...;
+        while ! nc -z discovery-server 8802;
+        do
+          sleep 1;
+        done;
+        java -jar /app/gateway-server.jar
+      "
+  test-microservice:
+    container_name: test-microservice
+    build:
+      context: ./test-microservice
+      dockerfile: Dockerfile
+    image: test-microservice:latest
+    expose:
+      - 8810
+    ports:
+      - 8810:8810
+    links:
+      - central-config-server:central-config-server
+      - discovery-server:discovery-server
+    depends_on:
+      - central-config-server
+      - discovery-server
+    command: >
+      /bin/sh -c "
+        echo Waiting for discovery-server service start...;
+        while ! nc -z discovery-server 8802;
+        do
+          sleep 1;
+        done;
+        java -jar /app/test-microservice.jar
+      "
+
+
+
+

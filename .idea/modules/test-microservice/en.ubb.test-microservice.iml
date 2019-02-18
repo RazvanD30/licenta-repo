@@ -1,4 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<module version="4">
-  <component name="ExternalSystem" externalSystem="GRADLE" externalSystemModuleGroup="en.ubb" externalSystemModuleVersion="1.0-SNAPSHOT" linkedProjectId=":test-microservice" linkedProjectPath="$MODULE_DIR$/../../../test-microservice" rootProjectPath="$MODULE_DIR$/../../.." />
-</module>

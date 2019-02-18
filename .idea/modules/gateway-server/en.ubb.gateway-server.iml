@@ -1,4 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<module version="4">
-  <component name="ExternalSystem" externalSystem="GRADLE" externalSystemModuleGroup="en.ubb" externalSystemModuleVersion="1.0-SNAPSHOT" linkedProjectId=":gateway-server" linkedProjectPath="$MODULE_DIR$/../../../gateway-server" rootProjectPath="$MODULE_DIR$/../../.." />
-</module>

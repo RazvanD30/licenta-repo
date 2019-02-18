@@ -1,0 +1,42 @@
+<div class="container">
+  <section>
+    <button (click)="incrementTime()" style="width: 50px"> INC</button>
+    <button (click)="decrementTime()" style="width: 50px"> DEC</button>
+    <button (click)="done()" style="width: 50px"> DON</button>
+    <article>
+      <div class="chart grid">
+        <div class="exercise">
+          <div class="loader-container" *ngFor="let operation of operations">
+            <button mat-button class="load" #startLoading> Load</button>
+            <div class="bar">
+              <div class="face top">
+                <div class="growing-bar"
+                     [ngStyle]="{'animation-duration':operation.estimatedSeconds + 's', 'transition-delay': operation.estimatedSeconds + 's'}"></div>
+              </div>
+              <div class="face side-0">
+                <div class="growing-bar"
+                     [ngStyle]="{'animation-duration':operation.estimatedSeconds + 's', 'transition-delay': operation.estimatedSeconds + 's'}"></div>
+              </div>
+              <div class="face floor">
+                <div class="growing-bar"
+                     [ngStyle]="{'animation-duration':operation.estimatedSeconds + 's', 'transition-delay': operation.estimatedSeconds + 's'}"></div>
+              </div>
+              <div class="face side-a" [ngStyle]="{'animation-duration':operation.estimatedSeconds + 's'}"></div>
+              <div class="face side-b" [ngStyle]="{'animation-duration':operation.estimatedSeconds + 's'}"></div>
+              <div class="face side-1">
+                <div class="growing-bar"
+                     [ngStyle]="{'animation-duration':operation.estimatedSeconds + 's', 'transition-delay': operation.estimatedSeconds + 's'}"></div>
+              </div>
+            </div>
+            <div *ngIf="operation.done === false">
+                <mat-card class="loading-label"> {{operation.description}}</mat-card>
+                <mat-card class="loading-label">	&nbsp; {{ getStatusText(operation) }}</mat-card>
+            </div>
+            <mat-card class="loading-label" *ngIf="operation.done === true"> Done</mat-card>
+          </div>
+        </div>
+      </div>
+    </article>
+  </section>
+</div>
+

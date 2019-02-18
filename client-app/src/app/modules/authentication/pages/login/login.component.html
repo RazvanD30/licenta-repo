@@ -1,0 +1,15 @@
+<div class="buttons-ctn">
+  <a #buttonLogin (click)="expandLogin()" class="button button--left"><span>Login</span></a>
+  <a  #buttonRegister (click)="expandRegister()" class="button button--right"><span>Register</span></a>
+</div>
+<div #loginContent class="button__content button__content--left">
+  <h2>You chose left!</h2>
+  <a (click)="hideLogin()">Signup for nothing here</a>
+</div>
+<div #registerContent class="button__content button__content--right">
+  <h2>You chose right!</h2>
+  <h2>You chose right!</h2>
+  <h2>You chose right!</h2>
+  <h2>You chose right!</h2>
+  <a (click)="hideRegister()">Signup for nothing here</a>
+</div>

@@ -17,35 +17,9 @@ import java.util.List;
 @EnableDiscoveryClient
 @SpringBootApplication
 public class App {
-
     public static void main(String[] args) {
         SpringApplication.run(App.class, args);
     }
 }
 
-@RefreshScope
-@RestController
-class MessageRestController {
 
-    @Value("${message:Hello default}")
-    private String message;
-
-    @RequestMapping("/message")
-    String getMessage() {
-        return this.message;
-    }
-
-}
-
-@RestController
-class ServiceInstanceRestController {
-
-    @Autowired
-    private DiscoveryClient discoveryClient;
-
-    @RequestMapping("/service-instances/{applicationName}")
-    public List<ServiceInstance> serviceInstancesByApplicationName(
-            @PathVariable String applicationName) {
-        return this.discoveryClient.getInstances(applicationName);
-    }
-}

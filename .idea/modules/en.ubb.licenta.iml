@@ -1,4 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <module version="4">
   <component name="ExternalSystem" externalSystem="GRADLE" externalSystemModuleGroup="en.ubb" externalSystemModuleVersion="1.0-SNAPSHOT" linkedProjectId="licenta" linkedProjectPath="$MODULE_DIR$/../.." rootProjectPath="$MODULE_DIR$/../.." />
+  <component name="NewModuleRootManager" inherit-compiler-output="true">
+    <content url="file://$MODULE_DIR$/../..">
+      <excludeFolder url="file://$MODULE_DIR$/../../.gradle" />
+      <excludeFolder url="file://$MODULE_DIR$/../../build" />
+      <excludeFolder url="file://$MODULE_DIR$/../../client-app/dist" />
+      <excludeFolder url="file://$MODULE_DIR$/../../client-app/tmp" />
+      <excludeFolder url="file://$MODULE_DIR$/../../out" />
+    </content>
+    <orderEntry type="sourceFolder" forTests="false" />
+  </component>
 </module>

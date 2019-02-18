@@ -12,13 +12,154 @@ repositories {
     mavenCentral()
 }
 
-dependencies {
-
-}
-
 allprojects {
     ext {
         springBootVersion = '2.1.2.RELEASE'
         dependencyManagementVersion = '1.0.5.RELEASE'
+        gradleDockerVersion = "1.2"
+    }
+}
+
+
+
+subprojects {
+
+    task dockerRemoveContainer(type: Exec) {
+        ignoreExitValue = true
+        def command = "docker rm -f  ${project.name}"
+        commandLine 'cmd', '/c', command
+    }
+
+    task dockerRemoveImage(type: Exec) {
+        dependsOn(dockerRemoveContainer)
+        ignoreExitValue = true
+        def command = "docker rmi -f ${project.name}:latest razvand30/licenta:${project.name}"
+        commandLine 'cmd', '/c', command
+    }
+
+    task dockerInteralBuild(type: Exec){
+        dependsOn(dockerRemoveImage)
+        ignoreExitValue = true
+        def command = "docker build . -t  ${project.name}"
+        commandLine 'cmd', '/c', command
+    }
+
+    task dockerTag(type: Exec){
+        dependsOn(dockerInteralBuild)
+        ignoreExitValue = true
+        def command = "docker tag ${project.name}:latest razvand30/licenta:${project.name}"
+        commandLine 'cmd', '/c', command
+    }
+
+    task dockerBuild(type: Exec) {
+        dependsOn(dockerTag)
+        ignoreExitValue = true
+        def command = "docker rmi -f ${project.name}"
+        commandLine 'cmd', '/c', command
+    }
+
+    task dockerRun(type: Exec) {
+        ignoreExitValue = true
+        evaluationDependsOnChildren()
+        def command = "docker run -d --network docker-network --name ${project.name} -p ${-> project.port}:${-> project.port} razvand30/licenta:${project.name}"
+        commandLine 'cmd', '/c', command
+    }
+
+    task dockerPush(type: Exec) {
+        ignoreExitValue = true
+        def command = "docker push razvand30/licenta:${project.name}"
+        commandLine 'cmd', '/c', command
+    }
+
+    task dockerUntag(type: Exec) {
+        ignoreExitValue = true
+        def command = "docker rmi -f razvand30/licenta:${project.name}"
+        commandLine 'cmd', '/c', command
+    }
+
+    task dockerPull(type: Exec) {
+        dependsOn(dockerRemoveImage)
+        ignoreExitValue = true
+        def command = "docker pull razvand30/licenta:${project.name}"
+        commandLine 'cmd', '/c', command
+    }
+
+    task dockerStop(type: Exec){
+        ignoreExitValue = true
+        def command = "docker stop ${project.name}"
+        commandLine 'cmd', '/c', command
+    }
+
+
+}
+
+task buildAll(type: GradleBuild) {
+    tasks = [ 'build' ]
+}
+
+task dockerRemoveAllContainers {
+    subprojects { pr ->
+        if (file("Dockerfile").exists()) {
+            dockerRemoveAllContainers.dependsOn("${pr.path}:dockerRemoveContainer")
+        }
+    }
+}
+
+task dockerRemoveAllImages {
+    dockerRemoveAllImages.dependsOn(dockerRemoveAllContainers)
+    subprojects { pr ->
+        if (file("Dockerfile").exists()) {
+            dockerRemoveAllImages.dependsOn("${pr.path}:dockerRemoveImage")
+        }
+    }
+}
+
+task dockerUntagAll {
+    subprojects { pr ->
+        if (file("Dockerfile").exists()) {
+            dockerUntagAll.dependsOn("${pr.path}:dockerUntag")
+        }
+    }
+}
+
+task dockerBuildAll {
+    dependsOn(buildAll)
+    subprojects { pr ->
+        if (file("Dockerfile").exists()) {
+            dockerBuildAll.dependsOn("${pr.path}:dockerBuild")
+        }
+    }
+}
+
+task dockerRunAll {
+    dependsOn(dockerRemoveAllContainers)
+    subprojects { pr ->
+        if (file("Dockerfile").exists()) {
+            dockerRunAll.dependsOn("${pr.path}:dockerRun")
+        }
+    }
+}
+
+task dockerPushAll {
+    subprojects { pr ->
+        if (file("Dockerfile").exists()) {
+            dockerPushAll.dependsOn("${pr.path}:dockerPush")
+        }
+    }
+}
+
+task dockerPullAll {
+    subprojects { pr ->
+        if (file("Dockerfile").exists()) {
+            dockerPullAll.dependsOn("${pr.path}:dockerPull")
+        }
+    }
+}
+
+task dockerStopAll {
+    subprojects { pr ->
+        if (file("Dockerfile").exists()) {
+            dockerStopAll.dependsOn("${pr.path}:dockerStop")
+        }
     }
 }
