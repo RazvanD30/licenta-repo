@@ -1,0 +1,55 @@
+.mat-form-field {
+  display: block;
+  margin-left: 10%;
+  margin-right: 10%;
+  width: 80%;
+}
+
+.action {
+  display: flex;
+  align-items: center;
+  position: absolute;
+  bottom: 5%;
+  right: 5%;
+}
+
+textarea {
+
+}
+
+.register-content {
+  margin-bottom: 1%;
+}
+
+.register-container {
+  color: white;
+}
+
+.register-container /deep/.mat-raised-button[disabled] {
+  background-color: grey;
+}
+
+.register-container .divider {
+  height: 20px;
+}
+
+.register-container .mat-input-element,
+.register-container .mat-form-field-appearance-legacy .mat-form-field-label {
+  color: white !important;
+}
+
+.register-container .mat-form-field-appearance-legacy /deep/.mat-form-field-label {
+  color: white !important;
+}
+
+.register-container .mat-form-field-appearance-legacy /deep/ .mat-hint {
+  color: white !important;
+}
+
+.register-container .mat-form-field-ripple {
+  background-color: white !important;
+}
+
+.register-container .mat-form-field-appearance-legacy /deep/ .mat-form-field-underline {
+  background-color: white !important;
+}

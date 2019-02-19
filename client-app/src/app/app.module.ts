@@ -9,7 +9,7 @@ import {CapitalizePipe} from './shared/pipes/capitalize.pipe';
 import {SafePipe} from './shared/pipes/safe.pipe';
 import {HomeModule} from './modules/home/home.module';
 import {CoreModule} from './core/core.module';
-import {MatCard} from '@angular/material';
+import {MatCard, MatDatepickerModule} from '@angular/material';
 import {FlexLayoutModule} from '@angular/flex-layout';
 import {AlertComponent} from './shared/components/alert/alert.component';
 import {AuthenticationGuard} from './core/guards/authentication.guard';
@@ -20,31 +20,42 @@ import {HTTP_INTERCEPTORS, HttpClientModule} from '@angular/common/http';
 import {HttpTokenInterceptor} from './core/interceptors/http-token.interceptor';
 import {ErrorHandlerInterceptor} from './core/interceptors/error-handler.interceptor';
 import {AuthenticateMock, authenticateMockProvider} from './core/mocks/authenticate.mock';
-import {AuthenticationModule} from './modules/authentication/authentication.module';
+import {AuthenticationComponent} from './core/authentication/authentication.component';
+import {LoginComponent} from './core/authentication/partial-components/login/login.component';
+import {MaterialModule} from './modules/material/material.module';
+import {FormsModule, ReactiveFormsModule} from '@angular/forms';
+import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
+import {RegisterComponent} from './core/authentication/partial-components/register/register.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     LoaderComponent,
     AuthenticationDirective,
+    AuthenticationComponent,
     CapitalizePipe,
+    LoginComponent,
+    RegisterComponent,
     SafePipe,
-    MatCard,
     AlertComponent
   ],
   imports: [
     BrowserModule,
+    FormsModule,
+    ReactiveFormsModule,
+    BrowserAnimationsModule,
     CoreModule,
     FlexLayoutModule,
     HomeModule,
-    AuthenticationModule,
     AppRoutingModule,
-    HttpClientModule
+    HttpClientModule,
+    MaterialModule
   ],
   providers: [
     AuthenticationGuard,
     AlertService,
     UserService,
+    AuthenticationService,
 
     {provide: HTTP_INTERCEPTORS, useClass: HttpTokenInterceptor, multi: true},
     {provide: HTTP_INTERCEPTORS, useClass: ErrorHandlerInterceptor, multi: true},

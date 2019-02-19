@@ -1,0 +1,169 @@
+@mixin easeOut {
+  transition: all .35s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+
+$black: lighten(black, 8);
+
+* {
+  box-sizing: border-box;
+}
+
+
+.action {
+  display: flex;
+  align-items: center;
+  position: absolute;
+  bottom: 5%;
+  left: 5%;
+}
+
+body {
+  font-family: 'Montserrat';
+  font-weight: 300;
+  line-height: 1.5;
+}
+
+a {
+  text-decoration: none;
+  color: inherit;
+}
+
+
+.buttons-ctn {
+  will-change: transform;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  margin-left: -150px;
+  margin-top: -30px;
+  transform-style: preserve-3d;
+  backface-visibility: hidden;
+}
+
+.button {
+  will-change: transform;
+  position: relative;
+  float: left;
+  display: inline-block;
+  padding: 20px;
+  width: 150px;
+  text-align: center;
+  line-height: normal;
+  @include easeOut;
+
+  &--left {
+    background: darken(white, 8);
+    color: $black;
+  }
+
+  &--right {
+    background: $black;
+    color: white;
+  }
+
+  &--active {
+    cursor: default;
+    z-index: 2;
+    color: transparent;
+
+    span {
+      opacity: 0;
+    }
+
+  }
+  &--hidden {
+    z-index: 0;
+    opacity: 0;
+    transition-delay: 0.05s;
+  }
+
+
+
+}
+
+.button__content {
+  display: block;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  padding: 60px 20px;
+  text-align: center;
+  width: 300px;
+  visibility: hidden;
+  opacity: 0;
+  z-index: 10;
+  color: white;
+
+  &--left {
+    color: $black;
+  }
+
+  &--right {
+    color: white;
+  }
+
+  &--active {
+    opacity: 1;
+    visibility: visible;
+  }
+
+  @media (max-width: 650px) {
+    width: 200px;
+  }
+  @media (min-width: 650px) {
+    width: 300px;
+    height: fit-content;
+  }
+}
+
+.authentication-container {
+  width: 100vw;
+  height: 100vh;
+  overflow: hidden;
+}
+
+.top-left-side {
+  position: absolute;
+  z-index: -1;
+  left: 0;
+  top: 0;
+  width: 50%;
+  height: 50%;
+  background-color: lighten(black, 6);
+  overflow: hidden;
+}
+
+.top-right-side {
+  position: absolute;
+  z-index: -1;
+  left: 50%;
+  top: 0;
+  width: 50%;
+  height: 50%;
+  background: darken(white, 6);
+  overflow: hidden;
+}
+
+.bottom-left-side {
+  position: absolute;
+  z-index: -1;
+  left: 0;
+  top: 50%;
+  width: 50%;
+  height: 50%;
+  background-color: lighten(black, 10);
+  overflow: hidden;
+}
+
+.bottom-right-side {
+  position: absolute;
+  z-index: -1;
+  left: 50%;
+  top: 50%;
+  width: 50%;
+  height: 50%;
+  background: darken(white, 10);
+  overflow: hidden;
+}

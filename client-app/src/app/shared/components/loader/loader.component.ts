@@ -82,7 +82,7 @@ export class LoaderComponent implements OnInit {
       }
     }
     const seconds = this.getRemainingSeconds(operation);
-    if(seconds == 1){
+    if (seconds === 1) {
       result += this.getRemainingSeconds(operation) + ' second';
     } else {
       result += this.getRemainingSeconds(operation) + ' seconds';

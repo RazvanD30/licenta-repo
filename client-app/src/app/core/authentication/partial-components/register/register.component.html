@@ -1,0 +1,32 @@
+<div class="register-container">
+  <h2 mat-dialog-title> Register </h2>
+
+  <mat-dialog-content class="register-content" [formGroup]="form">
+
+    <mat-form-field>
+      <input matInput placeholder="Username" type="text" formControlName="username">
+    </mat-form-field>
+    <mat-form-field>
+      <input matInput placeholder="Password" type="password" formControlName="password">
+    </mat-form-field>
+    <mat-form-field>
+      <input matInput placeholder="E-Mail Address" type="text" formControlName="email">
+    </mat-form-field>
+    <mat-form-field>
+      <input matInput placeholder="Phone number" formControlName="phone">
+      <mat-icon matSuffix>phone</mat-icon>
+      <mat-hint>Include area code</mat-hint>
+    </mat-form-field>
+    <div class="divider"></div>
+
+
+  </mat-dialog-content>
+  <mat-dialog-actions>
+    <div matTooltip="Please complete all fields" [matTooltipDisabled]="form.valid" matTooltipPosition="right">
+      <button mat-raised-button class="action" type="submit" (click)="onSubmit()" [disabled]="!form.valid">
+        Register
+        <mat-icon> arrow_forward_ios</mat-icon>
+      </button>
+    </div>
+  </mat-dialog-actions>
+</div>

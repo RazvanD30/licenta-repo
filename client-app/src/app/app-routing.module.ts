@@ -3,14 +3,15 @@ import {Routes, RouterModule} from '@angular/router';
 
 import {LoaderComponent} from './shared/components/loader/loader.component';
 import {AuthenticationGuard} from './core/guards/authentication.guard';
+import {AuthenticationComponent} from './core/authentication/authentication.component';
 
 const routes: Routes = [
-  {path: '', loadChildren: './modules/home/home.module#HomeModule'},
-  {path: 'authentication', loadChildren: './modules/authentication/authentication.module#AuthenticationModule'},
+  {path: 'authenticate', component: AuthenticationComponent},
   {path: 'loader', component: LoaderComponent},
 
+
   // otherwise redirect to home
-  {path: '**', redirectTo: ''}
+  // {path: '**', redirectTo: ''}
 ];
 
 @NgModule({

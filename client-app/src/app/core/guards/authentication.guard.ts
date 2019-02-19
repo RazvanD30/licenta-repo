@@ -22,11 +22,9 @@ export class AuthenticationGuard implements CanActivate {
 
   canActivate(next: ActivatedRouteSnapshot, state: RouterStateSnapshot): boolean {
     if (localStorage.getItem('current-user')) {
-      console.log('can activate');
       return true;
     }
-    console.log('can not activate');
-    this.router.navigate(['/login'], {queryParams: {returnUrl: state.url}});
+    this.router.navigate(['/authenticate'], {queryParams: {returnUrl: state.url}});
     return false;
   }
 }

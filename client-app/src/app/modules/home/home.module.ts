@@ -2,7 +2,7 @@ import {NgModule} from '@angular/core';
 import {CommonModule} from '@angular/common';
 import {HomeComponent} from './pages/home/home.component';
 import {HomeRoutingModule} from './home-routing.module';
-import {AuthenticationModule} from '../authentication/authentication.module';
+import {AuthenticationGuard} from '../../core/guards/authentication.guard';
 
 @NgModule({
   declarations: [
@@ -10,8 +10,10 @@ import {AuthenticationModule} from '../authentication/authentication.module';
     ],
   imports: [
     CommonModule,
-    HomeRoutingModule,
-    AuthenticationModule
+    HomeRoutingModule
+  ],
+  providers: [
+    AuthenticationGuard
   ]
 })
 export class HomeModule {

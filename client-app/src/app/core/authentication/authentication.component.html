@@ -1,0 +1,32 @@
+
+<div class="top-left-side">
+</div>
+<div class="top-right-side">
+</div>
+<div class="bottom-left-side">
+</div>
+<div class="bottom-right-side">
+</div>
+
+
+<div class="authentication-container">
+  <div class="buttons-ctn">
+
+    <a #buttonLogin (click)="expandLogin()" class="button button--left"><span>Login</span></a>
+    <a #buttonRegister (click)="expandRegister()" class="button button--right"><span>Register</span></a>
+  </div>
+  <div #loginContent class="button__content button__content--left">
+    <app-login></app-login>
+    <button mat-raised-button class="action" (click)="hideLogin()">
+      <mat-icon> arrow_back_ios</mat-icon>
+      Back
+    </button>
+  </div>
+  <div #registerContent class="button__content button__content--right">
+    <app-register (submitEmitter)="redirectToLogin($event)"></app-register>
+    <button mat-raised-button class="action" (click)="hideRegister()">
+      <mat-icon> arrow_back_ios</mat-icon>
+      Back
+    </button>
+  </div>
+</div>
