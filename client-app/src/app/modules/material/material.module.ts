@@ -1,5 +1,4 @@
 import { NgModule } from '@angular/core';
-import { CommonModule } from '@angular/common';
 import {
   MatAutocompleteModule,
   MatBadgeModule,
@@ -42,7 +41,7 @@ import {
 @NgModule({
   declarations: [],
   imports: [
-    CommonModule
+
   ], exports: [
       MatAutocompleteModule,
       MatBadgeModule,

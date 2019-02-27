@@ -14,11 +14,13 @@ export class LoaderComponent implements OnInit {
 
   @ViewChild('startLoading') startLoadingBtn;
   @Input() operations: Operation[];
+
   private clock: Observable<Date>;
   private startingTime: any;
   private currentTime: any;
 
   constructor() {
+    console.log('loaded loader');
   }
 
   ngOnInit() {

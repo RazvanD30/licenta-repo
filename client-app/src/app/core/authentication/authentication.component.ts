@@ -1,28 +1,39 @@
-import {Component, ElementRef, OnInit, Renderer2, ViewChild} from '@angular/core';
+import {AfterViewInit, Component, ElementRef, Inject, OnInit, Renderer2, ViewChild} from '@angular/core';
+import {DOCUMENT} from '@angular/common';
+import {ActivatedRoute, Router} from '@angular/router';
 
 @Component({
   selector: 'app-authentication',
   templateUrl: './authentication.component.html',
   styleUrls: ['./authentication.component.scss']
 })
-export class AuthenticationComponent implements OnInit {
+export class AuthenticationComponent implements OnInit, AfterViewInit {
+
   @ViewChild('buttonLogin') buttonLogin: ElementRef;
   @ViewChild('buttonRegister') buttonRegister: ElementRef;
   @ViewChild('loginContent') loginContent: ElementRef;
   @ViewChild('registerContent') registerContent: ElementRef;
   @ViewChild('authentication-container') authenticationContainer: ElementRef;
-  private listener;
+
   loginWindowOpenend: boolean;
   registerWindowOpened: boolean;
 
+  private listener;
+  private returnUrl: string;
 
-  constructor(private renderer: Renderer2) {
+  constructor(
+    @Inject(DOCUMENT) private document,
+    private renderer: Renderer2,
+    private route: ActivatedRoute,
+    private router: Router) {
+    console.log('loaded auth');
     this.renderer = renderer;
   }
 
   ngOnInit() {
     this.loginWindowOpenend = false;
     this.registerWindowOpened = false;
+    this.returnUrl = this.route.snapshot.queryParams.returnUrl || '/';
   }
 
   expandLogin() {
@@ -110,7 +121,27 @@ export class AuthenticationComponent implements OnInit {
   }
 
   redirectToLogin(event: Event) {
-      this.hideRegister();
+    this.hideRegister();
+  }
+
+  redirectToHome(event: Event) {
+    this.hideLogin();
+    this.router.navigateByUrl(this.returnUrl);
+  }
+
+  loadScript(src: any) {
+    const s = this.renderer.createElement('script');
+    s.type = 'text/javascript';
+    s.src = src;
+    this.renderer.appendChild(this.document.body, s);
+  }
+
+  ngAfterViewInit(): void {
+
+    this.loadScript('https://s3-us-west-2.amazonaws.com/s.cdpn.io/499416/TweenLite.min.js');
+    this.loadScript('https://s3-us-west-2.amazonaws.com/s.cdpn.io/499416/EasePack.min.js');
+    this.loadScript('../assets/demo.js');
   }
 
 }
+

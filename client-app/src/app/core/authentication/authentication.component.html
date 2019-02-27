@@ -7,6 +7,8 @@
 </div>
 <div class="bottom-right-side">
 </div>
+<canvas id="demo-canvas" class="canvas"></canvas>
+
 
 
 <div class="authentication-container">
@@ -16,7 +18,7 @@
     <a #buttonRegister (click)="expandRegister()" class="button button--right"><span>Register</span></a>
   </div>
   <div #loginContent class="button__content button__content--left">
-    <app-login></app-login>
+    <app-login (submitEmitter)="redirectToHome($event)"></app-login>
     <button mat-raised-button class="action" (click)="hideLogin()">
       <mat-icon> arrow_back_ios</mat-icon>
       Back

@@ -3,13 +3,10 @@ import {NgModule} from '@angular/core';
 
 import {AppRoutingModule} from './app-routing.module';
 import {AppComponent} from './app.component';
-import {LoaderComponent} from './shared/components/loader/loader.component';
 import {AuthenticationDirective} from './shared/directives/authentication.directive';
 import {CapitalizePipe} from './shared/pipes/capitalize.pipe';
 import {SafePipe} from './shared/pipes/safe.pipe';
-import {HomeModule} from './modules/home/home.module';
 import {CoreModule} from './core/core.module';
-import {MatCard, MatDatepickerModule} from '@angular/material';
 import {FlexLayoutModule} from '@angular/flex-layout';
 import {AlertComponent} from './shared/components/alert/alert.component';
 import {AuthenticationGuard} from './core/guards/authentication.guard';
@@ -26,18 +23,21 @@ import {MaterialModule} from './modules/material/material.module';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {RegisterComponent} from './core/authentication/partial-components/register/register.component';
+import {LoaderComponent} from './shared/components/loader/loader.component';
+import {HomeModule} from './modules/home/home.module';
+import {UserManagementModule} from './modules/user-management/user-management.module';
 
 @NgModule({
   declarations: [
     AppComponent,
-    LoaderComponent,
     AuthenticationDirective,
     AuthenticationComponent,
     CapitalizePipe,
     LoginComponent,
     RegisterComponent,
     SafePipe,
-    AlertComponent
+    AlertComponent,
+    LoaderComponent
   ],
   imports: [
     BrowserModule,
@@ -46,10 +46,11 @@ import {RegisterComponent} from './core/authentication/partial-components/regist
     BrowserAnimationsModule,
     CoreModule,
     FlexLayoutModule,
-    HomeModule,
-    AppRoutingModule,
     HttpClientModule,
-    MaterialModule
+    MaterialModule,
+
+
+    AppRoutingModule // MUST BE AFTER EVERY LAZY LOADED MODULE
   ],
   providers: [
     AuthenticationGuard,
