@@ -5,4 +5,6 @@ include 'gateway-server'
 include 'test-microservice'
 include 'statistics-server'
 include 'statistics-server'
+include 'network-debugger'
+include 'network-configuration-server'
 

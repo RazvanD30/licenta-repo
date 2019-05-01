@@ -1,0 +1,77 @@
+
+.navigation-bar {
+  padding: 0 !important;
+  z-index: 9000 !important;
+  height: 0 !important;
+
+  *{
+    font-family: Futura, "Trebuchet MS", Arial, sans-serif;
+  }
+
+  .header-container {
+    width: fit-content;
+    margin: auto;
+  }
+
+  .navigation-bar-inner li{
+    line-height: 40px;
+    letter-spacing:2px;
+  }
+
+  .nav-link{
+    border-top: 4px solid white;
+    color: black !important;
+    transition: border-top .3s;
+    &:hover{border-top: 4px solid black;}
+  }
+
+
+  .header{
+    position: fixed;
+    z-index: 9000;
+    background-color: rgba(255,255,255, .95);
+    /* remove the gradient */
+    background-image: none !important;
+    border-bottom:2px solid black !important;
+    line-height: 40px !important;
+    width: 100% !important;
+  }
+
+  .dropdown-menu a {
+    font-family: Futura, "Trebuchet MS", Arial, sans-serif !important;
+  }
+
+  .dropdown.show .dropdown-menu {
+    opacity: 1 !important;
+    z-index: 1001;
+    margin-left: 18px;
+  }
+
+  .center {
+    margin: auto;
+    position: absolute;
+    left: 0; right: 0;
+  }
+
+  .triangle-up {
+    position:fixed;
+    z-index: 1000;
+    width: 0;
+    height: 0;
+    margin-top: 2px;
+    border-left: 30px solid transparent;
+    border-right: 30px solid transparent;
+    border-top: 30px solid black;
+  }
+
+  .triangle-up p{
+    text-align:center;
+    color:white;
+    margin-top:-33px;
+    margin-left:-13px;
+    transition:color .2s;
+    &:hover{color: rgba(0, 0, 0, .4)}
+  }
+}
+
+

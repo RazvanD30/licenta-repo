@@ -1,0 +1,34 @@
+<div class="navigation-bar"
+     [@openCloseNavbar]="{value: getAnimValue(), params: {margin_top: getMarginTop()}}">
+  <nav class="navigation-bar-inner header" #navBarInner [@openCloseHeader]="isOpen === true ? 'open' : 'closed'">
+    <div class="header-container" >
+      <ul class="nav pull-right">
+        <ng-container *ngFor="let link of links; let i = index">
+          <li class="dropdown">
+            <a *ngIf="link.multiple === false" class="nav-link" type="button" [href]="link.href">
+              <fa-icon *ngIf="link.icon" [icon]="link.icon"></fa-icon>
+              {{link.text}}
+            </a>
+            <a *ngIf="link.multiple === true" class="dropdown-toggle nav-link" type="button" [id]="i"
+               data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+              <fa-icon *ngIf="link.icon" [icon]="link.icon"></fa-icon>
+              {{link.text}}
+            </a>
+            <div *ngIf="link.multiple === true" class="dropdown-menu" [attr.aria-labelledby]="i">
+              <a *ngFor="let sublink of link.choices" class="dropdown-item" [href]="sublink.href">
+                <fa-icon *ngIf="sublink.icon" [icon]="sublink.icon"></fa-icon>
+                {{ sublink.text }}
+              </a>
+            </div>
+          </li>
+        </ng-container>
+      </ul>
+      <div class="triangle-up center">
+        <p>
+          <fa-icon [icon]="faChevronDown" size="2x" (click)="openClose($event)" id="toggle"></fa-icon>
+        </p>
+      </div>
+    </div>
+  </nav>
+  <br/>
+</div>

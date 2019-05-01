@@ -1,6 +1,6 @@
 version: '3'
-services:
 
+services:
   central-config-server:
     container_name: central-config-server
     build:

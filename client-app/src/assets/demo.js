@@ -1,3 +1,4 @@
+
 (function () {
 
   var width, height, canvas, ctx, points, target, animateHeader = true;
@@ -6,7 +7,7 @@
   var closestNeighbourDistance = 30000; // was 4000
   var closeNeighbourDistance = 60000; // was 20000
   var farNeighbourDistance = 80000; // was 40000
-  var degradationRate = 0.4;
+  var radiusConstant = 6;
   var listenForMouse = false;
 
   // Main
@@ -16,10 +17,9 @@
   addListeners();
 
   function initCircles() {
-    width = window.innerWidth;
-    height = window.innerHeight;
-    target = {x: 0, y: 0};
-
+    width = window.innerWidth < 1920 ? window.innerWidth : 1920;
+    height = window.innerHeight < 1080 ? window.innerHeight : 1080;
+    target = {x: -1, y: -1};
 
     canvas = document.getElementById('demo-canvas');
     canvas.width = width;
@@ -28,8 +28,8 @@
 
     // create points
     points = [];
-    for (var x = 0; x < width; x = x + width / Math.sqrt(numberOfPoints)) {
-      for (var y = 0; y < height; y = y + height / Math.sqrt(numberOfPoints)) {
+    for (var x = 0; x < canvas.width; x = x + canvas.width / Math.sqrt(numberOfPoints)) {
+      for (var y = 0; y < canvas.height; y = y + canvas.height / Math.sqrt(numberOfPoints)) {
         var px = x + Math.random() * 80;
         var py = y + Math.random() * 80;
         var p = {x: px, originX: px, y: py, originY: py};
@@ -69,7 +69,7 @@
 
     // assign a circle to each point
     for (var i in points) {
-      var c = new Circle(points[i], 4 + Math.random() * 2, 'rgba(0, 0, 0, 0.5)');
+      var c = new Circle(points[i], radiusConstant + Math.random() * 2, 'rgba(0, 0, 0, 0.5)');
       points[i].circle = c;
     }
   }
@@ -86,19 +86,10 @@
 
   function mouseMove(e) {
 
-    if(listenForMouse === false)
+    if (listenForMouse === false)
       return;
-
-    var posx = posy = 0;
-    if (e.pageX || e.pageY) {
-      posx = e.pageX;
-      posy = e.pageY;
-    } else if (e.clientX || e.clientY) {
-      posx = e.clientX + document.body.scrollLeft + document.documentElement.scrollLeft;
-      posy = e.clientY + document.body.scrollTop + document.documentElement.scrollTop;
-    }
-    target.x = posx;
-    target.y = posy;
+    target.x = width / 2;
+    target.y = height / 2;
   }
 
   function scrollCheck() {
@@ -110,10 +101,15 @@
   }
 
   function resize() {
-    width = window.innerWidth;
-    height = window.innerHeight;
+    width = window.innerWidth < 1920 ? window.innerWidth : 1920;
+    height = window.innerHeight < 1080 ? window.innerHeight : 1080;
+    closestNeighbourDistance  = 15.6 * width;
+    closeNeighbourDistance = 31.3 * width;
+    farNeighbourDistance = 41.7 * width;
     canvas.width = width;
     canvas.height = height;
+    initCircles();
+    initAnimation();
   }
 
   // animation
@@ -135,19 +131,23 @@
     var i = 0;
     const delay = ms => new Promise(res => setTimeout(res, ms));
 
+
+
     var constHeight1 = height / 4;
-    var constHeight2 = 3/4 * height;
+    var constHeight2 = 3 / 4 * height;
+    await delay(300);
+
     while (i < width + 400) {
-      await delay(50);
+      await delay(40);
       target.y = constHeight1;
       target.x = i;
       i += 50;
-      await delay(50);
+      await delay(40);
       target.y = constHeight2;
     }
-
-
-    listenForMouse = true;
+    await delay(300);
+    target.x = width / 2;
+    target.y = height / 2;
   }
 
   function animate() {
@@ -170,8 +170,8 @@
           points[i].active = 0.05;
           points[i].circle.active = 0.1;
         } else {
-          points[i].active = points[i].active > 0.005 ? 0.995 * points[i].active : 0;
-          points[i].circle.active = points[i].circle.active > 0.01 ? 0.995 * points[i].circle.active : 0;
+          points[i].active = points[i].active > 0.005 ? 0.997 * points[i].active : 0;
+          points[i].circle.active = points[i].circle.active > 0.01 ? 0.997 * points[i].circle.active : 0;
         }
 
 
@@ -202,7 +202,7 @@
 
 
       var middleXOfLine = (p.x + p.closest[i].x) / 2;
-      if (middleXOfLine < window.innerWidth / 2) {
+      if (middleXOfLine < canvas.width / 2) {
         ctx.strokeStyle = 'rgba(255, 255, 255,' + p.active + ')';
       } else {
         ctx.strokeStyle = 'rgba(0, 0, 0,' + p.active + ')';
@@ -226,7 +226,7 @@
       if (!_this.active) return;
       ctx.beginPath();
       ctx.arc(_this.pos.x, _this.pos.y, _this.radius, 0, 2 * Math.PI, false);
-      if (pos.x < window.innerWidth / 2) {
+      if (pos.x < canvas.width / 2) {
         ctx.fillStyle = 'rgba(255, 255, 255,' + _this.active + ')';
       } else {
         ctx.fillStyle = 'rgba(0, 0, 0,' + _this.active + ')';
@@ -238,7 +238,7 @@
 
   // Util
   function getDistance(p1, p2) {
-    return Math.pow(p1.x - p2.x, 2) + Math.pow(p1.y - p2.y, 2);
+    return  p1.x === -1 ? 1000000000 : Math.pow(p1.x - p2.x, 2) + Math.pow(p1.y - p2.y, 2);
   }
 
 })();

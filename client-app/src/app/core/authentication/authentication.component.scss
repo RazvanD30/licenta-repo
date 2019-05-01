@@ -53,13 +53,13 @@ a {
   @include easeOut;
 
   &--left {
-    background: darken(white, 8);
-    color: $black;
+    background: darken(white, 8) !important;
+    color: $black !important;
   }
 
   &--right {
-    background: $black;
-    color: white;
+    background: $black !important;
+    color: white !important;
   }
 
   &--active {
@@ -119,8 +119,8 @@ a {
 }
 
 .authentication-container {
-  width: 100vw;
-  height: 100vh;
+  width: 100%;
+  height: 100%;
   overflow: hidden;
 }
 
@@ -147,11 +147,16 @@ a {
 }
 
 .canvas {
-  position: absolute;
+  display: inline-block;
+  position: fixed;
   left: 0;
+  right: 0;
   top: 0;
+  bottom: 0;
+  margin: auto;
   width: 100%;
   height: 100%;
+  z-index: -1;
 }
 
 .bottom-left-side {

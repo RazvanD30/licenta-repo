@@ -26,7 +26,6 @@ export class AuthenticationComponent implements OnInit, AfterViewInit {
     private renderer: Renderer2,
     private route: ActivatedRoute,
     private router: Router) {
-    console.log('loaded auth');
     this.renderer = renderer;
   }
 
@@ -137,7 +136,6 @@ export class AuthenticationComponent implements OnInit, AfterViewInit {
   }
 
   ngAfterViewInit(): void {
-
     this.loadScript('https://s3-us-west-2.amazonaws.com/s.cdpn.io/499416/TweenLite.min.js');
     this.loadScript('https://s3-us-west-2.amazonaws.com/s.cdpn.io/499416/EasePack.min.js');
     this.loadScript('../assets/demo.js');

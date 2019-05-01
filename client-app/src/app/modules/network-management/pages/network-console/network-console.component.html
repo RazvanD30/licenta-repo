@@ -1,0 +1,17 @@
+<div *ngIf="active === true" class="console" (click)="focusInput()">
+  <div class="output" #output>
+    <span *ngIf="connected === false">Waiting for server response... <br></span>
+    <span *ngIf="connected === true">Connected. Enter command below... <br></span>
+    <span *ngIf="connected === true" class="green"> {{time}}ms ping</span><br>
+    <span class="seperator">== == == == == == == == == == == == == == == == == == == == == ==</span><br>
+    <span>Press <span class="red">F1</span> to open in a new window, or <span class="red">F2</span> to show/hide!</span>
+    <br>
+    <span class="blue">type '<span class="grey">help</span>' to see a list of comands available</span><br>
+    <span *ngFor="let out of outputs"> {{ out }} <br> </span>
+  </div>
+  <div class="action">
+    <span>$ </span>
+    <textarea class="input" #input (keypress)="consoleKeyPress($event)" name="input" cols="30" rows="1"></textarea>
+  </div>
+</div>
+

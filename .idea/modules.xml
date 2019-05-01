@@ -14,6 +14,10 @@
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/gateway-server/licenta.gateway-server.iml" filepath="$PROJECT_DIR$/.idea/modules/gateway-server/licenta.gateway-server.iml" />
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/gateway-server/licenta.gateway-server.main.iml" filepath="$PROJECT_DIR$/.idea/modules/gateway-server/licenta.gateway-server.main.iml" />
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/gateway-server/licenta.gateway-server.test.iml" filepath="$PROJECT_DIR$/.idea/modules/gateway-server/licenta.gateway-server.test.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/network-configuration-server/licenta.network-configuration-server.iml" filepath="$PROJECT_DIR$/.idea/modules/network-configuration-server/licenta.network-configuration-server.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/network-configuration-server/licenta.network-configuration-server.main.iml" filepath="$PROJECT_DIR$/.idea/modules/network-configuration-server/licenta.network-configuration-server.main.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/network-configuration-server/licenta.network-configuration-server.test.iml" filepath="$PROJECT_DIR$/.idea/modules/network-configuration-server/licenta.network-configuration-server.test.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/network-debugger/licenta.network-debugger.iml" filepath="$PROJECT_DIR$/.idea/modules/network-debugger/licenta.network-debugger.iml" />
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/statistics-server/licenta.statistics-server.iml" filepath="$PROJECT_DIR$/.idea/modules/statistics-server/licenta.statistics-server.iml" />
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/statistics-server/licenta.statistics-server.main.iml" filepath="$PROJECT_DIR$/.idea/modules/statistics-server/licenta.statistics-server.main.iml" />
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/statistics-server/licenta.statistics-server.test.iml" filepath="$PROJECT_DIR$/.idea/modules/statistics-server/licenta.statistics-server.test.iml" />

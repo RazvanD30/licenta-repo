@@ -16,40 +16,27 @@ import {UserService} from './core/services/user.service';
 import {HTTP_INTERCEPTORS, HttpClientModule} from '@angular/common/http';
 import {HttpTokenInterceptor} from './core/interceptors/http-token.interceptor';
 import {ErrorHandlerInterceptor} from './core/interceptors/error-handler.interceptor';
-import {AuthenticateMock, authenticateMockProvider} from './core/mocks/authenticate.mock';
+import {authenticateMockProvider} from './core/mocks/authenticate.mock';
 import {AuthenticationComponent} from './core/authentication/authentication.component';
-import {LoginComponent} from './core/authentication/partial-components/login/login.component';
 import {MaterialModule} from './modules/material/material.module';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {RegisterComponent} from './core/authentication/partial-components/register/register.component';
 import {LoaderComponent} from './shared/components/loader/loader.component';
-import {HomeModule} from './modules/home/home.module';
-import {UserManagementModule} from './modules/user-management/user-management.module';
+import {MDBBootstrapModule} from 'angular-bootstrap-md';
 
 @NgModule({
   declarations: [
     AppComponent,
-    AuthenticationDirective,
-    AuthenticationComponent,
     CapitalizePipe,
-    LoginComponent,
-    RegisterComponent,
     SafePipe,
     AlertComponent,
     LoaderComponent
   ],
   imports: [
-    BrowserModule,
-    FormsModule,
-    ReactiveFormsModule,
+    MDBBootstrapModule.forRoot(),
     BrowserAnimationsModule,
     CoreModule,
-    FlexLayoutModule,
-    HttpClientModule,
-    MaterialModule,
-
-
     AppRoutingModule // MUST BE AFTER EVERY LAZY LOADED MODULE
   ],
   providers: [

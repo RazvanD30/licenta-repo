@@ -1,0 +1,133 @@
+<div class="table-container">
+  <div class="mat-elevation-z8">
+    <mat-button-toggle-group name="fontStyle" aria-label="Font Style">
+      <button mat-raised-button color="warn" (click)="resetFilters()">
+        <mat-icon>clear</mat-icon>
+        Reset filters
+      </button>
+      <button mat-raised-button color="primary" (click)="save()">
+        <mat-icon>save</mat-icon>
+        Save modifications
+      </button>
+    </mat-button-toggle-group>
+    <mat-tab-group>
+      <mat-tab label="Filter by..."></mat-tab>
+
+      <mat-tab>
+        <ng-template mat-tab-label>
+          <div *ngIf="filters.name === ''"> Name </div>
+          <div *ngIf="filters.name !== ''" style="color: red"> Name (edited)</div>
+        </ng-template>
+        <mat-form-field class="example-full-width">
+          <input [(ngModel)]="filters.name" matInput (keyup)="applyFilter($event.target.value,'name')"
+                 placeholder="Filter by name">
+        </mat-form-field>
+      </mat-tab>
+
+      <mat-tab>
+        <ng-template mat-tab-label>
+          <div *ngIf="filters.username === ''"> Username </div>
+          <div *ngIf="filters.username !== ''" style="color: red"> Username (edited)</div>
+        </ng-template>
+        <mat-form-field class="example-full-width">
+          <input [(ngModel)]="filters.username" matInput (keyup)="applyFilter($event.target.value,'username')"
+                 placeholder="Filter by username">
+        </mat-form-field>
+      </mat-tab>
+
+      <mat-tab>
+        <ng-template mat-tab-label>
+          <div *ngIf="filters.role === ''"> Role </div>
+          <div *ngIf="filters.role !== ''" style="color: red"> Role (edited)</div>
+        </ng-template>
+        <mat-form-field class="example-full-width">
+          <input type="number" [(ngModel)]="filters.role" matInput (keyup)="applyFilter($event.target.value,'role')"
+                 placeholder="Filter by role">
+        </mat-form-field>
+      </mat-tab>
+
+      <mat-tab>
+        <ng-template mat-tab-label>
+          <div *ngIf="filters.permissions === ''"> Permissions </div>
+          <div *ngIf="filters.permissions !== ''" style="color: red"> Permissions (edited)</div>
+        </ng-template>
+        <mat-form-field class="example-full-width">
+          <input type="number" [(ngModel)]="filters.permissions" matInput (keyup)="applyFilter($event.target.value,'permissions')"
+                 placeholder="Filter by permissions">
+        </mat-form-field>
+      </mat-tab>
+
+
+      <mat-tab>
+        <ng-template mat-tab-label>
+          <div *ngIf="filters.supervisorUsername === ''"> Supervisor username </div>
+          <div *ngIf="filters.supervisorUsername !== ''" style="color: red"> Supervisor username (edited)</div>
+        </ng-template>
+        <mat-form-field class="example-full-width">
+          <input type="number" [(ngModel)]="filters.supervisorUsername" matInput (keyup)="applyFilter($event.target.value,'supervisorUsername')"
+                 placeholder="Filter by supervisor username">
+        </mat-form-field>
+      </mat-tab>
+
+    </mat-tab-group>
+
+
+    <table mat-table *ngIf="usersDataSource" [dataSource]="usersDataSource" class="mat-elevation-z8" matSort>
+
+      <ng-container matColumnDef="name">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>Name</th>
+        <td mat-cell *matCellDef="let user"> {{ user.lastName + " " + user.firstName }} </td>
+        <td mat-footer-cell *matFooterCellDef></td>
+      </ng-container>
+
+      <ng-container matColumnDef="username">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>Username</th>
+        <td mat-cell *matCellDef="let user"> {{ user.username }}</td>
+        <td mat-footer-cell *matFooterCellDef></td>
+      </ng-container>
+
+      <ng-container matColumnDef="role">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>Role</th>
+        <td mat-cell *matCellDef="let user"> {{ user.role }}</td>
+        <td mat-footer-cell *matFooterCellDef></td>
+      </ng-container>
+
+      <ng-container matColumnDef="permissions">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>Permissions</th>
+        <td mat-cell *matCellDef="let user"> {{ user.permissions }}</td>
+        <td mat-footer-cell *matFooterCellDef></td>
+      </ng-container>
+
+      <ng-container matColumnDef="supervisorUsername">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>Supervisor username </th>
+        <td mat-cell *matCellDef="let user"> {{ user.supervisorUsername }}</td>
+        <td mat-footer-cell *matFooterCellDef></td>
+      </ng-container>
+
+      <ng-container matColumnDef="email">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>Email</th>
+        <td mat-cell *matCellDef="let user"> {{ user.email }}</td>
+        <td mat-footer-cell *matFooterCellDef></td>
+      </ng-container>
+
+      <ng-container matColumnDef="phoneNumber">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>Phone number</th>
+        <td mat-cell *matCellDef="let user"> {{ user.phoneNumber }}</td>
+        <td mat-footer-cell *matFooterCellDef></td>
+      </ng-container>
+
+      <ng-container matColumnDef="lastActiveOn">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>Last active</th>
+        <td mat-cell *matCellDef="let user"> {{ user.lastActiveOn }}</td>
+        <td mat-footer-cell *matFooterCellDef></td>
+      </ng-container>
+
+      <tr mat-header-row class="custom-table-header" *matHeaderRowDef="displayedColumns"></tr>
+      <tr mat-row class="custom-table-row" *matRowDef="let row; columns: displayedColumns;"></tr>
+      <tr mat-footer-row *matFooterRowDef="displayedColumns" class="example-first-footer-row"></tr>
+
+    </table>
+    <mat-paginator [pageSizeOptions]="[50, 100]" showFirstLastButtons></mat-paginator>
+  </div>
+</div>
+

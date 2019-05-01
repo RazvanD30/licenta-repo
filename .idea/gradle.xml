@@ -12,6 +12,8 @@
             <option value="$PROJECT_DIR$/central-config-server" />
             <option value="$PROJECT_DIR$/discovery-server" />
             <option value="$PROJECT_DIR$/gateway-server" />
+            <option value="$PROJECT_DIR$/network-configuration-server" />
+            <option value="$PROJECT_DIR$/network-debugger" />
             <option value="$PROJECT_DIR$/statistics-server" />
             <option value="$PROJECT_DIR$/test-microservice" />
           </set>

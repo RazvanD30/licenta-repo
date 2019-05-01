@@ -1,6 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="CompilerConfiguration">
+    <annotationProcessing>
+      <profile default="true" name="Default" enabled="true" />
+    </annotationProcessing>
     <bytecodeTargetLevel>
       <module name="en.ubb.central-config-server.main" target="1.8" />
       <module name="en.ubb.central-config-server.test" target="1.8" />
@@ -20,6 +23,8 @@
       <module name="en.ubb.licenta-server.test" target="1.8" />
       <module name="en.ubb.licenta.main" target="1.8" />
       <module name="en.ubb.licenta.test" target="1.8" />
+      <module name="en.ubb.network-configuration-server.main" target="1.8" />
+      <module name="en.ubb.network-configuration-server.test" target="1.8" />
       <module name="en.ubb.statistics-server.main" target="1.8" />
       <module name="en.ubb.statistics-server.test" target="1.8" />
       <module name="en.ubb.test-microservice.main" target="1.8" />
@@ -32,6 +37,8 @@
       <module name="licenta.gateway-server.test" target="1.8" />
       <module name="licenta.licenta-server.main" target="1.8" />
       <module name="licenta.licenta-server.test" target="1.8" />
+      <module name="licenta.network-configuration-server.main" target="1.8" />
+      <module name="licenta.network-configuration-server.test" target="1.8" />
       <module name="licenta.statistics-server.main" target="1.8" />
       <module name="licenta.statistics-server.test" target="1.8" />
       <module name="licenta.test-microservice.main" target="1.8" />

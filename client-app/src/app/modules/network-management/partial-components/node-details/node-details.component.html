@@ -1,0 +1,110 @@
+<h1 mat-dialog-title> Details for Node with ID: {{ data.id }} </h1>
+
+<div mat-dialog-content>
+
+
+
+
+  <mat-accordion *ngIf="loaded === true">
+
+
+    <mat-expansion-panel>
+      <mat-expansion-panel-header>
+        <mat-panel-title>
+          Neighbours
+        </mat-panel-title>
+        <mat-panel-description>
+          Information about the nodes linked to this
+        </mat-panel-description>
+      </mat-expansion-panel-header>
+      <cdk-virtual-scroll-viewport itemSize="20" class="example-viewport">
+        <div *cdkVirtualFor="let circle of neighbours" class="example-item">
+          {{ circle.id }}
+          Status: &nbsp;
+          <span *ngIf="circle.status === IGNORED" style="color: rgb(58, 182, 196)"> Ignored </span>
+          <span *ngIf="circle.status === UNDER_WATCH" style="color: rgb(0, 230, 64)"> Under watch </span>
+          <span *ngIf="circle.status === WAIT" style="color: rgb(228, 132, 72)"> Waiting on breakpoint </span>
+          <span *ngIf="circle.status === BREAKPOINT" style="color: rgb(230, 75, 75)"> Breakpoint </span>
+        </div>
+
+      </cdk-virtual-scroll-viewport>
+
+    </mat-expansion-panel>
+
+    <mat-expansion-panel>
+      <mat-expansion-panel-header>
+        <mat-panel-title>
+          Input connections
+        </mat-panel-title>
+        <mat-panel-description>
+          Information about all the input connections for this node
+        </mat-panel-description>
+      </mat-expansion-panel-header>
+      <cdk-virtual-scroll-viewport itemSize="20" class="example-viewport">
+        <div *cdkVirtualFor="let conn of getInputLinks()" class="example-item">
+          <div class="info-section info-section-source">
+            <fa-icon [icon]="faDirections"></fa-icon>
+            Source ID: &nbsp; {{ conn.source.id }}
+          </div>
+          <div class="info-section info-section-destination">
+            <fa-icon [icon]="faDirections"></fa-icon>
+            Destination ID: &nbsp; {{ conn.destination.id }}
+          </div>
+          <div class="info-section info-section-weight">
+            <fa-icon [icon]="faWeightHanging"></fa-icon>
+            Weight: &nbsp; {{ conn.weight }}
+          </div>
+          <div class="info-section info-section-status">
+            <fa-icon [icon]="faInfo"></fa-icon>
+            Status: &nbsp;
+            <span *ngIf="conn.status === IGNORED" style="color: rgb(58, 182, 196)"> Ignored </span>
+            <span *ngIf="conn.status === UNDER_WATCH" style="color: rgb(0, 230, 64)"> Under watch </span>
+            <span *ngIf="conn.status === WAIT" style="color: rgb(228, 132, 72)"> Waiting on breakpoint </span>
+            <span *ngIf="conn.status === BREAKPOINT" style="color: rgb(230, 75, 75)"> Breakpoint </span>
+          </div>
+        </div>
+      </cdk-virtual-scroll-viewport>
+    </mat-expansion-panel>
+
+    <mat-expansion-panel>
+      <mat-expansion-panel-header>
+        <mat-panel-title>
+          Output connections
+        </mat-panel-title>
+        <mat-panel-description>
+          Information about all the output connections for this node
+        </mat-panel-description>
+      </mat-expansion-panel-header>
+      <cdk-virtual-scroll-viewport itemSize="20" class="example-viewport">
+        <div *cdkVirtualFor="let conn of getOutputLinks()" class="example-item">
+          <div class="info-section info-section-source">
+            <fa-icon [icon]="faDirections"></fa-icon>
+            Source ID: &nbsp; {{ conn.source.id }}
+          </div>
+          <div class="info-section info-section-destination">
+            <fa-icon [icon]="faDirections"></fa-icon>
+            Destination ID: &nbsp; {{ conn.destination.id }}
+          </div>
+          <div class="info-section info-section-weight">
+            <fa-icon [icon]="faWeightHanging"></fa-icon>
+            Weight: &nbsp; {{ conn.weight }}
+          </div>
+          <div class="info-section info-section-status">
+            <fa-icon [icon]="faInfo"></fa-icon>
+            Status: &nbsp;
+            <span *ngIf="conn.status === IGNORED" style="color: rgb(58, 182, 196)"> Ignored </span>
+            <span *ngIf="conn.status === UNDER_WATCH" style="color: rgb(0, 230, 64)"> Under watch </span>
+            <span *ngIf="conn.status === WAIT" style="color: rgb(228, 132, 72)"> Waiting on breakpoint </span>
+            <span *ngIf="conn.status === BREAKPOINT" style="color: rgb(230, 75, 75)"> Breakpoint </span>
+          </div>
+        </div>
+      </cdk-virtual-scroll-viewport>
+    </mat-expansion-panel>
+  </mat-accordion>
+
+
+</div>
+<div mat-dialog-actions>
+  <button mat-button (click)="loaded = true"> Save</button>
+  <button mat-button> Close</button>
+</div>

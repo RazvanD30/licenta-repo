@@ -11,7 +11,12 @@ const routes: Routes = [
   {path: 'user-management', loadChildren: './modules/user-management/user-management.module#UserManagementModule'},
   {path: 'authenticate', component: AuthenticationComponent},
   {path: 'loader', component: LoaderComponent, canActivate: [AuthenticationGuard]},
-  {path: 'alert', component: AlertComponent}
+  {path: 'alert', component: AlertComponent},
+  {
+    path: 'network',
+    loadChildren: './modules/network-management/network-management.module#NetworkManagementModule',
+    canLoad: [AuthenticationGuard]
+  }
 
 
   // otherwise redirect to home
