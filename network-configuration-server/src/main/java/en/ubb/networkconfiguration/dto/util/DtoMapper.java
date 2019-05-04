@@ -4,10 +4,14 @@ import en.ubb.networkconfiguration.domain.network.runtime.Layer;
 import en.ubb.networkconfiguration.domain.network.runtime.Link;
 import en.ubb.networkconfiguration.domain.network.runtime.Network;
 import en.ubb.networkconfiguration.domain.network.runtime.Node;
+import en.ubb.networkconfiguration.domain.network.setup.LayerInitializer;
+import en.ubb.networkconfiguration.domain.network.setup.NetworkInitializer;
 import en.ubb.networkconfiguration.dto.LayerDto;
 import en.ubb.networkconfiguration.dto.LinkDto;
 import en.ubb.networkconfiguration.dto.NetworkDto;
 import en.ubb.networkconfiguration.dto.NodeDto;
+import en.ubb.networkconfiguration.dto.setup.LayerInitDto;
+import en.ubb.networkconfiguration.dto.setup.NetworkInitDto;
 
 import java.util.stream.Collectors;
 
@@ -62,6 +66,34 @@ public class DtoMapper {
                 .build();
     }
 
+    public static NetworkInitDto toDto(NetworkInitializer network) {
+        return NetworkInitDto.builder()
+                .id(network.getId())
+                .batchSize(network.getBatchSize())
+                .learningRate(network.getLearningRate())
+                .nEpochs(network.getNEpochs())
+                .name(network.getName())
+                .nInputs(network.getNInputs())
+                .nOutputs(network.getNOutputs())
+                .seed(network.getSeed())
+                .layers(network.getLayers().stream()
+                        .map(DtoMapper::toDto)
+                        .collect(Collectors.toList()))
+                .build();
+
+    }
+
+
+    public static LayerInitDto toDto(LayerInitializer layer) {
+        return LayerInitDto.builder()
+                .id(layer.getId())
+                .nInputs(layer.getNInputs())
+                .nNodes(layer.getNNodes())
+                .nOutputs(layer.getNOutputs())
+                .activation(layer.getActivation())
+                .type(layer.getType())
+                .build();
+    }
 
     public static Network fromDto(NetworkDto network) {
         return Network.builder()
@@ -108,6 +140,35 @@ public class DtoMapper {
         return Link.builder()
                 .id(link.getId())
                 .weight(link.getWeight())
+                .build();
+    }
+
+    public static NetworkInitializer fromDto(NetworkInitDto network) {
+        return NetworkInitializer.builder()
+                .id(network.getId())
+                .batchSize(network.getBatchSize())
+                .learningRate(network.getLearningRate())
+                .nEpochs(network.getNEpochs())
+                .name(network.getName())
+                .nInputs(network.getNInputs())
+                .nOutputs(network.getNOutputs())
+                .seed(network.getSeed())
+                .layers(network.getLayers().stream()
+                        .map(DtoMapper::fromDto)
+                        .collect(Collectors.toList()))
+                .build();
+
+    }
+
+
+    public static LayerInitializer fromDto(LayerInitDto layer) {
+        return LayerInitializer.builder()
+                .id(layer.getId())
+                .nInputs(layer.getNInputs())
+                .nNodes(layer.getNNodes())
+                .nOutputs(layer.getNOutputs())
+                .activation(layer.getActivation())
+                .type(layer.getType())
                 .build();
     }
 

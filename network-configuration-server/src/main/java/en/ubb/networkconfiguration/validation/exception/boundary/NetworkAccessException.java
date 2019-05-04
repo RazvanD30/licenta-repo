@@ -1,4 +1,4 @@
-package en.ubb.networkconfiguration.validation.exception;
+package en.ubb.networkconfiguration.validation.exception.boundary;
 
 public class NetworkAccessException extends BoundaryException {
 

@@ -9,7 +9,7 @@ import lombok.*;
 @Setter
 public class LinkDto {
 
-    private long id;
+    private Long id;
 
     private double weight;
 }

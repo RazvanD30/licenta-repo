@@ -2,8 +2,10 @@ package en.ubb.networkconfiguration.domain.network.setup;
 
 import en.ubb.networkconfiguration.domain.BaseEntity;
 import lombok.*;
+import org.hibernate.validator.constraints.Range;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotEmpty;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -16,27 +18,34 @@ import java.util.List;
 public class NetworkInitializer extends BaseEntity<Long> {
 
     @Column(name = "name", nullable = false)
+    @NotEmpty
     private String name;
 
     @Column(name = "seed", nullable = false)
     private int seed;
 
     @Column(name = "learning_rate", nullable = false)
+    @Range(min = 0, max = 10)
     private double learningRate;
 
     @Column(name = "batch_size", nullable = false)
+    @Range(min = 1)
     private int batchSize;
 
     @Column(name = "epochs", nullable = false)
+    @Range(min = 1)
     private int nEpochs;
 
     @Column(name = "inputs", nullable = false)
+    @Range(min = 1)
     private int nInputs;
 
     @Column(name = "outputs", nullable = false)
+    @Range(min = 1)
     private int nOutputs;
 
     @Column(name = "layers", nullable = false)
+    @Range(min = 1)
     private int nLayers;
 
     @OneToMany(mappedBy = "network", cascade = CascadeType.ALL)

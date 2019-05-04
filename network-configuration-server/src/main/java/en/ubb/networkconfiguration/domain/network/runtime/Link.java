@@ -13,7 +13,7 @@ import javax.persistence.*;
 @Table(name = "links")
 public class Link extends BaseEntity<Long> {
 
-    @Column(name = "weight")
+    @Column(name = "weight", nullable = false)
     private double weight;
 
     @ManyToOne(fetch = FetchType.LAZY)

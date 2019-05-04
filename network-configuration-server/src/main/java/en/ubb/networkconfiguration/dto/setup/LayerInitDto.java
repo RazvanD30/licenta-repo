@@ -1,6 +1,7 @@
-package en.ubb.networkconfiguration.dto;
+package en.ubb.networkconfiguration.dto.setup;
 
 import en.ubb.networkconfiguration.domain.enums.LayerType;
+import en.ubb.networkconfiguration.dto.NodeDto;
 import lombok.*;
 import org.nd4j.linalg.activations.Activation;
 
@@ -11,9 +12,9 @@ import java.util.List;
 @Builder
 @Getter
 @Setter
-public class LayerDto {
+public class LayerInitDto {
 
-    private Long id;
+    private long id;
 
     private int nInputs;
 
@@ -25,5 +26,4 @@ public class LayerDto {
 
     private Activation activation;
 
-    private List<NodeDto> nodes;
 }

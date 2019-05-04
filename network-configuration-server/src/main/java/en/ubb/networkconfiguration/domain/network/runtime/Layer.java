@@ -3,9 +3,11 @@ package en.ubb.networkconfiguration.domain.network.runtime;
 import en.ubb.networkconfiguration.domain.BaseEntity;
 import en.ubb.networkconfiguration.domain.enums.LayerType;
 import lombok.*;
+import org.hibernate.validator.constraints.Range;
 import org.nd4j.linalg.activations.Activation;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotEmpty;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -17,13 +19,16 @@ import java.util.List;
 @Table(name = "layers")
 public class Layer extends BaseEntity<Long> {
 
-    @Column(name = "inputs")
+    @Column(name = "inputs", nullable = false)
+    @Range(min = 1)
     private int nInputs;
 
-    @Column(name = "nodes")
+    @Column(name = "nodes", nullable = false)
+    @Range(min = 1)
     private int nNodes;
 
-    @Column(name = "outputs")
+    @Column(name = "outputs", nullable = false)
+    @Range(min = 1)
     private int nOutputs;
 
     @ManyToOne(fetch = FetchType.LAZY)
@@ -34,9 +39,11 @@ public class Layer extends BaseEntity<Long> {
     private List<Node> nodes = new ArrayList<>();
 
     @Column(name = "type", nullable = false)
+    @NotEmpty
     private LayerType type;
 
     @Column(name = "activation")
+    @NotEmpty
     private Activation activation;
 
     @Builder(toBuilder = true)

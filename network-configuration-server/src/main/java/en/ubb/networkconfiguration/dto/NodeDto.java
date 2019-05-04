@@ -11,7 +11,7 @@ import java.util.List;
 @Setter
 public class NodeDto {
 
-    private long id;
+    private Long id;
 
     private double bias;
 

@@ -7,14 +7,18 @@ import en.ubb.networkconfiguration.domain.network.runtime.Node;
 import en.ubb.networkconfiguration.domain.network.setup.LayerInitializer;
 import en.ubb.networkconfiguration.domain.network.setup.NetworkInitializer;
 import en.ubb.networkconfiguration.dto.NetworkDto;
+import en.ubb.networkconfiguration.dto.setup.NetworkInitDto;
 import en.ubb.networkconfiguration.dto.util.DtoMapper;
 import en.ubb.networkconfiguration.service.NetworkService;
-import en.ubb.networkconfiguration.validation.exception.IllegalArgumentException;
-import en.ubb.networkconfiguration.validation.exception.NetworkNotFoundException;
+import en.ubb.networkconfiguration.validation.exception.boundary.BoundaryException;
+import en.ubb.networkconfiguration.validation.exception.boundary.NetworkNotFoundException;
 import org.nd4j.linalg.activations.Activation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
+import javax.validation.constraints.NotNull;
+import java.io.IOException;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -38,23 +42,32 @@ public class NetworkApi {
     }
 
     @GetMapping(value = "/networks/{id}", produces = "application/json")
-    public NetworkDto getById(@PathVariable Long id) {
-        if(id == null){
-            throw new IllegalArgumentException("null","a positive integer");
-        }
+    public NetworkDto getById(@NotNull @PathVariable Long id) {
         return this.networkService.getById(id).map(DtoMapper::toDto)
                 .orElseThrow(() -> new NetworkNotFoundException(id));
     }
 
-    @DeleteMapping(value = "networks/{id}", produces = "application/json")
-    public void deleteById(@PathVariable Long id) {
-        if(id == null){
-            throw new IllegalArgumentException("null","a positive integer");
+    @DeleteMapping(value = "networks/{id}")
+    public void deleteById(@NotNull @PathVariable Long id) {
+        if (!this.networkService.deleteById(id)) {
+            throw new NetworkNotFoundException(id);
         }
-        this.networkService.deleteById(id);
     }
 
-    
+    @PostMapping("networks")
+    public void create(@Valid @RequestBody NetworkInitDto dto) {
+        try {
+            this.networkService.createNetwork(DtoMapper.fromDto(dto));
+        } catch (IOException ex) {
+            throw new BoundaryException("Unexpected error encountered while saving the network.", ex);
+        }
+    }
+
+    @PutMapping("networks/{id}")
+    public void update(@Valid @RequestBody NetworkDto dto, @NotNull @PathVariable Long id) {
+
+
+    }
 
 
     @GetMapping(value = "/testing", produces = "application/json")
@@ -133,7 +146,7 @@ public class NetworkApi {
         newNode.getOutputLinks().get(0).setWeight(0.999);
         networkService.updateNode(newNode);
 
-        Network network = networkService.getById(config.getId());
+        Network network = networkService.getById(config.getId()).get();
         System.out.println("aa");
         networkService.runNetwork(config);
 
