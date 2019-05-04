@@ -37,7 +37,7 @@ export class NetworkDebugService {
 
 
     let currentLayerGui: LayerGui = null;
-    // intialize the layers and the nodes on them (no connections yet)
+    // intialize the layers and the nNodes on them (no connections yet)
     while (currentLayer !== null) {
       let previousLayerGui = currentLayerGui;
       currentLayerGui = new LayerGui(currentLayer.id);

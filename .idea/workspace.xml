@@ -2,80 +2,56 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="e464ab5a-f048-420b-8b7a-2cc97f5ae89f" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/client-app/src/app/core/services/network-debug.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/client-app/src/app/modules/network-management/network-management-routing.module.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/client-app/src/app/shared/models/Layer.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/client-app/src/app/shared/models/Link.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/client-app/src/app/shared/models/NNode.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/client-app/src/app/shared/models/Network.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/client-app/src/app/shared/models/gui/Circle.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/client-app/src/app/shared/models/gui/Connection.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/client-app/src/app/shared/models/gui/Pos.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/client-app/src/app/shared/models/gui/Status.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/discovery-server/src/main/resources/bootstrap-prod.properties" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/discovery-server/src/main/resources/bootstrap-test.properties" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/gateway-server/src/main/resources/bootstrap-prod.properties" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/gateway-server/src/main/resources/bootstrap-test.properties" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/network-configuration-server/src/main/java/en/ubb/networkconfiguration/App.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/network-configuration-server/src/main/java/en/ubb/networkconfiguration/domain/BaseEntity.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/network-configuration-server/src/main/java/en/ubb/networkconfiguration/domain/HiddenLayerConfig.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/network-configuration-server/src/main/java/en/ubb/networkconfiguration/domain/NetworkConfig.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/network-configuration-server/src/main/java/en/ubb/networkconfiguration/repo/NetworkConfigRepo.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/network-configuration-server/src/main/java/en/ubb/networkconfiguration/rest/NetworkApi.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/network-configuration-server/src/main/java/en/ubb/networkconfiguration/service/NetworkService.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/network-configuration-server/src/main/java/en/ubb/networkconfiguration/service/impl/NetworkServiceImpl.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/network-configuration-server/src/main/resources/bootstrap-prod.properties" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/network-configuration-server/src/main/resources/bootstrap-test.properties" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/network-configuration-server/src/main/resources/bootstrap.properties" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/test-microservice/src/main/resources/bootstrap-prod.properties" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/test-microservice/src/main/resources/bootstrap-test.properties" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/network-configuration-server/src/main/java/en/ubb/networkconfiguration/domain/enums/LayerType.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/network-configuration-server/src/main/java/en/ubb/networkconfiguration/domain/network/runtime/Layer.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/network-configuration-server/src/main/java/en/ubb/networkconfiguration/domain/network/runtime/Link.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/network-configuration-server/src/main/java/en/ubb/networkconfiguration/domain/network/runtime/Network.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/network-configuration-server/src/main/java/en/ubb/networkconfiguration/domain/network/runtime/Node.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/network-configuration-server/src/main/java/en/ubb/networkconfiguration/domain/network/setup/LayerInitializer.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/network-configuration-server/src/main/java/en/ubb/networkconfiguration/domain/network/setup/NetworkInitializer.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/network-configuration-server/src/main/java/en/ubb/networkconfiguration/dto/LayerDto.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/network-configuration-server/src/main/java/en/ubb/networkconfiguration/dto/LinkDto.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/network-configuration-server/src/main/java/en/ubb/networkconfiguration/dto/NetworkDto.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/network-configuration-server/src/main/java/en/ubb/networkconfiguration/dto/NodeDto.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/network-configuration-server/src/main/java/en/ubb/networkconfiguration/dto/util/DtoMapper.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/network-configuration-server/src/main/java/en/ubb/networkconfiguration/repo/NetworkRepo.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/network-configuration-server/src/main/java/en/ubb/networkconfiguration/repo/NodeRepo.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/network-configuration-server/src/main/java/en/ubb/networkconfiguration/util/LayerUtil.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/network-configuration-server/src/main/java/en/ubb/networkconfiguration/util/NetworkUtil.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/network-configuration-server/src/main/java/en/ubb/networkconfiguration/validation/exception/BoundaryException.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/network-configuration-server/src/main/java/en/ubb/networkconfiguration/validation/exception/IllegalArgumentException.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/network-configuration-server/src/main/java/en/ubb/networkconfiguration/validation/exception/NetworkNotFoundException.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/network-configuration-server/src/main/resources/application.properties" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/network-configuration-server/src/main/resources/classification/linear_data_eval.csv" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/network-configuration-server/src/main/resources/classification/linear_data_train.csv" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/network-configuration-server/src/main/resources/classification/save.csv" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.gradle/4.10/fileHashes/fileHashes.bin" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/4.10/fileHashes/fileHashes.bin" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.gradle/4.10/fileHashes/fileHashes.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/4.10/fileHashes/fileHashes.lock" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/compiler.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/compiler.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/gradle.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/gradle.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/modules.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/modules.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/modules/en.ubb.licenta.main.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/modules/en.ubb.licenta.main.iml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/modules/en.ubb.licenta.test.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/modules/en.ubb.licenta.test.iml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/modules/test-microservice/licenta.test-microservice.main.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/modules/test-microservice/licenta.test-microservice.main.iml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/modules/test-microservice/licenta.test-microservice.test.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/modules/test-microservice/licenta.test-microservice.test.iml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/libraries/Gradle__org_springframework_boot_spring_boot_starter_freemarker_2_1_2_RELEASE.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/libraries/Gradle__org_springframework_spring_context_support_5_1_4_RELEASE.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/modules/central-config-server/licenta.central-config-server.main.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/modules/central-config-server/licenta.central-config-server.main.iml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/modules/central-config-server/licenta.central-config-server.test.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/modules/central-config-server/licenta.central-config-server.test.iml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/modules/discovery-server/licenta.discovery-server.main.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/modules/discovery-server/licenta.discovery-server.main.iml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/modules/discovery-server/licenta.discovery-server.test.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/modules/discovery-server/licenta.discovery-server.test.iml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/modules/gateway-server/licenta.gateway-server.main.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/modules/gateway-server/licenta.gateway-server.main.iml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/modules/gateway-server/licenta.gateway-server.test.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/modules/gateway-server/licenta.gateway-server.test.iml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/central-config-server/Dockerfile" beforeDir="false" afterPath="$PROJECT_DIR$/central-config-server/Dockerfile" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/client-app/angular.json" beforeDir="false" afterPath="$PROJECT_DIR$/client-app/angular.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/client-app/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/client-app/package-lock.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/client-app/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/client-app/package.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/client-app/src/app/app-routing.module.ts" beforeDir="false" afterPath="$PROJECT_DIR$/client-app/src/app/app-routing.module.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/client-app/src/app/app.component.html" beforeDir="false" afterPath="$PROJECT_DIR$/client-app/src/app/app.component.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/client-app/src/app/app.module.ts" beforeDir="false" afterPath="$PROJECT_DIR$/client-app/src/app/app.module.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/client-app/src/app/configs/app-settings.config.ts" beforeDir="false" afterPath="$PROJECT_DIR$/client-app/src/app/configs/app-settings.config.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/client-app/src/app/core/authentication/authentication.component.scss" beforeDir="false" afterPath="$PROJECT_DIR$/client-app/src/app/core/authentication/authentication.component.scss" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/client-app/src/app/core/authentication/authentication.component.ts" beforeDir="false" afterPath="$PROJECT_DIR$/client-app/src/app/core/authentication/authentication.component.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/client-app/src/app/core/core.module.ts" beforeDir="false" afterPath="$PROJECT_DIR$/client-app/src/app/core/core.module.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/client-app/src/app/core/header/header.component.html" beforeDir="false" afterPath="$PROJECT_DIR$/client-app/src/app/core/header/header.component.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/client-app/src/app/core/header/header.component.scss" beforeDir="false" afterPath="$PROJECT_DIR$/client-app/src/app/core/header/header.component.scss" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/client-app/src/app/core/header/header.component.ts" beforeDir="false" afterPath="$PROJECT_DIR$/client-app/src/app/core/header/header.component.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build.gradle" beforeDir="false" afterPath="$PROJECT_DIR$/build.gradle" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/client-app/src/app/core/mocks/authenticate.mock.ts" beforeDir="false" afterPath="$PROJECT_DIR$/client-app/src/app/core/mocks/authenticate.mock.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/client-app/src/app/modules/home/home.module.ts" beforeDir="false" afterPath="$PROJECT_DIR$/client-app/src/app/modules/home/home.module.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/client-app/src/app/modules/home/pages/home/home.component.html" beforeDir="false" afterPath="$PROJECT_DIR$/client-app/src/app/modules/home/pages/home/home.component.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/client-app/src/app/modules/home/pages/home/home.component.scss" beforeDir="false" afterPath="$PROJECT_DIR$/client-app/src/app/modules/home/pages/home/home.component.scss" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/client-app/src/app/modules/home/pages/home/home.component.ts" beforeDir="false" afterPath="$PROJECT_DIR$/client-app/src/app/modules/home/pages/home/home.component.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/client-app/src/app/modules/user-management/pages/users-view/users-view.component.html" beforeDir="false" afterPath="$PROJECT_DIR$/client-app/src/app/modules/user-management/pages/users-view/users-view.component.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/client-app/src/app/modules/user-management/partial-components/users-table/users-table.component.scss" beforeDir="false" afterPath="$PROJECT_DIR$/client-app/src/app/modules/user-management/partial-components/users-table/users-table.component.scss" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/client-app/src/app/modules/user-management/user-management.module.ts" beforeDir="false" afterPath="$PROJECT_DIR$/client-app/src/app/modules/user-management/user-management.module.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/client-app/src/assets/demo.js" beforeDir="false" afterPath="$PROJECT_DIR$/client-app/src/assets/demo.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/client-app/src/assets/styles.scss" beforeDir="false" afterPath="$PROJECT_DIR$/client-app/src/assets/styles.scss" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/discovery-server/Dockerfile" beforeDir="false" afterPath="$PROJECT_DIR$/discovery-server/Dockerfile" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/discovery-server/src/main/resources/bootstrap.properties" beforeDir="false" afterPath="$PROJECT_DIR$/discovery-server/src/main/resources/bootstrap.properties" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/docker-compose.yml" beforeDir="false" afterPath="$PROJECT_DIR$/docker-compose.yml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/gateway-server/Dockerfile" beforeDir="false" afterPath="$PROJECT_DIR$/gateway-server/Dockerfile" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/gateway-server/out/production/resources/bootstrap.properties" beforeDir="false" afterPath="$PROJECT_DIR$/gateway-server/out/production/resources/bootstrap.properties" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/gateway-server/src/main/resources/bootstrap.properties" beforeDir="false" afterPath="$PROJECT_DIR$/gateway-server/src/main/resources/bootstrap.properties" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/settings.gradle" beforeDir="false" afterPath="$PROJECT_DIR$/settings.gradle" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/test-microservice/Dockerfile" beforeDir="false" afterPath="$PROJECT_DIR$/test-microservice/Dockerfile" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/test-microservice/build.gradle" beforeDir="false" afterPath="$PROJECT_DIR$/test-microservice/build.gradle" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client-app/src/app/shared/services/network-debug.service.ts" beforeDir="false" afterPath="$PROJECT_DIR$/client-app/src/app/shared/services/network-debug.service.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/discovery-server/out/production/resources/bootstrap.properties" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/network-configuration-server/build.gradle" beforeDir="false" afterPath="$PROJECT_DIR$/network-configuration-server/build.gradle" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/network-configuration-server/out/production/resources/bootstrap.properties" beforeDir="false" afterPath="$PROJECT_DIR$/network-configuration-server/out/production/resources/bootstrap.properties" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/network-configuration-server/src/main/java/en/ubb/networkconfiguration/App.java" beforeDir="false" afterPath="$PROJECT_DIR$/network-configuration-server/src/main/java/en/ubb/networkconfiguration/App.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/network-configuration-server/src/main/java/en/ubb/networkconfiguration/domain/BaseEntity.java" beforeDir="false" afterPath="$PROJECT_DIR$/network-configuration-server/src/main/java/en/ubb/networkconfiguration/domain/BaseEntity.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/network-configuration-server/src/main/java/en/ubb/networkconfiguration/domain/HiddenLayerConfig.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/network-configuration-server/src/main/java/en/ubb/networkconfiguration/domain/NetworkConfig.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/network-configuration-server/src/main/java/en/ubb/networkconfiguration/repo/NetworkConfigRepo.java" beforeDir="false" afterPath="$PROJECT_DIR$/network-configuration-server/src/main/java/en/ubb/networkconfiguration/repo/LayerRepo.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/network-configuration-server/src/main/java/en/ubb/networkconfiguration/rest/NetworkApi.java" beforeDir="false" afterPath="$PROJECT_DIR$/network-configuration-server/src/main/java/en/ubb/networkconfiguration/rest/NetworkApi.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/network-configuration-server/src/main/java/en/ubb/networkconfiguration/service/NetworkService.java" beforeDir="false" afterPath="$PROJECT_DIR$/network-configuration-server/src/main/java/en/ubb/networkconfiguration/service/NetworkService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/network-configuration-server/src/main/java/en/ubb/networkconfiguration/service/impl/NetworkServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/network-configuration-server/src/main/java/en/ubb/networkconfiguration/service/impl/NetworkServiceImpl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/network-configuration-server/src/main/resources/bootstrap.properties" beforeDir="false" afterPath="$PROJECT_DIR$/network-configuration-server/src/main/resources/bootstrap.properties" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/test-microservice/out/production/resources/bootstrap.properties" beforeDir="false" afterPath="$PROJECT_DIR$/test-microservice/out/production/resources/bootstrap.properties" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/test-microservice/src/main/java/en/ubb/microservice/App.java" beforeDir="false" afterPath="$PROJECT_DIR$/test-microservice/src/main/java/en/ubb/microservice/App.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/test-microservice/src/main/resources/bootstrap.properties" beforeDir="false" afterPath="$PROJECT_DIR$/test-microservice/src/main/resources/bootstrap.properties" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/out/" />
     <ignored path="$PROJECT_DIR$/.gradle/" />
@@ -176,37 +152,28 @@
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/test-microservice/src/main/resources/bootstrap-test.properties">
+        <entry file="file://$PROJECT_DIR$/network-configuration-server/src/main/java/en/ubb/networkconfiguration/service/impl/NetworkServiceImpl.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state>
-              <caret column="45" selection-start-column="45" selection-end-column="45" />
+            <state relative-caret-position="418">
+              <caret line="62" column="18" lean-forward="true" selection-start-line="62" selection-start-column="18" selection-end-line="62" selection-end-column="18" />
+              <folding>
+                <element signature="imports" expanded="true" />
+                <element signature="e#2130#2131#0" expanded="true" />
+                <element signature="e#2157#2158#0" expanded="true" />
+                <element signature="e#2177#2178#0" expanded="true" />
+                <element signature="e#2222#2223#0" expanded="true" />
+                <element signature="e#9498#9499#0" expanded="true" />
+                <element signature="e#9525#9526#0" expanded="true" />
+              </folding>
             </state>
           </provider>
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/test-microservice/Dockerfile">
+        <entry file="file://$PROJECT_DIR$/network-configuration-server/src/main/java/en/ubb/networkconfiguration/App.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="189">
-              <caret line="9" column="61" selection-start-line="9" selection-start-column="61" selection-end-line="9" selection-end-column="61" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/discovery-server/build/scripts/discovery-server.bat">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="588">
-              <caret line="82" selection-start-line="82" selection-end-line="82" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/network-configuration-server/src/main/java/en/ubb/networkconfiguration/domain/NetworkConfig.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="483">
-              <caret line="29" column="26" selection-start-line="29" selection-start-column="26" selection-end-line="29" selection-end-column="26" />
+            <state relative-caret-position="255">
+              <caret line="15" selection-start-line="15" selection-end-line="15" />
               <folding>
                 <element signature="imports" expanded="true" />
               </folding>
@@ -215,10 +182,10 @@
         </entry>
       </file>
       <file pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/network-configuration-server/src/main/java/en/ubb/networkconfiguration/domain/HiddenLayerConfig.java">
+        <entry file="file://$PROJECT_DIR$/network-configuration-server/src/main/java/en/ubb/networkconfiguration/rest/NetworkApi.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="334">
-              <caret line="18" column="13" selection-start-line="18" selection-start-column="13" selection-end-line="18" selection-end-column="13" />
+            <state relative-caret-position="365">
+              <caret line="42" column="55" lean-forward="true" selection-start-line="42" selection-start-column="55" selection-end-line="42" selection-end-column="55" />
               <folding>
                 <element signature="imports" expanded="true" />
               </folding>
@@ -227,32 +194,93 @@
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/network-configuration-server/src/main/resources/bootstrap-test.properties">
-          <provider selected="true" editor-type-id="text-editor" />
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/discovery-server/src/main/resources/bootstrap-test.properties">
-          <provider selected="true" editor-type-id="text-editor" />
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/discovery-server/src/main/resources/bootstrap.properties">
+        <entry file="file://$PROJECT_DIR$/network-configuration-server/src/main/java/en/ubb/networkconfiguration/validation/exception/NetworkAccessException.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="21">
-              <caret line="1" column="27" selection-start-line="1" selection-start-column="27" selection-end-line="1" selection-end-column="27" />
+            <state relative-caret-position="34">
+              <caret line="2" column="61" selection-start-line="2" selection-start-column="61" selection-end-line="2" selection-end-column="61" />
+              <folding>
+                <element signature="e#147#148#0" expanded="true" />
+                <element signature="e#170#171#0" expanded="true" />
+              </folding>
             </state>
           </provider>
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/discovery-server/src/main/resources/bootstrap-prod.properties">
-          <provider selected="true" editor-type-id="text-editor" />
+        <entry file="file://$PROJECT_DIR$/network-configuration-server/src/main/java/en/ubb/networkconfiguration/validation/exception/NetworkNotFoundException.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="34">
+              <caret line="2" column="63" selection-start-line="2" selection-start-column="63" selection-end-line="2" selection-end-column="63" />
+              <folding>
+                <element signature="e#182#183#0" expanded="true" />
+                <element signature="e#212#213#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/test-microservice/src/main/resources/bootstrap-prod.properties">
-          <provider selected="true" editor-type-id="text-editor" />
+        <entry file="file://$PROJECT_DIR$/network-configuration-server/src/main/java/en/ubb/networkconfiguration/validation/exception/IllegalArgumentException.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="85">
+              <caret line="5" column="24" selection-start-line="5" selection-start-column="24" selection-end-line="5" selection-end-column="24" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/network-configuration-server/src/main/java/en/ubb/networkconfiguration/validation/exception/BoundaryException.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="68">
+              <caret line="4" column="4" lean-forward="true" selection-start-line="4" selection-start-column="4" selection-end-line="4" selection-end-column="4" />
+              <folding>
+                <element signature="e#149#150#0" expanded="true" />
+                <element signature="e#172#173#0" expanded="true" />
+                <element signature="e#220#221#0" expanded="true" />
+                <element signature="e#250#251#0" expanded="true" />
+                <element signature="e#315#316#0" expanded="true" />
+                <element signature="e#352#353#0" expanded="true" />
+                <element signature="e#401#402#0" expanded="true" />
+                <element signature="e#429#430#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/network-configuration-server/src/main/java/en/ubb/networkconfiguration/repo/LayerRepo.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="136">
+              <caret line="8" column="14" selection-start-line="8" selection-start-column="14" selection-end-line="8" selection-end-column="14" />
+              <folding>
+                <element signature="imports" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/network-configuration-server/src/main/java/en/ubb/networkconfiguration/dto/util/DtoMapper.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="238">
+              <caret line="14" lean-forward="true" selection-start-line="14" selection-end-line="14" />
+              <folding>
+                <element signature="imports" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/network-configuration-server/src/main/java/en/ubb/networkconfiguration/service/NetworkService.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="272">
+              <caret line="17" column="20" selection-start-line="17" selection-start-column="20" selection-end-line="17" selection-end-column="20" />
+              <folding>
+                <element signature="imports" expanded="true" />
+              </folding>
+            </state>
+          </provider>
         </entry>
       </file>
     </leaf>
@@ -275,10 +303,24 @@
       <find>key-store-path</find>
       <find>key-store-path2</find>
       <find>docker-network</find>
+      <find>)</find>
+      <find>springBootV</find>
+      <find>score</find>
+      <find>layers</find>
+      <find>initDone</find>
+      <find>clone</find>
+      <find>initCalled</find>
+      <find>load</find>
+      <find>build</find>
+      <find>getParam</find>
+      <find>public</find>
+      <find>networkconfi</find>
+      <find>private</find>
     </findStrings>
     <replaceStrings>
       <replace>implementation</replace>
       <replace>emp-network</replace>
+      <replace>public</replace>
     </replaceStrings>
   </component>
   <component name="Git.Settings">
@@ -287,48 +329,6 @@
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
-        <option value="$PROJECT_DIR$/central-config-server/src/main/resources/setup.properties" />
-        <option value="$PROJECT_DIR$/central-config-server/docker_build_run.groovy" />
-        <option value="$PROJECT_DIR$/central-config-server/build.gradle" />
-        <option value="$PROJECT_DIR$/discovery-server/build.gradle" />
-        <option value="$PROJECT_DIR$/gateway-server/build.gradle" />
-        <option value="$PROJECT_DIR$/settings.gradle" />
-        <option value="$PROJECT_DIR$/build.gradle" />
-        <option value="$PROJECT_DIR$/discovery-server/wait-for.sh" />
-        <option value="$PROJECT_DIR$/statistics-server/src/main/java/StatisticsApp.java" />
-        <option value="$PROJECT_DIR$/statistics-server/src/main/java/en/ubb/statistics/StatisticsApp.java" />
-        <option value="$PROJECT_DIR$/statistics-server/src/main/java/en/ubb/statistics/persistence/models/OperationType.java" />
-        <option value="$PROJECT_DIR$/statistics-server/build.gradle" />
-        <option value="$PROJECT_DIR$/statistics-server/src/main/java/en/ubb/statistics/persistence/models/BaseEntity.java" />
-        <option value="$PROJECT_DIR$/statistics-server/src/main/java/en/ubb/statistics/persistence/models/ConfigurationType.java" />
-        <option value="$PROJECT_DIR$/statistics-server/src/main/java/en/ubb/statistics/persistence/models/Benchmark.java" />
-        <option value="$PROJECT_DIR$/statistics-server/src/main/java/en/ubb/statistics/persistence/models/CompoundOperation.java" />
-        <option value="$PROJECT_DIR$/statistics-server/src/main/java/en/ubb/statistics/persistence/models/CompoundOperationResult.java" />
-        <option value="$PROJECT_DIR$/statistics-server/src/main/java/en/ubb/statistics/persistence/models/OperationResult.java" />
-        <option value="$PROJECT_DIR$/statistics-server/src/main/java/en/ubb/statistics/persistence/models/Operation.java" />
-        <option value="$PROJECT_DIR$/statistics-server/src/main/java/en/ubb/statistics/persistence/enums/NodeProperty.java" />
-        <option value="$PROJECT_DIR$/statistics-server/src/main/java/en/ubb/statistics/persistence/enums/NetworkGenerationProperty.java" />
-        <option value="$PROJECT_DIR$/statistics-server/src/main/java/en/ubb/statistics/persistence/enums/operation_properties/NetworkGenerationProperty.java" />
-        <option value="$PROJECT_DIR$/statistics-server/src/main/java/en/ubb/statistics/persistence/enums/operation_properties/GenerationProperties.java" />
-        <option value="$PROJECT_DIR$/statistics-server/src/main/java/en/ubb/statistics/persistence/enums/operation_properties/NodePropertiess.java" />
-        <option value="$PROJECT_DIR$/statistics-server/src/main/java/en/ubb/statistics/persistence/enums/operation_properties/NetworkProperties.java" />
-        <option value="$PROJECT_DIR$/test-microservice/build.gradle" />
-        <option value="$PROJECT_DIR$/test-microservice/src/main/java/en/ubb/microservice/App.java" />
-        <option value="$PROJECT_DIR$/network-configuration-server/src/main/java/en/ubb/networkconfiguration/service/NetworkServic.java" />
-        <option value="$PROJECT_DIR$/network-configuration-server/src/main/java/en/ubb/networkconfiguration/service/Network.java" />
-        <option value="$PROJECT_DIR$/network-configuration-server/src/main/java/en/ubb/networkconfiguration/domain/LayerConfig.java" />
-        <option value="$PROJECT_DIR$/network-configuration-server/src/main/java/en/ubb/networkconfiguration/domain/NetworkConfig.java" />
-        <option value="$PROJECT_DIR$/network-configuration-server/src/main/java/en/ubb/networkconfiguration/domain/BaseEntity.java" />
-        <option value="$PROJECT_DIR$/network-configuration-server/src/main/java/en/ubb/networkconfiguration/rest/NetworkApi.java" />
-        <option value="$PROJECT_DIR$/network-configuration-server/build.gradle" />
-        <option value="$PROJECT_DIR$/network-configuration-server/src/main/java/en/ubb/networkconfiguration/domain/HiddenLayerConfig.java" />
-        <option value="$PROJECT_DIR$/network-configuration-server/src/main/java/en/ubb/networkconfiguration/repo/NetworkConfigRepo.java" />
-        <option value="$PROJECT_DIR$/network-configuration-server/src/main/java/en/ubb/networkconfiguration/service/NetworkService.java" />
-        <option value="$PROJECT_DIR$/network-configuration-server/src/main/java/en/ubb/networkconfiguration/service/impl/NetworkServiceImpl.java" />
-        <option value="$PROJECT_DIR$/network-configuration-server/src/main/java/en/ubb/networkconfiguration/App.java" />
-        <option value="$PROJECT_DIR$/central-config-server/Dockerfile" />
-        <option value="$PROJECT_DIR$/test-microservice/Dockerfile" />
-        <option value="$PROJECT_DIR$/gateway-server/Dockerfile" />
         <option value="$PROJECT_DIR$/discovery-server/Dockerfile" />
         <option value="$PROJECT_DIR$/docker-compose.yml" />
         <option value="$PROJECT_DIR$/gateway-server/src/main/resources/bootstrap-prod.properties" />
@@ -337,7 +337,49 @@
         <option value="$PROJECT_DIR$/test-microservice/src/main/resources/bootstrap-test.properties" />
         <option value="$PROJECT_DIR$/gateway-server/src/main/resources/bootstrap.properties" />
         <option value="$PROJECT_DIR$/discovery-server/src/main/resources/bootstrap.properties" />
+        <option value="$PROJECT_DIR$/network-configuration-server/src/main/resources/gradle.properties" />
+        <option value="$PROJECT_DIR$/build.gradle" />
+        <option value="$PROJECT_DIR$/network-configuration-server/src/main/resources/application.yml" />
+        <option value="$PROJECT_DIR$/network-configuration-server/build.gradle" />
         <option value="$PROJECT_DIR$/network-configuration-server/src/main/resources/bootstrap.properties" />
+        <option value="$PROJECT_DIR$/network-configuration-server/src/main/resources/classification/linear_data_train.csv" />
+        <option value="$PROJECT_DIR$/network-configuration-server/src/main/resources/classification/linear_data_eval.csv" />
+        <option value="$PROJECT_DIR$/network-configuration-server/src/main/java/en/ubb/networkconfiguration/repo/NetworkConfigRepo.java" />
+        <option value="$PROJECT_DIR$/network-configuration-server/src/main/java/en/ubb/networkconfiguration/domain/enums/LayerType.java" />
+        <option value="$PROJECT_DIR$/network-configuration-server/src/main/java/en/ubb/networkconfiguration/repo/LayerConfigRepo.java" />
+        <option value="$PROJECT_DIR$/network-configuration-server/src/main/java/en/ubb/networkconfiguration/repo/NodeConfigRepo.java" />
+        <option value="$PROJECT_DIR$/network-configuration-server/src/main/java/en/ubb/networkconfiguration/util/LayerUtil.java" />
+        <option value="$PROJECT_DIR$/network-configuration-server/src/main/java/en/ubb/networkconfiguration/util/NetworkUtil.java" />
+        <option value="$PROJECT_DIR$/network-configuration-server/src/main/resources/application.properties" />
+        <option value="$PROJECT_DIR$/network-configuration-server/src/main/java/en/ubb/networkconfiguration/domain/BaseEntity.java" />
+        <option value="$PROJECT_DIR$/network-configuration-server/src/main/java/en/ubb/networkconfiguration/domain/NodeConfig.java" />
+        <option value="$PROJECT_DIR$/network-configuration-server/src/main/java/en/ubb/networkconfiguration/domain/LinkConfig.java" />
+        <option value="$PROJECT_DIR$/network-configuration-server/src/main/java/en/ubb/networkconfiguration/App.java" />
+        <option value="$PROJECT_DIR$/network-configuration-server/src/main/java/en/ubb/networkconfiguration/domain/NetworkConfig.java" />
+        <option value="$PROJECT_DIR$/network-configuration-server/src/main/java/en/ubb/networkconfiguration/domain/NetworkInitializer.java" />
+        <option value="$PROJECT_DIR$/network-configuration-server/src/main/java/en/ubb/networkconfiguration/domain/LayerConfig.java" />
+        <option value="$PROJECT_DIR$/network-configuration-server/src/main/java/en/ubb/networkconfiguration/domain/LayerInitializer.java" />
+        <option value="$PROJECT_DIR$/network-configuration-server/src/main/java/en/ubb/networkconfiguration/domain/network/runtime/LayerConfig.java" />
+        <option value="$PROJECT_DIR$/network-configuration-server/src/main/java/en/ubb/networkconfiguration/domain/network/runtime/NodeConfig.java" />
+        <option value="$PROJECT_DIR$/network-configuration-server/src/main/java/en/ubb/networkconfiguration/domain/network/runtime/Link.java" />
+        <option value="$PROJECT_DIR$/network-configuration-server/src/main/java/en/ubb/networkconfiguration/domain/network/runtime/Node.java" />
+        <option value="$PROJECT_DIR$/network-configuration-server/src/main/java/en/ubb/networkconfiguration/domain/network/setup/NetworkInitializer.java" />
+        <option value="$PROJECT_DIR$/network-configuration-server/src/main/java/en/ubb/networkconfiguration/domain/network/runtime/Layer.java" />
+        <option value="$PROJECT_DIR$/network-configuration-server/src/main/java/en/ubb/networkconfiguration/domain/network/setup/LayerInitializer.java" />
+        <option value="$PROJECT_DIR$/network-configuration-server/src/main/java/en/ubb/networkconfiguration/domain/network/runtime/Network.java" />
+        <option value="$PROJECT_DIR$/network-configuration-server/src/main/java/en/ubb/networkconfiguration/dto/NetworkDto.java" />
+        <option value="$PROJECT_DIR$/network-configuration-server/src/main/java/en/ubb/networkconfiguration/dto/LinkDto.java" />
+        <option value="$PROJECT_DIR$/network-configuration-server/src/main/java/en/ubb/networkconfiguration/dto/LayerDto.java" />
+        <option value="$PROJECT_DIR$/network-configuration-server/src/main/java/en/ubb/networkconfiguration/dto/NodeDto.java" />
+        <option value="$PROJECT_DIR$/network-configuration-server/src/main/java/en/ubb/networkconfiguration/dto/util/DtoMapper.java" />
+        <option value="$PROJECT_DIR$/network-configuration-server/src/main/java/en/ubb/networkconfiguration/service/NetworkService.java" />
+        <option value="$PROJECT_DIR$/network-configuration-server/src/main/java/en/ubb/networkconfiguration/service/impl/NetworkServiceImpl.java" />
+        <option value="$PROJECT_DIR$/network-configuration-server/src/main/java/en/ubb/networkconfiguration/validation/exception/NetworkException.java" />
+        <option value="$PROJECT_DIR$/network-configuration-server/src/main/java/en/ubb/networkconfiguration/validation/exception/BoundaryException.java" />
+        <option value="$PROJECT_DIR$/network-configuration-server/src/main/java/en/ubb/networkconfiguration/validation/exception/NetworkAccessException.java" />
+        <option value="$PROJECT_DIR$/network-configuration-server/src/main/java/en/ubb/networkconfiguration/validation/exception/NetworkNotFoundException.java" />
+        <option value="$PROJECT_DIR$/network-configuration-server/src/main/java/en/ubb/networkconfiguration/validation/exception/IllegalArgumentException.java" />
+        <option value="$PROJECT_DIR$/network-configuration-server/src/main/java/en/ubb/networkconfiguration/rest/NetworkApi.java" />
       </list>
     </option>
   </component>
@@ -349,11 +391,11 @@
   <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
   <component name="ProjectView">
     <navigator proportions="" version="1">
+      <hideEmptyPackages ProjectPane="true" />
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
       <pane id="PackagesPane" />
-      <pane id="Scope" />
       <pane id="ProjectPane">
         <subPane>
           <expand>
@@ -364,52 +406,25 @@
             <path>
               <item name="licenta" type="b2602c69:ProjectViewProjectNode" />
               <item name="licenta-repo" type="8a07ba80:GradleTreeStructureProvider$GradleModuleDirectoryNode" />
-              <item name="central-config-server" type="8a07ba80:GradleTreeStructureProvider$GradleModuleDirectoryNode" />
-            </path>
-            <path>
-              <item name="licenta" type="b2602c69:ProjectViewProjectNode" />
-              <item name="licenta-repo" type="8a07ba80:GradleTreeStructureProvider$GradleModuleDirectoryNode" />
               <item name="discovery-server" type="8a07ba80:GradleTreeStructureProvider$GradleModuleDirectoryNode" />
             </path>
             <path>
               <item name="licenta" type="b2602c69:ProjectViewProjectNode" />
               <item name="licenta-repo" type="8a07ba80:GradleTreeStructureProvider$GradleModuleDirectoryNode" />
-              <item name="gateway-server" type="8a07ba80:GradleTreeStructureProvider$GradleModuleDirectoryNode" />
-            </path>
-            <path>
-              <item name="licenta" type="b2602c69:ProjectViewProjectNode" />
-              <item name="licenta-repo" type="8a07ba80:GradleTreeStructureProvider$GradleModuleDirectoryNode" />
-              <item name="gateway-server" type="8a07ba80:GradleTreeStructureProvider$GradleModuleDirectoryNode" />
+              <item name="discovery-server" type="8a07ba80:GradleTreeStructureProvider$GradleModuleDirectoryNode" />
               <item name="src" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
               <item name="licenta" type="b2602c69:ProjectViewProjectNode" />
               <item name="licenta-repo" type="8a07ba80:GradleTreeStructureProvider$GradleModuleDirectoryNode" />
-              <item name="gateway-server" type="8a07ba80:GradleTreeStructureProvider$GradleModuleDirectoryNode" />
+              <item name="discovery-server" type="8a07ba80:GradleTreeStructureProvider$GradleModuleDirectoryNode" />
               <item name="src" type="462c0819:PsiDirectoryNode" />
               <item name="main" type="8a07ba80:GradleTreeStructureProvider$GradleModuleDirectoryNode" />
             </path>
             <path>
               <item name="licenta" type="b2602c69:ProjectViewProjectNode" />
               <item name="licenta-repo" type="8a07ba80:GradleTreeStructureProvider$GradleModuleDirectoryNode" />
-              <item name="gateway-server" type="8a07ba80:GradleTreeStructureProvider$GradleModuleDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="main" type="8a07ba80:GradleTreeStructureProvider$GradleModuleDirectoryNode" />
-              <item name="java" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="licenta" type="b2602c69:ProjectViewProjectNode" />
-              <item name="licenta-repo" type="8a07ba80:GradleTreeStructureProvider$GradleModuleDirectoryNode" />
-              <item name="gateway-server" type="8a07ba80:GradleTreeStructureProvider$GradleModuleDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="main" type="8a07ba80:GradleTreeStructureProvider$GradleModuleDirectoryNode" />
-              <item name="java" type="462c0819:PsiDirectoryNode" />
-              <item name="gateway" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="licenta" type="b2602c69:ProjectViewProjectNode" />
-              <item name="licenta-repo" type="8a07ba80:GradleTreeStructureProvider$GradleModuleDirectoryNode" />
-              <item name="gateway-server" type="8a07ba80:GradleTreeStructureProvider$GradleModuleDirectoryNode" />
+              <item name="discovery-server" type="8a07ba80:GradleTreeStructureProvider$GradleModuleDirectoryNode" />
               <item name="src" type="462c0819:PsiDirectoryNode" />
               <item name="main" type="8a07ba80:GradleTreeStructureProvider$GradleModuleDirectoryNode" />
               <item name="resources" type="462c0819:PsiDirectoryNode" />
@@ -467,6 +482,41 @@
               <item name="main" type="8a07ba80:GradleTreeStructureProvider$GradleModuleDirectoryNode" />
               <item name="java" type="462c0819:PsiDirectoryNode" />
               <item name="networkconfiguration" type="462c0819:PsiDirectoryNode" />
+              <item name="domain" type="462c0819:PsiDirectoryNode" />
+              <item name="network" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="licenta" type="b2602c69:ProjectViewProjectNode" />
+              <item name="licenta-repo" type="8a07ba80:GradleTreeStructureProvider$GradleModuleDirectoryNode" />
+              <item name="network-configuration-server" type="8a07ba80:GradleTreeStructureProvider$GradleModuleDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="main" type="8a07ba80:GradleTreeStructureProvider$GradleModuleDirectoryNode" />
+              <item name="java" type="462c0819:PsiDirectoryNode" />
+              <item name="networkconfiguration" type="462c0819:PsiDirectoryNode" />
+              <item name="domain" type="462c0819:PsiDirectoryNode" />
+              <item name="network" type="462c0819:PsiDirectoryNode" />
+              <item name="runtime" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="licenta" type="b2602c69:ProjectViewProjectNode" />
+              <item name="licenta-repo" type="8a07ba80:GradleTreeStructureProvider$GradleModuleDirectoryNode" />
+              <item name="network-configuration-server" type="8a07ba80:GradleTreeStructureProvider$GradleModuleDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="main" type="8a07ba80:GradleTreeStructureProvider$GradleModuleDirectoryNode" />
+              <item name="java" type="462c0819:PsiDirectoryNode" />
+              <item name="networkconfiguration" type="462c0819:PsiDirectoryNode" />
+              <item name="domain" type="462c0819:PsiDirectoryNode" />
+              <item name="network" type="462c0819:PsiDirectoryNode" />
+              <item name="setup" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="licenta" type="b2602c69:ProjectViewProjectNode" />
+              <item name="licenta-repo" type="8a07ba80:GradleTreeStructureProvider$GradleModuleDirectoryNode" />
+              <item name="network-configuration-server" type="8a07ba80:GradleTreeStructureProvider$GradleModuleDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="main" type="8a07ba80:GradleTreeStructureProvider$GradleModuleDirectoryNode" />
+              <item name="java" type="462c0819:PsiDirectoryNode" />
+              <item name="networkconfiguration" type="462c0819:PsiDirectoryNode" />
               <item name="repo" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
@@ -506,55 +556,38 @@
               <item name="network-configuration-server" type="8a07ba80:GradleTreeStructureProvider$GradleModuleDirectoryNode" />
               <item name="src" type="462c0819:PsiDirectoryNode" />
               <item name="main" type="8a07ba80:GradleTreeStructureProvider$GradleModuleDirectoryNode" />
+              <item name="java" type="462c0819:PsiDirectoryNode" />
+              <item name="networkconfiguration" type="462c0819:PsiDirectoryNode" />
+              <item name="util" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="licenta" type="b2602c69:ProjectViewProjectNode" />
+              <item name="licenta-repo" type="8a07ba80:GradleTreeStructureProvider$GradleModuleDirectoryNode" />
+              <item name="network-configuration-server" type="8a07ba80:GradleTreeStructureProvider$GradleModuleDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="main" type="8a07ba80:GradleTreeStructureProvider$GradleModuleDirectoryNode" />
+              <item name="java" type="462c0819:PsiDirectoryNode" />
+              <item name="networkconfiguration" type="462c0819:PsiDirectoryNode" />
+              <item name="exception" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="licenta" type="b2602c69:ProjectViewProjectNode" />
+              <item name="licenta-repo" type="8a07ba80:GradleTreeStructureProvider$GradleModuleDirectoryNode" />
+              <item name="network-configuration-server" type="8a07ba80:GradleTreeStructureProvider$GradleModuleDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="main" type="8a07ba80:GradleTreeStructureProvider$GradleModuleDirectoryNode" />
               <item name="resources" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
               <item name="licenta" type="b2602c69:ProjectViewProjectNode" />
               <item name="licenta-repo" type="8a07ba80:GradleTreeStructureProvider$GradleModuleDirectoryNode" />
-              <item name="test-microservice" type="8a07ba80:GradleTreeStructureProvider$GradleModuleDirectoryNode" />
-            </path>
-            <path>
-              <item name="licenta" type="b2602c69:ProjectViewProjectNode" />
-              <item name="licenta-repo" type="8a07ba80:GradleTreeStructureProvider$GradleModuleDirectoryNode" />
-              <item name="test-microservice" type="8a07ba80:GradleTreeStructureProvider$GradleModuleDirectoryNode" />
               <item name="src" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="licenta" type="b2602c69:ProjectViewProjectNode" />
-              <item name="licenta-repo" type="8a07ba80:GradleTreeStructureProvider$GradleModuleDirectoryNode" />
-              <item name="test-microservice" type="8a07ba80:GradleTreeStructureProvider$GradleModuleDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="main" type="8a07ba80:GradleTreeStructureProvider$GradleModuleDirectoryNode" />
-            </path>
-            <path>
-              <item name="licenta" type="b2602c69:ProjectViewProjectNode" />
-              <item name="licenta-repo" type="8a07ba80:GradleTreeStructureProvider$GradleModuleDirectoryNode" />
-              <item name="test-microservice" type="8a07ba80:GradleTreeStructureProvider$GradleModuleDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="main" type="8a07ba80:GradleTreeStructureProvider$GradleModuleDirectoryNode" />
-              <item name="java" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="licenta" type="b2602c69:ProjectViewProjectNode" />
-              <item name="licenta-repo" type="8a07ba80:GradleTreeStructureProvider$GradleModuleDirectoryNode" />
-              <item name="test-microservice" type="8a07ba80:GradleTreeStructureProvider$GradleModuleDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="main" type="8a07ba80:GradleTreeStructureProvider$GradleModuleDirectoryNode" />
-              <item name="java" type="462c0819:PsiDirectoryNode" />
-              <item name="microservice" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="licenta" type="b2602c69:ProjectViewProjectNode" />
-              <item name="licenta-repo" type="8a07ba80:GradleTreeStructureProvider$GradleModuleDirectoryNode" />
-              <item name="test-microservice" type="8a07ba80:GradleTreeStructureProvider$GradleModuleDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="main" type="8a07ba80:GradleTreeStructureProvider$GradleModuleDirectoryNode" />
-              <item name="resources" type="462c0819:PsiDirectoryNode" />
             </path>
           </expand>
           <select />
         </subPane>
       </pane>
+      <pane id="Scope" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -566,7 +599,7 @@
     <property name="RequestMappingsPanelWidth1" value="75" />
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="aspect.path.notification.shown" value="true" />
-    <property name="com.android.tools.idea.instantapp.provision.ProvisionBeforeRunTaskProvider.myTimeStamp" value="1555634184309" />
+    <property name="com.android.tools.idea.instantapp.provision.ProvisionBeforeRunTaskProvider.myTimeStamp" value="1556930157804" />
     <property name="last_opened_file_path" value="$PROJECT_DIR$/docker-compose.yml" />
     <property name="nodejs_interpreter_path.stuck_in_default_project" value="undefined stuck path" />
     <property name="nodejs_npm_path_reset_for_default_project" value="true" />
@@ -574,7 +607,7 @@
     <property name="project.structure.last.edited" value="Modules" />
     <property name="project.structure.proportion" value="0.15" />
     <property name="project.structure.side.proportion" value="0.2" />
-    <property name="settings.editor.selected.configurable" value="reference.projectsettings.compiler.annotationProcessors" />
+    <property name="settings.editor.selected.configurable" value="editor.preferences.fonts.default" />
   </component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
@@ -599,9 +632,9 @@
         </RuleState>
       </list>
     </option>
-    <option name="contentProportion" value="0.16774891" />
+    <option name="contentProportion" value="0.0952381" />
   </component>
-  <component name="RunManager" selected="Docker.docker-compose.yml: Compose Deployment">
+  <component name="RunManager" selected="Spring Boot.App">
     <configuration name="ConfigurationApp - Deploy" type="GradleRunConfiguration" factoryName="Gradle">
       <ExternalSystemSettings>
         <option name="executionName" />
@@ -665,18 +698,86 @@
       <GradleScriptDebugEnabled>true</GradleScriptDebugEnabled>
       <method v="2" />
     </configuration>
-    <configuration name="GatewayApplication" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot" temporary="true" nameIsGenerated="true">
-      <module name="licenta.gateway-server.main" />
+    <configuration name="licenta-repo" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
+      <ExternalSystemSettings>
+        <option name="executionName" />
+        <option name="externalProjectPath" value="$PROJECT_DIR$" />
+        <option name="externalSystemIdString" value="GRADLE" />
+        <option name="scriptParameters" />
+        <option name="taskDescriptions">
+          <list />
+        </option>
+        <option name="taskNames">
+          <list />
+        </option>
+        <option name="vmOptions" />
+      </ExternalSystemSettings>
+      <GradleScriptDebugEnabled>true</GradleScriptDebugEnabled>
+      <method v="2" />
+    </configuration>
+    <configuration name="App (1)" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot">
+      <module name="licenta.test-microservice.main" />
+      <option name="SPRING_BOOT_MAIN_CLASS" value="en.ubb.microservice.App" />
+      <option name="ALTERNATIVE_JRE_PATH" />
+      <option name="SHORTEN_COMMAND_LINE" value="MANIFEST" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="App" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot" temporary="true" nameIsGenerated="true">
+      <module name="licenta.network-configuration-server.main" />
       <extension name="coverage">
         <pattern>
-          <option name="PATTERN" value="en.ubb.gateway.*" />
+          <option name="PATTERN" value="en.ubb.networkconfiguration.*" />
           <option name="ENABLED" value="true" />
         </pattern>
       </extension>
-      <option name="SPRING_BOOT_MAIN_CLASS" value="en.ubb.gateway.GatewayApplication" />
-      <option name="VM_PARAMETERS" value="-Dspring.profiles.active=test" />
+      <option name="SPRING_BOOT_MAIN_CLASS" value="en.ubb.networkconfiguration.App" />
       <option name="ALTERNATIVE_JRE_PATH" />
-      <option name="SHORTEN_COMMAND_LINE" value="CLASSPATH_FILE" />
+      <option name="SHORTEN_COMMAND_LINE" value="MANIFEST" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="ConfigurationApplication" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot">
+      <module name="licenta.central-config-server.main" />
+      <option name="SPRING_BOOT_MAIN_CLASS" value="en.ubb.configuration.ConfigurationApplication" />
+      <option name="ALTERNATIVE_JRE_PATH" />
+      <option name="SHORTEN_COMMAND_LINE" value="MANIFEST" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="DiscoveryApplication" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot">
+      <module name="licenta.discovery-server.main" />
+      <option name="SPRING_BOOT_MAIN_CLASS" value="en.ubb.discovery.DiscoveryApplication" />
+      <option name="ALTERNATIVE_JRE_PATH" />
+      <option name="SHORTEN_COMMAND_LINE" value="MANIFEST" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="GatewayApplication" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot">
+      <module name="licenta.gateway-server.main" />
+      <option name="SPRING_BOOT_MAIN_CLASS" value="en.ubb.gateway.GatewayApplication" />
+      <option name="ALTERNATIVE_JRE_PATH" />
+      <option name="SHORTEN_COMMAND_LINE" value="MANIFEST" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="StatisticsApp" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot">
+      <module name="licenta.statistics-server.main" />
+      <option name="SPRING_BOOT_MAIN_CLASS" value="en.ubb.statistics.StatisticsApp" />
+      <option name="ALTERNATIVE_JRE_PATH" />
+      <option name="SHORTEN_COMMAND_LINE" value="MANIFEST" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration default="true" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot">
+      <option name="ALTERNATIVE_JRE_PATH" />
+      <option name="SHORTEN_COMMAND_LINE" value="MANIFEST" />
       <method v="2">
         <option name="Make" enabled="true" />
       </method>
@@ -703,12 +804,19 @@
       <item itemvalue="Gradle.ConfigurationApp - Deploy" />
       <item itemvalue="Gradle.DiscoveryApp - Deploy" />
       <item itemvalue="Gradle.GatewayApp - Deploy" />
+      <item itemvalue="Gradle.licenta-repo" />
+      <item itemvalue="Spring Boot.DiscoveryApplication" />
+      <item itemvalue="Spring Boot.ConfigurationApplication" />
       <item itemvalue="Spring Boot.GatewayApplication" />
+      <item itemvalue="Spring Boot.StatisticsApp" />
+      <item itemvalue="Spring Boot.App (1)" />
+      <item itemvalue="Spring Boot.App" />
     </list>
     <recent_temporary>
       <list>
+        <item itemvalue="Spring Boot.App" />
         <item itemvalue="Docker.docker-compose.yml: Compose Deployment" />
-        <item itemvalue="Spring Boot.GatewayApplication" />
+        <item itemvalue="Gradle.licenta-repo" />
         <item itemvalue="Docker.test-microservice/Dockerfile" />
       </list>
     </recent_temporary>
@@ -743,6 +851,9 @@
       <workItem from="1555620028937" duration="11282000" />
       <workItem from="1555799986812" duration="1665000" />
       <workItem from="1555873711305" duration="650000" />
+      <workItem from="1556684727217" duration="5416000" />
+      <workItem from="1556821156090" duration="36331000" />
+      <workItem from="1556927566906" duration="2543000" />
     </task>
     <task id="LOCAL-00001" summary="s">
       <created>1547388543011</created>
@@ -809,7 +920,7 @@
     </history-entry>
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="118978000" />
+    <option name="totallyTimeSpent" value="163268000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -821,9 +932,10 @@
     </todo-panel>
   </component>
   <component name="ToolWindowManager">
-    <frame x="-8" y="-8" width="1936" height="1056" extended-state="7" />
+    <frame x="-8" y="-8" width="1936" height="1056" extended-state="6" />
+    <editor active="true" />
     <layout>
-      <window_info active="true" content_ui="combo" id="Project" order="0" sideWeight="0.4982639" visible="true" weight="0.25692964" />
+      <window_info active="true" content_ui="combo" id="Project" order="0" sideWeight="0.4982639" visible="true" weight="0.21108742" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info id="Designer" order="2" />
       <window_info id="Image Layers" order="3" />
@@ -833,24 +945,24 @@
       <window_info id="Learn" order="7" />
       <window_info id="Web" order="8" sideWeight="0.5017361" side_tool="true" weight="0.24520256" />
       <window_info anchor="bottom" id="Message" order="0" />
-      <window_info anchor="bottom" id="Find" order="1" weight="0.32897604" />
-      <window_info anchor="bottom" id="Run" order="2" weight="0.23726977" />
+      <window_info anchor="bottom" id="Find" order="1" weight="0.32827735" />
+      <window_info anchor="bottom" id="Run" order="2" weight="0.3531961" />
       <window_info anchor="bottom" id="Debug" order="3" weight="0.43878657" />
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
       <window_info anchor="bottom" id="TODO" order="6" weight="0.32827735" />
       <window_info anchor="bottom" id="Spring" order="7" weight="0.32827735" />
       <window_info anchor="bottom" id="Terminal" order="8" weight="0.5915493" />
-      <window_info anchor="bottom" id="Docker" order="9" sideWeight="0.68869936" visible="true" weight="0.17659806" />
+      <window_info anchor="bottom" id="Docker" order="9" sideWeight="0.68869936" visible="true" weight="0.27410617" />
       <window_info anchor="bottom" id="Event Log" order="10" sideWeight="0.31130064" side_tool="true" weight="0.4312026" />
       <window_info anchor="bottom" id="Application Servers" order="11" />
       <window_info anchor="bottom" id="Java Enterprise" order="12" weight="0.32936078" />
       <window_info anchor="bottom" id="NativeScript" order="13" />
       <window_info anchor="bottom" id="Build" order="14" sideWeight="0.49946696" weight="0.30985916" />
       <window_info anchor="bottom" id="Database Changes" order="15" />
-      <window_info anchor="bottom" id="Messages" order="16" weight="0.32827735" />
+      <window_info anchor="bottom" id="Messages" order="16" weight="0.41603467" />
       <window_info anchor="bottom" id="Version Control" order="17" weight="0.32936078" />
-      <window_info anchor="bottom" id="Run Dashboard" order="18" sideWeight="0.49840087" weight="0.3434453" />
+      <window_info anchor="bottom" id="Run Dashboard" order="18" sideWeight="0.49840087" weight="0.5124594" />
       <window_info anchor="right" id="Commander" internal_type="SLIDING" order="0" type="SLIDING" weight="0.4" />
       <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
       <window_info anchor="right" content_ui="combo" id="Hierarchy" order="2" weight="0.25" />
@@ -876,71 +988,212 @@
     <MESSAGE value="s" />
     <option name="LAST_COMMIT_MESSAGE" value="s" />
   </component>
+  <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <breakpoints>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/network-configuration-server/src/main/java/en/ubb/networkconfiguration/rest/NetworkApi.java</url>
+          <line>140</line>
+          <properties />
+          <option name="timeStamp" value="28" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/network-configuration-server/src/main/java/en/ubb/networkconfiguration/rest/NetworkApi.java</url>
+          <line>121</line>
+          <properties />
+          <option name="timeStamp" value="55" />
+        </line-breakpoint>
+      </breakpoints>
+    </breakpoint-manager>
+    <watches-manager>
+      <configuration name="SpringBootApplicationConfigurationType">
+        <watch expression="model.getLayer(0).getParam(biasKey).length()" language="JAVA" />
+        <watch expression="model.getLayer(1).getParam(biasKey).length()" language="JAVA" />
+        <watch expression="((ArrayList) network.getLayers()).size" language="JAVA" custom="java.util.ArrayList" />
+        <watch expression="model.getLayer(0).getParam(weightKey).toDoubleMatrix()" language="JAVA" />
+        <watch expression="model.getLayer(1).getParam(weightKey).toDoubleMatrix()" language="JAVA" />
+        <watch expression="currentLayer.getNNodes()" language="JAVA" />
+        <watch expression="currentLayer.getNOutputs()" language="JAVA" />
+        <watch expression="previousLayer.getNNodes()" language="JAVA" />
+        <watch expression="previousLayer.getNOutputs()" language="JAVA" />
+        <watch expression="config.getModel().getLayer(0).getParam(&quot;b&quot;).toDoubleVector()" language="JAVA" />
+        <watch expression="config.getModel().getLayer(1).getParam(&quot;b&quot;).toDoubleVector()" language="JAVA" />
+      </configuration>
+    </watches-manager>
+  </component>
+  <component name="debuggerHistoryManager">
+    <expressions id="watch">
+      <expression>
+        <expression-string>config.getModel().getLayer(1).getParam(&quot;b&quot;).toDoubleVector()</expression-string>
+        <language-id>JAVA</language-id>
+        <evaluation-mode>EXPRESSION</evaluation-mode>
+      </expression>
+      <expression>
+        <expression-string>config.getModel().getLayer(0).getParam(&quot;b&quot;).toDoubleVector()</expression-string>
+        <language-id>JAVA</language-id>
+        <evaluation-mode>EXPRESSION</evaluation-mode>
+      </expression>
+      <expression>
+        <expression-string>network.getModel().getLayer(0).getParam(&quot;b&quot;).toDoubleVector()</expression-string>
+        <language-id>JAVA</language-id>
+        <evaluation-mode>EXPRESSION</evaluation-mode>
+      </expression>
+      <expression>
+        <expression-string>network.getModel().getLayer(0).getParam(&quot;b&quot;)</expression-string>
+        <language-id>JAVA</language-id>
+        <evaluation-mode>EXPRESSION</evaluation-mode>
+      </expression>
+      <expression>
+        <expression-string>previousLayer.getNOutputs()</expression-string>
+        <language-id>JAVA</language-id>
+        <evaluation-mode>EXPRESSION</evaluation-mode>
+      </expression>
+      <expression>
+        <expression-string>previousLayer.getNNodes()</expression-string>
+        <language-id>JAVA</language-id>
+        <evaluation-mode>EXPRESSION</evaluation-mode>
+      </expression>
+      <expression>
+        <expression-string>currentLayer.getNOutputs()</expression-string>
+        <language-id>JAVA</language-id>
+        <evaluation-mode>EXPRESSION</evaluation-mode>
+      </expression>
+      <expression>
+        <expression-string>currentLayer.getNNodes()</expression-string>
+        <language-id>JAVA</language-id>
+        <evaluation-mode>EXPRESSION</evaluation-mode>
+      </expression>
+      <expression>
+        <expression-string>model.getLayer(1).getParam(weightKey).toDoubleMatrix()</expression-string>
+        <language-id>JAVA</language-id>
+        <evaluation-mode>EXPRESSION</evaluation-mode>
+      </expression>
+      <expression>
+        <expression-string>model.getLayer(0).getParam(weightKey).toDoubleMatrix()</expression-string>
+        <language-id>JAVA</language-id>
+        <evaluation-mode>EXPRESSION</evaluation-mode>
+      </expression>
+    </expressions>
+  </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/build.gradle">
+    <entry file="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/javax.persistence/javax.persistence-api/2.2/462dff65f6f8bde02ee9d8afe07fe9d50268199c/javax.persistence-api-2.2-sources.jar!/javax/persistence/Lob.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1323">
-          <caret line="63" column="61" selection-start-line="63" selection-start-column="61" selection-end-line="63" selection-end-column="61" />
+        <state relative-caret-position="714">
+          <caret line="60" column="18" selection-start-line="60" selection-start-column="18" selection-end-line="60" selection-end-column="18" />
         </state>
       </provider>
     </entry>
-    <entry file="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/javax.persistence/javax.persistence-api/2.2/462dff65f6f8bde02ee9d8afe07fe9d50268199c/javax.persistence-api-2.2-sources.jar!/javax/persistence/Entity.java">
+    <entry file="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/javax.persistence/javax.persistence-api/2.2/462dff65f6f8bde02ee9d8afe07fe9d50268199c/javax.persistence-api-2.2-sources.jar!/javax/persistence/OneToMany.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="294">
-          <caret line="32" column="18" selection-start-line="32" selection-start-column="18" selection-end-line="32" selection-end-column="18" />
+        <state relative-caret-position="390">
+          <caret line="112" column="18" selection-start-line="112" selection-start-column="18" selection-end-line="112" selection-end-column="18" />
         </state>
       </provider>
     </entry>
-    <entry file="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/javax.persistence/javax.persistence-api/2.2/462dff65f6f8bde02ee9d8afe07fe9d50268199c/javax.persistence-api-2.2-sources.jar!/javax/persistence/Table.java">
+    <entry file="file://$PROJECT_DIR$/network-configuration-server/src/main/java/en/ubb/networkconfiguration/repo/NetworkRepo.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="299">
-          <caret line="42" column="18" selection-start-line="42" selection-start-column="18" selection-end-line="42" selection-end-column="18" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/javax.persistence/javax.persistence-api/2.2/462dff65f6f8bde02ee9d8afe07fe9d50268199c/javax.persistence-api-2.2-sources.jar!/javax/persistence/GeneratedValue.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="415">
-          <caret line="62" column="18" selection-start-line="62" selection-start-column="18" selection-end-line="62" selection-end-column="18" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/javax.persistence/javax.persistence-api/2.2/462dff65f6f8bde02ee9d8afe07fe9d50268199c/javax.persistence-api-2.2-sources.jar!/javax/persistence/GenerationType.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="499">
-          <caret line="43" column="4" selection-start-line="43" selection-start-column="4" selection-end-line="43" selection-end-column="4" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.deeplearning4j/deeplearning4j-nn/1.0.0-beta3/abe22e7e57a5f6d21b2794090e8008d9175a2d58/deeplearning4j-nn-1.0.0-beta3-sources.jar!/org/deeplearning4j/nn/multilayer/MultiLayerNetwork.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="110">
-          <caret line="104" column="13" selection-start-line="104" selection-start-column="13" selection-end-line="104" selection-end-column="13" />
+        <state relative-caret-position="119">
+          <caret line="7" selection-start-line="7" selection-end-line="8" selection-end-column="14" />
           <folding>
-            <element signature="e#12217#12218#0" expanded="true" />
-            <element signature="e#12250#12251#0" expanded="true" />
+            <element signature="imports" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.deeplearning4j/deeplearning4j-nn/1.0.0-beta3/d0e1881d573e3a6a5bd38ad4a66d37b3c5810562/deeplearning4j-nn-1.0.0-beta3.jar!/org/deeplearning4j/nn/conf/layers/Layer.class">
+    <entry file="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.springframework.data/spring-data-commons/2.1.5.RELEASE/8e8ee6b7fbc90aed51973b38c27463739daa6200/spring-data-commons-2.1.5.RELEASE-sources.jar!/org/springframework/data/annotation/PersistenceConstructor.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="2247">
-          <caret line="132" column="18" selection-start-line="132" selection-start-column="18" selection-end-line="132" selection-end-column="18" />
+        <state relative-caret-position="170">
+          <caret line="27" column="18" selection-start-line="27" selection-start-column="18" selection-end-line="27" selection-end-column="18" />
         </state>
       </provider>
     </entry>
-    <entry file="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.deeplearning4j/deeplearning4j-nn/1.0.0-beta3/abe22e7e57a5f6d21b2794090e8008d9175a2d58/deeplearning4j-nn-1.0.0-beta3-sources.jar!/org/deeplearning4j/nn/conf/layers/recurrent/Bidirectional.java">
+    <entry file="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.projectlombok/lombok/1.18.6/2908ec27909c1929a9f2e031e4ae27e54d268860/lombok-1.18.6-sources.jar!/lombok/experimental/Wither.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="420">
-          <caret line="57" column="13" selection-start-line="57" selection-start-column="13" selection-end-line="57" selection-end-column="13" />
+        <state relative-caret-position="-83">
+          <caret line="55" column="18" selection-start-line="55" selection-start-column="18" selection-end-line="55" selection-end-column="18" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/network-configuration-server/src/main/java/en/ubb/networkconfiguration/rest/NetworkApi.java">
+    <entry file="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.projectlombok/lombok/1.18.6/2908ec27909c1929a9f2e031e4ae27e54d268860/lombok-1.18.6-sources.jar!/lombok/AllArgsConstructor.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="231">
-          <caret line="14" column="16" selection-start-line="14" selection-start-column="16" selection-end-line="14" selection-end-column="16" />
+        <state relative-caret-position="-117">
+          <caret line="41" column="18" selection-start-line="41" selection-start-column="18" selection-end-line="41" selection-end-column="18" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.projectlombok/lombok/1.18.6/2908ec27909c1929a9f2e031e4ae27e54d268860/lombok-1.18.6-sources.jar!/lombok/experimental/SuperBuilder.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="119">
+          <caret line="33" column="31" selection-start-line="33" selection-start-column="31" selection-end-line="33" selection-end-column="31" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.nd4j/nd4j-buffer/1.0.0-beta3/6d8c75c36a008ff99fcc7a92931cf4a2884a57da/nd4j-buffer-1.0.0-beta3-sources.jar!/org/nd4j/linalg/api/buffer/DataBuffer.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-230">
+          <caret line="32" column="17" selection-start-line="32" selection-start-column="17" selection-end-line="32" selection-end-column="17" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/network-configuration-server/src/main/resources/application.properties">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="85">
+          <caret line="5" column="27" selection-start-line="5" selection-start-column="27" selection-end-line="5" selection-end-column="27" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.nd4j/nd4j-api/1.0.0-beta3/ae3a83d57ad23a1a881cb0745b7f725411d05a32/nd4j-api-1.0.0-beta3-sources.jar!/org/nd4j/linalg/api/ndarray/INDArray.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-289">
+          <caret line="309" column="13" selection-start-line="309" selection-start-column="13" selection-end-line="309" selection-end-column="13" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/javax.persistence/javax.persistence-api/2.2/462dff65f6f8bde02ee9d8afe07fe9d50268199c/javax.persistence-api-2.2-sources.jar!/javax/persistence/Column.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="595">
+          <caret line="53" column="18" selection-start-line="53" selection-start-column="18" selection-end-line="53" selection-end-column="18" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/javax.persistence/javax.persistence-api/2.2/462dff65f6f8bde02ee9d8afe07fe9d50268199c/javax.persistence-api-2.2-sources.jar!/javax/persistence/Index.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="176">
+          <caret line="49" column="18" selection-start-line="49" selection-start-column="18" selection-end-line="49" selection-end-column="18" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/network-configuration-server/src/main/java/en/ubb/networkconfiguration/repo/NodeRepo.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="153">
+          <caret line="9" column="72" lean-forward="true" selection-start-line="9" selection-start-column="72" selection-end-line="9" selection-end-column="72" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/network-configuration-server/src/main/java/en/ubb/networkconfiguration/domain/enums/LayerType.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="85">
+          <caret line="5" column="9" selection-start-line="5" selection-start-column="9" selection-end-line="5" selection-end-column="9" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/network-configuration-server/src/main/java/en/ubb/networkconfiguration/util/LayerUtil.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="357">
+          <caret line="21" column="61" selection-start-line="21" selection-start-column="61" selection-end-line="21" selection-end-column="61" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/network-configuration-server/src/main/java/en/ubb/networkconfiguration/util/NetworkUtil.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="323">
+          <caret line="19" column="24" lean-forward="true" selection-start-line="19" selection-start-column="24" selection-end-line="19" selection-end-column="24" />
           <folding>
             <element signature="imports" expanded="true" />
           </folding>
@@ -949,283 +1202,337 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/network-configuration-server/src/main/java/en/ubb/networkconfiguration/domain/BaseEntity.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="441">
-          <caret line="29" selection-start-line="29" selection-end-line="29" />
-          <folding>
-            <element signature="imports" expanded="true" />
-            <element signature="e#894#895#0" expanded="true" />
-            <element signature="e#933#934#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.deeplearning4j/deeplearning4j-nn/1.0.0-beta3/abe22e7e57a5f6d21b2794090e8008d9175a2d58/deeplearning4j-nn-1.0.0-beta3-sources.jar!/org/deeplearning4j/nn/conf/layers/BaseLayer.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="299">
-          <caret line="120" column="80" selection-start-line="120" selection-start-column="71" selection-end-line="120" selection-end-column="84" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.deeplearning4j/deeplearning4j-nn/1.0.0-beta3/abe22e7e57a5f6d21b2794090e8008d9175a2d58/deeplearning4j-nn-1.0.0-beta3-sources.jar!/org/deeplearning4j/nn/conf/layers/Layer.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="530">
-          <caret line="213" column="33" selection-start-line="213" selection-start-column="33" selection-end-line="213" selection-end-column="33" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.deeplearning4j/deeplearning4j-nn/1.0.0-beta3/abe22e7e57a5f6d21b2794090e8008d9175a2d58/deeplearning4j-nn-1.0.0-beta3-sources.jar!/org/deeplearning4j/nn/conf/layers/DenseLayer.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="351">
-          <caret line="107" column="60" selection-start-line="107" selection-start-column="60" selection-end-line="107" selection-end-column="60" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.deeplearning4j/deeplearning4j-nn/1.0.0-beta3/abe22e7e57a5f6d21b2794090e8008d9175a2d58/deeplearning4j-nn-1.0.0-beta3-sources.jar!/org/deeplearning4j/nn/conf/layers/FeedForwardLayer.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-285">
-          <caret line="140" column="33" selection-start-line="140" selection-start-column="33" selection-end-line="140" selection-end-column="33" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.deeplearning4j/deeplearning4j-nn/1.0.0-beta3/abe22e7e57a5f6d21b2794090e8008d9175a2d58/deeplearning4j-nn-1.0.0-beta3-sources.jar!/org/deeplearning4j/optimize/listeners/ScoreIterationListener.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="302">
-          <caret line="39" column="11" selection-start-line="39" selection-start-column="11" selection-end-line="39" selection-end-column="11" />
-          <folding>
-            <element signature="e#1523#1524#0" expanded="true" />
-            <element signature="e#1577#1578#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/network-configuration-server/src/main/java/en/ubb/networkconfiguration/repo/NetworkConfigRepo.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="42">
-          <caret line="2" column="58" selection-start-line="2" selection-start-column="58" selection-end-line="2" selection-end-column="58" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/network-configuration-server/src/main/java/en/ubb/networkconfiguration/service/NetworkService.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="210">
-          <caret line="10" lean-forward="true" selection-start-line="10" selection-end-line="10" />
+        <state relative-caret-position="357">
+          <caret line="21" selection-start-line="21" selection-end-line="21" />
           <folding>
             <element signature="imports" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.deeplearning4j/deeplearning4j-datasets/1.0.0-beta3/3da3e8f895ef90dda484860c05f4a2f8bb0c644/deeplearning4j-datasets-1.0.0-beta3-sources.jar!/org/deeplearning4j/datasets/iterator/impl/MnistDataSetIterator.java">
+    <entry file="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.projectlombok/lombok/1.18.6/2908ec27909c1929a9f2e031e4ae27e54d268860/lombok-1.18.6-sources.jar!/lombok/Builder.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="777">
-          <caret line="54" column="11" selection-start-line="54" selection-start-column="11" selection-end-line="54" selection-end-column="11" />
+        <state relative-caret-position="588">
+          <caret line="137" column="27" selection-start-line="137" selection-start-column="11" selection-end-line="137" selection-end-column="27" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.projectlombok/lombok/1.18.6/2908ec27909c1929a9f2e031e4ae27e54d268860/lombok-1.18.6-sources.jar!/lombok/Getter.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="586">
+          <caret line="67" column="32" selection-start-line="67" selection-start-column="23" selection-end-line="67" selection-end-column="32" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.nd4j/nd4j-api/1.0.0-beta3/ae3a83d57ad23a1a881cb0745b7f725411d05a32/nd4j-api-1.0.0-beta3-sources.jar!/org/nd4j/linalg/learning/GradientUpdater.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="204">
+          <caret line="27" column="17" selection-start-line="27" selection-start-column="17" selection-end-line="27" selection-end-column="17" />
         </state>
       </provider>
     </entry>
     <entry file="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.deeplearning4j/deeplearning4j-nn/1.0.0-beta3/abe22e7e57a5f6d21b2794090e8008d9175a2d58/deeplearning4j-nn-1.0.0-beta3-sources.jar!/org/deeplearning4j/nn/conf/NeuralNetConfiguration.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="299">
-          <caret line="806" column="23" selection-start-line="806" selection-start-column="23" selection-end-line="806" selection-end-column="23" />
+        <state relative-caret-position="333">
+          <caret line="913" column="35" lean-forward="true" selection-start-line="913" selection-start-column="35" selection-end-line="913" selection-end-column="35" />
+          <folding>
+            <element signature="e#6452#6453#0" expanded="true" />
+            <element signature="e#6527#6528#0" expanded="true" />
+            <element signature="e#7677#7678#0" expanded="true" />
+            <element signature="e#7736#7737#0" expanded="true" />
+            <element signature="e#25402#25403#0" expanded="true" />
+            <element signature="e#25454#25455#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.nd4j/nd4j-api/1.0.0-beta3/ae3a83d57ad23a1a881cb0745b7f725411d05a32/nd4j-api-1.0.0-beta3-sources.jar!/org/nd4j/linalg/learning/config/IUpdater.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="272">
+          <caret line="37" column="22" lean-forward="true" selection-start-line="37" selection-start-column="22" selection-end-line="37" selection-end-column="22" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.nd4j/nd4j-api/1.0.0-beta3/ae3a83d57ad23a1a881cb0745b7f725411d05a32/nd4j-api-1.0.0-beta3-sources.jar!/org/nd4j/linalg/learning/config/Sgd.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="221">
+          <caret line="35" column="13" selection-start-line="35" selection-start-column="13" selection-end-line="35" selection-end-column="13" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/network-configuration-server/src/main/java/en/ubb/networkconfiguration/domain/network/setup/LayerInitializer.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="629">
+          <caret line="37" column="4" selection-start-line="37" selection-start-column="4" selection-end-line="37" selection-end-column="4" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/network-configuration-server/src/main/java/en/ubb/networkconfiguration/domain/network/setup/NetworkInitializer.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="161">
+          <caret line="38" column="46" selection-start-line="38" selection-start-column="46" selection-end-line="38" selection-end-column="46" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.deeplearning4j/deeplearning4j-nn/1.0.0-beta3/abe22e7e57a5f6d21b2794090e8008d9175a2d58/deeplearning4j-nn-1.0.0-beta3-sources.jar!/org/deeplearning4j/eval/Evaluation.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="227">
+          <caret line="67" column="131" lean-forward="true" selection-start-line="67" selection-start-column="131" selection-end-line="67" selection-end-column="131" />
+          <folding>
+            <element signature="e#2930#2931#0" expanded="true" />
+            <element signature="e#2963#2964#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.nd4j/nd4j-api/1.0.0-beta3/ae3a83d57ad23a1a881cb0745b7f725411d05a32/nd4j-api-1.0.0-beta3-sources.jar!/org/nd4j/evaluation/classification/Evaluation.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="278">
+          <caret line="84" column="16" selection-start-line="84" selection-start-column="16" selection-end-line="84" selection-end-column="16" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.nd4j/nd4j-common/1.0.0-beta3/e8b68518a26dbf83409a8c295792b137f4981cca/nd4j-common-1.0.0-beta3-sources.jar!/org/nd4j/base/Preconditions.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="154">
+          <caret line="633" column="23" selection-start-line="633" selection-start-column="23" selection-end-line="633" selection-end-column="23" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.deeplearning4j/deeplearning4j-nn/1.0.0-beta3/abe22e7e57a5f6d21b2794090e8008d9175a2d58/deeplearning4j-nn-1.0.0-beta3-sources.jar!/org/deeplearning4j/nn/multilayer/MultiLayerNetwork.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="178">
+          <caret line="2776" column="26" lean-forward="true" selection-start-line="2776" selection-start-column="26" selection-end-line="2776" selection-end-column="26" />
+          <folding>
+            <element signature="e#22151#22152#0" expanded="true" />
+            <element signature="e#22184#22185#0" expanded="true" />
+            <element signature="e#123244#123245#0" expanded="true" />
+            <element signature="e#123273#123274#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.deeplearning4j/deeplearning4j-nn/1.0.0-beta3/abe22e7e57a5f6d21b2794090e8008d9175a2d58/deeplearning4j-nn-1.0.0-beta3-sources.jar!/org/deeplearning4j/nn/conf/layers/FeedForwardLayer.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="196">
+          <caret line="173" column="17" selection-start-line="173" selection-start-column="17" selection-end-line="173" selection-end-column="17" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.nd4j/nd4j-api/1.0.0-beta3/ae3a83d57ad23a1a881cb0745b7f725411d05a32/nd4j-api-1.0.0-beta3-sources.jar!/org/nd4j/linalg/activations/impl/ActivationLReLU.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="306">
+          <caret line="39" column="11" selection-start-line="39" selection-start-column="11" selection-end-line="39" selection-end-column="11" />
+          <folding>
+            <element signature="e#1481#1482#0" expanded="true" />
+            <element signature="e#1516#1517#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.nd4j/nd4j-api/1.0.0-beta3/ae3a83d57ad23a1a881cb0745b7f725411d05a32/nd4j-api-1.0.0-beta3-sources.jar!/org/nd4j/linalg/activations/Activation.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="884">
+          <caret line="77" column="40" selection-start-line="77" selection-start-column="40" selection-end-line="77" selection-end-column="40" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.nd4j/nd4j-api/1.0.0-beta3/ae3a83d57ad23a1a881cb0745b7f725411d05a32/nd4j-api-1.0.0-beta3-sources.jar!/org/nd4j/linalg/activations/impl/ActivationSoftmax.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="204">
+          <caret line="32" column="13" selection-start-line="32" selection-start-column="13" selection-end-line="32" selection-end-column="13" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/network-configuration-server/src/main/java/en/ubb/networkconfiguration/domain/network/runtime/Network.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-154">
+          <caret line="19" selection-start-line="19" selection-end-line="38" selection-end-column="25" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/network-configuration-server/src/main/java/en/ubb/networkconfiguration/domain/network/runtime/Node.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="51">
+          <caret line="14" column="7" lean-forward="true" selection-start-line="14" selection-start-column="7" selection-end-line="14" selection-end-column="7" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/network-configuration-server/src/main/java/en/ubb/networkconfiguration/domain/network/runtime/Link.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="204">
+          <caret line="12" column="21" selection-start-line="12" selection-start-column="21" selection-end-line="12" selection-end-column="21" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/network-configuration-server/src/main/java/en/ubb/networkconfiguration/domain/network/runtime/Layer.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="136">
+          <caret line="14" selection-start-line="14" selection-end-line="14" selection-end-column="19" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/network-configuration-server/src/main/java/en/ubb/networkconfiguration/dto/NetworkDto.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="136">
+          <caret line="8" selection-start-line="8" selection-end-line="8" selection-end-column="8" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/network-configuration-server/src/main/java/en/ubb/networkconfiguration/dto/LinkDto.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="102">
+          <caret line="6" column="8" selection-start-line="6" selection-start-column="8" selection-end-line="6" selection-end-column="8" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/network-configuration-server/src/main/java/en/ubb/networkconfiguration/dto/LayerDto.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="170">
+          <caret line="10" column="8" selection-start-line="10" selection-start-column="8" selection-end-line="10" selection-end-column="8" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/network-configuration-server/src/main/java/en/ubb/networkconfiguration/dto/NodeDto.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="136">
+          <caret line="8" column="8" selection-start-line="8" selection-start-column="8" selection-end-line="8" selection-end-column="8" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/network-configuration-server/src/main/java/en/ubb/networkconfiguration/dto/util/DtoMapper.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="238">
+          <caret line="14" lean-forward="true" selection-start-line="14" selection-end-line="14" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/network-configuration-server/src/main/java/en/ubb/networkconfiguration/repo/LayerRepo.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="136">
+          <caret line="8" column="14" selection-start-line="8" selection-start-column="14" selection-end-line="8" selection-end-column="14" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/network-configuration-server/src/main/java/en/ubb/networkconfiguration/service/impl/NetworkServiceImpl.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="588">
-          <caret line="40" column="4" selection-start-line="40" selection-start-column="4" selection-end-line="40" selection-end-column="88" />
+        <state relative-caret-position="418">
+          <caret line="62" column="18" lean-forward="true" selection-start-line="62" selection-start-column="18" selection-end-line="62" selection-end-column="18" />
+          <folding>
+            <element signature="imports" expanded="true" />
+            <element signature="e#2130#2131#0" expanded="true" />
+            <element signature="e#2157#2158#0" expanded="true" />
+            <element signature="e#2177#2178#0" expanded="true" />
+            <element signature="e#2222#2223#0" expanded="true" />
+            <element signature="e#9498#9499#0" expanded="true" />
+            <element signature="e#9525#9526#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/network-configuration-server/src/main/java/en/ubb/networkconfiguration/service/NetworkService.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="272">
+          <caret line="17" column="20" selection-start-line="17" selection-start-column="20" selection-end-line="17" selection-end-column="20" />
           <folding>
             <element signature="imports" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/test-microservice/src/main/java/en/ubb/microservice/App.java">
+    <entry file="file://$PROJECT_DIR$/network-configuration-server/src/main/java/en/ubb/networkconfiguration/validation/exception/BoundaryException.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="252">
-          <caret line="12" column="5" lean-forward="true" selection-start-line="12" selection-start-column="5" selection-end-line="12" selection-end-column="5" />
+        <state relative-caret-position="68">
+          <caret line="4" column="4" lean-forward="true" selection-start-line="4" selection-start-column="4" selection-end-line="4" selection-end-column="4" />
           <folding>
-            <element signature="imports" expanded="true" />
+            <element signature="e#149#150#0" expanded="true" />
+            <element signature="e#172#173#0" expanded="true" />
+            <element signature="e#220#221#0" expanded="true" />
+            <element signature="e#250#251#0" expanded="true" />
+            <element signature="e#315#316#0" expanded="true" />
+            <element signature="e#352#353#0" expanded="true" />
+            <element signature="e#401#402#0" expanded="true" />
+            <element signature="e#429#430#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/settings.gradle">
-      <provider selected="true" editor-type-id="text-editor" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/docker-clear.bat">
+    <entry file="file://$PROJECT_DIR$/network-configuration-server/src/main/java/en/ubb/networkconfiguration/validation/exception/NetworkAccessException.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="42">
-          <caret line="2" column="79" lean-forward="true" selection-start-line="2" selection-start-column="79" selection-end-line="2" selection-end-column="79" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/network-configuration-server/build.gradle">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="496">
-          <caret line="62" column="40" selection-start-line="62" selection-start-column="40" selection-end-line="62" selection-end-column="40" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/central-config-server/build.gradle">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-395">
-          <caret line="23" column="29" selection-start-line="23" selection-start-column="29" selection-end-line="23" selection-end-column="29" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/gateway-server/build.gradle">
-      <provider selected="true" editor-type-id="text-editor" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/gateway-server/Dockerfile">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="168">
-          <caret line="8" column="54" lean-forward="true" selection-start-line="8" selection-start-column="54" selection-end-line="8" selection-end-column="54" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/discovery-server/build.gradle">
-      <provider selected="true" editor-type-id="text-editor" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/discovery-server/Dockerfile">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="168">
-          <caret line="8" column="54" lean-forward="true" selection-start-line="8" selection-start-column="54" selection-end-line="8" selection-end-column="54" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/central-config-server/Dockerfile">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="168">
-          <caret line="8" column="59" selection-start-line="8" selection-start-column="59" selection-end-line="8" selection-end-column="59" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/docker-compose.yml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="21">
-          <caret line="1" selection-start-line="1" selection-end-line="1" />
+        <state relative-caret-position="34">
+          <caret line="2" column="61" selection-start-line="2" selection-start-column="61" selection-end-line="2" selection-end-column="61" />
+          <folding>
+            <element signature="e#147#148#0" expanded="true" />
+            <element signature="e#170#171#0" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/network-configuration-server/src/main/java/en/ubb/networkconfiguration/App.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="2331">
-          <caret line="129" column="5" selection-start-line="129" selection-start-column="5" selection-end-line="129" selection-end-column="5" />
+        <state relative-caret-position="255">
+          <caret line="15" selection-start-line="15" selection-end-line="15" />
           <folding>
             <element signature="imports" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/central-config-server/src/main/resources/bootstrap.properties">
-      <provider selected="true" editor-type-id="text-editor" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/central-config-server/src/main/resources/application.properties">
-      <provider selected="true" editor-type-id="text-editor" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/gateway-server/src/main/java/en/ubb/gateway/GatewayApplication.java">
+    <entry file="file://$PROJECT_DIR$/network-configuration-server/src/main/java/en/ubb/networkconfiguration/validation/exception/NetworkNotFoundException.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="210">
-          <caret line="12" selection-start-line="12" selection-end-line="12" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/gateway-server/src/main/resources/bootstrap-prod.properties">
-      <provider selected="true" editor-type-id="text-editor">
-        <state>
-          <caret column="57" selection-start-column="57" selection-end-column="57" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/gateway-server/src/main/resources/bootstrap-test.properties">
-      <provider selected="true" editor-type-id="text-editor">
-        <state>
-          <caret column="40" selection-start-column="40" selection-end-column="40" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/test-microservice/build.gradle">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="882">
-          <caret line="42" column="13" selection-start-line="42" selection-start-column="13" selection-end-line="42" selection-end-column="13" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/gateway-server/src/main/resources/bootstrap.properties">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="21">
-          <caret line="1" selection-start-line="1" selection-end-line="1" selection-end-column="27" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/network-configuration-server/src/main/resources/bootstrap.properties">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="21">
-          <caret line="1" column="27" selection-start-line="1" selection-start-column="27" selection-end-line="1" selection-end-column="27" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/test-microservice/src/main/resources/bootstrap.properties">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="21">
-          <caret line="1" column="27" selection-start-line="1" selection-start-column="27" selection-end-line="1" selection-end-column="27" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/test-microservice/src/main/resources/bootstrap-test.properties">
-      <provider selected="true" editor-type-id="text-editor">
-        <state>
-          <caret column="45" selection-start-column="45" selection-end-column="45" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/test-microservice/Dockerfile">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="189">
-          <caret line="9" column="61" selection-start-line="9" selection-start-column="61" selection-end-line="9" selection-end-column="61" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/network-configuration-server/src/main/resources/bootstrap-test.properties">
-      <provider selected="true" editor-type-id="text-editor" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/discovery-server/src/main/resources/bootstrap-test.properties">
-      <provider selected="true" editor-type-id="text-editor" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/discovery-server/src/main/resources/bootstrap.properties">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="21">
-          <caret line="1" column="27" selection-start-line="1" selection-start-column="27" selection-end-line="1" selection-end-column="27" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/discovery-server/src/main/resources/bootstrap-prod.properties">
-      <provider selected="true" editor-type-id="text-editor" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/test-microservice/src/main/resources/bootstrap-prod.properties">
-      <provider selected="true" editor-type-id="text-editor" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/discovery-server/build/scripts/discovery-server.bat">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="588">
-          <caret line="82" selection-start-line="82" selection-end-line="82" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/network-configuration-server/src/main/java/en/ubb/networkconfiguration/domain/NetworkConfig.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="483">
-          <caret line="29" column="26" selection-start-line="29" selection-start-column="26" selection-end-line="29" selection-end-column="26" />
+        <state relative-caret-position="34">
+          <caret line="2" column="63" selection-start-line="2" selection-start-column="63" selection-end-line="2" selection-end-column="63" />
           <folding>
-            <element signature="imports" expanded="true" />
+            <element signature="e#182#183#0" expanded="true" />
+            <element signature="e#212#213#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/network-configuration-server/src/main/java/en/ubb/networkconfiguration/domain/HiddenLayerConfig.java">
+    <entry file="file://$PROJECT_DIR$/network-configuration-server/src/main/java/en/ubb/networkconfiguration/validation/exception/IllegalArgumentException.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="334">
-          <caret line="18" column="13" selection-start-line="18" selection-start-column="13" selection-end-line="18" selection-end-column="13" />
+        <state relative-caret-position="85">
+          <caret line="5" column="24" selection-start-line="5" selection-start-column="24" selection-end-line="5" selection-end-column="24" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/network-configuration-server/src/main/java/en/ubb/networkconfiguration/rest/NetworkApi.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="365">
+          <caret line="42" column="55" lean-forward="true" selection-start-line="42" selection-start-column="55" selection-end-line="42" selection-end-column="55" />
           <folding>
             <element signature="imports" expanded="true" />
           </folding>

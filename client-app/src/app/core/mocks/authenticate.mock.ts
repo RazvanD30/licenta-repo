@@ -171,19 +171,19 @@ export class AuthenticateMock implements HttpInterceptor {
       layers.push(layer);
     }
 
-    // input nodes
+    // input nNodes
     for (let i = 0; i < INPUT_NODES; i++) {
       const node: NeuralNode = new NeuralNode(ID_ADD + i, Status.INPUT);
       layers[0].nodes.push(node);
     }
 
-    // output nodes
+    // output nNodes
     for (let i = 0; i < OUTPUT_NODES; i++) {
       const node: NeuralNode = new NeuralNode(ID_ADD + (layers.length - 1) * 1000 + i, Status.IGNORED);
       layers[layers.length - 1].nodes.push(node);
     }
 
-    // hidden nodes
+    // hidden nNodes
     for (let l = 1; l <= HIDDEN_LAYERS; l++) {
       for (let n = 0; n < NODES_PER_HIDDEN_LAYER; n++) {
         const node: NeuralNode = new NeuralNode(ID_ADD + l * 1000 + n, Status.IGNORED);
