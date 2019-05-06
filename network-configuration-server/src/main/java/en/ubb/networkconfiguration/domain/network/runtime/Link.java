@@ -16,7 +16,7 @@ public class Link extends BaseEntity<Long> {
     @Column(name = "weight", nullable = false)
     private double weight;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "node_id")
     private Node node;
 

@@ -3,10 +3,12 @@ package en.ubb.networkconfiguration.validation.validator;
 import en.ubb.networkconfiguration.dto.LayerDto;
 import en.ubb.networkconfiguration.dto.NetworkDto;
 import org.jetbrains.annotations.NotNull;
+import org.springframework.stereotype.Component;
 import org.springframework.validation.Errors;
 import org.springframework.validation.ValidationUtils;
 import org.springframework.validation.Validator;
 
+@Component
 public class NetworkDtoValidator implements Validator {
 
     private final Validator layerDtoValidator;

@@ -1,15 +1,14 @@
 package en.ubb.networkconfiguration.service.impl;
 
-import en.ubb.networkconfiguration.domain.network.runtime.Layer;
-import en.ubb.networkconfiguration.domain.network.runtime.Link;
-import en.ubb.networkconfiguration.domain.network.runtime.Network;
-import en.ubb.networkconfiguration.domain.network.runtime.Node;
+import en.ubb.networkconfiguration.domain.network.runtime.*;
 import en.ubb.networkconfiguration.domain.network.setup.NetworkInitializer;
 import en.ubb.networkconfiguration.repo.LayerRepo;
 import en.ubb.networkconfiguration.repo.NetworkRepo;
+import en.ubb.networkconfiguration.repo.NetworkStateRepo;
 import en.ubb.networkconfiguration.repo.NodeRepo;
 import en.ubb.networkconfiguration.service.NetworkService;
 import en.ubb.networkconfiguration.util.LayerUtil;
+import en.ubb.networkconfiguration.validation.exception.boundary.NetworkNotFoundException;
 import org.datavec.api.records.reader.RecordReader;
 import org.datavec.api.records.reader.impl.csv.CSVRecordReader;
 import org.datavec.api.split.FileSplit;
@@ -31,6 +30,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.validation.Valid;
 import java.io.*;
 import java.util.List;
 import java.util.Optional;
@@ -47,6 +47,9 @@ public class NetworkServiceImpl implements NetworkService {
     @Autowired
     private LayerRepo layerRepo;
 
+    @Autowired
+    private NetworkStateRepo networkStateRepo;
+
     private static final Logger log = LoggerFactory.getLogger(NetworkServiceImpl.class);
 
     @Override
@@ -61,14 +64,14 @@ public class NetworkServiceImpl implements NetworkService {
 
     @Override
     public boolean deleteById(long id) {
-        if(networkRepo.findById(id).isPresent()){
+        if (networkRepo.findById(id).isPresent()) {
             networkRepo.deleteById(id);
             return true;
         }
         return false;
     }
 
-    private Network getInitialNetwork(NetworkInitializer initializer){
+    private Network getInitialNetwork(NetworkInitializer initializer) {
         Network network = new Network().toBuilder()
                 .name(initializer.getName())
                 .batchSize(initializer.getBatchSize())
@@ -90,11 +93,11 @@ public class NetworkServiceImpl implements NetworkService {
             network.addLayer(layer);
         });
 
-        for(int i = 0; i < network.getLayers().size(); i++){
+        for (int i = 0; i < network.getLayers().size(); i++) {
             Layer currentLayer = network.getLayers().get(i);
-            for(int currentNode = 0; currentNode < currentLayer.getNNodes(); currentNode++){
+            for (int currentNode = 0; currentNode < currentLayer.getNNodes(); currentNode++) {
                 Node node = new Node();
-                for(int currentLink = 0; currentLink < currentLayer.getNOutputs(); currentLink++){
+                for (int currentLink = 0; currentLink < currentLayer.getNOutputs(); currentLink++) {
                     Link link = new Link();
                     node.addLink(link);
                 }
@@ -105,7 +108,7 @@ public class NetworkServiceImpl implements NetworkService {
     }
 
     @Override
-    public Network createNetwork(NetworkInitializer initializer) throws IOException {
+    public Network create(@Valid NetworkInitializer initializer) throws IOException {
 
         Network network = this.getInitialNetwork(initializer);
 
@@ -129,12 +132,32 @@ public class NetworkServiceImpl implements NetworkService {
         MultiLayerNetwork model = new MultiLayerNetwork(conf);
         model.init();
         network.setModel(model);
-        this.saveNetwork(network);
+        this.saveProgress(network);
         return network;
     }
 
     @Override
-    public Network runNetwork(Network network) throws IOException, InterruptedException {
+    public Network update(Network updatedNetwork) {
+
+        Network network = networkRepo.findById(updatedNetwork.getId())
+                .orElseThrow(() -> new NetworkNotFoundException(updatedNetwork.getId()))
+                .toBuilder()
+                .name(updatedNetwork.getName())
+                .batchSize(updatedNetwork.getBatchSize())
+                .learningRate(updatedNetwork.getLearningRate())
+                .nEpochs(updatedNetwork.getNEpochs())
+                .nInputs(updatedNetwork.getNInputs())
+                .nOutputs(updatedNetwork.getNOutputs())
+                .layers(updatedNetwork.getLayers())
+                .build();
+
+        this.networkRepo.save(network);
+
+        return network;
+    }
+
+    @Override
+    public Network run(Network network) throws IOException, InterruptedException {
         MultiLayerNetwork model = network.getModel();
 
         final String filenameTrain = new ClassPathResource("/classification/linear_data_train.csv").getFile().getPath();
@@ -170,11 +193,17 @@ public class NetworkServiceImpl implements NetworkService {
     }
 
     @Override
-    public Network saveNetwork(Network network) throws IOException {
+    public Network saveProgress(Network network) throws IOException {
         MultiLayerNetwork model = network.getModel();
         ByteArrayOutputStream stream = new ByteArrayOutputStream();
         ModelSerializer.writeModel(model, stream, true, null);
-        network.setNetwork(stream.toByteArray());
+
+
+        NetworkState state = new NetworkState();
+        state.setDescriptor(stream.toByteArray());
+
+        state = networkStateRepo.save(state);
+        state.addNetwork(network);
 
         String weightKey = "W";
         String biasKey = "b";
@@ -191,7 +220,7 @@ public class NetworkServiceImpl implements NetworkService {
                 node.setBias(biases[nodeC]);
             }
 
-            for(int nodeP = 0; nodeP < previousLayer.getNNodes(); nodeP++){
+            for (int nodeP = 0; nodeP < previousLayer.getNNodes(); nodeP++) {
                 Node node = previousLayer.getNodes().get(nodeP);
                 for (int linkC = 0; linkC < previousLayer.getNOutputs(); linkC++) {
                     Link link = node.getOutputLinks().get(linkC);
@@ -238,7 +267,7 @@ public class NetworkServiceImpl implements NetworkService {
 
     @Override
     public Network loadNetwork(Network network) throws IOException {
-        InputStream stream = new ByteArrayInputStream(network.getNetwork());
+        InputStream stream = new ByteArrayInputStream(network.getState().getDescriptor());
         network.setModel(ModelSerializer.restoreMultiLayerNetwork(stream, true));
         return network;
     }

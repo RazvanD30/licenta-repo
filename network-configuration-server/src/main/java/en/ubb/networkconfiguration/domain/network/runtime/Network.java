@@ -46,9 +46,9 @@ public class Network extends BaseEntity<Long> {
     @Range(min = 1)
     private int nOutputs;
 
-    @Lob
-    @Column(name = "network")
-    private byte[] network;
+    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @JoinColumn(name = "state_id")
+    private NetworkState state;
 
     @OneToMany(mappedBy = "network", cascade = CascadeType.ALL)
     private List<Layer> layers = new ArrayList<>();
@@ -57,7 +57,7 @@ public class Network extends BaseEntity<Long> {
     private MultiLayerNetwork model;
 
     @Builder(toBuilder = true)
-    public Network(Long id, String name, int seed, double learningRate, int batchSize, int nEpochs, int nInputs, int nOutputs, byte[] network, List<Layer> layers, MultiLayerNetwork model) {
+    public Network(Long id, @NotEmpty String name, int seed, @Range(min = 0, max = 10) double learningRate, @Range(min = 1) int batchSize, @Range(min = 1) int nEpochs, @Range(min = 1) int nInputs, @Range(min = 1) int nOutputs, NetworkState state, List<Layer> layers, MultiLayerNetwork model) {
         super(id);
         this.name = name;
         this.seed = seed;
@@ -66,7 +66,7 @@ public class Network extends BaseEntity<Long> {
         this.nEpochs = nEpochs;
         this.nInputs = nInputs;
         this.nOutputs = nOutputs;
-        this.network = network;
+        this.state = state;
         this.layers = layers;
         this.model = model;
     }

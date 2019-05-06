@@ -1,4 +1,4 @@
-package en.ubb.networkconfiguration.rest;
+package en.ubb.networkconfiguration.controller;
 
 
 import en.ubb.networkconfiguration.domain.enums.LayerType;
@@ -12,11 +12,15 @@ import en.ubb.networkconfiguration.dto.util.DtoMapper;
 import en.ubb.networkconfiguration.service.NetworkService;
 import en.ubb.networkconfiguration.validation.exception.boundary.BoundaryException;
 import en.ubb.networkconfiguration.validation.exception.boundary.NetworkNotFoundException;
+import en.ubb.networkconfiguration.validation.validator.NetworkDtoValidator;
 import org.nd4j.linalg.activations.Activation;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.annotation.Validated;
+import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.support.SessionStatus;
 
-import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
 import java.io.IOException;
 import java.util.List;
@@ -26,11 +30,20 @@ import java.util.stream.Collectors;
 @RequestMapping("network-run")
 public class NetworkApi {
 
+    @Autowired
+    private NetworkDtoValidator networkDtoValidator;
+
     private final NetworkService networkService;
 
     @Autowired
     public NetworkApi(NetworkService networkService) {
         this.networkService = networkService;
+    }
+
+
+    @InitBinder
+    protected void initBinder(WebDataBinder binder) {
+        binder.addValidators(networkDtoValidator);
     }
 
 
@@ -47,26 +60,57 @@ public class NetworkApi {
                 .orElseThrow(() -> new NetworkNotFoundException(id));
     }
 
-    @DeleteMapping(value = "networks/{id}")
+    @DeleteMapping(value = "/networks/{id}")
     public void deleteById(@NotNull @PathVariable Long id) {
         if (!this.networkService.deleteById(id)) {
             throw new NetworkNotFoundException(id);
         }
     }
 
-    @PostMapping("networks")
-    public void create(@Valid @RequestBody NetworkInitDto dto) {
+    @PostMapping("/networks/init")
+    public void create(@Validated @RequestBody NetworkInitDto dto, BindingResult result, SessionStatus status) {
         try {
-            this.networkService.createNetwork(DtoMapper.fromDto(dto));
+            if (result.hasErrors()) {
+                return;
+            }
+            this.networkService.create(DtoMapper.fromDto(dto));
+            status.setComplete();
         } catch (IOException ex) {
             throw new BoundaryException("Unexpected error encountered while saving the network.", ex);
         }
     }
 
     @PutMapping("networks/{id}")
-    public void update(@Valid @RequestBody NetworkDto dto, @NotNull @PathVariable Long id) {
+    public void update(
+            @Validated @RequestBody NetworkDto dto,
+            @NotNull @PathVariable Long id,
+            BindingResult result,
+            SessionStatus status) {
 
+        if (result.hasErrors()) {
+            return;
+        }
+        dto.setId(id);
+        this.networkService.update(DtoMapper.fromDto(dto));
+        status.setComplete();
+    }
 
+    @GetMapping("networks/run/{id}")
+    public String run(@NotNull @PathVariable Long id) throws IOException, InterruptedException {
+        Network network = this.networkService.getById(id)
+                .orElseThrow(() -> new NetworkNotFoundException(id));
+
+        this.networkService.run(network);
+        return "success"; //TODO RETURN RESULT / IMPROVEMENT ETC.
+    }
+
+    @GetMapping("networks/save-progress/{id}")
+    public String saveProgress(@NotNull @PathVariable Long id) throws IOException {
+        Network network = this.networkService.getById(id)
+                .orElseThrow(() -> new NetworkNotFoundException(id));
+
+        this.networkService.saveProgress(network);
+        return "success"; //TODO RETURN RESULT / IMPROVEMENT ETC.
     }
 
 
@@ -125,15 +169,15 @@ public class NetworkApi {
                 .build());
 
 
-        config = networkService.createNetwork(networkInitializer);
-        config = networkService.runNetwork(config);
-        config = networkService.saveNetwork(config);
+        config = networkService.create(networkInitializer);
+        config = networkService.run(config);
+        config = networkService.saveProgress(config);
 
         config = networkService.loadNetwork(config);
 
-        networkService.runNetwork(config);
+        networkService.run(config);
 
-        config = networkService.saveNetwork(config);
+        config = networkService.saveProgress(config);
 
         Node node = config.getLayers().get(0).getNodes().get(0);
         Node newNode = node.toBuilder().bias(0.5).outputLinks(
@@ -148,7 +192,7 @@ public class NetworkApi {
 
         Network network = networkService.getById(config.getId()).get();
         System.out.println("aa");
-        networkService.runNetwork(config);
+        networkService.run(config);
 
 
         //TODO SAVE NETWORK AFTER RUN, REFACTOR TO USE ONLY MY DOMAIN CLASS

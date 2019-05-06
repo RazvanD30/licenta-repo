@@ -20,7 +20,7 @@ import java.util.List;
 public class Layer extends BaseEntity<Long> {
 
     @Column(name = "inputs", nullable = false)
-    @Range(min = 1)
+    @Range(min = 0)
     private int nInputs;
 
     @Column(name = "nodes", nullable = false)
@@ -28,10 +28,10 @@ public class Layer extends BaseEntity<Long> {
     private int nNodes;
 
     @Column(name = "outputs", nullable = false)
-    @Range(min = 1)
+    @Range(min = 0)
     private int nOutputs;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "network_id")
     private Network network;
 
@@ -39,11 +39,9 @@ public class Layer extends BaseEntity<Long> {
     private List<Node> nodes = new ArrayList<>();
 
     @Column(name = "type", nullable = false)
-    @NotEmpty
     private LayerType type;
 
     @Column(name = "activation")
-    @NotEmpty
     private Activation activation;
 
     @Builder(toBuilder = true)

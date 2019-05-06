@@ -13,7 +13,7 @@ import java.util.List;
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
-@Table(name = "nNodes")
+@Table(name = "nodes")
 public class Node extends BaseEntity<Long> {
 
     @Column(name = "bias")
@@ -22,7 +22,7 @@ public class Node extends BaseEntity<Long> {
     @OneToMany(mappedBy = "node", cascade = CascadeType.ALL)
     private List<Link> outputLinks = new ArrayList<>();
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "layer_id")
     private Layer layer;
 

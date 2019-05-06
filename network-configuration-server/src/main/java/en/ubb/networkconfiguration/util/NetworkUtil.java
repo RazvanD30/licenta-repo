@@ -12,7 +12,7 @@ public class NetworkUtil {
 
     public static MultiLayerNetwork loadModel(Network network){
         try {
-            InputStream stream = new ByteArrayInputStream(network.getNetwork());
+            InputStream stream = new ByteArrayInputStream(network.getState().getDescriptor());
             MultiLayerNetwork model = ModelSerializer.restoreMultiLayerNetwork(stream, true);
             network.setModel(model);
             return model;

@@ -22,19 +22,17 @@ public class LayerInitializer extends BaseEntity<Long> {
     private int nNodes;
 
     @Column(name = "type", nullable = false)
-    @NotEmpty
     private LayerType type;
 
     @Column(name = "activation")
-    @NotEmpty
     private Activation activation;
 
     @Column(name = "inputs")
-    @Range(min = 1)
+    @Range(min = 0)
     private int nInputs;
 
     @Column(name = "outputs")
-    @Range(min = 1)
+    @Range(min = 0)
     private int nOutputs;
 
     @ManyToOne(fetch = FetchType.LAZY)

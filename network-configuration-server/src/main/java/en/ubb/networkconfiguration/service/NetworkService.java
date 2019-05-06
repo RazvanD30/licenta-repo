@@ -6,6 +6,7 @@ import en.ubb.networkconfiguration.domain.network.runtime.Network;
 import en.ubb.networkconfiguration.domain.network.runtime.Node;
 import en.ubb.networkconfiguration.domain.network.setup.NetworkInitializer;
 
+import javax.validation.Valid;
 import java.io.IOException;
 import java.util.List;
 import java.util.Optional;
@@ -19,11 +20,13 @@ public interface NetworkService {
 
     boolean deleteById(long id);
 
-    Network createNetwork(NetworkInitializer initializer) throws IOException;
+    Network create(NetworkInitializer initializer) throws IOException;
 
-    Network runNetwork(Network network) throws IOException, InterruptedException;
+    Network update(Network updatedNetwork);
 
-    Network saveNetwork(Network network) throws IOException;
+    Network run(Network network) throws IOException, InterruptedException;
+
+    Network saveProgress(Network network) throws IOException;
 
     Network loadNetwork(Network network) throws IOException;
 
