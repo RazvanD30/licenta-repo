@@ -1,4 +1,4 @@
-package en.ubb.networkconfiguration.dto;
+package en.ubb.networkconfiguration.boundary.dto.runtime;
 
 import en.ubb.networkconfiguration.domain.enums.LayerType;
 import lombok.*;

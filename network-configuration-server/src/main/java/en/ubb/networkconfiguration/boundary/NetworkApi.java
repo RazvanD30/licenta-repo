@@ -1,4 +1,4 @@
-package en.ubb.networkconfiguration.controller;
+package en.ubb.networkconfiguration.boundary;
 
 
 import en.ubb.networkconfiguration.domain.enums.LayerType;
@@ -6,9 +6,9 @@ import en.ubb.networkconfiguration.domain.network.runtime.Network;
 import en.ubb.networkconfiguration.domain.network.runtime.Node;
 import en.ubb.networkconfiguration.domain.network.setup.LayerInitializer;
 import en.ubb.networkconfiguration.domain.network.setup.NetworkInitializer;
-import en.ubb.networkconfiguration.dto.NetworkDto;
-import en.ubb.networkconfiguration.dto.setup.NetworkInitDto;
-import en.ubb.networkconfiguration.dto.util.DtoMapper;
+import en.ubb.networkconfiguration.boundary.dto.runtime.NetworkDto;
+import en.ubb.networkconfiguration.boundary.dto.setup.NetworkInitDto;
+import en.ubb.networkconfiguration.boundary.util.DtoMapper;
 import en.ubb.networkconfiguration.service.NetworkService;
 import en.ubb.networkconfiguration.validation.exception.boundary.BoundaryException;
 import en.ubb.networkconfiguration.validation.exception.boundary.NetworkNotFoundException;

@@ -1,7 +1,7 @@
 package en.ubb.networkconfiguration.validation.validator;
 
-import en.ubb.networkconfiguration.dto.LayerDto;
-import en.ubb.networkconfiguration.dto.NetworkDto;
+import en.ubb.networkconfiguration.boundary.dto.runtime.LayerDto;
+import en.ubb.networkconfiguration.boundary.dto.runtime.NetworkDto;
 import org.jetbrains.annotations.NotNull;
 import org.springframework.stereotype.Component;
 import org.springframework.validation.Errors;
@@ -52,9 +52,16 @@ public class NetworkDtoValidator implements Validator {
             if (network.getLayers().isEmpty()) {
                 errors.rejectValue("layers", "layers.listEmpty");
             }
+            for(int i = 0; i < network.getLayers().size() - 1; i++){
+                LayerDto current = network.getLayers().get(i);
+                LayerDto next = network.getLayers().get(i+1);
+                if(current.getNNodes() != next.getNInputs() || current.getNOutputs() != next.getNNodes()){
+                    errors.rejectValue("layers", "layers.invalidLinkConfig");
+                }
+            }
             network.getLayers().forEach(layer -> {
                 try {
-                    errors.pushNestedPath("node");
+                    errors.pushNestedPath("layer");
                     ValidationUtils.invokeValidator(this.layerDtoValidator, layer, errors);
                 } finally {
                     errors.popNestedPath();

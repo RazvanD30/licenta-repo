@@ -1,17 +1,17 @@
-package en.ubb.networkconfiguration.dto.util;
+package en.ubb.networkconfiguration.boundary.util;
 
+import en.ubb.networkconfiguration.boundary.dto.runtime.LayerDto;
+import en.ubb.networkconfiguration.boundary.dto.runtime.LinkDto;
+import en.ubb.networkconfiguration.boundary.dto.runtime.NetworkDto;
+import en.ubb.networkconfiguration.boundary.dto.runtime.NodeDto;
 import en.ubb.networkconfiguration.domain.network.runtime.Layer;
 import en.ubb.networkconfiguration.domain.network.runtime.Link;
 import en.ubb.networkconfiguration.domain.network.runtime.Network;
 import en.ubb.networkconfiguration.domain.network.runtime.Node;
 import en.ubb.networkconfiguration.domain.network.setup.LayerInitializer;
 import en.ubb.networkconfiguration.domain.network.setup.NetworkInitializer;
-import en.ubb.networkconfiguration.dto.LayerDto;
-import en.ubb.networkconfiguration.dto.LinkDto;
-import en.ubb.networkconfiguration.dto.NetworkDto;
-import en.ubb.networkconfiguration.dto.NodeDto;
-import en.ubb.networkconfiguration.dto.setup.LayerInitDto;
-import en.ubb.networkconfiguration.dto.setup.NetworkInitDto;
+import en.ubb.networkconfiguration.boundary.dto.setup.LayerInitDto;
+import en.ubb.networkconfiguration.boundary.dto.setup.NetworkInitDto;
 
 import java.util.stream.Collectors;
 

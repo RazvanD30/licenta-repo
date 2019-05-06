@@ -1,4 +1,4 @@
-package en.ubb.networkconfiguration.dto;
+package en.ubb.networkconfiguration.boundary.dto.setup;
 
 import lombok.*;
 
@@ -9,9 +9,9 @@ import java.util.List;
 @Builder
 @Getter
 @Setter
-public class NetworkDto {
+public class NetworkInitDto {
 
-    private Long id;
+    private long id;
 
     private String name;
 
@@ -27,5 +27,5 @@ public class NetworkDto {
 
     private int nOutputs;
 
-    private List<LayerDto> layers;
+    private List<LayerInitDto> layers;
 }

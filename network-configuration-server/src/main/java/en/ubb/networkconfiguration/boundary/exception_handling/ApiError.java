@@ -1,4 +1,4 @@
-package en.ubb.networkconfiguration.controller.exception_handling;
+package en.ubb.networkconfiguration.boundary.exception_handling;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
