@@ -1,7 +1,7 @@
 package en.ubb.networkconfiguration.validation.validator;
 
-import en.ubb.networkconfiguration.dto.LayerDto;
-import en.ubb.networkconfiguration.dto.NodeDto;
+import en.ubb.networkconfiguration.boundary.dto.runtime.LayerDto;
+import en.ubb.networkconfiguration.boundary.dto.runtime.NodeDto;
 import org.jetbrains.annotations.NotNull;
 import org.springframework.stereotype.Component;
 import org.springframework.validation.Errors;
@@ -30,26 +30,26 @@ public class LayerDtoValidator implements Validator {
 
     @Override
     public void validate(@NotNull Object target, @NotNull Errors errors) {
-        ValidationUtils.rejectIfEmpty(errors, "type", "type.empty");
-        ValidationUtils.rejectIfEmpty(errors, "activation", "activation.empty");
-        ValidationUtils.rejectIfEmpty(errors, "nodes", "nodes.empty");
+        ValidationUtils.rejectIfEmpty(errors, "type", "layer.type.empty");
+        ValidationUtils.rejectIfEmpty(errors, "activation", "layer.activation.empty");
+        ValidationUtils.rejectIfEmpty(errors, "nodes", "layer.nodes.null");
 
         LayerDto layer = (LayerDto) target;
 
         if (layer.getNInputs() < 0) {
-            errors.rejectValue("nInputs", "nInputs.ltZero");
+            errors.rejectValue("nInputs", "layer.nInputs.ltZero");
         }
         if (layer.getNNodes() <= 0) {
-            errors.rejectValue("nNodes", "nNodes.leZero");
+            errors.rejectValue("nNodes", "layer.nNodes.leZero");
         }
         if (layer.getNOutputs() < 0) {
-            errors.rejectValue("nOutputs", "nOutputs.ltZero");
+            errors.rejectValue("nOutputs", "layer.nOutputs.ltZero");
         }
         if (layer.getNodes() != null) {
             if (layer.getNodes().isEmpty()) {
-                errors.rejectValue("nodes", "nodes.listEmpty");
+                errors.rejectValue("nodes", "layer.nodes.empty");
             } else if (layer.getNNodes() != layer.getNodes().size()) {
-                errors.rejectValue("nodes", "nodes.ne.nNodes");
+                errors.rejectValue("nodes", "layer.nodes.ne.nNodes");
                 errors.rejectValue("nNodes", "nNodes.ne.nodes");
             }
             layer.getNodes().forEach(node -> {

@@ -1,14 +1,15 @@
 package en.ubb.networkconfiguration.service.impl;
 
+import en.ubb.networkconfiguration.domain.enums.FileType;
 import en.ubb.networkconfiguration.domain.network.runtime.*;
 import en.ubb.networkconfiguration.domain.network.setup.NetworkInitializer;
-import en.ubb.networkconfiguration.repo.LayerRepo;
-import en.ubb.networkconfiguration.repo.NetworkRepo;
-import en.ubb.networkconfiguration.repo.NetworkStateRepo;
-import en.ubb.networkconfiguration.repo.NodeRepo;
+import en.ubb.networkconfiguration.dao.*;
+import en.ubb.networkconfiguration.dao.specification.DataFileRepoSpec;
 import en.ubb.networkconfiguration.service.NetworkService;
 import en.ubb.networkconfiguration.util.LayerUtil;
-import en.ubb.networkconfiguration.validation.exception.boundary.NetworkNotFoundException;
+import en.ubb.networkconfiguration.validation.exception.business.FileAccessBussExc;
+import en.ubb.networkconfiguration.validation.exception.business.NetworkAccessBussExc;
+import en.ubb.networkconfiguration.validation.exception.business.NotFoundBussExc;
 import org.datavec.api.records.reader.RecordReader;
 import org.datavec.api.records.reader.impl.csv.CSVRecordReader;
 import org.datavec.api.split.FileSplit;
@@ -28,6 +29,7 @@ import org.nd4j.linalg.learning.config.Nesterovs;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 
 import javax.validation.Valid;
@@ -38,19 +40,26 @@ import java.util.Optional;
 @Service
 public class NetworkServiceImpl implements NetworkService {
 
-    @Autowired
-    private NetworkRepo networkRepo;
+    private final NetworkRepo networkRepo;
+
+    private final NodeRepo nodeRepo;
+
+    private final LayerRepo layerRepo;
+
+    private final NetworkStateRepo networkStateRepo;
+
+    private final LinkRepo linkRepo;
+
+    private static final Logger LOGGER = LoggerFactory.getLogger(NetworkServiceImpl.class);
 
     @Autowired
-    private NodeRepo nodeRepo;
-
-    @Autowired
-    private LayerRepo layerRepo;
-
-    @Autowired
-    private NetworkStateRepo networkStateRepo;
-
-    private static final Logger log = LoggerFactory.getLogger(NetworkServiceImpl.class);
+    public NetworkServiceImpl(NetworkRepo networkRepo, NodeRepo nodeRepo, LayerRepo layerRepo, NetworkStateRepo networkStateRepo, LinkRepo linkRepo) {
+        this.networkRepo = networkRepo;
+        this.nodeRepo = nodeRepo;
+        this.layerRepo = layerRepo;
+        this.networkStateRepo = networkStateRepo;
+        this.linkRepo = linkRepo;
+    }
 
     @Override
     public List<Network> getAll() {
@@ -58,7 +67,7 @@ public class NetworkServiceImpl implements NetworkService {
     }
 
     @Override
-    public Optional<Network> getById(long id) {
+    public Optional<Network> findById(long id) {
         return networkRepo.findById(id);
     }
 
@@ -108,7 +117,7 @@ public class NetworkServiceImpl implements NetworkService {
     }
 
     @Override
-    public Network create(@Valid NetworkInitializer initializer) throws IOException {
+    public Network create(NetworkInitializer initializer) throws NetworkAccessBussExc {
 
         Network network = this.getInitialNetwork(initializer);
 
@@ -118,16 +127,13 @@ public class NetworkServiceImpl implements NetworkService {
                 .updater(new Nesterovs(network.getLearningRate(), 0.9))
                 .list();
 
-        network.getLayers().forEach(layer -> {
-            LayerUtil.getBuilderForType(layer.getType()).ifPresent(layerBuilder -> {
-                networkBuilder.layer(layerBuilder
-                        .nIn(layer.getNInputs())
-                        .nOut(layer.getNNodes())
-                        .activation(layer.getActivation())
-                        .build());
-
-            });
-        });
+        network.getLayers().forEach(layer -> LayerUtil.getBuilderForType(layer.getType())
+                .ifPresent(layerBuilder ->
+                        networkBuilder.layer(layerBuilder
+                                .nIn(layer.getNInputs())
+                                .nOut(layer.getNNodes())
+                                .activation(layer.getActivation())
+                                .build())));
         MultiLayerConfiguration conf = networkBuilder.build();
         MultiLayerNetwork model = new MultiLayerNetwork(conf);
         model.init();
@@ -137,10 +143,10 @@ public class NetworkServiceImpl implements NetworkService {
     }
 
     @Override
-    public Network update(Network updatedNetwork) {
+    public Network update(Network updatedNetwork) throws NotFoundBussExc {
 
         Network network = networkRepo.findById(updatedNetwork.getId())
-                .orElseThrow(() -> new NetworkNotFoundException(updatedNetwork.getId()))
+                .orElseThrow(() -> new NotFoundBussExc("Network with id " + updatedNetwork.getId() + " not found"))
                 .toBuilder()
                 .name(updatedNetwork.getName())
                 .batchSize(updatedNetwork.getBatchSize())
@@ -157,96 +163,103 @@ public class NetworkServiceImpl implements NetworkService {
     }
 
     @Override
-    public Network run(Network network) throws IOException, InterruptedException {
-        MultiLayerNetwork model = network.getModel();
+    public Network run(Network network, DataFile trainFile, DataFile testFile) throws FileAccessBussExc {
+        try {
+            MultiLayerNetwork model = network.getModel();
 
-        final String filenameTrain = new ClassPathResource("/classification/linear_data_train.csv").getFile().getPath();
-        final String filenameTest = new ClassPathResource("/classification/linear_data_eval.csv").getFile().getPath();
+            final String filenameTrain = new ClassPathResource(trainFile.getClassPath()).getFile().getPath();
+            final String filenameTest = new ClassPathResource(testFile.getClassPath()).getFile().getPath();
 
-        RecordReader rr = new CSVRecordReader();
-        rr.initialize(new FileSplit(new File(filenameTrain)));
-        DataSetIterator trainIter = new RecordReaderDataSetIterator(rr, network.getBatchSize(), 0, 2);
+            RecordReader rr = new CSVRecordReader();
+            rr.initialize(new FileSplit(new File(filenameTrain)));
+            DataSetIterator trainIter =
+                    new RecordReaderDataSetIterator(rr, network.getBatchSize(), 0, trainFile.getNLabels());
 
-        // Load the test/evaluation data
-        RecordReader rrTest = new CSVRecordReader();
-        rrTest.initialize(new FileSplit(new File(filenameTest)));
-        DataSetIterator testIter = new RecordReaderDataSetIterator(rrTest, network.getBatchSize(), 0, 2);
+            // Load the test/evaluation data
+            RecordReader rrTest = new CSVRecordReader();
+            rrTest.initialize(new FileSplit(new File(filenameTest)));
+            DataSetIterator testIter =
+                    new RecordReaderDataSetIterator(rrTest, network.getBatchSize(), 0, testFile.getNLabels());
 
-        model.setListeners(new ScoreIterationListener(10));
-        model.fit(trainIter, network.getNEpochs());
+            model.setListeners(new ScoreIterationListener(10));
+            model.fit(trainIter, network.getNEpochs());
 
-        System.out.println("Evaluate model....");
-        Evaluation eval = new Evaluation(network.getNOutputs());
-        while (testIter.hasNext()) {
-            DataSet t = testIter.next();
-            INDArray features = t.getFeatures();
-            INDArray lables = t.getLabels();
-            INDArray predicted = model.output(features, false);
+            System.out.println("Evaluate model....");
+            Evaluation eval = new Evaluation(network.getNOutputs());
+            while (testIter.hasNext()) {
+                DataSet t = testIter.next();
+                INDArray features = t.getFeatures();
+                INDArray lables = t.getLabels();
+                INDArray predicted = model.output(features, false);
 
-            eval.eval(lables, predicted);
+                eval.eval(lables, predicted);
+            }
+
+            //Print the evaluation statistics
+            System.out.println(eval.stats());
+            return network;
+        } catch (IOException | InterruptedException ex) {
+            throw new FileAccessBussExc("Could not access the train/test files for the network with id "
+                    + network.getId() + ". " + ex.getMessage());
         }
-
-        //Print the evaluation statistics
-        System.out.println(eval.stats());
-        return network;
 
     }
 
     @Override
-    public Network saveProgress(Network network) throws IOException {
+    public Network saveProgress(Network network) throws NetworkAccessBussExc {
         MultiLayerNetwork model = network.getModel();
         ByteArrayOutputStream stream = new ByteArrayOutputStream();
-        ModelSerializer.writeModel(model, stream, true, null);
+        try {
+            ModelSerializer.writeModel(model, stream, true, null);
 
+            NetworkState state = new NetworkState();
+            state.setDescriptor(stream.toByteArray());
 
-        NetworkState state = new NetworkState();
-        state.setDescriptor(stream.toByteArray());
+            state = networkStateRepo.save(state);
+            state.addNetwork(network);
 
-        state = networkStateRepo.save(state);
-        state.addNetwork(network);
+            String weightKey = "W";
+            String biasKey = "b";
 
-        String weightKey = "W";
-        String biasKey = "b";
+            for (int layerC = 0; layerC < network.getLayers().size() - 1; layerC++) {
+                Layer previousLayer = network.getLayers().get(layerC);
+                Layer currentLayer = network.getLayers().get(layerC + 1);
 
-        for (int layerC = 0; layerC < network.getLayers().size() - 1; layerC++) {
-            Layer previousLayer = network.getLayers().get(layerC);
-            Layer currentLayer = network.getLayers().get(layerC + 1);
+                double[][] weights = model.getLayer(layerC).getParam(weightKey).toDoubleMatrix();
+                double[] biases = model.getLayer(layerC).getParam(biasKey).toDoubleVector();
 
-            double[][] weights = model.getLayer(layerC).getParam(weightKey).toDoubleMatrix();
-            double[] biases = model.getLayer(layerC).getParam(biasKey).toDoubleVector();
-
-            for (int nodeC = 0; nodeC < currentLayer.getNNodes(); nodeC++) {
-                Node node = currentLayer.getNodes().get(nodeC);
-                node.setBias(biases[nodeC]);
-            }
-
-            for (int nodeP = 0; nodeP < previousLayer.getNNodes(); nodeP++) {
-                Node node = previousLayer.getNodes().get(nodeP);
-                for (int linkC = 0; linkC < previousLayer.getNOutputs(); linkC++) {
-                    Link link = node.getOutputLinks().get(linkC);
-                    link.setWeight(weights[nodeP][linkC]);
+                for (int nodeC = 0; nodeC < currentLayer.getNNodes(); nodeC++) {
+                    Node node = currentLayer.getNodes().get(nodeC);
+                    node.setBias(biases[nodeC]);
                 }
+
+                for (int nodeP = 0; nodeP < previousLayer.getNNodes(); nodeP++) {
+                    Node node = previousLayer.getNodes().get(nodeP);
+                    for (int linkC = 0; linkC < previousLayer.getNOutputs(); linkC++) {
+                        Link link = node.getOutputLinks().get(linkC);
+                        link.setWeight(weights[nodeP][linkC]);
+                    }
+                }
+
             }
-
+            return networkRepo.save(network);
+        } catch (IOException ex) {
+            throw new NetworkAccessBussExc("Could not save the model state. " + ex.getMessage());
         }
-        return networkRepo.save(network);
     }
 
-
-    public void updateLink(long linkID, Link updatedLink) throws IOException {
-
-
-    }
-
-    public Network updateNode(Node updatedNode) {
+    public Node updateNode(Node updatedNode) throws NetworkAccessBussExc {
 
         Node persistedNode = this.nodeRepo.getOne(updatedNode.getId());
         Layer persistedLayer = persistedNode.getLayer();
         Network persistedNetwork = persistedNode.getLayer().getNetwork();
         MultiLayerNetwork model = persistedNetwork.getModel();
+
         int layerPosition = persistedNetwork.getLayers().indexOf(persistedLayer);
-        org.deeplearning4j.nn.api.Layer internalLayer = model.getLayer(layerPosition);
         int nodePosition = persistedLayer.getNodes().indexOf(persistedNode);
+
+        org.deeplearning4j.nn.api.Layer internalLayer = model.getLayer(layerPosition);
+
 
         String weightKey = "W";
         String biasKey = "b";
@@ -261,47 +274,66 @@ public class NetworkServiceImpl implements NetworkService {
 
         persistedNode.setBias(updatedNode.getBias());
         updatedNode.getOutputLinks().forEach(persistedNode::updateLink);
+        this.saveProgress(persistedNetwork);
 
-        return persistedNetwork;
+        return persistedNode;
     }
 
     @Override
-    public Network loadNetwork(Network network) throws IOException {
-        InputStream stream = new ByteArrayInputStream(network.getState().getDescriptor());
-        network.setModel(ModelSerializer.restoreMultiLayerNetwork(stream, true));
-        return network;
+    public Link updateLink(Link updatedLink) throws NetworkAccessBussExc {
+        Link persistedLink = this.linkRepo.getOne(updatedLink.getId());
+        Node persistedNode = persistedLink.getNode();
+        Layer persistedLayer = persistedNode.getLayer();
+        Network persistedNetwork = persistedNode.getLayer().getNetwork();
+        MultiLayerNetwork model = persistedNetwork.getModel();
+        int layerPosition = persistedNetwork.getLayers().indexOf(persistedLayer);
+        int linkPosition = persistedNode.getOutputLinks().indexOf(persistedLink);
+        int nodePosition = persistedLayer.getNodes().indexOf(persistedNode);
+
+        org.deeplearning4j.nn.api.Layer internalLayer = model.getLayer(layerPosition);
+
+        int[] pos = {nodePosition, linkPosition};
+
+        String weightKey = "W";
+
+        internalLayer.getParam(weightKey).putScalar(pos, updatedLink.getWeight());
+        persistedLink.setWeight(updatedLink.getWeight());
+
+        this.saveProgress(persistedNetwork);
+
+        return persistedLink;
     }
 
     @Override
-    public Network updateLayer(Layer updatedLayer) throws IOException {
+    public Network loadNetwork(Network network) throws NetworkAccessBussExc {
+        try {
+            InputStream stream = new ByteArrayInputStream(network.getState().getDescriptor());
+            network.setModel(ModelSerializer.restoreMultiLayerNetwork(stream, true));
+            return network;
+        } catch (IOException ex) {
+            throw new NetworkAccessBussExc("Could not load the model state. " + ex.getMessage());
+        }
+    }
+
+    @Override
+    public Network updateLayer(Layer updatedLayer) throws NetworkAccessBussExc {
 
         Layer persistedLayer = layerRepo.getOne(updatedLayer.getId());
 
-        updatedLayer.getNodes().forEach(this::updateNode);
+        for (Node node : updatedLayer.getNodes()) {
+            this.updateNode(node);
+        }
 
         return persistedLayer.getNetwork();
     }
 
     @Override
     public Network addLayer(long networkID, int position, Layer layer) {
+
+        //TODO
         return null;
     }
 
 
-    public MultiLayerNetwork uopdateLayer(MultiLayerNetwork model, int position, NeuralNetConfiguration layerConfiguration) {
-        MultiLayerConfiguration conf = model.getLayerWiseConfigurations().clone();
-        conf.getConfs().set(position, layerConfiguration);
-        MultiLayerNetwork ret = new MultiLayerNetwork(conf);
-        ret.init();
-        return ret;
-    }
 
-
-    public MultiLayerNetwork aaddLayer(MultiLayerNetwork model, int position, NeuralNetConfiguration layerConfiguration) {
-        MultiLayerConfiguration conf = model.getLayerWiseConfigurations().clone();
-        conf.getConfs().add(position, layerConfiguration);
-        MultiLayerNetwork ret = new MultiLayerNetwork(conf);
-        ret.init();
-        return ret;
-    }
 }
