@@ -2,9 +2,9 @@ buildscript {
     repositories {
         mavenCentral()
         mavenLocal()
-        maven { url "https://repo.spring.io/snapshot" }
-        maven { url "https://repo.spring.io/milestone" }
-        maven { url "https://repo.spring.io/release" }
+        maven { url "https://dao.spring.io/snapshot" }
+        maven { url "https://dao.spring.io/milestone" }
+        maven { url "https://dao.spring.io/release" }
     }
     dependencies {
         classpath "org.springframework.boot:spring-boot-gradle-plugin:${springBootVersion}"
@@ -54,10 +54,7 @@ configurations {
 }
 
 dependencies {
-    implementation 'org.springframework.cloud:spring-cloud-starter-netflix-eureka-client'
     implementation 'org.springframework.boot:spring-boot-starter-web'
-    implementation 'org.springframework.boot:spring-boot-starter-actuator'
-    implementation 'org.springframework.cloud:spring-cloud-starter-config'
     implementation 'org.projectlombok:lombok'
     implementation 'org.springframework.boot:spring-boot-starter-validation'
     implementation "org.deeplearning4j:deeplearning4j-core:1.0.0-beta3"

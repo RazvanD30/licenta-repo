@@ -4,6 +4,7 @@ import lombok.*;
 
 import javax.persistence.Column;
 import javax.persistence.Embeddable;
+import java.io.Serializable;
 
 @Getter
 @Setter
@@ -11,7 +12,7 @@ import javax.persistence.Embeddable;
 @NoArgsConstructor
 @EqualsAndHashCode
 @Embeddable
-public class NetworkFileId {
+public class NetworkFileId implements Serializable {
 
     @Column(name = "network_id")
     private Long networkId;

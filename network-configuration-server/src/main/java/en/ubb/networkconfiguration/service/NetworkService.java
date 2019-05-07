@@ -13,16 +13,15 @@ import java.util.Optional;
 
 public interface NetworkService {
 
-
     List<Network> getAll();
 
-    Optional<Network> getById(long id);
+    Optional<Network> findById(long id);
 
     boolean deleteById(long id);
 
-    Network create(NetworkInitializer initializer);
+    Network create(NetworkInitializer initializer) throws NetworkAccessBussExc;
 
-    Network update(Network updatedNetwork);
+    Network update(Network updatedNetwork) throws NotFoundBussExc;
 
     Network run(Network network, DataFile trainFile, DataFile testFile) throws FileAccessBussExc;
 
@@ -30,15 +29,11 @@ public interface NetworkService {
 
     Network loadNetwork(Network network) throws NetworkAccessBussExc;
 
-    Network addFile(long networkID, String classPath, FileType fileType) throws NotFoundBussExc;
-
-    Network removeFile(long networkID, String classPath)
-
     Network addLayer(long networkID, int position, Layer layer);
 
-    Network updateLayer(Layer updatedLayer);
+    Network updateLayer(Layer updatedLayer) throws NetworkAccessBussExc;
 
-    Node updateNode(Node updatedNode);
+    Node updateNode(Node updatedNode) throws NetworkAccessBussExc;
 
-    Link updateLink(Link updatedLink);
+    Link updateLink(Link updatedLink) throws NetworkAccessBussExc;
 }

@@ -1,9 +1,8 @@
 package en.ubb.networkconfiguration.validation.exception.boundary;
 
-public class BoundaryException extends RuntimeException {
+public class BoundaryException extends Exception {
 
     public BoundaryException() {
-        super();
     }
 
     public BoundaryException(String message) {
@@ -18,7 +17,7 @@ public class BoundaryException extends RuntimeException {
         super(cause);
     }
 
-    protected BoundaryException(String message, Throwable cause, boolean enableSuppression, boolean writableStackTrace) {
+    public BoundaryException(String message, Throwable cause, boolean enableSuppression, boolean writableStackTrace) {
         super(message, cause, enableSuppression, writableStackTrace);
     }
 }

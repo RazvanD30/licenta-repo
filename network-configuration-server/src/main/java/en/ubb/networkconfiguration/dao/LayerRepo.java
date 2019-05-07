@@ -1,12 +1,11 @@
-package en.ubb.networkconfiguration.repo;
+package en.ubb.networkconfiguration.dao;
 
-import en.ubb.networkconfiguration.domain.network.runtime.Network;
+import en.ubb.networkconfiguration.domain.network.runtime.Layer;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
 @Repository
 @Transactional
-public interface NetworkRepo extends JpaRepository<Network, Long> {
-
+public interface LayerRepo extends JpaRepository<Layer, Long> {
 }

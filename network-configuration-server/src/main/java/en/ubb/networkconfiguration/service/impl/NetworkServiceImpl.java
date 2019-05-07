@@ -3,11 +3,10 @@ package en.ubb.networkconfiguration.service.impl;
 import en.ubb.networkconfiguration.domain.enums.FileType;
 import en.ubb.networkconfiguration.domain.network.runtime.*;
 import en.ubb.networkconfiguration.domain.network.setup.NetworkInitializer;
-import en.ubb.networkconfiguration.repo.*;
-import en.ubb.networkconfiguration.repo.specification.DataFileRepoSpec;
+import en.ubb.networkconfiguration.dao.*;
+import en.ubb.networkconfiguration.dao.specification.DataFileRepoSpec;
 import en.ubb.networkconfiguration.service.NetworkService;
 import en.ubb.networkconfiguration.util.LayerUtil;
-import en.ubb.networkconfiguration.validation.exception.boundary.NetworkNotFoundException;
 import en.ubb.networkconfiguration.validation.exception.business.FileAccessBussExc;
 import en.ubb.networkconfiguration.validation.exception.business.NetworkAccessBussExc;
 import en.ubb.networkconfiguration.validation.exception.business.NotFoundBussExc;
@@ -41,25 +40,26 @@ import java.util.Optional;
 @Service
 public class NetworkServiceImpl implements NetworkService {
 
-    @Autowired
-    private NetworkRepo networkRepo;
+    private final NetworkRepo networkRepo;
+
+    private final NodeRepo nodeRepo;
+
+    private final LayerRepo layerRepo;
+
+    private final NetworkStateRepo networkStateRepo;
+
+    private final LinkRepo linkRepo;
+
+    private static final Logger LOGGER = LoggerFactory.getLogger(NetworkServiceImpl.class);
 
     @Autowired
-    private NodeRepo nodeRepo;
-
-    @Autowired
-    private LayerRepo layerRepo;
-
-    @Autowired
-    private NetworkStateRepo networkStateRepo;
-
-    @Autowired
-    private LinkRepo linkRepo;
-
-    @Autowired
-    private DataFileRepo dataFileRepo;
-
-    private static final Logger log = LoggerFactory.getLogger(NetworkServiceImpl.class);
+    public NetworkServiceImpl(NetworkRepo networkRepo, NodeRepo nodeRepo, LayerRepo layerRepo, NetworkStateRepo networkStateRepo, LinkRepo linkRepo) {
+        this.networkRepo = networkRepo;
+        this.nodeRepo = nodeRepo;
+        this.layerRepo = layerRepo;
+        this.networkStateRepo = networkStateRepo;
+        this.linkRepo = linkRepo;
+    }
 
     @Override
     public List<Network> getAll() {
@@ -67,7 +67,7 @@ public class NetworkServiceImpl implements NetworkService {
     }
 
     @Override
-    public Optional<Network> getById(long id) {
+    public Optional<Network> findById(long id) {
         return networkRepo.findById(id);
     }
 
@@ -117,7 +117,7 @@ public class NetworkServiceImpl implements NetworkService {
     }
 
     @Override
-    public Network create(@Valid NetworkInitializer initializer) {
+    public Network create(NetworkInitializer initializer) throws NetworkAccessBussExc {
 
         Network network = this.getInitialNetwork(initializer);
 
@@ -127,16 +127,13 @@ public class NetworkServiceImpl implements NetworkService {
                 .updater(new Nesterovs(network.getLearningRate(), 0.9))
                 .list();
 
-        network.getLayers().forEach(layer -> {
-            LayerUtil.getBuilderForType(layer.getType()).ifPresent(layerBuilder -> {
-                networkBuilder.layer(layerBuilder
-                        .nIn(layer.getNInputs())
-                        .nOut(layer.getNNodes())
-                        .activation(layer.getActivation())
-                        .build());
-
-            });
-        });
+        network.getLayers().forEach(layer -> LayerUtil.getBuilderForType(layer.getType())
+                .ifPresent(layerBuilder ->
+                        networkBuilder.layer(layerBuilder
+                                .nIn(layer.getNInputs())
+                                .nOut(layer.getNNodes())
+                                .activation(layer.getActivation())
+                                .build())));
         MultiLayerConfiguration conf = networkBuilder.build();
         MultiLayerNetwork model = new MultiLayerNetwork(conf);
         model.init();
@@ -146,10 +143,10 @@ public class NetworkServiceImpl implements NetworkService {
     }
 
     @Override
-    public Network update(Network updatedNetwork) {
+    public Network update(Network updatedNetwork) throws NotFoundBussExc {
 
         Network network = networkRepo.findById(updatedNetwork.getId())
-                .orElseThrow(() -> new NetworkNotFoundException(updatedNetwork.getId()))
+                .orElseThrow(() -> new NotFoundBussExc("Network with id " + updatedNetwork.getId() + " not found"))
                 .toBuilder()
                 .name(updatedNetwork.getName())
                 .batchSize(updatedNetwork.getBatchSize())
@@ -175,12 +172,14 @@ public class NetworkServiceImpl implements NetworkService {
 
             RecordReader rr = new CSVRecordReader();
             rr.initialize(new FileSplit(new File(filenameTrain)));
-            DataSetIterator trainIter = new RecordReaderDataSetIterator(rr, network.getBatchSize(), 0, 2);
+            DataSetIterator trainIter =
+                    new RecordReaderDataSetIterator(rr, network.getBatchSize(), 0, trainFile.getNLabels());
 
             // Load the test/evaluation data
             RecordReader rrTest = new CSVRecordReader();
             rrTest.initialize(new FileSplit(new File(filenameTest)));
-            DataSetIterator testIter = new RecordReaderDataSetIterator(rrTest, network.getBatchSize(), 0, 2);
+            DataSetIterator testIter =
+                    new RecordReaderDataSetIterator(rrTest, network.getBatchSize(), 0, testFile.getNLabels());
 
             model.setListeners(new ScoreIterationListener(10));
             model.fit(trainIter, network.getNEpochs());
@@ -199,7 +198,7 @@ public class NetworkServiceImpl implements NetworkService {
             //Print the evaluation statistics
             System.out.println(eval.stats());
             return network;
-        } catch (IOException | InterruptedException ex){
+        } catch (IOException | InterruptedException ex) {
             throw new FileAccessBussExc("Could not access the train/test files for the network with id "
                     + network.getId() + ". " + ex.getMessage());
         }
@@ -249,7 +248,7 @@ public class NetworkServiceImpl implements NetworkService {
         }
     }
 
-    public Node updateNode(Node updatedNode) {
+    public Node updateNode(Node updatedNode) throws NetworkAccessBussExc {
 
         Node persistedNode = this.nodeRepo.getOne(updatedNode.getId());
         Layer persistedLayer = persistedNode.getLayer();
@@ -281,7 +280,7 @@ public class NetworkServiceImpl implements NetworkService {
     }
 
     @Override
-    public Link updateLink(Link updatedLink) {
+    public Link updateLink(Link updatedLink) throws NetworkAccessBussExc {
         Link persistedLink = this.linkRepo.getOne(updatedLink.getId());
         Node persistedNode = persistedLink.getNode();
         Layer persistedLayer = persistedNode.getLayer();
@@ -317,55 +316,24 @@ public class NetworkServiceImpl implements NetworkService {
     }
 
     @Override
-    public Network updateLayer(Layer updatedLayer) {
+    public Network updateLayer(Layer updatedLayer) throws NetworkAccessBussExc {
 
         Layer persistedLayer = layerRepo.getOne(updatedLayer.getId());
 
-        updatedLayer.getNodes().forEach(this::updateNode);
+        for (Node node : updatedLayer.getNodes()) {
+            this.updateNode(node);
+        }
 
         return persistedLayer.getNetwork();
     }
 
     @Override
     public Network addLayer(long networkID, int position, Layer layer) {
+
+        //TODO
         return null;
     }
 
 
-    public MultiLayerNetwork uopdateLayer(MultiLayerNetwork model, int position, NeuralNetConfiguration layerConfiguration) {
-        MultiLayerConfiguration conf = model.getLayerWiseConfigurations().clone();
-        conf.getConfs().set(position, layerConfiguration);
-        MultiLayerNetwork ret = new MultiLayerNetwork(conf);
-        ret.init();
-        return ret;
-    }
 
-
-    public MultiLayerNetwork aaddLayer(MultiLayerNetwork model, int position, NeuralNetConfiguration layerConfiguration) {
-        MultiLayerConfiguration conf = model.getLayerWiseConfigurations().clone();
-        conf.getConfs().add(position, layerConfiguration);
-        MultiLayerNetwork ret = new MultiLayerNetwork(conf);
-        ret.init();
-        return ret;
-    }
-
-
-    @Override
-    public Network addFile(long networkID, String classPath, FileType fileType) throws NotFoundBussExc {
-        return this.networkRepo.findById(networkID).map(persistedNetwork ->
-                this.dataFileRepo.findOne(Specification.where(DataFileRepoSpec.hasClasspath(classPath)))
-                        .map(dataFile -> {
-                            persistedNetwork.addFile(dataFile, fileType);
-                            return persistedNetwork;
-
-                        })
-                        .orElseGet(() -> {
-                            DataFile dataFile = DataFile.builder()
-                                    .classPath(classPath)
-                                    .build();
-                            persistedNetwork.addFile(dataFile, fileType);
-                            return persistedNetwork;
-                        })
-        ).orElseThrow(() -> new NotFoundBussExc("Network with id " + networkID + " not found"));
-    }
 }

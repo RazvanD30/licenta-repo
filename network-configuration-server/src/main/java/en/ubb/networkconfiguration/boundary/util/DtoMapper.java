@@ -4,15 +4,15 @@ import en.ubb.networkconfiguration.boundary.dto.runtime.LayerDto;
 import en.ubb.networkconfiguration.boundary.dto.runtime.LinkDto;
 import en.ubb.networkconfiguration.boundary.dto.runtime.NetworkDto;
 import en.ubb.networkconfiguration.boundary.dto.runtime.NodeDto;
-import en.ubb.networkconfiguration.domain.network.runtime.Layer;
-import en.ubb.networkconfiguration.domain.network.runtime.Link;
-import en.ubb.networkconfiguration.domain.network.runtime.Network;
-import en.ubb.networkconfiguration.domain.network.runtime.Node;
+import en.ubb.networkconfiguration.boundary.dto.setup.DataFileDto;
+import en.ubb.networkconfiguration.domain.network.runtime.*;
 import en.ubb.networkconfiguration.domain.network.setup.LayerInitializer;
 import en.ubb.networkconfiguration.domain.network.setup.NetworkInitializer;
 import en.ubb.networkconfiguration.boundary.dto.setup.LayerInitDto;
 import en.ubb.networkconfiguration.boundary.dto.setup.NetworkInitDto;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.stream.Collectors;
 
 public class DtoMapper {
@@ -169,6 +169,29 @@ public class DtoMapper {
                 .nOutputs(layer.getNOutputs())
                 .activation(layer.getActivation())
                 .type(layer.getType())
+                .build();
+    }
+
+    public static List<DataFileDto> toDtos(DataFile dataFile) {
+        List<DataFileDto> dtos = new ArrayList<>();
+
+        dataFile.getNetworks().forEach(networkFile -> {
+            DataFileDto dto = DataFileDto.builder()
+                    .networkId(networkFile.getNetwork().getId())
+                    .classPath(dataFile.getClassPath())
+                    .nLabels(dataFile.getNLabels())
+                    .type(networkFile.getType())
+                    .build();
+            dtos.add(dto);
+        });
+        return dtos;
+    }
+
+    public static DataFile fromDtoPartial(DataFileDto dto){
+        return DataFile.builder()
+                .id(dto.getId())
+                .classPath(dto.getClassPath())
+                .nLabels(dto.getNLabels())
                 .build();
     }
 
