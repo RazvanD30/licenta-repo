@@ -22,7 +22,7 @@ import java.util.List;
 @Table(name = "networks")
 public class Network extends BaseEntity<Long> {
 
-    @Column(name = "name", nullable = false, unique = true)
+    @Column(name = "name", nullable = false, unique = true, length = 100)
     @NotEmpty
     private String name;
 

@@ -3,6 +3,7 @@ package en.ubb.networkconfiguration.validation.validator;
 import en.ubb.networkconfiguration.boundary.dto.runtime.LayerDto;
 import en.ubb.networkconfiguration.boundary.dto.runtime.NetworkDto;
 import org.jetbrains.annotations.NotNull;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.validation.Errors;
 import org.springframework.validation.ValidationUtils;
@@ -11,9 +12,10 @@ import org.springframework.validation.Validator;
 @Component
 public class NetworkDtoValidator implements Validator {
 
-    private final Validator layerDtoValidator;
+    private final LayerDtoValidator layerDtoValidator;
 
-    public NetworkDtoValidator(Validator layerDtoValidator) {
+    @Autowired
+    public NetworkDtoValidator(LayerDtoValidator layerDtoValidator) {
         if (layerDtoValidator == null) {
             throw new IllegalArgumentException("The supplied [Validator] is required and must not be null.");
         }
@@ -30,43 +32,43 @@ public class NetworkDtoValidator implements Validator {
 
     @Override
     public void validate(@NotNull Object target, @NotNull Errors errors) {
-        ValidationUtils.rejectIfEmpty(errors, "name", "name.empty");
-        ValidationUtils.rejectIfEmpty(errors, "layers", "layers.empty");
+        ValidationUtils.rejectIfEmpty(errors, "name", "network.name.empty");
+        ValidationUtils.rejectIfEmpty(errors, "layers", "network.layers.null");
         NetworkDto network = (NetworkDto) target;
         if (network.getLearningRate() <= 0) {
-            errors.rejectValue("learningRate", "learningRate.leZero");
+            errors.rejectValue("learningRate", "network.learningRate.leZero");
         }
         if (network.getBatchSize() <= 0) {
-            errors.rejectValue("batchSize", "batchSize.leZero");
+            errors.rejectValue("batchSize", "network.batchSize.leZero");
         }
         if (network.getNEpochs() <= 0) {
-            errors.rejectValue("nEpochs", "nInputs.leZero");
+            errors.rejectValue("nEpochs", "network.nEpochs.leZero");
         }
         if (network.getNInputs() <= 0) {
-            errors.rejectValue("nInputs", "nInputs.leZero");
+            errors.rejectValue("nInputs", "network.nInputs.leZero");
         }
         if (network.getNOutputs() <= 0) {
-            errors.rejectValue("nOutputs", "nOutputs.leZero");
+            errors.rejectValue("nOutputs", "network.nOutputs.leZero");
         }
         if (network.getLayers() != null) {
             if (network.getLayers().isEmpty()) {
-                errors.rejectValue("layers", "layers.listEmpty");
+                errors.rejectValue("layers", "network.layers.empty");
             }
-            for(int i = 0; i < network.getLayers().size() - 1; i++){
+            for (int i = 0; i < network.getLayers().size() - 1; i++) {
                 LayerDto current = network.getLayers().get(i);
-                LayerDto next = network.getLayers().get(i+1);
-                if(current.getNNodes() != next.getNInputs() || current.getNOutputs() != next.getNNodes()){
-                    errors.rejectValue("layers", "layers.invalidLinkConfig");
+                LayerDto next = network.getLayers().get(i + 1);
+                if (current.getNNodes() != next.getNInputs() || current.getNOutputs() != next.getNNodes()) {
+                    errors.rejectValue("layers", "network.layers.invalidLinkConfig");
                 }
             }
-            network.getLayers().forEach(layer -> {
+            for (int i = 0; i < network.getLayers().size(); i++) {
                 try {
-                    errors.pushNestedPath("layer");
-                    ValidationUtils.invokeValidator(this.layerDtoValidator, layer, errors);
+                    errors.pushNestedPath("layers[" + i + "]");
+                    ValidationUtils.invokeValidator(this.layerDtoValidator, network.getLayers().get(i), errors);
                 } finally {
                     errors.popNestedPath();
                 }
-            });
+            }
         }
     }
 }

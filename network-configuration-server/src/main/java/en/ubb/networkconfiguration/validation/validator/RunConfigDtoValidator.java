@@ -17,8 +17,8 @@ public class RunConfigDtoValidator implements Validator {
 
     @Override
     public void validate(@NotNull Object target, @NotNull Errors errors) {
-        ValidationUtils.rejectIfEmpty(errors,"networkId","networkId.empty");
-        ValidationUtils.rejectIfEmpty(errors,"trainFileId","trainFileId.empty");
-        ValidationUtils.rejectIfEmpty(errors,"testFileId","testFileId.empty");
+        ValidationUtils.rejectIfEmpty(errors, "networkId", "runConfig.networkId.empty");
+        ValidationUtils.rejectIfEmpty(errors, "trainFileId", "runConfig.trainFileId.empty");
+        ValidationUtils.rejectIfEmpty(errors, "testFileId", "runConfig.testFileId.empty");
     }
 }

@@ -12,8 +12,16 @@ export const APP_SETTINGS = {
       UPDATE: 'http://localhost:8080/users/',
       DELETE: 'http://localhost:8080/users/'
     },
+    NETWORK_RUN: {
+      GET_ALL: 'http://localhost:8080/network-management/networks',
+      GET_BY_ID: 'http://localhost:8080/network-management/networks/',
+      DELETE_BY_ID: 'http://localhost:8080/network-management/networks/',
+      UPDATE: 'http://localhost:8080/network-management/networks',
+      RUN_BY_ID: 'http://localhost:8080/network-management/networks/run/',
+      SAVE_PROGRESS_BY_ID: 'http://localhost:8080/network-management/networks/save-progress/'
+    },
     NETWORK_DEBUG: {
-      GET_ALL: 'http://localhost:8080/network/all',
+      GET_ALL: 'http://localhost:8080/network-management/networks',
       GET_CONNECTIONS: 'http://localhost:8080/network/connections',
       GET_BY_ID: '',
       UPDATE: '',

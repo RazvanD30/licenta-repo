@@ -9,6 +9,7 @@ import org.springframework.validation.Validator;
 
 @Component
 public class NodeDtoValidator implements Validator {
+
     @Override
     public boolean supports(@NotNull Class<?> clazz) {
         return NodeDto.class.equals(clazz);
@@ -16,7 +17,7 @@ public class NodeDtoValidator implements Validator {
 
     @Override
     public void validate(@NotNull Object target, @NotNull Errors errors) {
-        ValidationUtils.rejectIfEmpty(errors,"links","links.empty");
+        ValidationUtils.rejectIfEmpty(errors,"links","node.links.null");
         // the output nodes do not have any links, so no validation on this
     }
 }

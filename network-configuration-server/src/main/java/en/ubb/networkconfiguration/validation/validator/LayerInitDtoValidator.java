@@ -19,10 +19,12 @@ public class LayerInitDtoValidator implements Validator {
     @Override
     public void validate(@NotNull Object target, @NotNull Errors errors) {
         ValidationUtils.rejectIfEmpty(errors, "type", "layer.type.empty");
-        ValidationUtils.rejectIfEmpty(errors, "activation", "layer.activation.empty");
 
         LayerInitDto layer = (LayerInitDto) target;
 
+        if(layer.getNInputs() > 0) {
+            ValidationUtils.rejectIfEmpty(errors, "activation", "layer.activation.empty");
+        }
         if (layer.getNInputs() < 0) {
             errors.rejectValue("nInputs", "layer.nInputs.ltZero");
         }

@@ -81,7 +81,7 @@ public class NetworkApi {
         }
     }
 
-    @PutMapping("networks}")
+    @PutMapping("networks")
     public void update(@Validated @RequestBody NetworkDto dto, BindingResult result, SessionStatus status) throws NotFoundException {
 
         if (result.hasErrors()) {

@@ -1,6 +1,6 @@
-import {Layer} from './Layer';
+import {LayerInit} from './LayerInit';
 
-export interface Network {
+export interface NetworkInit {
   id: number;
   name: string;
   seed: number;
@@ -9,8 +9,5 @@ export interface Network {
   nEpochs: number;
   nInputs: number;
   nOutputs: number;
-  layers: Layer[];
+  layers: LayerInit[];
 }
-
-
-

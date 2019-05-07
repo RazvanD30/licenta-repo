@@ -17,13 +17,13 @@ public class DataFileDtoValidator implements Validator {
 
     @Override
     public void validate(@NotNull Object target, @NotNull Errors errors) {
-        ValidationUtils.rejectIfEmpty(errors,"networkId","networkId.empty");
-        ValidationUtils.rejectIfEmpty(errors,"classPath","classPath.empty");
-        ValidationUtils.rejectIfEmpty(errors,"type","type.empty");
+        ValidationUtils.rejectIfEmpty(errors, "networkId", "dataFile.networkId.empty");
+        ValidationUtils.rejectIfEmpty(errors, "classPath", "dataFile.classPath.empty");
+        ValidationUtils.rejectIfEmpty(errors, "type", "dataFile.type.empty");
 
         DataFileDto dto = (DataFileDto) target;
-        if(dto.getNLabels() <= 0){
-            errors.rejectValue("nLabels","nLabelz.leZero");
+        if (dto.getNLabels() <= 0) {
+            errors.rejectValue("nLabels", "dataFile.nLabels.leZero");
         }
     }
 }

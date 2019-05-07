@@ -18,6 +18,7 @@ import org.springframework.web.util.WebUtils;
 import java.util.Collections;
 import java.util.List;
 import java.util.Locale;
+import java.util.Objects;
 import java.util.stream.Collectors;
 
 @ControllerAdvice
@@ -55,8 +56,11 @@ public class GlobalExceptionHandler {
 
     private ResponseEntity<ApiError> handleValidationException(ValidationException ex, HttpHeaders headers, HttpStatus status, WebRequest request) {
         List<String> errors = ex.getBindingResult().getFieldErrors().stream()
+                .filter(fieldError -> fieldError.getCode() != null)
                 .map(fieldError -> {
-                    return messageSource.getMessage(fieldError, Locale.getDefault());
+                    Object[] args = pushArg(fieldError.getArguments() != null ? fieldError.getArguments() : new Object[]{},
+                            fieldError.getRejectedValue());
+                    return messageSource.getMessage(fieldError.getCode(), args, Locale.getDefault());
                 })
                 .collect(Collectors.toList());
         return handleExceptionInternal(ex, new ApiError(errors), headers, status, request);
@@ -72,6 +76,13 @@ public class GlobalExceptionHandler {
             request.setAttribute(WebUtils.ERROR_EXCEPTION_ATTRIBUTE, ex, WebRequest.SCOPE_REQUEST);
         }
         return new ResponseEntity<>(body, headers, status);
+    }
+
+    private static Object[] pushArg(Object[] array, Object push) {
+        Object[] longer = new Object[array.length + 1];
+        System.arraycopy(array, 0, longer, 0, array.length);
+        longer[array.length] = push;
+        return longer;
     }
 
 }

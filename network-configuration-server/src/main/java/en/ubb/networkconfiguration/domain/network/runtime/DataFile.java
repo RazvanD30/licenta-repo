@@ -17,7 +17,7 @@ import java.util.List;
 @Table(name = "data_files")
 public class DataFile extends BaseEntity<Long> {
 
-    @Column(name = "class_path", nullable = false, unique = true)
+    @Column(name = "class_path", nullable = false, unique = true, length = 100)
     private String classPath;
 
     @Column(name = "labels")

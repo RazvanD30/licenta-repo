@@ -30,6 +30,7 @@ public class NetworkInitDtoValidator implements Validator {
         return NetworkInitDto.class.equals(clazz);
     }
 
+
     @Override
     public void validate(@NotNull Object target, @NotNull Errors errors) {
         ValidationUtils.rejectIfEmpty(errors, "name", "network.name.empty");
@@ -42,7 +43,7 @@ public class NetworkInitDtoValidator implements Validator {
             errors.rejectValue("batchSize", "network.batchSize.leZero");
         }
         if (network.getNEpochs() <= 0) {
-            errors.rejectValue("nEpochs", "network.nInputs.leZero");
+            errors.rejectValue("nEpochs", "network.nEpochs.leZero");
         }
         if (network.getNInputs() <= 0) {
             errors.rejectValue("nInputs", "network.nInputs.leZero");
@@ -62,9 +63,12 @@ public class NetworkInitDtoValidator implements Validator {
                 }
             }
             for (int i = 0; i < network.getLayers().size(); i++) {
-                errors.pushNestedPath("layers[" + i + "]");
-                ValidationUtils.invokeValidator(this.layerInitDtoValidator, network.getLayers().get(i), errors);
-                errors.popNestedPath();
+                try {
+                    errors.pushNestedPath("layers[" + i + "]");
+                    ValidationUtils.invokeValidator(this.layerInitDtoValidator, network.getLayers().get(i), errors);
+                } finally {
+                    errors.popNestedPath();
+                }
             }
         }
     }

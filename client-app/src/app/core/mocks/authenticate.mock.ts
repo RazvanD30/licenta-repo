@@ -4,7 +4,7 @@ import {Observable, of, throwError} from 'rxjs';
 import {delay, dematerialize, materialize, mergeMap} from 'rxjs/operators';
 import {APP_SETTINGS} from '../../configs/app-settings.config';
 import {Layer} from '../../shared/models/network/Layer';
-import {NeuralNode} from '../../shared/models/network/NeuralNode';
+import {Node} from '../../shared/models/network/Node';
 import {Link} from '../../shared/models/network/Link';
 import {Status} from '../../shared/models/network/Status';
 import {Network} from '../../shared/models/network/Network';
@@ -173,20 +173,20 @@ export class AuthenticateMock implements HttpInterceptor {
 
     // input nNodes
     for (let i = 0; i < INPUT_NODES; i++) {
-      const node: NeuralNode = new NeuralNode(ID_ADD + i, Status.INPUT);
+      const node: Node = new Node(ID_ADD + i, Status.INPUT);
       layers[0].nodes.push(node);
     }
 
     // output nNodes
     for (let i = 0; i < OUTPUT_NODES; i++) {
-      const node: NeuralNode = new NeuralNode(ID_ADD + (layers.length - 1) * 1000 + i, Status.IGNORED);
+      const node: Node = new Node(ID_ADD + (layers.length - 1) * 1000 + i, Status.IGNORED);
       layers[layers.length - 1].nodes.push(node);
     }
 
     // hidden nNodes
     for (let l = 1; l <= HIDDEN_LAYERS; l++) {
       for (let n = 0; n < NODES_PER_HIDDEN_LAYER; n++) {
-        const node: NeuralNode = new NeuralNode(ID_ADD + l * 1000 + n, Status.IGNORED);
+        const node: Node = new Node(ID_ADD + l * 1000 + n, Status.IGNORED);
         layers[l].nodes.push(node);
       }
     }
