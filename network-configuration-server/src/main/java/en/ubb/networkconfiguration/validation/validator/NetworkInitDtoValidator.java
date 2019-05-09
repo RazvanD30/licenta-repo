@@ -36,6 +36,7 @@ public class NetworkInitDtoValidator implements Validator {
         ValidationUtils.rejectIfEmpty(errors, "name", "network.name.empty");
         ValidationUtils.rejectIfEmpty(errors, "layers", "network.layers.null");
         NetworkInitDto network = (NetworkInitDto) target;
+
         if (network.getLearningRate() <= 0) {
             errors.rejectValue("learningRate", "network.learningRate.leZero");
         }

@@ -1,5 +1,6 @@
 package en.ubb.networkconfiguration.boundary.dto.runtime;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.*;
 
 @AllArgsConstructor
@@ -9,7 +10,9 @@ import lombok.*;
 @Setter
 public class LinkDto {
 
+    @JsonProperty("id")
     private Long id;
 
+    @JsonProperty("weight")
     private double weight;
 }

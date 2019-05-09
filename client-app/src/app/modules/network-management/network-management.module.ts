@@ -18,6 +18,8 @@ import { NetworkTableComponent } from './partial-components/network-table/networ
 import {MaterialModule} from '../material/material.module';
 import {ScrollingModule} from '@angular/cdk/scrolling';
 import { NodeDetailsComponent } from './partial-components/node-details/node-details.component';
+import {NetworkRunService} from '../../core/services/network-run.service';
+import {NetworkInitService} from '../../core/services/network-init.service';
 @NgModule({
   declarations: [
     CytoscapeComponent,
@@ -39,11 +41,12 @@ import { NodeDetailsComponent } from './partial-components/node-details/node-det
   providers: [
     UserService,
     AuthenticationGuard,
+    NetworkRunService,
+    NetworkInitService,
     {provide: HTTP_INTERCEPTORS, useClass: HttpTokenInterceptor, multi: true},
-    {provide: HTTP_INTERCEPTORS, useClass: ErrorHandlerInterceptor, multi: true},
+    {provide: HTTP_INTERCEPTORS, useClass: ErrorHandlerInterceptor, multi: true}
 
     // mock backend
-    authenticateMockProvider
   ],
   entryComponents: [
     NetworkSpecialRoutineComponent,

@@ -12,6 +12,12 @@ export const APP_SETTINGS = {
       UPDATE: 'http://localhost:8080/users/',
       DELETE: 'http://localhost:8080/users/'
     },
+    NETWORK_INIT: {
+      CREATE: 'http://localhost:8080/network-management/init',
+      GET_ALL: 'http://localhost:8080/network-management/init',
+      GET_BY_ID: 'http://localhost:8080/network-management/init/',
+      DELETE_BY_ID: 'http://localhost:8080/network-management/init/'
+    },
     NETWORK_RUN: {
       GET_ALL: 'http://localhost:8080/network-management/networks',
       GET_BY_ID: 'http://localhost:8080/network-management/networks/',

@@ -44,15 +44,11 @@ public class NetworkInitializer extends BaseEntity<Long> {
     @Range(min = 1)
     private int nOutputs;
 
-    @Column(name = "layers", nullable = false)
-    @Range(min = 1)
-    private int nLayers;
-
     @OneToMany(mappedBy = "network", cascade = CascadeType.ALL)
     private List<LayerInitializer> layers = new ArrayList<>();
 
     @Builder(toBuilder = true)
-    public NetworkInitializer(Long id, String name, int seed, double learningRate, int batchSize, int nEpochs, int nInputs, int nOutputs, int nLayers, List<LayerInitializer> layers) {
+    public NetworkInitializer(Long id, String name, int seed, double learningRate, int batchSize, int nEpochs, int nInputs, int nOutputs, List<LayerInitializer> layers) {
         super(id);
         this.name = name;
         this.seed = seed;
@@ -61,7 +57,6 @@ public class NetworkInitializer extends BaseEntity<Long> {
         this.nEpochs = nEpochs;
         this.nInputs = nInputs;
         this.nOutputs = nOutputs;
-        this.nLayers = nLayers;
         this.layers = layers;
     }
 

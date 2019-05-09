@@ -119,7 +119,7 @@ export class NetworkDebuggingComponent implements OnInit {
 
 
   initPoints() {
-
+/*
     this.networkDebugService.getConnections().subscribe(connections => {
 
       this.networkDebugService.getAll().subscribe(networks => {
@@ -199,7 +199,7 @@ export class NetworkDebuggingComponent implements OnInit {
       });
 
     });
-
+*/
 
   }
 

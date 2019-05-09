@@ -2,7 +2,7 @@ package en.ubb.networkconfiguration.service.impl;
 
 import en.ubb.networkconfiguration.dao.DataFileRepo;
 import en.ubb.networkconfiguration.dao.NetworkRepo;
-import en.ubb.networkconfiguration.dao.specification.DataFileRepoSpec;
+import en.ubb.networkconfiguration.dao.specification.DataFileSpec;
 import en.ubb.networkconfiguration.domain.enums.FileType;
 import en.ubb.networkconfiguration.domain.network.runtime.DataFile;
 import en.ubb.networkconfiguration.domain.network.runtime.Network;
@@ -65,7 +65,7 @@ public class FileServiceImpl implements FileService {
 
     @Override
     public Optional<DataFile> findFile(String classPath) {
-        return this.dataFileRepo.findOne(Specification.where(DataFileRepoSpec.hasClasspath(classPath)));
+        return this.dataFileRepo.findOne(Specification.where(DataFileSpec.hasClasspath(classPath)));
     }
 
     @Override

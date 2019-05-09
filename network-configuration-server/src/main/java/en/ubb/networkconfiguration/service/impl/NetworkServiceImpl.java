@@ -1,10 +1,8 @@
 package en.ubb.networkconfiguration.service.impl;
 
-import en.ubb.networkconfiguration.domain.enums.FileType;
 import en.ubb.networkconfiguration.domain.network.runtime.*;
 import en.ubb.networkconfiguration.domain.network.setup.NetworkInitializer;
 import en.ubb.networkconfiguration.dao.*;
-import en.ubb.networkconfiguration.dao.specification.DataFileRepoSpec;
 import en.ubb.networkconfiguration.service.NetworkService;
 import en.ubb.networkconfiguration.util.LayerUtil;
 import en.ubb.networkconfiguration.validation.exception.business.FileAccessBussExc;
@@ -29,10 +27,8 @@ import org.nd4j.linalg.learning.config.Nesterovs;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 
-import javax.validation.Valid;
 import java.io.*;
 import java.util.List;
 import java.util.Optional;

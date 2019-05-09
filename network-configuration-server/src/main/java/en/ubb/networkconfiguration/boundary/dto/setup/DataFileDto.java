@@ -1,5 +1,6 @@
 package en.ubb.networkconfiguration.boundary.dto.setup;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import en.ubb.networkconfiguration.domain.enums.FileType;
 import lombok.*;
 
@@ -10,14 +11,19 @@ import lombok.*;
 @Setter
 public class DataFileDto {
 
+    @JsonProperty("id")
     private Long id;
 
+    @JsonProperty("networkId")
     private long networkId;
 
+    @JsonProperty("classPath")
     private String classPath;
 
+    @JsonProperty("type")
     private FileType type;
 
+    @JsonProperty("nLabels")
     private int nLabels;
 
 }

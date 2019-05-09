@@ -119,7 +119,7 @@ export class AuthenticateMock implements HttpInterceptor {
 
         const connection1 = new NetworkConnection(0, 100000000, 11, 100000000);
         const connection2 = new NetworkConnection(100000,100000000,100007,100000000);
-
+/*
         for (let i = 0; i < 2; i++) {
           let link = new Link(-1 * i, 1, Status.INPUT, 11000 + i, 100000000 + i);
           connection1.links.push(link);
@@ -131,8 +131,8 @@ export class AuthenticateMock implements HttpInterceptor {
         }
 
         const connections: NetworkConnection[] = [connection1,connection2];
-
-        return of(new HttpResponse({status: 200, body: connections}))
+*/
+       //return of(new HttpResponse({status: 200, body: connections}))
       }
 
       if (request.url.startsWith(APP_SETTINGS.URLS.USER_MANAGEMENT.DELETE) && request.method === 'DELETE') {
@@ -161,6 +161,7 @@ export class AuthenticateMock implements HttpInterceptor {
     const TOTAL_LAYERS = HIDDEN_LAYERS + 2;
 
     const layers: Layer[] = [];
+    /*
 
     // layers
     for (let i = 0; i < TOTAL_LAYERS; i++) {
@@ -205,7 +206,10 @@ export class AuthenticateMock implements HttpInterceptor {
         }
       }
     }
+
     return new Network(ID_ADD, 'Mocked neural network', 1234, 0.2, 500, 10, INPUT_NODES, OUTPUT_NODES, layers[0]);
+    */
+    return null;
   }
 
 }

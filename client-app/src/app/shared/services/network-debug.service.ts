@@ -32,7 +32,7 @@ export class NetworkDebugService {
 
 
   public loadNetwork(network: Network) {
-
+    /*
     let currentLayer: Layer = network.firstLayer;
 
 
@@ -69,6 +69,8 @@ export class NetworkDebugService {
       });
       currentLayer = currentLayer.next;
     }
+    */
+    return null;
   }
 
 
