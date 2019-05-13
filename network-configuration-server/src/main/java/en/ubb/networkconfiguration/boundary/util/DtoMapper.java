@@ -5,9 +5,9 @@ import en.ubb.networkconfiguration.boundary.dto.runtime.LinkDto;
 import en.ubb.networkconfiguration.boundary.dto.runtime.NetworkDto;
 import en.ubb.networkconfiguration.boundary.dto.runtime.NodeDto;
 import en.ubb.networkconfiguration.boundary.dto.setup.DataFileDto;
-import en.ubb.networkconfiguration.domain.network.runtime.*;
-import en.ubb.networkconfiguration.domain.network.setup.LayerInitializer;
-import en.ubb.networkconfiguration.domain.network.setup.NetworkInitializer;
+import en.ubb.networkconfiguration.persistence.domain.network.runtime.*;
+import en.ubb.networkconfiguration.persistence.domain.network.setup.LayerInitializer;
+import en.ubb.networkconfiguration.persistence.domain.network.setup.NetworkInitializer;
 import en.ubb.networkconfiguration.boundary.dto.setup.LayerInitDto;
 import en.ubb.networkconfiguration.boundary.dto.setup.NetworkInitDto;
 

@@ -1,7 +1,7 @@
 package en.ubb.networkconfiguration.boundary.dto.setup;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
-import en.ubb.networkconfiguration.domain.enums.FileType;
+import en.ubb.networkconfiguration.persistence.domain.enums.FileType;
 import lombok.*;
 
 @AllArgsConstructor

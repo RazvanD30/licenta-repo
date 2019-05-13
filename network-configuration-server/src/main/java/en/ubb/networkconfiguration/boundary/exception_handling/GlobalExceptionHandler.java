@@ -1,8 +1,8 @@
 package en.ubb.networkconfiguration.boundary.exception_handling;
 
-import en.ubb.networkconfiguration.validation.exception.boundary.BoundaryException;
-import en.ubb.networkconfiguration.validation.exception.boundary.NotFoundException;
-import en.ubb.networkconfiguration.validation.exception.boundary.ValidationException;
+import en.ubb.networkconfiguration.boundary.validation.exception.BoundaryException;
+import en.ubb.networkconfiguration.boundary.validation.exception.NotFoundException;
+import en.ubb.networkconfiguration.boundary.validation.exception.ValidationException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,7 +18,6 @@ import org.springframework.web.util.WebUtils;
 import java.util.Collections;
 import java.util.List;
 import java.util.Locale;
-import java.util.Objects;
 import java.util.stream.Collectors;
 
 @ControllerAdvice

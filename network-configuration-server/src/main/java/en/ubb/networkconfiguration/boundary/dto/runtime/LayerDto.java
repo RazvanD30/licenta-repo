@@ -1,7 +1,7 @@
 package en.ubb.networkconfiguration.boundary.dto.runtime;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
-import en.ubb.networkconfiguration.domain.enums.LayerType;
+import en.ubb.networkconfiguration.persistence.domain.enums.LayerType;
 import lombok.*;
 import org.nd4j.linalg.activations.Activation;
 
