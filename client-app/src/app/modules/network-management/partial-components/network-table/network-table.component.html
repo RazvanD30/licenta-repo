@@ -1,3 +1,4 @@
+
 <div class="table-container">
   <div class="mat-elevation-z8">
     <mat-button-toggle-group name="fontStyle" aria-label="Font Style">
@@ -12,10 +13,9 @@
     </mat-button-toggle-group>
     <mat-tab-group>
       <mat-tab label="Filter by..."></mat-tab>
-
       <mat-tab>
         <ng-template mat-tab-label>
-          <div *ngIf="filters.name === ''"> Name </div>
+          <div *ngIf="filters.name === ''"> Name</div>
           <div *ngIf="filters.name !== ''" style="color: red"> Name (edited)</div>
         </ng-template>
         <mat-form-field class="example-full-width">
@@ -26,99 +26,196 @@
 
       <mat-tab>
         <ng-template mat-tab-label>
-          <div *ngIf="filters.username === ''"> Username </div>
-          <div *ngIf="filters.username !== ''" style="color: red"> Username (edited)</div>
+          <div *ngIf="filters.seed === ''"> Seed</div>
+          <div *ngIf="filters.seed !== ''" style="color: red"> Seed (edited)</div>
         </ng-template>
         <mat-form-field class="example-full-width">
-          <input [(ngModel)]="filters.username" matInput (keyup)="applyFilter($event.target.value,'username')"
-                 placeholder="Filter by username">
+          <mat-select placeholder="Operation type" [(ngModel)]="filters.comparison.seed">
+            <mat-option value="gt">Greater than</mat-option>
+            <mat-option value="lt">Less than</mat-option>
+            <mat-option value="eq">Equal to</mat-option>
+            <mat-option value="nq">Different from</mat-option>
+          </mat-select>
+        </mat-form-field>
+        <mat-form-field class="example-full-width" [hidden]="!filters.comparison.seed">
+          <input [(ngModel)]="filters.seed" matInput (keyup)="applyFilter($event.target.value,'seed')"
+                 placeholder="Filter by seed" type="number">
         </mat-form-field>
       </mat-tab>
 
       <mat-tab>
         <ng-template mat-tab-label>
-          <div *ngIf="filters.role === ''"> Role </div>
-          <div *ngIf="filters.role !== ''" style="color: red"> Role (edited)</div>
+          <div *ngIf="filters.learningRate === ''"> Learning Rate</div>
+          <div *ngIf="filters.learningRate !== ''" style="color: red"> Learning Rate (edited)</div>
         </ng-template>
         <mat-form-field class="example-full-width">
-          <input type="number" [(ngModel)]="filters.role" matInput (keyup)="applyFilter($event.target.value,'role')"
-                 placeholder="Filter by role">
+          <mat-select placeholder="Operation type" [(ngModel)]="filters.comparison.learningRate">
+            <mat-option value="gt">Greater than</mat-option>
+            <mat-option value="lt">Less than</mat-option>
+            <mat-option value="eq">Equal to</mat-option>
+            <mat-option value="nq">Different from</mat-option>
+          </mat-select>
+        </mat-form-field>
+        <mat-form-field class="example-full-width" [hidden]="!filters.comparison.learningRate">
+          <input [(ngModel)]="filters.learningRate" matInput (keyup)="applyFilter($event.target.value,'learningRate')"
+                 placeholder="Filter by learning rate" type="number">
         </mat-form-field>
       </mat-tab>
 
       <mat-tab>
         <ng-template mat-tab-label>
-          <div *ngIf="filters.permissions === ''"> Permissions </div>
-          <div *ngIf="filters.permissions !== ''" style="color: red"> Permissions (edited)</div>
+          <div *ngIf="filters.batchSize === ''"> Batch Size</div>
+          <div *ngIf="filters.batchSize !== ''" style="color: red"> Batch Size (edited)</div>
         </ng-template>
         <mat-form-field class="example-full-width">
-          <input type="number" [(ngModel)]="filters.permissions" matInput (keyup)="applyFilter($event.target.value,'permissions')"
-                 placeholder="Filter by permissions">
+          <mat-select placeholder="Operation type" [(ngModel)]="filters.comparison.batchSize">
+            <mat-option value="gt">Greater than</mat-option>
+            <mat-option value="lt">Less than</mat-option>
+            <mat-option value="eq">Equal to</mat-option>
+            <mat-option value="nq">Different from</mat-option>
+          </mat-select>
+        </mat-form-field>
+        <mat-form-field class="example-full-width" [hidden]="!filters.comparison.batchSize">
+          <input [(ngModel)]="filters.batchSize" matInput (keyup)="applyFilter($event.target.value,'batchSize')"
+                 placeholder="Filter by batch size" type="number">
         </mat-form-field>
       </mat-tab>
 
+      <mat-tab>
+        <ng-template mat-tab-label>
+          <div *ngIf="filters.nEpochs === ''"> #Epochs</div>
+          <div *ngIf="filters.nEpochs !== ''" style="color: red"> #Epochs (edited)</div>
+        </ng-template>
+        <mat-form-field class="example-full-width">
+          <mat-select placeholder="Operation type" [(ngModel)]="filters.comparison.nEpochs">
+            <mat-option value="gt">Greater than</mat-option>
+            <mat-option value="lt">Less than</mat-option>
+            <mat-option value="eq">Equal to</mat-option>
+            <mat-option value="nq">Different from</mat-option>
+          </mat-select>
+        </mat-form-field>
+        <mat-form-field class="example-full-width" [hidden]="!filters.comparison.nEpochs">
+          <input [(ngModel)]="filters.nEpochs" matInput (keyup)="applyFilter($event.target.value,'nEpochs')"
+                 placeholder="Filter by #Epochs" type="number">
+        </mat-form-field>
+      </mat-tab>
 
       <mat-tab>
         <ng-template mat-tab-label>
-          <div *ngIf="filters.supervisorUsername === ''"> Supervisor username </div>
-          <div *ngIf="filters.supervisorUsername !== ''" style="color: red"> Supervisor username (edited)</div>
+          <div *ngIf="filters.nInputs === ''"> #Inputs</div>
+          <div *ngIf="filters.nInputs !== ''" style="color: red"> #Inputs (edited)</div>
         </ng-template>
         <mat-form-field class="example-full-width">
-          <input type="number" [(ngModel)]="filters.supervisorUsername" matInput (keyup)="applyFilter($event.target.value,'supervisorUsername')"
-                 placeholder="Filter by supervisor username">
+          <mat-select placeholder="Operation type" [(ngModel)]="filters.comparison.nInputs">
+            <mat-option value="gt">Greater than</mat-option>
+            <mat-option value="lt">Less than</mat-option>
+            <mat-option value="eq">Equal to</mat-option>
+            <mat-option value="nq">Different from</mat-option>
+          </mat-select>
+        </mat-form-field>
+        <mat-form-field class="example-full-width" [hidden]="!filters.comparison.nInputs">
+          <input [(ngModel)]="filters.nInputs" matInput (keyup)="applyFilter($event.target.value,'nInputs')"
+                 placeholder="Filter by #Inputs" type="number">
+        </mat-form-field>
+      </mat-tab>
+
+      <mat-tab>
+        <ng-template mat-tab-label>
+          <div *ngIf="filters.nOutputs === ''"> #Outputs</div>
+          <div *ngIf="filters.nOutputs !== ''" style="color: red"> #Outputs (edited)</div>
+        </ng-template>
+        <mat-form-field class="example-full-width">
+          <mat-select placeholder="Operation type" [(ngModel)]="filters.comparison.nOutputs">
+            <mat-option value="gt">Greater than</mat-option>
+            <mat-option value="lt">Less than</mat-option>
+            <mat-option value="eq">Equal to</mat-option>
+            <mat-option value="nq">Different from</mat-option>
+          </mat-select>
+        </mat-form-field>
+        <mat-form-field class="example-full-width" [hidden]="!filters.comparison.nOutputs">
+          <input [(ngModel)]="filters.nOutputs" matInput (keyup)="applyFilter($event.target.value,'nOutputs')"
+                 placeholder="Filter by #Outputs" type="number">
+        </mat-form-field>
+      </mat-tab>
+
+      <mat-tab>
+        <ng-template mat-tab-label>
+          <div *ngIf="filters.nLayers === ''"> #Layers</div>
+          <div *ngIf="filters.nLayers !== ''" style="color: red"> #Layers (edited)</div>
+        </ng-template>
+        <mat-form-field class="example-full-width">
+          <mat-select placeholder="Operation type" [(ngModel)]="filters.comparison.nLayers">
+            <mat-option value="gt">Greater than</mat-option>
+            <mat-option value="lt">Less than</mat-option>
+            <mat-option value="eq">Equal to</mat-option>
+            <mat-option value="nq">Different from</mat-option>
+          </mat-select>
+        </mat-form-field>
+        <mat-form-field class="example-full-width" [hidden]="!filters.comparison.nLayers">
+          <input [(ngModel)]="filters.nLayers" matInput (keyup)="applyFilter($event.target.value,'nLayers')"
+                 placeholder="Filter by #Layers" type="number">
         </mat-form-field>
       </mat-tab>
 
     </mat-tab-group>
 
 
-    <table mat-table *ngIf="usersDataSource" [dataSource]="usersDataSource" class="mat-elevation-z8" matSort>
+    <table mat-table *ngIf="networkDataSource" [dataSource]="networkDataSource" class="mat-elevation-z8" matSort>
+
+      <ng-container matColumnDef="id">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>Id</th>
+        <td mat-cell *matCellDef="let network"> {{ network.id }}</td>
+        <td mat-footer-cell *matFooterCellDef></td>
+      </ng-container>
 
       <ng-container matColumnDef="name">
         <th mat-header-cell *matHeaderCellDef mat-sort-header>Name</th>
-        <td mat-cell *matCellDef="let user"> {{ user.lastName + " " + user.firstName }} </td>
+        <td mat-cell *matCellDef="let network"> {{ network.name }}</td>
         <td mat-footer-cell *matFooterCellDef></td>
       </ng-container>
 
-      <ng-container matColumnDef="username">
-        <th mat-header-cell *matHeaderCellDef mat-sort-header>Username</th>
-        <td mat-cell *matCellDef="let user"> {{ user.username }}</td>
+      <ng-container matColumnDef="seed">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>Seed</th>
+        <td mat-cell *matCellDef="let network"> {{ network.seed }}</td>
         <td mat-footer-cell *matFooterCellDef></td>
       </ng-container>
 
-      <ng-container matColumnDef="role">
-        <th mat-header-cell *matHeaderCellDef mat-sort-header>Role</th>
-        <td mat-cell *matCellDef="let user"> {{ user.role }}</td>
+      <ng-container matColumnDef="learningRate">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>Learning Rate</th>
+        <td mat-cell *matCellDef="let network"> {{ network.learningRate }}</td>
         <td mat-footer-cell *matFooterCellDef></td>
       </ng-container>
 
-      <ng-container matColumnDef="permissions">
-        <th mat-header-cell *matHeaderCellDef mat-sort-header>Permissions</th>
-        <td mat-cell *matCellDef="let user"> {{ user.permissions }}</td>
+      <ng-container matColumnDef="batchSize">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>Batch Size</th>
+        <td mat-cell *matCellDef="let network"> {{ network.batchSize }}</td>
         <td mat-footer-cell *matFooterCellDef></td>
       </ng-container>
 
-      <ng-container matColumnDef="supervisorUsername">
-        <th mat-header-cell *matHeaderCellDef mat-sort-header>Supervisor username </th>
-        <td mat-cell *matCellDef="let user"> {{ user.supervisorUsername }}</td>
+      <ng-container matColumnDef="nEpochs">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>#Epochs</th>
+        <td mat-cell *matCellDef="let network"> {{ network.nEpochs }}</td>
         <td mat-footer-cell *matFooterCellDef></td>
       </ng-container>
 
-      <ng-container matColumnDef="email">
-        <th mat-header-cell *matHeaderCellDef mat-sort-header>Email</th>
-        <td mat-cell *matCellDef="let user"> {{ user.email }}</td>
+      <ng-container matColumnDef="nInputs">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>#Inputs</th>
+        <td mat-cell *matCellDef="let network"> {{ network.nInputs }}</td>
         <td mat-footer-cell *matFooterCellDef></td>
       </ng-container>
 
-      <ng-container matColumnDef="phoneNumber">
-        <th mat-header-cell *matHeaderCellDef mat-sort-header>Phone number</th>
-        <td mat-cell *matCellDef="let user"> {{ user.phoneNumber }}</td>
+      <ng-container matColumnDef="nOutputs">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>#Outputs</th>
+        <td mat-cell *matCellDef="let network"> {{ network.nOutputs }}</td>
         <td mat-footer-cell *matFooterCellDef></td>
       </ng-container>
 
-      <ng-container matColumnDef="lastActiveOn">
-        <th mat-header-cell *matHeaderCellDef mat-sort-header>Last active</th>
-        <td mat-cell *matCellDef="let user"> {{ user.lastActiveOn }}</td>
+      <ng-container matColumnDef="nLayers">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header disableClear>#Layers</th>
+        <td mat-cell *matCellDef="let network">
+          {{network.layers.length}}
+          <fa-icon [icon]="faList" (click)="layerConfigOpenEvent.emit(network)"></fa-icon>
+        </td>
         <td mat-footer-cell *matFooterCellDef></td>
       </ng-container>
 

@@ -1,9 +1,10 @@
-import {Component, OnInit, ViewChild} from '@angular/core';
-import {User} from '../../../../shared/models/User';
+import {Component, EventEmitter, Input, OnInit, Output, ViewChild} from '@angular/core';
 import {MatPaginator, MatSort, MatTableDataSource} from '@angular/material';
-import {UserService} from '../../../../core/services/user.service';
 import {MyErrorStateMatcher} from '../../../user-management/partial-components/users-table/users-table.component';
-import {NetworkDebugService} from '../../../../core/services/network-debug';
+import {Network} from '../../../../shared/models/network/Network';
+import {NetworkRunService} from '../../../../core/services/network-run.service';
+import {faList} from '@fortawesome/free-solid-svg-icons';
+
 
 @Component({
   selector: 'app-network-table',
@@ -12,50 +13,58 @@ import {NetworkDebugService} from '../../../../core/services/network-debug';
 })
 export class NetworkTableComponent implements OnInit {
 
-  ngOnInit() {
-
-
-  }
-  /*
-  users: User[];
+  @Input() networks: Network[];
   displayedColumns: string[];
   editable: boolean;
-  usersDataSource: MatTableDataSource<User>;
+  networkDataSource: MatTableDataSource<Network>;
   filters;
   gradeErrorMatcher;
   fc;
+  faList = faList;
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
+  @Output() layerConfigOpenEvent = new EventEmitter();
 
-  constructor(private networkService: NetworkDebugService) {
+
+  constructor(private networkRunService: NetworkRunService) {
   }
 
   ngOnInit() {
     this.filters = {
-      username: '',
       name: '',
-      role: '',
-      supervisorUsername: '',
-      permissions: ''
+      seed: '',
+      learningRate: '',
+      batchSize: '',
+      nEpochs: '',
+      nInputs: '',
+      nOutputs: '',
+      nLayers: '',
+      comparison: {
+        seed: '',
+        learningRate: '',
+        batchSize: '',
+        nEpochs: '',
+        nInputs: '',
+        nOutputs: '',
+        nLayers: ''
+      }
     };
-    this.userService.getAll().subscribe(users => {
-      this.users = users;
-      this.usersDataSource = new MatTableDataSource(this.users);
-      this.usersDataSource.paginator = this.paginator;
-      this.usersDataSource.sortingDataAccessor = (user: User, property: string) => {
-        switch (property) {
-          case 'role':
-            return user.role.type;
-          default:
-            return user[property];
-        }
-      };
-      this.usersDataSource.filterPredicate = (user: User, filters: string) => this.filterPredicate(user);
-      this.usersDataSource.sort = this.sort;
 
-      this.resetFilters();
-    });
-    this.displayedColumns = ['name', 'username', 'role', 'permissions', 'email', 'phoneNumber', 'supervisorUsername', 'lastActiveOn'];
+    this.networkDataSource = new MatTableDataSource(this.networks);
+    this.networkDataSource.paginator = this.paginator;
+    this.networkDataSource.sortingDataAccessor = (network: Network, property: string) => {
+      switch (property) {
+        case 'nLayers':
+          return network.layers.length;
+        default:
+          return network[property];
+      }
+    };
+    this.networkDataSource.filterPredicate = (network: Network, filters: string) => this.filterPredicate(network);
+    this.networkDataSource.sort = this.sort;
+
+    this.resetFilters();
+    this.displayedColumns = ['id', 'name', 'seed', 'learningRate', 'batchSize', 'nEpochs', 'nInputs', 'nOutputs', 'nLayers'];
     this.editable = true;
     this.gradeErrorMatcher = new MyErrorStateMatcher();
     this.fc = [];
@@ -63,30 +72,52 @@ export class NetworkTableComponent implements OnInit {
 
   }
 
-  filterPredicate(user: User): boolean {
+
+  compare(cell: number, expected: number, operation: string) {
+    switch (operation) {
+      case 'lt':
+        return cell < expected;
+      case 'gt':
+        return cell > expected;
+      case 'eq':
+        return cell == expected;
+      case 'nq':
+        return cell != expected;
+    }
+  }
+
+  filterPredicate(network: Network): boolean {
     let ok = true;
-    if (this.filters.username !== '') {
-      ok = ok === true && user.username.toLowerCase().includes(this.filters.username.toLowerCase());
-    }
     if (this.filters.name !== '') {
-      ok = ok === true && ((user.lastName + ' ' + user.firstName).trim().toLowerCase().includes(this.filters.name.trim().toLowerCase()));
+      ok = ok === true && network.name.includes(this.filters.name);
     }
-    if (this.filters.role !== '') {
-      ok = ok === true && user.role.type.toLowerCase().includes(this.filters.role.toLowerCase());
+    if (this.filters.seed !== '') {
+      ok = ok === true && this.compare(network.seed, this.filters.seed, this.filters.comparison.seed);
     }
-    if (this.filters.permissions !== '') {
-      ok = ok === true && (user.role.permissions.find(p => p.name === this.filters.permissions) !== null
-        || user.additionalPermissions === this.filters.permissions);
+    if (this.filters.learningRate !== '') {
+      ok = ok === true && this.compare(network.learningRate, this.filters.learningRate, this.filters.comparison.learningRate);
     }
-    if (this.filters.supervisorUsername !== '') {
-      ok = ok === true && user.supervisorUsername.toLowerCase().includes(this.filters.supervisorUsername.toLowerCase());
+    if (this.filters.batchSize !== '') {
+      ok = ok === true && this.compare(network.batchSize, this.filters.batchSize, this.filters.comparison.batchSize);
+    }
+    if (this.filters.nEpochs !== '') {
+      ok = ok === true && this.compare(network.nEpochs, this.filters.nEpochs, this.filters.comparison.nEpochs);
+    }
+    if (this.filters.nInputs !== '') {
+      ok = ok === true && this.compare(network.nInputs, this.filters.nInputs, this.filters.comparison.nInputs);
+    }
+    if (this.filters.nOutputs !== '') {
+      ok = ok === true && this.compare(network.nOutputs, this.filters.nOutputs, this.filters.comparison.nOutputs);
+    }
+    if (this.filters.nLayers !== '') {
+      ok = ok === true && this.compare(network.layers.length, this.filters.nLayers, this.filters.comparison.nLayers);
     }
     return ok;
   }
 
 
-  getRowIndexForUser(user: User) {
-    return this.users.findIndex(u => u.id === user.id);
+  getRowIndexFor(network: Network) {
+    return this.networks.findIndex(n => n.id === network.id);
   }
 
   resetFormControl() {
@@ -96,21 +127,37 @@ export class NetworkTableComponent implements OnInit {
 
   applyFilter(filterValue: string, filterColumn: string) {
 
-    this.filters[filterColumn] = filterValue;
-    this.usersDataSource.filter = 'a' + filterValue.trim().toLowerCase();
+    if (filterValue === null || filterColumn === null) {
+      this.networkDataSource.filter = 'a';
+    } else {
+      this.filters[filterColumn] = filterValue;
+      this.networkDataSource.filter = 'a' + filterValue.trim().toLowerCase();
+    }
 
-    if (this.usersDataSource.paginator) {
-      this.usersDataSource.paginator.firstPage();
+    if (this.networkDataSource.paginator) {
+      this.networkDataSource.paginator.firstPage();
     }
   }
 
   resetFilters() {
     this.filters = {
-      username: '',
       name: '',
-      role: '',
-      supervisorUsername: '',
-      permissions: ''
+      seed: '',
+      learningRate: '',
+      batchSize: '',
+      nEpochs: '',
+      nInputs: '',
+      nOutputs: '',
+      nLayers: '',
+      comparison: {
+        seed: '',
+        learningRate: '',
+        batchSize: '',
+        nEpochs: '',
+        nInputs: '',
+        nOutputs: '',
+        nLayers: ''
+      }
     };
     this.applyFilter('', null);
   }
@@ -126,6 +173,7 @@ export class NetworkTableComponent implements OnInit {
 
   save() {
 
-  }*/
+  }
+
 
 }

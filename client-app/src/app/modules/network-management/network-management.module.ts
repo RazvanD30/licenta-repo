@@ -20,6 +20,7 @@ import {ScrollingModule} from '@angular/cdk/scrolling';
 import { NodeDetailsComponent } from './partial-components/node-details/node-details.component';
 import {NetworkRunService} from '../../core/services/network-run.service';
 import {NetworkInitService} from '../../core/services/network-init.service';
+import { LayerTableComponent } from './partial-components/layer-table/layer-table.component';
 @NgModule({
   declarations: [
     CytoscapeComponent,
@@ -30,7 +31,9 @@ import {NetworkInitService} from '../../core/services/network-init.service';
     UsersViewComponent,
     UsersTableComponent,
     NetworkTableComponent,
-    NodeDetailsComponent
+    LayerTableComponent,
+    NodeDetailsComponent,
+    LayerTableComponent
   ],
   imports: [
     CoreModule,

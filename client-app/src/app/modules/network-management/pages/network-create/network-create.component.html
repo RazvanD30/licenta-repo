@@ -1,64 +1,24 @@
-<div class="example-container mat-elevation-z8">
+<div>
   <mat-card>Networks</mat-card>
-  <div class="example-loading-shade"
-       *ngIf="isLoadingResults">
-    <mat-spinner *ngIf="isLoadingResults"></mat-spinner>
-  </div>
 
-  <div class="example-table-container">
 
-    <table mat-table [dataSource]="data" class="example-table"
-           matSort matSortActive="created" matSortDisableClear matSortDirection="desc">
+    <mat-tab-group class="tables-header mat-elevation-z2" (selectedTabChange)="setSelection($event)" [selectedIndex]="selectedTab">
+      <mat-tab label="Network configurations"></mat-tab>
+      <mat-tab label="Network running status"></mat-tab>
+      <mat-tab label="Layer-wise configurations"></mat-tab>
+      <mat-tab label="Network running statistic"></mat-tab>
+    </mat-tab-group>
 
-      <ng-container matColumnDef="id">
-        <th mat-header-cell *matHeaderCellDef mat-sort-header disableClear>#</th>
-        <td mat-cell *matCellDef="let row">{{row.id}}</td>
-      </ng-container>
+    <div class="tables-container">
+      <div class="network-table">
+        <app-network-table *ngIf="networks && selection.networkConfig === true"
+                           [networks]="networks"
+                           (layerConfigOpenEvent)="setSelectedNetworkForLayerWise($event)"
+        ></app-network-table>
+      </div>
+      <div class="layer-table">
+        <app-layer-table *ngIf="selectedNetworkForLayerWise && selection.layerConfig === true" [layers]="selectedNetworkForLayerWise.layers"></app-layer-table>
+      </div>
+    </div>
 
-      <ng-container matColumnDef="name">
-        <th mat-header-cell *matHeaderCellDef mat-sort-header disableClear>Name</th>
-        <td mat-cell *matCellDef="let row">{{row.name}}</td>
-      </ng-container>
-
-      <ng-container matColumnDef="seed">
-        <th mat-header-cell *matHeaderCellDef mat-sort-header disableClear>Seed</th>
-        <td mat-cell *matCellDef="let row">{{row.seed}}</td>
-      </ng-container>
-
-      <ng-container matColumnDef="learningRate">
-        <th mat-header-cell *matHeaderCellDef mat-sort-header disableClear> Learning rate </th>
-        <td mat-cell *matCellDef="let row">{{row.learningRate}}</td>
-      </ng-container>
-
-      <ng-container matColumnDef="batchSize">
-        <th mat-header-cell *matHeaderCellDef mat-sort-header disableClear>Batch size</th>
-        <td mat-cell *matCellDef="let row">{{row.batchSize}}</td>
-      </ng-container>
-
-      <ng-container matColumnDef="nEpochs">
-        <th mat-header-cell *matHeaderCellDef mat-sort-header disableClear># Epochs</th>
-        <td mat-cell *matCellDef="let row">{{row.nEpochs}}</td>
-      </ng-container>
-
-      <ng-container matColumnDef="nInputs">
-        <th mat-header-cell *matHeaderCellDef mat-sort-header disableClear># Inputs</th>
-        <td mat-cell *matCellDef="let row">{{row.nInputs}}</td>
-      </ng-container>
-
-      <ng-container matColumnDef="nOutputs">
-        <th mat-header-cell *matHeaderCellDef mat-sort-header disableClear># Ouputs</th>
-        <td mat-cell *matCellDef="let row">{{row.nOutputs}}</td>
-      </ng-container>
-
-      <ng-container matColumnDef="layers">
-        <th mat-header-cell *matHeaderCellDef mat-sort-header disableClear># Layers</th>
-        <td mat-cell *matCellDef="let row">{{row.layers.size}}</td>
-      </ng-container>
-
-      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-      <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
-    </table>
-  </div>
-
-  <mat-paginator [length]="data.length" [pageSize]="30"></mat-paginator>
 </div>
