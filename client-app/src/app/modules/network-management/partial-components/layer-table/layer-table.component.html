@@ -88,9 +88,9 @@
           <div *ngIf="filters.activation === ''"> Activation</div>
           <div *ngIf="filters.activation !== ''" style="color: red"> Activation (edited)</div>
         </ng-template>
-        <mat-form-field class="example-full-width" [hidden]="!filters.comparison.activation">
+        <mat-form-field class="example-full-width">
           <input [(ngModel)]="filters.activation" matInput (keyup)="applyFilter($event.target.value,'activation')"
-                 placeholder="Filter by activation type" type="number">
+                 placeholder="Filter by activation type">
         </mat-form-field>
       </mat-tab>
 

@@ -1,0 +1,191 @@
+
+<div class="table-container">
+  <div class="mat-elevation-z8">
+    <mat-button-toggle-group name="fontStyle" aria-label="Font Style">
+      <button mat-raised-button color="warn" (click)="resetFilters()">
+        <mat-icon>clear</mat-icon>
+        Reset filters
+      </button>
+      <button mat-raised-button color="primary" (click)="save()">
+        <mat-icon>save</mat-icon>
+        Save modifications
+      </button>
+    </mat-button-toggle-group>
+    <mat-tab-group>
+
+      <mat-tab label="Filter by..."></mat-tab>
+
+      <mat-tab>
+        <ng-template mat-tab-label>
+          <div *ngIf="filters.createDateTime === ''"> Creation date </div>
+          <div *ngIf="filters.createDateTime !== ''" style="color: red"> Creation date (edited)</div>
+        </ng-template>
+        <mat-form-field class="example-full-width">
+          <mat-select placeholder="Operation type" [(ngModel)]="filters.comparison.createDateTime">
+            <mat-option value="gt">Greater than</mat-option>
+            <mat-option value="lt">Less than</mat-option>
+            <mat-option value="eq">Equal to</mat-option>
+            <mat-option value="nq">Different from</mat-option>
+          </mat-select>
+        </mat-form-field>
+        <mat-form-field class="example-full-width" [hidden]="!filters.comparison.createDateTime">
+          <input [(ngModel)]="filters.createDateTime" matInput (keyup)="applyFilter($event.target.value,'createDateTime')"
+                 placeholder="Filter by creation date" type="datetime-local">
+        </mat-form-field>
+      </mat-tab>
+      
+      <mat-tab>
+        <ng-template mat-tab-label>
+          <div *ngIf="filters.accuracy === ''"> Accuracy</div>
+          <div *ngIf="filters.accuracy !== ''" style="color: red"> Accuracy (edited)</div>
+        </ng-template>
+        <mat-form-field class="example-full-width">
+          <mat-select placeholder="Operation type" [(ngModel)]="filters.comparison.accuracy">
+            <mat-option value="gt">Greater than</mat-option>
+            <mat-option value="lt">Less than</mat-option>
+            <mat-option value="eq">Equal to</mat-option>
+            <mat-option value="nq">Different from</mat-option>
+          </mat-select>
+        </mat-form-field>
+        <mat-form-field class="example-full-width" [hidden]="!filters.comparison.accuracy">
+          <input [(ngModel)]="filters.accuracy" matInput (keyup)="applyFilter($event.target.value,'accuracy')"
+                 placeholder="Filter by accuracy" type="number">
+        </mat-form-field>
+      </mat-tab>
+
+
+      <mat-tab>
+        <ng-template mat-tab-label>
+          <div *ngIf="filters.precision === ''"> Precision</div>
+          <div *ngIf="filters.precision !== ''" style="color: red"> Precision (edited)</div>
+        </ng-template>
+        <mat-form-field class="example-full-width">
+          <mat-select placeholder="Operation type" [(ngModel)]="filters.comparison.precision">
+            <mat-option value="gt">Greater than</mat-option>
+            <mat-option value="lt">Less than</mat-option>
+            <mat-option value="eq">Equal to</mat-option>
+            <mat-option value="nq">Different from</mat-option>
+          </mat-select>
+        </mat-form-field>
+        <mat-form-field class="example-full-width" [hidden]="!filters.comparison.precision">
+          <input [(ngModel)]="filters.precision" matInput (keyup)="applyFilter($event.target.value,'precision')"
+                 placeholder="Filter by precision" type="number">
+        </mat-form-field>
+      </mat-tab>
+
+
+      <mat-tab>
+        <ng-template mat-tab-label>
+          <div *ngIf="filters.recall === ''"> Recall</div>
+          <div *ngIf="filters.recall !== ''" style="color: red"> Recall (edited)</div>
+        </ng-template>
+        <mat-form-field class="example-full-width">
+          <mat-select placeholder="Operation type" [(ngModel)]="filters.comparison.recall">
+            <mat-option value="gt">Greater than</mat-option>
+            <mat-option value="lt">Less than</mat-option>
+            <mat-option value="eq">Equal to</mat-option>
+            <mat-option value="nq">Different from</mat-option>
+          </mat-select>
+        </mat-form-field>
+        <mat-form-field class="example-full-width" [hidden]="!filters.comparison.recall">
+          <input [(ngModel)]="filters.recall" matInput (keyup)="applyFilter($event.target.value,'recall')"
+                 placeholder="Filter by recall" type="number">
+        </mat-form-field>
+      </mat-tab>
+
+
+      <mat-tab>
+        <ng-template mat-tab-label>
+          <div *ngIf="filters.f1Score === ''"> F1Score</div>
+          <div *ngIf="filters.f1Score !== ''" style="color: red"> F1Score (edited)</div>
+        </ng-template>
+        <mat-form-field class="example-full-width">
+          <mat-select placeholder="Operation type" [(ngModel)]="filters.comparison.f1Score">
+            <mat-option value="gt">Greater than</mat-option>
+            <mat-option value="lt">Less than</mat-option>
+            <mat-option value="eq">Equal to</mat-option>
+            <mat-option value="nq">Different from</mat-option>
+          </mat-select>
+        </mat-form-field>
+        <mat-form-field class="example-full-width" [hidden]="!filters.comparison.f1Score">
+          <input [(ngModel)]="filters.f1Score" matInput (keyup)="applyFilter($event.target.value,'f1Score')"
+                 placeholder="Filter by f1Score" type="number">
+        </mat-form-field>
+      </mat-tab>
+
+
+      <mat-tab>
+        <ng-template mat-tab-label>
+          <div *ngIf="filters.iterations === ''"> Iteration logs </div>
+          <div *ngIf="filters.iterations !== ''" style="color: red"> Iteration logs (edited)</div>
+        </ng-template>
+        <mat-form-field class="example-full-width">
+          <mat-select placeholder="Operation type" [(ngModel)]="filters.comparison.iterations">
+            <mat-option value="gt">Greater than</mat-option>
+            <mat-option value="lt">Less than</mat-option>
+            <mat-option value="eq">Equal to</mat-option>
+            <mat-option value="nq">Different from</mat-option>
+          </mat-select>
+        </mat-form-field>
+        <mat-form-field class="example-full-width" [hidden]="!filters.comparison.iterations">
+          <input [(ngModel)]="filters.iterations" matInput (keyup)="applyFilter($event.target.value,'iterations')"
+                 placeholder="Filter by iterations" type="number">
+        </mat-form-field>
+      </mat-tab>
+
+    </mat-tab-group>
+
+
+    <table mat-table *ngIf="logDataSource" [dataSource]="logDataSource" class="mat-elevation-z8" matSort>
+
+      <ng-container matColumnDef="createDateTime">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>CreateDateTime</th>
+        <td mat-cell *matCellDef="let log"> {{ log.createDateTime }}</td>
+        <td mat-footer-cell *matFooterCellDef></td>
+      </ng-container>
+
+      <ng-container matColumnDef="accuracy">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>Accuracy</th>
+        <td mat-cell *matCellDef="let log"> {{ log.accuracy }}</td>
+        <td mat-footer-cell *matFooterCellDef></td>
+      </ng-container>
+
+      <ng-container matColumnDef="precision">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>Precision</th>
+        <td mat-cell *matCellDef="let log"> {{ log.precision }}</td>
+        <td mat-footer-cell *matFooterCellDef></td>
+      </ng-container>
+      
+      <ng-container matColumnDef="recall">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>Recall</th>
+        <td mat-cell *matCellDef="let log"> {{ log.recall }}</td>
+        <td mat-footer-cell *matFooterCellDef></td>
+      </ng-container>
+
+      <ng-container matColumnDef="f1Score">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>F1Score</th>
+        <td mat-cell *matCellDef="let log"> {{ log.f1Score }}</td>
+        <td mat-footer-cell *matFooterCellDef></td>
+      </ng-container>
+
+      <ng-container matColumnDef="iterations">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>Iteration logs</th>
+        <td mat-cell *matCellDef="let log"> {{ log.networkIterationLogs.length }}</td>
+        <td mat-footer-cell *matFooterCellDef></td>
+      </ng-container>
+
+      <ng-container matColumnDef="id">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>Id</th>
+        <td mat-cell *matCellDef="let log"> {{ log.id }}</td>
+        <td mat-footer-cell *matFooterCellDef></td>
+      </ng-container>
+
+      <tr mat-header-row class="custom-table-header" *matHeaderRowDef="displayedColumns"></tr>
+      <tr mat-row class="custom-table-row" *matRowDef="let row; columns: displayedColumns;"></tr>
+      <tr mat-footer-row *matFooterRowDef="displayedColumns" class="example-first-footer-row"></tr>
+
+    </table>
+    <mat-paginator [pageSizeOptions]="[50, 100]" showFirstLastButtons></mat-paginator>
+  </div>
+</div>
+

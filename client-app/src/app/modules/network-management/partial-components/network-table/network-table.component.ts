@@ -1,9 +1,11 @@
 import {Component, EventEmitter, Input, OnInit, Output, ViewChild} from '@angular/core';
-import {MatPaginator, MatSort, MatTableDataSource} from '@angular/material';
+import {MatMenuTrigger, MatPaginator, MatSort, MatTableDataSource} from '@angular/material';
 import {MyErrorStateMatcher} from '../../../user-management/partial-components/users-table/users-table.component';
 import {Network} from '../../../../shared/models/network/Network';
 import {NetworkRunService} from '../../../../core/services/network-run.service';
 import {faList} from '@fortawesome/free-solid-svg-icons';
+import {ActiveView} from '../../models/ActiveView';
+import {SelectedTableType} from '../../models/SelectedTableType';
 
 
 @Component({
@@ -23,8 +25,10 @@ export class NetworkTableComponent implements OnInit {
   faList = faList;
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
-  @Output() layerConfigOpenEvent = new EventEmitter();
+  @Output() onLayersView = new EventEmitter();
+  contextMenuPosition = {x: '0px', y: '0px'};
 
+  @ViewChild(MatMenuTrigger) contextMenu: MatMenuTrigger;
 
   constructor(private networkRunService: NetworkRunService) {
   }
@@ -64,7 +68,7 @@ export class NetworkTableComponent implements OnInit {
     this.networkDataSource.sort = this.sort;
 
     this.resetFilters();
-    this.displayedColumns = ['id', 'name', 'seed', 'learningRate', 'batchSize', 'nEpochs', 'nInputs', 'nOutputs', 'nLayers'];
+    this.displayedColumns = ['id', 'name', 'seed', 'learningRate', 'batchSize', 'nEpochs', 'nInputs', 'nOutputs', 'nLayers', 'actions'];
     this.editable = true;
     this.gradeErrorMatcher = new MyErrorStateMatcher();
     this.fc = [];
@@ -72,6 +76,23 @@ export class NetworkTableComponent implements OnInit {
 
   }
 
+  onContextMenuActionLayerView(item: Network) {
+    const newView: ActiveView = {
+      network: item,
+      tableType: SelectedTableType.LAYER_TABLE,
+      additionalData: null
+    };
+    this.onLayersView.emit(newView);
+  }
+
+  onContextMenuActionLogView(item: Network) {
+    const newView: ActiveView = {
+      network: item,
+      tableType: SelectedTableType.LOG_TABLE,
+      additionalData: null
+    };
+    this.onLayersView.emit(newView);
+  }
 
   compare(cell: number, expected: number, operation: string) {
     switch (operation) {
@@ -89,7 +110,7 @@ export class NetworkTableComponent implements OnInit {
   filterPredicate(network: Network): boolean {
     let ok = true;
     if (this.filters.name !== '') {
-      ok = ok === true && network.name.includes(this.filters.name);
+      ok = ok === true && network.name.toLowerCase().includes(this.filters.name.toLowerCase());
     }
     if (this.filters.seed !== '') {
       ok = ok === true && this.compare(network.seed, this.filters.seed, this.filters.comparison.seed);

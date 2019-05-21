@@ -1,13 +1,12 @@
-import {Component, Inject, OnInit, Renderer2, ViewChild} from '@angular/core';
+import {Component, OnInit, Renderer2} from '@angular/core';
 import {NetworkRunService} from '../../../../core/services/network-run.service';
-import {MAT_DIALOG_DATA, MatDialog, MatDialogRef, MatPaginator, MatSort, MatTabChangeEvent} from '@angular/material';
-import {NetworkInit} from '../../../../shared/models/network/NetworkInit';
-import {merge} from 'rxjs';
-import {map, startWith, switchMap} from 'rxjs/operators';
+import {MatDialog} from '@angular/material';
 import {NetworkInitService} from '../../../../core/services/network-init.service';
 import {Network} from '../../../../shared/models/network/Network';
-import {FormControl} from '@angular/forms';
-import {Layer} from '../../../../shared/models/network/Layer';
+import {faTimes} from '@fortawesome/free-solid-svg-icons';
+import {SelectedTableType} from '../../models/SelectedTableType';
+import {ActiveView} from '../../models/ActiveView';
+
 
 @Component({
   selector: 'app-network-create',
@@ -18,14 +17,11 @@ export class NetworkCreateComponent implements OnInit {
 
 
   networks: Network[];
-  selectedTab: number;
-  selectedNetworkForLayerWise: Network;
-  selection = {
-    networkConfig: true,
-    networkRun: false,
-    layerConfig: false
-  };
+  faTimes = faTimes;
 
+  activeViews: ActiveView[] = [];
+
+  selectedView: ActiveView;
 
   constructor(private networkRunService: NetworkRunService,
               private networkInitService: NetworkInitService,
@@ -34,42 +30,103 @@ export class NetworkCreateComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.networkRunService.getAll().subscribe(networks =>
-      this.networks = networks
-    );
+    this.networkRunService.getAll().subscribe(networks => {
+      this.networks = networks;
+      this.selectedView = {
+        network: null,
+        tableType: SelectedTableType.NETWORK_TABLE,
+        additionalData: null
+      };
+      this.activeViews = [this.selectedView];
+    });
   }
 
-  getLayersForNetwork(network: Network): Layer[] {
-    return this.networks.find(n => n.id === network.id).layers;
+  loadWithLogs(selection: ActiveView) {
+    this.networkRunService.getAllLogs(selection.network.id).subscribe(logs => {
+      selection.additionalData = logs;
+      this.activeViews.push(selection);
+      this.setCurrentSelection(selection);
+    });
   }
 
-  setSelection(tabChangeEvent: MatTabChangeEvent) {
-    this.selection = {
-      networkConfig: false,
-      networkRun: false,
-      layerConfig: false
-    };
-    switch(tabChangeEvent.index){
-      case 0:
-        this.selection.networkConfig = true;
-        break;
-      case 1:
-        this.selection.networkRun = true;
-        break;
-      case 2:
-        this.selection.layerConfig = true;
-        break;
+  getCurrentSelectionIndex() {
+    return this.activeViews.find(n => {
+      return (n.network == null || n.network.id === this.selectedView.network.id) && n.tableType === this.selectedView.tableType;
+    });
+  }
+
+  isCurrentSelection(selection: ActiveView) {
+    return (this.selectedView.network == null || selection.network == null || this.selectedView.network.id == selection.network.id)
+      && this.selectedView.tableType === selection.tableType;
+  }
+
+  addView(newView: ActiveView) {
+    const found = this.activeViews.find(n => {
+      return (n.network == null || newView.network == null || n.network.id === newView.network.id) && n.tableType === newView.tableType;
+    });
+
+    if (found == null) {
+      console.log('loading');
+      if (newView.tableType === SelectedTableType.LOG_TABLE) {
+        console.log('loading with logs');
+        this.loadWithLogs(newView);
+      } else {
+        this.activeViews.push(newView);
+        this.setCurrentSelection(newView);
+      }
+    } else {
+      this.setCurrentSelection(found);
     }
   }
 
-  setSelectedNetworkForLayerWise(network: Network) {
-    this.selection = {
-      networkConfig: false,
-      networkRun: false,
-      layerConfig: true
-    };
-    this.selectedNetworkForLayerWise = network;
-    this.selectedTab = 2;
+
+  addNetworkToSelections(network: Network, selectedTableType: SelectedTableType) {
+
+    const sel = this.activeViews.find(n => {
+      return (n.network == null || n.network.id === network.id) && n.tableType === selectedTableType;
+    });
+    if (sel == null) {
+      const selection: ActiveView = {
+        network: network,
+        tableType: selectedTableType,
+        additionalData: null
+      };
+      this.activeViews.push(selection);
+      this.setCurrentSelection(selection);
+    } else {
+      this.setCurrentSelection(sel);
+    }
+  }
+
+
+  removeSelection(selection: ActiveView) {
+
+    this.activeViews = this.activeViews.filter(n => {
+      return (n.network == null || n.network.id !== selection.network.id) || n.tableType !== selection.tableType;
+    });
+    this.selectedView = this.activeViews[0];
+  }
+
+
+  addNetworkToLayerWise(network: Network) {
+    this.addNetworkToSelections(network, SelectedTableType.LAYER_TABLE);
+  }
+
+  setCurrentSelection(selection: ActiveView) {
+    console.log(this.activeViews);
+    this.selectedView = selection;
+  }
+
+  isNetworkTable(selected: ActiveView): boolean {
+    return selected != null && selected.tableType === SelectedTableType.NETWORK_TABLE;
+  }
+
+  isLayerTable(selected: ActiveView): boolean {
+    return selected != null && selected.tableType === SelectedTableType.LAYER_TABLE;
+  }
+
+  isLogTable(selected: ActiveView): boolean {
+    return selected != null && selected.tableType === SelectedTableType.LOG_TABLE;
   }
 
 }

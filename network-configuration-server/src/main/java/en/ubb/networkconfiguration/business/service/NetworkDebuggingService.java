@@ -1,7 +1,7 @@
-package en.ubb.networkconfiguration.service;
+package en.ubb.networkconfiguration.business.service;
 
 import en.ubb.networkconfiguration.boundary.dto.debugging.DebuggingNode;
-import en.ubb.networkconfiguration.domain.network.runtime.Network;
+import en.ubb.networkconfiguration.persistence.domain.network.runtime.Network;
 
 import java.util.List;
 

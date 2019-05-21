@@ -206,7 +206,7 @@
 
       <ng-container matColumnDef="nOutputs">
         <th mat-header-cell *matHeaderCellDef mat-sort-header>#Outputs</th>
-        <td mat-cell *matCellDef="let network"> {{ network.nOutputs }}</td>
+        <td mat-cell *matCellDef="let network" [mat-menu-trigger-for]="contextMenu"> {{ network.nOutputs }}</td>
         <td mat-footer-cell *matFooterCellDef></td>
       </ng-container>
 
@@ -214,7 +214,17 @@
         <th mat-header-cell *matHeaderCellDef mat-sort-header disableClear>#Layers</th>
         <td mat-cell *matCellDef="let network">
           {{network.layers.length}}
-          <fa-icon [icon]="faList" (click)="layerConfigOpenEvent.emit(network)"></fa-icon>
+          <fa-icon [icon]="faList" (click)="onContextMenuActionLayerView(network)"></fa-icon>
+        </td>
+        <td mat-footer-cell *matFooterCellDef></td>
+      </ng-container>
+
+      <ng-container matColumnDef="actions">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header disableClear>Actions</th>
+        <td mat-cell *matCellDef="let network">
+          <button mat-icon-button [matMenuTriggerFor]="contextMenu" [matMenuTriggerData]="{item: network}">
+            <mat-icon>more_vert</mat-icon>
+          </button>
         </td>
         <td mat-footer-cell *matFooterCellDef></td>
       </ng-container>
@@ -228,3 +238,11 @@
   </div>
 </div>
 
+<span [mat-menu-trigger-for]="contextMenu"></span>
+
+<mat-menu #contextMenu="matMenu">
+  <ng-template matMenuContent let-item="item">
+    <button mat-menu-item (click)="onContextMenuActionLayerView(item)">View layer-wise configuration</button>
+    <button mat-menu-item (click)="onContextMenuActionLogView(item)">View train/test logs</button>
+  </ng-template>
+</mat-menu>

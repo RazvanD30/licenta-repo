@@ -21,6 +21,7 @@ import { NodeDetailsComponent } from './partial-components/node-details/node-det
 import {NetworkRunService} from '../../core/services/network-run.service';
 import {NetworkInitService} from '../../core/services/network-init.service';
 import { LayerTableComponent } from './partial-components/layer-table/layer-table.component';
+import { LogsTableComponent } from './partial-components/logs-table/logs-table.component';
 @NgModule({
   declarations: [
     CytoscapeComponent,
@@ -33,7 +34,8 @@ import { LayerTableComponent } from './partial-components/layer-table/layer-tabl
     NetworkTableComponent,
     LayerTableComponent,
     NodeDetailsComponent,
-    LayerTableComponent
+    LayerTableComponent,
+    LogsTableComponent
   ],
   imports: [
     CoreModule,

@@ -82,11 +82,11 @@ export class LayerTableComponent implements OnInit {
     if (this.filters.nNodes !== '') {
       ok = ok === true && this.compare(layer.nNodes, this.filters.nNodes, this.filters.comparison.nNodes);
     }
-    if(this.filters.type !== '') {
-      ok = ok === true && layer.type == this.filters.type;
+    if (this.filters.type !== '') {
+      ok = ok === true && layer.type.toString().toLowerCase().includes(this.filters.type.toLowerCase());
     }
-    if(this.filters.activation !== ''){
-      ok = ok === true && layer.activation == this.filters.activation;
+    if (this.filters.activation !== '') {
+      ok = ok === true && layer.activation != null && layer.activation.toString().toLowerCase().includes(this.filters.activation.toLowerCase());
     }
     return ok;
   }

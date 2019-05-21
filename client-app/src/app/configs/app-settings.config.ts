@@ -32,6 +32,9 @@ export const APP_SETTINGS = {
       GET_BY_ID: '',
       UPDATE: '',
       DELETE: ''
+    },
+    NETWORK_LOGS: {
+      GET_ALL_SORTED_BY_NET_ID: 'http://localhost:8080/network-management/logs/'
     }
   }
 };

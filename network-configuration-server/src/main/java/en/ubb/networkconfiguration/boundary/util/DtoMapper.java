@@ -1,15 +1,12 @@
 package en.ubb.networkconfiguration.boundary.util;
 
-import en.ubb.networkconfiguration.boundary.dto.runtime.LayerDto;
-import en.ubb.networkconfiguration.boundary.dto.runtime.LinkDto;
-import en.ubb.networkconfiguration.boundary.dto.runtime.NetworkDto;
-import en.ubb.networkconfiguration.boundary.dto.runtime.NodeDto;
+import en.ubb.networkconfiguration.boundary.dto.runtime.*;
 import en.ubb.networkconfiguration.boundary.dto.setup.DataFileDto;
+import en.ubb.networkconfiguration.boundary.dto.setup.LayerInitDto;
+import en.ubb.networkconfiguration.boundary.dto.setup.NetworkInitDto;
 import en.ubb.networkconfiguration.persistence.domain.network.runtime.*;
 import en.ubb.networkconfiguration.persistence.domain.network.setup.LayerInitializer;
 import en.ubb.networkconfiguration.persistence.domain.network.setup.NetworkInitializer;
-import en.ubb.networkconfiguration.boundary.dto.setup.LayerInitDto;
-import en.ubb.networkconfiguration.boundary.dto.setup.NetworkInitDto;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -187,12 +184,33 @@ public class DtoMapper {
         return dtos;
     }
 
-    public static DataFile fromDtoPartial(DataFileDto dto){
+    public static DataFile fromDtoPartial(DataFileDto dto) {
         return DataFile.builder()
                 .id(dto.getId())
                 .classPath(dto.getClassPath())
                 .nLabels(dto.getNLabels())
                 .build();
     }
+
+    public static NetworkIterationLogDto toDto(NetworkIterationLog log) {
+        return NetworkIterationLogDto.builder()
+                .score(log.getScore())
+                .iteration(log.getIteration())
+                .build();
+    }
+
+    public static NetworkTrainLogDto toDto(NetworkTrainLog log) {
+        return NetworkTrainLogDto.builder()
+                .accuracy(log.getAccuracy())
+                .createDateTime(log.getCreateDateTime())
+                .f1Score(log.getF1Score())
+                .precision(log.getPrecision())
+                .recall(log.getRecall())
+                .networkIterationLogs(log.getNetworkIterationLogs().stream()
+                        .map(DtoMapper::toDto)
+                        .collect(Collectors.toList())
+                ).build();
+    }
+
 
 }
