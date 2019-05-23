@@ -1,30 +1,54 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
+  <component name="BookmarkManager">
+    <bookmark url="file://$PROJECT_DIR$/network-configuration-server/src/main/java/en/ubb/networkconfiguration/business/util/EncryptionUtil.java" description="&#10;import java.nio.charset.StandardCharsets;&#10;import ..." line="1" />
+  </component>
   <component name="ChangeListManager">
     <list default="true" id="e464ab5a-f048-420b-8b7a-2cc97f5ae89f" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/client-app/src/app/modules/network-management/models/ActiveView.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/client-app/src/app/modules/network-management/models/SelectedTableType.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/client-app/src/app/shared/models/network/NetworkIterationLog.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/client-app/src/app/shared/models/network/NetworkTrainLog.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/network-configuration-server/src/main/java/en/ubb/networkconfiguration/boundary/dto/runtime/NetworkIterationLogDto.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/network-configuration-server/src/main/java/en/ubb/networkconfiguration/boundary/dto/runtime/NetworkTrainLogDto.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/network-configuration-server/src/main/java/en/ubb/networkconfiguration/boundary/rest/NetworkTrainLogApi.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/network-configuration-server/src/main/java/en/ubb/networkconfiguration/business/aspect/NetworkRunMonitor.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/network-configuration-server/src/main/java/en/ubb/networkconfiguration/business/aspect/ServiceLogger.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/network-configuration-server/src/main/java/en/ubb/networkconfiguration/business/aspect/cache/CCachable.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/network-configuration-server/src/main/java/en/ubb/networkconfiguration/business/aspect/cache/CustomCache.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/network-configuration-server/src/main/java/en/ubb/networkconfiguration/business/aspect/security/SecurityAnnotation.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/network-configuration-server/src/main/java/en/ubb/networkconfiguration/business/aspect/security/SecurityInterceptor.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/network-configuration-server/src/main/java/en/ubb/networkconfiguration/business/listener/LifecycleEvent.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/network-configuration-server/src/main/java/en/ubb/networkconfiguration/business/listener/LifecycleResponseHandler.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/network-configuration-server/src/main/java/en/ubb/networkconfiguration/business/listener/LifecycleUpdateEventSource.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/network-configuration-server/src/main/java/en/ubb/networkconfiguration/business/listener/NetworkLifecycleState.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/network-configuration-server/src/main/java/en/ubb/networkconfiguration/business/service/UserService.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/network-configuration-server/src/main/java/en/ubb/networkconfiguration/business/service/impl/UserServiceImpl.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/network-configuration-server/src/main/java/en/ubb/networkconfiguration/business/util/EncryptionUtil.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/network-configuration-server/src/main/java/en/ubb/networkconfiguration/business/validation/exception/AuthorizationBussExc.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/network-configuration-server/src/main/java/en/ubb/networkconfiguration/config/CustomPerformanceMonitorInterterceptor.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/network-configuration-server/src/main/java/en/ubb/networkconfiguration/config/MonitoringConfig.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/network-configuration-server/src/main/java/en/ubb/networkconfiguration/config/SpringApplicationContext.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/network-configuration-server/src/main/java/en/ubb/networkconfiguration/persistence/dao/UserRepo.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/network-configuration-server/src/main/java/en/ubb/networkconfiguration/persistence/dao/specification/UserSpec.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/network-configuration-server/src/main/java/en/ubb/networkconfiguration/persistence/domain/authentication/User.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/network-configuration-server/src/main/java/en/ubb/networkconfiguration/persistence/domain/authentication/enums/Role.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/network-configuration-server/src/main/resources/log4j.properties" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.gradle/4.10/fileHashes/fileHashes.bin" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/4.10/fileHashes/fileHashes.bin" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.gradle/4.10/fileHashes/fileHashes.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/4.10/fileHashes/fileHashes.lock" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/client-app/src/app/configs/app-settings.config.ts" beforeDir="false" afterPath="$PROJECT_DIR$/client-app/src/app/configs/app-settings.config.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/client-app/src/app/core/services/network-run.service.ts" beforeDir="false" afterPath="$PROJECT_DIR$/client-app/src/app/core/services/network-run.service.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/client-app/src/app/modules/network-management/network-management.module.ts" beforeDir="false" afterPath="$PROJECT_DIR$/client-app/src/app/modules/network-management/network-management.module.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/client-app/src/app/modules/network-management/pages/network-create/network-create.component.html" beforeDir="false" afterPath="$PROJECT_DIR$/client-app/src/app/modules/network-management/pages/network-create/network-create.component.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/client-app/src/app/modules/network-management/pages/network-create/network-create.component.scss" beforeDir="false" afterPath="$PROJECT_DIR$/client-app/src/app/modules/network-management/pages/network-create/network-create.component.scss" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/client-app/src/app/modules/network-management/pages/network-create/network-create.component.ts" beforeDir="false" afterPath="$PROJECT_DIR$/client-app/src/app/modules/network-management/pages/network-create/network-create.component.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/client-app/src/app/modules/network-management/partial-components/layer-table/layer-table.component.html" beforeDir="false" afterPath="$PROJECT_DIR$/client-app/src/app/modules/network-management/partial-components/layer-table/layer-table.component.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/client-app/src/app/modules/network-management/partial-components/layer-table/layer-table.component.ts" beforeDir="false" afterPath="$PROJECT_DIR$/client-app/src/app/modules/network-management/partial-components/layer-table/layer-table.component.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/client-app/src/app/modules/network-management/partial-components/network-table/network-table.component.html" beforeDir="false" afterPath="$PROJECT_DIR$/client-app/src/app/modules/network-management/partial-components/network-table/network-table.component.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/client-app/src/app/modules/network-management/partial-components/network-table/network-table.component.ts" beforeDir="false" afterPath="$PROJECT_DIR$/client-app/src/app/modules/network-management/partial-components/network-table/network-table.component.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/network-configuration-server/build.gradle" beforeDir="false" afterPath="$PROJECT_DIR$/network-configuration-server/build.gradle" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/network-configuration-server/out/production/resources/application.properties" beforeDir="false" afterPath="$PROJECT_DIR$/network-configuration-server/out/production/resources/application.properties" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/network-configuration-server/src/main/java/en/ubb/networkconfiguration/boundary/util/DtoMapper.java" beforeDir="false" afterPath="$PROJECT_DIR$/network-configuration-server/src/main/java/en/ubb/networkconfiguration/boundary/util/DtoMapper.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/network-configuration-server/src/main/java/en/ubb/networkconfiguration/persistence/dao/NetworkTrainLogRepo.java" beforeDir="false" afterPath="$PROJECT_DIR$/network-configuration-server/src/main/java/en/ubb/networkconfiguration/persistence/dao/NetworkTrainLogRepo.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/network-configuration-server/src/main/java/en/ubb/networkconfiguration/service/NetworkDebuggingService.java" beforeDir="false" afterPath="$PROJECT_DIR$/network-configuration-server/src/main/java/en/ubb/networkconfiguration/business/service/NetworkDebuggingService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/network-configuration-server/src/main/java/en/ubb/networkconfiguration/service/impl/NetworkDebuggingServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/network-configuration-server/src/main/java/en/ubb/networkconfiguration/business/service/impl/NetworkDebuggingServiceImpl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/network-configuration-server/src/main/java/en/ubb/networkconfiguration/boundary/dto/runtime/LayerDto.java" beforeDir="false" afterPath="$PROJECT_DIR$/network-configuration-server/src/main/java/en/ubb/networkconfiguration/boundary/dto/runtime/LayerDto.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/network-configuration-server/src/main/java/en/ubb/networkconfiguration/boundary/dto/setup/DataFileDto.java" beforeDir="false" afterPath="$PROJECT_DIR$/network-configuration-server/src/main/java/en/ubb/networkconfiguration/boundary/dto/setup/DataFileDto.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/network-configuration-server/src/main/java/en/ubb/networkconfiguration/boundary/dto/setup/LayerInitDto.java" beforeDir="false" afterPath="$PROJECT_DIR$/network-configuration-server/src/main/java/en/ubb/networkconfiguration/boundary/dto/setup/LayerInitDto.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/network-configuration-server/src/main/java/en/ubb/networkconfiguration/boundary/rest/DataFileApi.java" beforeDir="false" afterPath="$PROJECT_DIR$/network-configuration-server/src/main/java/en/ubb/networkconfiguration/boundary/rest/DataFileApi.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/network-configuration-server/src/main/java/en/ubb/networkconfiguration/boundary/rest/NetworkApi.java" beforeDir="false" afterPath="$PROJECT_DIR$/network-configuration-server/src/main/java/en/ubb/networkconfiguration/boundary/rest/NetworkApi.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/network-configuration-server/src/main/java/en/ubb/networkconfiguration/business/listener/ScoreIterationLogListener.java" beforeDir="false" afterPath="$PROJECT_DIR$/network-configuration-server/src/main/java/en/ubb/networkconfiguration/business/listener/ScoreIterationLogListener.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/network-configuration-server/src/main/java/en/ubb/networkconfiguration/business/service/FileService.java" beforeDir="false" afterPath="$PROJECT_DIR$/network-configuration-server/src/main/java/en/ubb/networkconfiguration/business/service/FileService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/network-configuration-server/src/main/java/en/ubb/networkconfiguration/business/service/impl/FileServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/network-configuration-server/src/main/java/en/ubb/networkconfiguration/business/service/impl/FileServiceImpl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/network-configuration-server/src/main/java/en/ubb/networkconfiguration/business/service/impl/NetworkServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/network-configuration-server/src/main/java/en/ubb/networkconfiguration/business/service/impl/NetworkServiceImpl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/network-configuration-server/src/main/java/en/ubb/networkconfiguration/business/service/impl/NetworkTrainLogServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/network-configuration-server/src/main/java/en/ubb/networkconfiguration/business/service/impl/NetworkTrainLogServiceImpl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/network-configuration-server/src/main/java/en/ubb/networkconfiguration/business/util/LayerUtil.java" beforeDir="false" afterPath="$PROJECT_DIR$/network-configuration-server/src/main/java/en/ubb/networkconfiguration/business/util/LayerUtil.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/network-configuration-server/src/main/java/en/ubb/networkconfiguration/persistence/domain/enums/FileType.java" beforeDir="false" afterPath="$PROJECT_DIR$/network-configuration-server/src/main/java/en/ubb/networkconfiguration/persistence/domain/network/enums/FileType.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/network-configuration-server/src/main/java/en/ubb/networkconfiguration/persistence/domain/enums/LayerType.java" beforeDir="false" afterPath="$PROJECT_DIR$/network-configuration-server/src/main/java/en/ubb/networkconfiguration/persistence/domain/network/enums/LayerType.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/network-configuration-server/src/main/java/en/ubb/networkconfiguration/persistence/domain/network/runtime/Layer.java" beforeDir="false" afterPath="$PROJECT_DIR$/network-configuration-server/src/main/java/en/ubb/networkconfiguration/persistence/domain/network/runtime/Layer.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/network-configuration-server/src/main/java/en/ubb/networkconfiguration/persistence/domain/network/runtime/Network.java" beforeDir="false" afterPath="$PROJECT_DIR$/network-configuration-server/src/main/java/en/ubb/networkconfiguration/persistence/domain/network/runtime/Network.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/network-configuration-server/src/main/java/en/ubb/networkconfiguration/persistence/domain/network/runtime/NetworkFile.java" beforeDir="false" afterPath="$PROJECT_DIR$/network-configuration-server/src/main/java/en/ubb/networkconfiguration/persistence/domain/network/runtime/NetworkFile.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/network-configuration-server/src/main/java/en/ubb/networkconfiguration/persistence/domain/network/setup/LayerInitializer.java" beforeDir="false" afterPath="$PROJECT_DIR$/network-configuration-server/src/main/java/en/ubb/networkconfiguration/persistence/domain/network/setup/LayerInitializer.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/network-configuration-server/src/main/resources/application.properties" beforeDir="false" afterPath="$PROJECT_DIR$/network-configuration-server/src/main/resources/application.properties" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/out/" />
@@ -130,10 +154,50 @@
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/network-configuration-server/src/main/java/en/ubb/networkconfiguration/boundary/rest/NetworkTrainLogApi.java">
+        <entry file="file://$PROJECT_DIR$/network-configuration-server/src/main/java/en/ubb/networkconfiguration/business/service/impl/UserServiceImpl.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="367">
-              <caret line="27" column="88" lean-forward="true" selection-start-line="27" selection-start-column="88" selection-end-line="27" selection-end-column="88" />
+            <state relative-caret-position="1348">
+              <caret line="82" column="32" selection-start-line="82" selection-start-column="32" selection-end-line="82" selection-end-column="32" />
+              <folding>
+                <element signature="imports" expanded="true" />
+                <element signature="e#590#591#0" expanded="true" />
+                <element signature="e#630#631#0" expanded="true" />
+                <element signature="e#407#408#0" expanded="true" />
+                <element signature="e#434#435#0" expanded="true" />
+                <element signature="e#495#496#0" expanded="true" />
+                <element signature="e#534#535#0" expanded="true" />
+                <element signature="e#814#815#0" expanded="true" />
+                <element signature="e#841#842#0" expanded="true" />
+                <element signature="e#2300#2301#0" expanded="true" />
+                <element signature="e#2333#2334#0" expanded="true" />
+                <element signature="e#2385#2386#0" expanded="true" />
+                <element signature="e#2406#2407#0" expanded="true" />
+                <element signature="e#2477#2478#0" expanded="true" />
+                <element signature="e#2515#2516#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/network-configuration-server/src/main/java/en/ubb/networkconfiguration/business/aspect/security/SecurityInterceptor.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="714">
+              <caret line="42" lean-forward="true" selection-start-line="42" selection-end-line="42" />
+              <folding>
+                <element signature="imports" expanded="true" />
+                <element signature="e#962#963#0" expanded="true" />
+                <element signature="e#1008#1009#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/network-configuration-server/src/main/java/en/ubb/networkconfiguration/business/aspect/security/SecurityAnnotation.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="170">
+              <caret line="10" column="9" selection-start-line="10" selection-start-column="9" selection-end-line="10" selection-end-column="9" />
               <folding>
                 <element signature="imports" expanded="true" />
               </folding>
@@ -142,40 +206,19 @@
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
-        <entry file="jar://$PROJECT_DIR$/../../../Programs/JDK/jre/lib/rt.jar!/sun/reflect/DelegatingMethodAccessorImpl.class">
+        <entry file="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.aspectj/aspectjweaver/1.9.2/7aa564f5753105f884c50bc84ffa49a282c10a00/aspectjweaver-1.9.2-sources.jar!/org/aspectj/lang/JoinPoint.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="204">
-              <caret line="17" selection-start-line="17" selection-end-line="17" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="jar://$PROJECT_DIR$/../../../Programs/JDK/src.zip!/java/lang/reflect/Method.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="181">
-              <caret line="497" selection-start-line="497" selection-end-line="497" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/network-configuration-server/src/main/java/en/ubb/networkconfiguration/business/service/NetworkTrainLogService.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="136">
-              <caret line="8" column="26" selection-start-line="8" selection-start-column="26" selection-end-line="8" selection-end-column="26" />
-              <folding>
-                <element signature="imports" expanded="true" />
-              </folding>
+            <state relative-caret-position="315">
+              <caret line="76" column="13" selection-start-line="76" selection-start-column="13" selection-end-line="76" selection-end-column="13" />
             </state>
           </provider>
         </entry>
       </file>
       <file pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/network-configuration-server/src/main/java/en/ubb/networkconfiguration/business/service/impl/NetworkTrainLogServiceImpl.java">
+        <entry file="file://$PROJECT_DIR$/network-configuration-server/src/main/java/en/ubb/networkconfiguration/business/aspect/NetworkRunMonitor.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="391">
-              <caret line="23" selection-start-line="23" selection-end-line="23" />
+            <state relative-caret-position="187">
+              <caret line="11" column="10" selection-start-line="11" selection-start-column="10" selection-end-line="11" selection-end-column="10" />
               <folding>
                 <element signature="imports" expanded="true" />
               </folding>
@@ -184,10 +227,10 @@
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/network-configuration-server/src/main/java/en/ubb/networkconfiguration/boundary/rest/NetworkInitApi.java">
+        <entry file="file://$PROJECT_DIR$/network-configuration-server/src/main/java/en/ubb/networkconfiguration/business/aspect/ServiceLogger.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="663">
-              <caret line="50" selection-start-line="50" selection-end-line="50" />
+            <state relative-caret-position="323">
+              <caret line="19" column="4" selection-start-line="19" selection-start-column="4" selection-end-line="19" selection-end-column="87" />
               <folding>
                 <element signature="imports" expanded="true" />
               </folding>
@@ -196,10 +239,10 @@
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/network-configuration-server/src/main/java/en/ubb/networkconfiguration/persistence/dao/NetworkTrainLogRepo.java">
+        <entry file="file://$PROJECT_DIR$/network-configuration-server/src/main/java/en/ubb/networkconfiguration/business/aspect/cache/CustomCache.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="238">
-              <caret line="14" lean-forward="true" selection-start-line="14" selection-end-line="14" />
+            <state relative-caret-position="283">
+              <caret line="17" selection-start-line="17" selection-end-line="17" selection-end-column="23" />
               <folding>
                 <element signature="imports" expanded="true" />
               </folding>
@@ -210,17 +253,17 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/network-configuration-server/src/main/java/en/ubb/networkconfiguration/App.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="68">
-              <caret line="5" selection-start-line="5" selection-end-line="5" />
+            <state relative-caret-position="170">
+              <caret line="11" column="47" lean-forward="true" selection-start-line="11" selection-start-column="47" selection-end-line="11" selection-end-column="47" />
             </state>
           </provider>
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/network-configuration-server/src/main/java/en/ubb/networkconfiguration/boundary/rest/NetworkApi.java">
+        <entry file="file://$PROJECT_DIR$/network-configuration-server/src/main/java/en/ubb/networkconfiguration/persistence/domain/authentication/User.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="479">
-              <caret line="204" selection-start-line="204" selection-end-line="204" />
+            <state relative-caret-position="357">
+              <caret line="24" column="22" lean-forward="true" selection-start-line="24" selection-start-column="22" selection-end-line="24" selection-end-column="22" />
               <folding>
                 <element signature="imports" expanded="true" />
               </folding>
@@ -229,10 +272,13 @@
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/network-configuration-server/src/main/resources/application.properties">
+        <entry file="file://$PROJECT_DIR$/network-configuration-server/src/main/java/en/ubb/networkconfiguration/business/service/UserService.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="85">
-              <caret line="5" column="33" lean-forward="true" selection-start-line="5" selection-start-column="33" selection-end-line="5" selection-end-column="33" />
+            <state relative-caret-position="323">
+              <caret line="19" column="24" selection-start-line="19" selection-start-column="24" selection-end-line="19" selection-end-column="24" />
+              <folding>
+                <element signature="imports" expanded="true" />
+              </folding>
             </state>
           </provider>
         </entry>
@@ -242,8 +288,9 @@
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
       <list>
-        <option value="Enum" />
         <option value="Kotlin File" />
+        <option value="Enum" />
+        <option value="AnnotationType" />
         <option value="Class" />
       </list>
     </option>
@@ -274,6 +321,10 @@
       <find>Layer</find>
       <find>hibernate</find>
       <find>'</find>
+      <find>@Validated</find>
+      <find>NetworkService</find>
+      <find>finished method</find>
+      <find>execution</find>
     </findStrings>
     <replaceStrings>
       <replace>implementation</replace>
@@ -289,49 +340,6 @@
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
-        <option value="$PROJECT_DIR$/network-configuration-server/src/main/resources/messages.properties" />
-        <option value="$PROJECT_DIR$/network-configuration-server/src/main/java/en/ubb/networkconfiguration/boundary/NetworkApi.java" />
-        <option value="$PROJECT_DIR$/network-configuration-server/src/main/java/en/ubb/networkconfiguration/config/CorsConfig.java" />
-        <option value="$PROJECT_DIR$/network-configuration-server/src/main/java/en/ubb/networkconfiguration/validation/validator/LayerInitDtoValidator.java" />
-        <option value="$PROJECT_DIR$/network-configuration-server/src/main/java/en/ubb/networkconfiguration/validation/validator/NetworkInitDtoValidator.java" />
-        <option value="$PROJECT_DIR$/network-configuration-server/src/main/java/en/ubb/networkconfiguration/domain/network/setup/NetworkInitializer.java" />
-        <option value="$PROJECT_DIR$/network-configuration-server/src/main/java/en/ubb/networkconfiguration/boundary/dto/setup/DataFileDto.java" />
-        <option value="$PROJECT_DIR$/network-configuration-server/src/main/java/en/ubb/networkconfiguration/boundary/dto/setup/LayerInitDto.java" />
-        <option value="$PROJECT_DIR$/network-configuration-server/src/main/java/en/ubb/networkconfiguration/boundary/dto/setup/NetworkInitDto.java" />
-        <option value="$PROJECT_DIR$/network-configuration-server/src/main/java/en/ubb/networkconfiguration/boundary/dto/runtime/RunConfigDto.java" />
-        <option value="$PROJECT_DIR$/network-configuration-server/src/main/java/en/ubb/networkconfiguration/boundary/dto/runtime/NodeDto.java" />
-        <option value="$PROJECT_DIR$/network-configuration-server/src/main/java/en/ubb/networkconfiguration/boundary/dto/runtime/NetworkDto.java" />
-        <option value="$PROJECT_DIR$/network-configuration-server/src/main/java/en/ubb/networkconfiguration/boundary/dto/runtime/LinkDto.java" />
-        <option value="$PROJECT_DIR$/network-configuration-server/src/main/java/en/ubb/networkconfiguration/boundary/dto/runtime/LayerDto.java" />
-        <option value="$PROJECT_DIR$/network-configuration-server/src/main/java/en/ubb/networkconfiguration/service/NetworkInitService.java" />
-        <option value="$PROJECT_DIR$/network-configuration-server/src/main/java/en/ubb/networkconfiguration/dao/specification/NetworkInitSpec.java" />
-        <option value="$PROJECT_DIR$/network-configuration-server/src/main/java/en/ubb/networkconfiguration/dao/NetworkInitRepo.java" />
-        <option value="$PROJECT_DIR$/network-configuration-server/src/main/java/en/ubb/networkconfiguration/validation/exception/business/DuplicateBussExc.java" />
-        <option value="$PROJECT_DIR$/network-configuration-server/src/main/java/en/ubb/networkconfiguration/service/impl/NetworkInitServiceImpl.java" />
-        <option value="$PROJECT_DIR$/network-configuration-server/src/main/java/en/ubb/networkconfiguration/boundary/NetworkInitApi.java" />
-        <option value="$PROJECT_DIR$/network-configuration-server/src/main/java/en/ubb/networkconfiguration/validation/exception/boundary/DuplicateException.java" />
-        <option value="$PROJECT_DIR$/network-configuration-server/src/main/java/en/ubb/networkconfiguration/business/util/LayerUtil.java" />
-        <option value="$PROJECT_DIR$/network-configuration-server/src/main/java/en/ubb/networkconfiguration/business/service/FileService.java" />
-        <option value="$PROJECT_DIR$/network-configuration-server/src/main/java/en/ubb/networkconfiguration/persistence/domain/network/runtime/NetworkLink.java" />
-        <option value="$PROJECT_DIR$/network-configuration-server/src/main/java/en/ubb/networkconfiguration/persistence/domain/network/runtime/NetworkConnection.java" />
-        <option value="$PROJECT_DIR$/network-configuration-server/src/main/java/en/ubb/networkconfiguration/persistence/dao/specification/NetworkConnectionSpec.java" />
-        <option value="$PROJECT_DIR$/network-configuration-server/src/main/java/en/ubb/networkconfiguration/persistence/dao/NetworkConnectionRepo.java" />
-        <option value="$PROJECT_DIR$/network-configuration-server/src/main/java/en/ubb/networkconfiguration/business/service/NetworkConnectionService.java" />
-        <option value="$PROJECT_DIR$/network-configuration-server/src/main/java/en/ubb/networkconfiguration/business/service/impl/NetworkConnectionServiceImpl.java" />
-        <option value="$PROJECT_DIR$/network-configuration-server/src/main/java/en/ubb/networkconfiguration/persistence/domain/network/NetworkIterationLog.java" />
-        <option value="$PROJECT_DIR$/network-configuration-server/src/main/java/en/ubb/networkconfiguration/persistence/domain/network/runtime/Network.java" />
-        <option value="$PROJECT_DIR$/network-configuration-server/src/main/java/en/ubb/networkconfiguration/business/service/NetworkTrainLogService.java" />
-        <option value="$PROJECT_DIR$/network-configuration-server/src/main/java/en/ubb/networkconfiguration/business/service/impl/NetworkTrainLogServiceImpl.java" />
-        <option value="$PROJECT_DIR$/network-configuration-server/src/main/java/en/ubb/networkconfiguration/business/service/impl/NetworkServiceImpl.java" />
-        <option value="$PROJECT_DIR$/network-configuration-server/src/main/java/en/ubb/networkconfiguration/persistence/domain/network/runtime/NetworkTrainLog.java" />
-        <option value="$PROJECT_DIR$/network-configuration-server/src/main/java/en/ubb/networkconfiguration/persistence/domain/network/runtime/NetworkIterationLog.java" />
-        <option value="$PROJECT_DIR$/network-configuration-server/src/main/java/en/ubb/networkconfiguration/business/listener/ScoreIterationLogListener.java" />
-        <option value="$PROJECT_DIR$/network-configuration-server/src/main/java/en/ubb/networkconfiguration/boundary/rest/NetworkApi.java" />
-        <option value="$PROJECT_DIR$/network-configuration-server/src/main/java/en/ubb/networkconfiguration/persistence/domain/network/setup/LayerInitializer.java" />
-        <option value="$PROJECT_DIR$/network-configuration-server/src/main/java/en/ubb/networkconfiguration/persistence/domain/network/runtime/Layer.java" />
-        <option value="$PROJECT_DIR$/network-configuration-server/src/main/java/en/ubb/networkconfiguration/persistence/domain/network/runtime/NetworkFileId.java" />
-        <option value="$PROJECT_DIR$/network-configuration-server/src/main/java/en/ubb/networkconfiguration/persistence/domain/network/runtime/NetworkFile.java" />
-        <option value="$PROJECT_DIR$/network-configuration-server/src/main/java/en/ubb/networkconfiguration/business/service/impl/FileServiceImpl.java" />
         <option value="$PROJECT_DIR$/network-configuration-server/src/main/java/en/ubb/networkconfiguration/service/impl/NetworkDebuggingServiceImpl.java" />
         <option value="$PROJECT_DIR$/network-configuration-server/src/main/java/en/ubb/networkconfiguration/business/service/NetworkDebuggingService.java" />
         <option value="$PROJECT_DIR$/network-configuration-server/src/main/java/en/ubb/networkconfiguration/boundary/dto/runtime/NetworkIterationLogDto.java" />
@@ -339,7 +347,50 @@
         <option value="$PROJECT_DIR$/network-configuration-server/src/main/java/en/ubb/networkconfiguration/boundary/util/DtoMapper.java" />
         <option value="$PROJECT_DIR$/network-configuration-server/src/main/java/en/ubb/networkconfiguration/persistence/dao/NetworkTrainLogRepo.java" />
         <option value="$PROJECT_DIR$/network-configuration-server/src/main/java/en/ubb/networkconfiguration/boundary/rest/NetworkTrainLogApi.java" />
+        <option value="$PROJECT_DIR$/network-configuration-server/src/main/java/en/ubb/networkconfiguration/business/service/impl/NetworkTrainLogServiceImpl.java" />
+        <option value="$PROJECT_DIR$/network-configuration-server/src/main/java/en/ubb/networkconfiguration/boundary/dto/runtime/RunConfigDto.java" />
+        <option value="$PROJECT_DIR$/network-configuration-server/src/main/java/en/ubb/networkconfiguration/business/service/FileService.java" />
+        <option value="$PROJECT_DIR$/network-configuration-server/src/main/java/en/ubb/networkconfiguration/business/service/impl/FileServiceImpl.java" />
+        <option value="$PROJECT_DIR$/network-configuration-server/src/main/java/en/ubb/networkconfiguration/boundary/rest/DataFileApi.java" />
+        <option value="$PROJECT_DIR$/network-configuration-server/src/main/java/en/ubb/networkconfiguration/boundary/rest/NetworkApi.java" />
         <option value="$PROJECT_DIR$/network-configuration-server/src/main/resources/application.properties" />
+        <option value="$PROJECT_DIR$/network-configuration-server/src/main/resources/logback.xml" />
+        <option value="$PROJECT_DIR$/network-configuration-server/src/main/resources/log4j.properties" />
+        <option value="$PROJECT_DIR$/network-configuration-server/build.gradle" />
+        <option value="$PROJECT_DIR$/network-configuration-server/src/main/resources/log4j.xml" />
+        <option value="$PROJECT_DIR$/network-configuration-server/src/main/java/en/ubb/networkconfiguration/config/MonitoringConfig.java" />
+        <option value="$PROJECT_DIR$/network-configuration-server/src/main/java/en/ubb/networkconfiguration/business/listener/NetworkRunMonitor.java" />
+        <option value="$PROJECT_DIR$/network-configuration-server/src/main/java/en/ubb/networkconfiguration/business/listener/LifecycleHandler.java" />
+        <option value="$PROJECT_DIR$/network-configuration-server/src/main/java/en/ubb/networkconfiguration/config/SpringApplicationContext.java" />
+        <option value="$PROJECT_DIR$/network-configuration-server/src/main/java/en/ubb/networkconfiguration/business/listener/LifecycleUpdateSource.java" />
+        <option value="$PROJECT_DIR$/network-configuration-server/src/main/java/en/ubb/networkconfiguration/business/listener/LifecycleEvent.java" />
+        <option value="$PROJECT_DIR$/network-configuration-server/src/main/java/en/ubb/networkconfiguration/business/listener/NetworkLifecycleState.java" />
+        <option value="$PROJECT_DIR$/network-configuration-server/src/main/java/en/ubb/networkconfiguration/business/listener/ScoreIterationLogListener.java" />
+        <option value="$PROJECT_DIR$/network-configuration-server/src/main/java/en/ubb/networkconfiguration/business/listener/LifecycleUpdateEventSource.java" />
+        <option value="$PROJECT_DIR$/network-configuration-server/src/main/java/en/ubb/networkconfiguration/business/listener/LifecycleResponseHandler.java" />
+        <option value="$PROJECT_DIR$/network-configuration-server/src/main/java/en/ubb/networkconfiguration/business/aspect/Cachable.java" />
+        <option value="$PROJECT_DIR$/network-configuration-server/src/main/java/en/ubb/networkconfiguration/business/aspect/SingleObjectCache.java" />
+        <option value="$PROJECT_DIR$/network-configuration-server/src/main/java/en/ubb/networkconfiguration/business/aspect/cache/InMemoryCache.java" />
+        <option value="$PROJECT_DIR$/network-configuration-server/src/main/java/en/ubb/networkconfiguration/business/aspect/cache/SingleObjectCache.java" />
+        <option value="$PROJECT_DIR$/network-configuration-server/src/main/java/en/ubb/networkconfiguration/business/aspect/cache/CCachable.java" />
+        <option value="$PROJECT_DIR$/network-configuration-server/src/main/java/en/ubb/networkconfiguration/business/service/impl/NetworkServiceImpl.java" />
+        <option value="$PROJECT_DIR$/network-configuration-server/src/main/java/en/ubb/networkconfiguration/config/CustomPerformanceMonitorInterterceptor.java" />
+        <option value="$PROJECT_DIR$/network-configuration-server/src/main/java/en/ubb/networkconfiguration/business/aspect/ServiceLogger.java" />
+        <option value="$PROJECT_DIR$/network-configuration-server/src/main/java/en/ubb/networkconfiguration/business/aspect/cache/CustomCache.java" />
+        <option value="$PROJECT_DIR$/network-configuration-server/src/main/java/en/ubb/networkconfiguration/persistence/domain/authentication/Role.java" />
+        <option value="$PROJECT_DIR$/network-configuration-server/src/main/java/en/ubb/networkconfiguration/persistence/domain/authentication/enums/Role.java" />
+        <option value="$PROJECT_DIR$/network-configuration-server/src/main/java/en/ubb/networkconfiguration/persistence/domain/network/setup/LayerInitializer.java" />
+        <option value="$PROJECT_DIR$/network-configuration-server/src/main/java/en/ubb/networkconfiguration/persistence/domain/network/enums/FileType.java" />
+        <option value="$PROJECT_DIR$/network-configuration-server/src/main/java/en/ubb/networkconfiguration/persistence/dao/UserRepo.java" />
+        <option value="$PROJECT_DIR$/network-configuration-server/src/main/java/en/ubb/networkconfiguration/persistence/dao/specification/UserSpec.java" />
+        <option value="$PROJECT_DIR$/network-configuration-server/src/main/java/en/ubb/networkconfiguration/business/validation/exception/AuthorizationBussExc.java" />
+        <option value="$PROJECT_DIR$/network-configuration-server/src/main/java/en/ubb/networkconfiguration/business/util/EncryptionUtil.java" />
+        <option value="$PROJECT_DIR$/network-configuration-server/src/main/java/en/ubb/networkconfiguration/business/service/UserService.java" />
+        <option value="$PROJECT_DIR$/network-configuration-server/src/main/java/en/ubb/networkconfiguration/business/aspect/security/SecurityAnnotation.java" />
+        <option value="$PROJECT_DIR$/network-configuration-server/src/main/java/en/ubb/networkconfiguration/business/service/impl/UserServiceImpl.java" />
+        <option value="$PROJECT_DIR$/network-configuration-server/src/main/java/en/ubb/networkconfiguration/persistence/domain/authentication/User.java" />
+        <option value="$PROJECT_DIR$/network-configuration-server/src/main/java/en/ubb/networkconfiguration/business/aspect/security/SecurityInterceptor.java" />
+        <option value="$PROJECT_DIR$/network-configuration-server/src/main/java/en/ubb/networkconfiguration/business/aspect/NetworkRunMonitor.java" />
       </list>
     </option>
   </component>
@@ -356,6 +407,7 @@
     </navigator>
     <panes>
       <pane id="Scope" />
+      <pane id="PackagesPane" />
       <pane id="ProjectPane">
         <subPane>
           <expand>
@@ -502,6 +554,19 @@
               <item name="ubb" type="462c0819:PsiDirectoryNode" />
               <item name="networkconfiguration" type="462c0819:PsiDirectoryNode" />
               <item name="boundary" type="462c0819:PsiDirectoryNode" />
+              <item name="exception_handling" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="licenta" type="b2602c69:ProjectViewProjectNode" />
+              <item name="licenta-repo" type="8a07ba80:GradleTreeStructureProvider$GradleModuleDirectoryNode" />
+              <item name="network-configuration-server" type="8a07ba80:GradleTreeStructureProvider$GradleModuleDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="main" type="8a07ba80:GradleTreeStructureProvider$GradleModuleDirectoryNode" />
+              <item name="java" type="462c0819:PsiDirectoryNode" />
+              <item name="en" type="462c0819:PsiDirectoryNode" />
+              <item name="ubb" type="462c0819:PsiDirectoryNode" />
+              <item name="networkconfiguration" type="462c0819:PsiDirectoryNode" />
+              <item name="boundary" type="462c0819:PsiDirectoryNode" />
               <item name="rest" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
@@ -527,7 +592,74 @@
               <item name="en" type="462c0819:PsiDirectoryNode" />
               <item name="ubb" type="462c0819:PsiDirectoryNode" />
               <item name="networkconfiguration" type="462c0819:PsiDirectoryNode" />
+              <item name="boundary" type="462c0819:PsiDirectoryNode" />
+              <item name="validation" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="licenta" type="b2602c69:ProjectViewProjectNode" />
+              <item name="licenta-repo" type="8a07ba80:GradleTreeStructureProvider$GradleModuleDirectoryNode" />
+              <item name="network-configuration-server" type="8a07ba80:GradleTreeStructureProvider$GradleModuleDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="main" type="8a07ba80:GradleTreeStructureProvider$GradleModuleDirectoryNode" />
+              <item name="java" type="462c0819:PsiDirectoryNode" />
+              <item name="en" type="462c0819:PsiDirectoryNode" />
+              <item name="ubb" type="462c0819:PsiDirectoryNode" />
+              <item name="networkconfiguration" type="462c0819:PsiDirectoryNode" />
+              <item name="boundary" type="462c0819:PsiDirectoryNode" />
+              <item name="validation" type="462c0819:PsiDirectoryNode" />
+              <item name="validator" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="licenta" type="b2602c69:ProjectViewProjectNode" />
+              <item name="licenta-repo" type="8a07ba80:GradleTreeStructureProvider$GradleModuleDirectoryNode" />
+              <item name="network-configuration-server" type="8a07ba80:GradleTreeStructureProvider$GradleModuleDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="main" type="8a07ba80:GradleTreeStructureProvider$GradleModuleDirectoryNode" />
+              <item name="java" type="462c0819:PsiDirectoryNode" />
+              <item name="en" type="462c0819:PsiDirectoryNode" />
+              <item name="ubb" type="462c0819:PsiDirectoryNode" />
+              <item name="networkconfiguration" type="462c0819:PsiDirectoryNode" />
               <item name="business" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="licenta" type="b2602c69:ProjectViewProjectNode" />
+              <item name="licenta-repo" type="8a07ba80:GradleTreeStructureProvider$GradleModuleDirectoryNode" />
+              <item name="network-configuration-server" type="8a07ba80:GradleTreeStructureProvider$GradleModuleDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="main" type="8a07ba80:GradleTreeStructureProvider$GradleModuleDirectoryNode" />
+              <item name="java" type="462c0819:PsiDirectoryNode" />
+              <item name="en" type="462c0819:PsiDirectoryNode" />
+              <item name="ubb" type="462c0819:PsiDirectoryNode" />
+              <item name="networkconfiguration" type="462c0819:PsiDirectoryNode" />
+              <item name="business" type="462c0819:PsiDirectoryNode" />
+              <item name="aspect" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="licenta" type="b2602c69:ProjectViewProjectNode" />
+              <item name="licenta-repo" type="8a07ba80:GradleTreeStructureProvider$GradleModuleDirectoryNode" />
+              <item name="network-configuration-server" type="8a07ba80:GradleTreeStructureProvider$GradleModuleDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="main" type="8a07ba80:GradleTreeStructureProvider$GradleModuleDirectoryNode" />
+              <item name="java" type="462c0819:PsiDirectoryNode" />
+              <item name="en" type="462c0819:PsiDirectoryNode" />
+              <item name="ubb" type="462c0819:PsiDirectoryNode" />
+              <item name="networkconfiguration" type="462c0819:PsiDirectoryNode" />
+              <item name="business" type="462c0819:PsiDirectoryNode" />
+              <item name="aspect" type="462c0819:PsiDirectoryNode" />
+              <item name="cache" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="licenta" type="b2602c69:ProjectViewProjectNode" />
+              <item name="licenta-repo" type="8a07ba80:GradleTreeStructureProvider$GradleModuleDirectoryNode" />
+              <item name="network-configuration-server" type="8a07ba80:GradleTreeStructureProvider$GradleModuleDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="main" type="8a07ba80:GradleTreeStructureProvider$GradleModuleDirectoryNode" />
+              <item name="java" type="462c0819:PsiDirectoryNode" />
+              <item name="en" type="462c0819:PsiDirectoryNode" />
+              <item name="ubb" type="462c0819:PsiDirectoryNode" />
+              <item name="networkconfiguration" type="462c0819:PsiDirectoryNode" />
+              <item name="business" type="462c0819:PsiDirectoryNode" />
+              <item name="listener" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
               <item name="licenta" type="b2602c69:ProjectViewProjectNode" />
@@ -566,7 +698,35 @@
               <item name="en" type="462c0819:PsiDirectoryNode" />
               <item name="ubb" type="462c0819:PsiDirectoryNode" />
               <item name="networkconfiguration" type="462c0819:PsiDirectoryNode" />
-              <item name="persistence" type="462c0819:PsiDirectoryNode" />
+              <item name="business" type="462c0819:PsiDirectoryNode" />
+              <item name="util" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="licenta" type="b2602c69:ProjectViewProjectNode" />
+              <item name="licenta-repo" type="8a07ba80:GradleTreeStructureProvider$GradleModuleDirectoryNode" />
+              <item name="network-configuration-server" type="8a07ba80:GradleTreeStructureProvider$GradleModuleDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="main" type="8a07ba80:GradleTreeStructureProvider$GradleModuleDirectoryNode" />
+              <item name="java" type="462c0819:PsiDirectoryNode" />
+              <item name="en" type="462c0819:PsiDirectoryNode" />
+              <item name="ubb" type="462c0819:PsiDirectoryNode" />
+              <item name="networkconfiguration" type="462c0819:PsiDirectoryNode" />
+              <item name="business" type="462c0819:PsiDirectoryNode" />
+              <item name="validation" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="licenta" type="b2602c69:ProjectViewProjectNode" />
+              <item name="licenta-repo" type="8a07ba80:GradleTreeStructureProvider$GradleModuleDirectoryNode" />
+              <item name="network-configuration-server" type="8a07ba80:GradleTreeStructureProvider$GradleModuleDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="main" type="8a07ba80:GradleTreeStructureProvider$GradleModuleDirectoryNode" />
+              <item name="java" type="462c0819:PsiDirectoryNode" />
+              <item name="en" type="462c0819:PsiDirectoryNode" />
+              <item name="ubb" type="462c0819:PsiDirectoryNode" />
+              <item name="networkconfiguration" type="462c0819:PsiDirectoryNode" />
+              <item name="business" type="462c0819:PsiDirectoryNode" />
+              <item name="validation" type="462c0819:PsiDirectoryNode" />
+              <item name="exception" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
               <item name="licenta" type="b2602c69:ProjectViewProjectNode" />
@@ -579,48 +739,6 @@
               <item name="ubb" type="462c0819:PsiDirectoryNode" />
               <item name="networkconfiguration" type="462c0819:PsiDirectoryNode" />
               <item name="persistence" type="462c0819:PsiDirectoryNode" />
-              <item name="dao" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="licenta" type="b2602c69:ProjectViewProjectNode" />
-              <item name="licenta-repo" type="8a07ba80:GradleTreeStructureProvider$GradleModuleDirectoryNode" />
-              <item name="network-configuration-server" type="8a07ba80:GradleTreeStructureProvider$GradleModuleDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="main" type="8a07ba80:GradleTreeStructureProvider$GradleModuleDirectoryNode" />
-              <item name="java" type="462c0819:PsiDirectoryNode" />
-              <item name="en" type="462c0819:PsiDirectoryNode" />
-              <item name="ubb" type="462c0819:PsiDirectoryNode" />
-              <item name="networkconfiguration" type="462c0819:PsiDirectoryNode" />
-              <item name="persistence" type="462c0819:PsiDirectoryNode" />
-              <item name="domain" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="licenta" type="b2602c69:ProjectViewProjectNode" />
-              <item name="licenta-repo" type="8a07ba80:GradleTreeStructureProvider$GradleModuleDirectoryNode" />
-              <item name="network-configuration-server" type="8a07ba80:GradleTreeStructureProvider$GradleModuleDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="main" type="8a07ba80:GradleTreeStructureProvider$GradleModuleDirectoryNode" />
-              <item name="java" type="462c0819:PsiDirectoryNode" />
-              <item name="en" type="462c0819:PsiDirectoryNode" />
-              <item name="ubb" type="462c0819:PsiDirectoryNode" />
-              <item name="networkconfiguration" type="462c0819:PsiDirectoryNode" />
-              <item name="persistence" type="462c0819:PsiDirectoryNode" />
-              <item name="domain" type="462c0819:PsiDirectoryNode" />
-              <item name="enums" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="licenta" type="b2602c69:ProjectViewProjectNode" />
-              <item name="licenta-repo" type="8a07ba80:GradleTreeStructureProvider$GradleModuleDirectoryNode" />
-              <item name="network-configuration-server" type="8a07ba80:GradleTreeStructureProvider$GradleModuleDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="main" type="8a07ba80:GradleTreeStructureProvider$GradleModuleDirectoryNode" />
-              <item name="java" type="462c0819:PsiDirectoryNode" />
-              <item name="en" type="462c0819:PsiDirectoryNode" />
-              <item name="ubb" type="462c0819:PsiDirectoryNode" />
-              <item name="networkconfiguration" type="462c0819:PsiDirectoryNode" />
-              <item name="persistence" type="462c0819:PsiDirectoryNode" />
-              <item name="domain" type="462c0819:PsiDirectoryNode" />
-              <item name="network" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
               <item name="licenta" type="b2602c69:ProjectViewProjectNode" />
@@ -634,8 +752,20 @@
               <item name="networkconfiguration" type="462c0819:PsiDirectoryNode" />
               <item name="persistence" type="462c0819:PsiDirectoryNode" />
               <item name="domain" type="462c0819:PsiDirectoryNode" />
-              <item name="network" type="462c0819:PsiDirectoryNode" />
-              <item name="runtime" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="licenta" type="b2602c69:ProjectViewProjectNode" />
+              <item name="licenta-repo" type="8a07ba80:GradleTreeStructureProvider$GradleModuleDirectoryNode" />
+              <item name="network-configuration-server" type="8a07ba80:GradleTreeStructureProvider$GradleModuleDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="main" type="8a07ba80:GradleTreeStructureProvider$GradleModuleDirectoryNode" />
+              <item name="java" type="462c0819:PsiDirectoryNode" />
+              <item name="en" type="462c0819:PsiDirectoryNode" />
+              <item name="ubb" type="462c0819:PsiDirectoryNode" />
+              <item name="networkconfiguration" type="462c0819:PsiDirectoryNode" />
+              <item name="persistence" type="462c0819:PsiDirectoryNode" />
+              <item name="domain" type="462c0819:PsiDirectoryNode" />
+              <item name="authentication" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
               <item name="licenta" type="b2602c69:ProjectViewProjectNode" />
@@ -654,8 +784,6 @@
           <select />
         </subPane>
       </pane>
-      <pane id="PackagesPane" />
-      <pane id="AndroidView" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -667,16 +795,16 @@
     <property name="RequestMappingsPanelWidth1" value="75" />
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="aspect.path.notification.shown" value="true" />
-    <property name="com.android.tools.idea.instantapp.provision.ProvisionBeforeRunTaskProvider.myTimeStamp" value="1558391076417" />
+    <property name="com.android.tools.idea.instantapp.provision.ProvisionBeforeRunTaskProvider.myTimeStamp" value="1558579744235" />
     <property name="dynamic.classpath" value="true" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/docker-compose.yml" />
+    <property name="last_opened_file_path" value="$USER_HOME$/Desktop/ObserverObservable" />
     <property name="nodejs_interpreter_path.stuck_in_default_project" value="undefined stuck path" />
     <property name="nodejs_npm_path_reset_for_default_project" value="true" />
     <property name="nodejs_package_manager_path" value="npm" />
     <property name="project.structure.last.edited" value="Modules" />
     <property name="project.structure.proportion" value="0.15" />
     <property name="project.structure.side.proportion" value="0.2" />
-    <property name="settings.editor.selected.configurable" value="editor.preferences.fonts.default" />
+    <property name="settings.editor.selected.configurable" value="preferences.lookFeel" />
   </component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
@@ -701,7 +829,7 @@
         </RuleState>
       </list>
     </option>
-    <option name="contentProportion" value="0.18831168" />
+    <option name="contentProportion" value="0.11796537" />
   </component>
   <component name="RunManager" selected="Spring Boot.App">
     <configuration name="ConfigurationApp - Deploy" type="GradleRunConfiguration" factoryName="Gradle">
@@ -919,6 +1047,9 @@
       <workItem from="1557135449438" duration="555000" />
       <workItem from="1557136040230" duration="9736000" />
       <workItem from="1557211642407" duration="21297000" />
+      <workItem from="1558459528604" duration="1089000" />
+      <workItem from="1558472312452" duration="19000" />
+      <workItem from="1558559345869" duration="17804000" />
     </task>
     <task id="LOCAL-00001" summary="s">
       <created>1547388543011</created>
@@ -985,7 +1116,7 @@
     </history-entry>
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="208170000" />
+    <option name="totallyTimeSpent" value="227082000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -998,8 +1129,9 @@
   </component>
   <component name="ToolWindowManager">
     <frame x="-8" y="-8" width="1936" height="1056" extended-state="6" />
+    <editor active="true" />
     <layout>
-      <window_info active="true" content_ui="combo" id="Project" order="0" sideWeight="0.4982639" visible="true" weight="0.22547974" />
+      <window_info active="true" content_ui="combo" id="Project" order="0" sideWeight="0.4982639" visible="true" weight="0.2510661" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info id="Designer" order="2" />
       <window_info id="Image Layers" order="3" />
@@ -1024,9 +1156,10 @@
       <window_info anchor="bottom" id="Java Enterprise" order="13" weight="0.32893288" />
       <window_info anchor="bottom" id="Build" order="14" sideWeight="0.49946696" weight="0.22222222" />
       <window_info anchor="bottom" id="Database Changes" order="15" />
-      <window_info anchor="bottom" id="Messages" order="16" weight="0.41503268" />
+      <window_info anchor="bottom" id="Messages" order="16" weight="0.41495124" />
       <window_info anchor="bottom" id="Version Control" order="17" weight="0.32936078" />
-      <window_info anchor="bottom" id="Run Dashboard" order="18" sideWeight="0.9323028" visible="true" weight="0.3846154" />
+      <window_info anchor="bottom" id="Run Dashboard" order="18" sideWeight="0.9323028" visible="true" weight="0.22643554" />
+      <window_info anchor="bottom" id="Bucklescript" order="19" />
       <window_info anchor="right" id="Commander" internal_type="SLIDING" order="0" type="SLIDING" weight="0.4" />
       <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
       <window_info anchor="right" content_ui="combo" id="Hierarchy" order="2" weight="0.25" />
@@ -1156,40 +1289,40 @@
           <option name="timeStamp" value="72" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/network-configuration-server/src/main/java/en/ubb/networkconfiguration/business/service/impl/NetworkServiceImpl.java</url>
-          <line>205</line>
-          <properties />
-          <option name="timeStamp" value="1" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/network-configuration-server/src/main/java/en/ubb/networkconfiguration/business/service/impl/FileServiceImpl.java</url>
-          <line>48</line>
+          <line>50</line>
           <properties />
           <option name="timeStamp" value="6" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/network-configuration-server/src/main/java/en/ubb/networkconfiguration/business/service/impl/FileServiceImpl.java</url>
-          <line>60</line>
+          <line>62</line>
           <properties />
           <option name="timeStamp" value="10" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/network-configuration-server/src/main/java/en/ubb/networkconfiguration/business/service/impl/FileServiceImpl.java</url>
-          <line>58</line>
+          <line>60</line>
           <properties />
           <option name="timeStamp" value="12" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/network-configuration-server/src/main/java/en/ubb/networkconfiguration/boundary/rest/NetworkApi.java</url>
-          <line>64</line>
-          <properties />
-          <option name="timeStamp" value="74" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/network-configuration-server/src/main/java/en/ubb/networkconfiguration/business/service/impl/NetworkTrainLogServiceImpl.java</url>
           <line>23</line>
           <properties />
           <option name="timeStamp" value="80" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/network-configuration-server/src/main/java/en/ubb/networkconfiguration/config/CustomPerformanceMonitorInterterceptor.java</url>
+          <line>28</line>
+          <properties />
+          <option name="timeStamp" value="95" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/network-configuration-server/src/main/java/en/ubb/networkconfiguration/persistence/domain/authentication/User.java</url>
+          <line>12</line>
+          <properties />
+          <option name="timeStamp" value="101" />
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>
@@ -1254,152 +1387,150 @@
     </expressions>
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/network-configuration-server/src/main/java/en/ubb/networkconfiguration/business/service/NetworkService.java">
+    <entry file="file://$PROJECT_DIR$/network-configuration-server/src/main/java/en/ubb/networkconfiguration/persistence/domain/network/runtime/Network.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="85">
-          <caret line="12" column="17" selection-start-line="12" selection-start-column="17" selection-end-line="12" selection-end-column="17" />
+        <state relative-caret-position="187">
+          <caret line="22" column="13" selection-start-line="22" selection-start-column="13" selection-end-line="22" selection-end-column="13" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/network-configuration-server/src/main/java/en/ubb/networkconfiguration/business/service/NetworkInitService.java">
+    <entry file="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.google.guava/guava/20.0/9c8493c7991464839b612d7547d6c263adf08f75/guava-20.0-sources.jar!/com/google/common/cache/LoadingCache.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="68">
-          <caret line="8" column="17" selection-start-line="8" selection-start-column="17" selection-end-line="8" selection-end-column="17" />
+        <state relative-caret-position="-24">
+          <caret line="38" column="17" selection-start-line="38" selection-start-column="17" selection-end-line="38" selection-end-column="17" />
         </state>
       </provider>
     </entry>
-    <entry file="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.deeplearning4j/deeplearning4j-nn/1.0.0-beta3/abe22e7e57a5f6d21b2794090e8008d9175a2d58/deeplearning4j-nn-1.0.0-beta3-sources.jar!/org/deeplearning4j/nn/api/Model.java">
+    <entry file="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.google.guava/guava/19.0/91a4d115400e904f22b03a78deb355e9ea803cd4/guava-19.0-sources.jar!/com/google/common/cache/CacheLoader.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="149">
-          <caret line="35" column="17" selection-start-line="35" selection-start-column="17" selection-end-line="35" selection-end-column="17" />
+        <state relative-caret-position="-126">
+          <caret line="43" column="36" selection-start-line="43" selection-start-column="16" selection-end-line="43" selection-end-column="36" />
         </state>
       </provider>
     </entry>
-    <entry file="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.projectlombok/lombok/1.18.6/2908ec27909c1929a9f2e031e4ae27e54d268860/lombok-1.18.6-sources.jar!/lombok/extern/slf4j/Slf4j.java">
+    <entry file="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.google.guava/guava/20.0/9c8493c7991464839b612d7547d6c263adf08f75/guava-20.0-sources.jar!/com/google/common/cache/CacheBuilder.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="646">
-          <caret line="61" column="18" selection-start-line="61" selection-start-column="18" selection-end-line="61" selection-end-column="18" />
+        <state relative-caret-position="299">
+          <caret line="122" selection-start-line="122" selection-end-line="145" selection-end-column="19" />
         </state>
       </provider>
     </entry>
-    <entry file="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.deeplearning4j/deeplearning4j-nn/1.0.0-beta3/abe22e7e57a5f6d21b2794090e8008d9175a2d58/deeplearning4j-nn-1.0.0-beta3-sources.jar!/org/deeplearning4j/optimize/listeners/ScoreIterationListener.java">
+    <entry file="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.google.guava/guava/20.0/9c8493c7991464839b612d7547d6c263adf08f75/guava-20.0-sources.jar!/com/google/common/cache/Cache.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="204">
-          <caret line="32" selection-start-line="32" selection-end-line="60" selection-end-column="1" />
-          <folding>
-            <element signature="e#1523#1524#0" expanded="true" />
-            <element signature="e#1577#1578#0" expanded="true" />
-          </folding>
+        <state relative-caret-position="231">
+          <caret line="47" column="29" lean-forward="true" selection-start-line="47" selection-start-column="29" selection-end-line="47" selection-end-column="29" />
         </state>
       </provider>
     </entry>
-    <entry file="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.nd4j/nd4j-api/1.0.0-beta3/ae3a83d57ad23a1a881cb0745b7f725411d05a32/nd4j-api-1.0.0-beta3-sources.jar!/org/nd4j/evaluation/classification/Evaluation.java">
+    <entry file="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.aspectj/aspectjweaver/1.9.2/7aa564f5753105f884c50bc84ffa49a282c10a00/aspectjweaver-1.9.2-sources.jar!/org/aspectj/lang/ProceedingJoinPoint.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-826">
-          <caret line="594" column="19" selection-start-line="594" selection-start-column="19" selection-end-line="594" selection-end-column="19" />
-          <folding>
-            <element signature="e#25074#25075#0" expanded="true" />
-            <element signature="e#25109#25110#0" expanded="true" />
-          </folding>
+        <state relative-caret-position="170">
+          <caret line="20" column="17" selection-start-line="20" selection-start-column="17" selection-end-line="20" selection-end-column="17" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/network-configuration-server/src/main/java/en/ubb/networkconfiguration/persistence/dao/NetworkConnectionRepo.java">
+    <entry file="file://$PROJECT_DIR$/network-configuration-server/src/main/java/en/ubb/networkconfiguration/boundary/exception_handling/ApiError.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="102">
-          <caret line="6" column="17" selection-start-line="6" selection-start-column="17" selection-end-line="6" selection-end-column="17" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
+        <state relative-caret-position="136">
+          <caret line="13" column="13" selection-start-line="13" selection-start-column="13" selection-end-line="13" selection-end-column="13" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/network-configuration-server/src/main/java/en/ubb/networkconfiguration/boundary/dto/setup/NetworkInitDto.java">
+    <entry file="file://$PROJECT_DIR$/network-configuration-server/src/main/java/en/ubb/networkconfiguration/boundary/exception_handling/GlobalExceptionHandler.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="153">
-          <caret line="12" column="13" selection-start-line="12" selection-start-column="13" selection-end-line="12" selection-end-column="13" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/network-configuration-server/src/main/java/en/ubb/networkconfiguration/business/service/impl/NetworkConnectionServiceImpl.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="769">
-          <caret line="78" column="72" selection-start-line="78" selection-start-column="72" selection-end-line="78" selection-end-column="72" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
+        <state relative-caret-position="-561">
+          <caret line="23" column="13" selection-start-line="23" selection-start-column="13" selection-end-line="23" selection-end-column="13" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/network-configuration-server/src/main/java/en/ubb/networkconfiguration/business/listener/ScoreIterationLogListener.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="570">
-          <caret line="39" column="41" lean-forward="true" selection-start-line="39" selection-start-column="41" selection-end-line="39" selection-end-column="41" />
+        <state relative-caret-position="346">
+          <caret line="57" lean-forward="true" selection-start-line="57" selection-end-line="57" />
           <folding>
             <element signature="imports" expanded="true" />
-            <element signature="e#1642#1643#0" expanded="true" />
-            <element signature="e#1673#1674#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/network-configuration-server/src/main/java/en/ubb/networkconfiguration/boundary/validation/validator/RunConfigDtoValidator.java">
+    <entry file="file://$PROJECT_DIR$/network-configuration-server/src/main/java/en/ubb/networkconfiguration/business/listener/NetworkLifecycleState.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="187">
+          <caret line="11" column="29" selection-start-line="11" selection-start-column="29" selection-end-line="11" selection-end-column="29" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/network-configuration-server/src/main/java/en/ubb/networkconfiguration/business/listener/LifecycleUpdateEventSource.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="272">
+          <caret line="16" column="13" lean-forward="true" selection-start-line="16" selection-start-column="13" selection-end-line="16" selection-end-column="13" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/network-configuration-server/src/main/java/en/ubb/networkconfiguration/config/SpringApplicationContext.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="119">
+          <caret line="7" column="10" selection-start-line="7" selection-start-column="10" selection-end-line="7" selection-end-column="10" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/network-configuration-server/src/main/java/en/ubb/networkconfiguration/config/MonitoringConfig.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="380">
+          <caret line="28" lean-forward="true" selection-start-line="28" selection-end-line="28" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/network-configuration-server/src/main/java/en/ubb/networkconfiguration/config/MessageConfig.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="85">
-          <caret line="10" column="13" selection-start-line="10" selection-start-column="13" selection-end-line="10" selection-end-column="13" />
+          <caret line="8" column="13" selection-start-line="8" selection-start-column="13" selection-end-line="8" selection-end-column="13" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/network-configuration-server/src/main/java/en/ubb/networkconfiguration/boundary/dto/runtime/RunConfigDto.java">
+    <entry file="file://$PROJECT_DIR$/network-configuration-server/src/main/java/en/ubb/networkconfiguration/config/CustomPerformanceMonitorInterterceptor.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="153">
-          <caret line="10" column="13" selection-start-line="10" selection-start-column="13" selection-end-line="10" selection-end-column="13" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/network-configuration-server/src/main/java/en/ubb/networkconfiguration/persistence/domain/network/setup/LayerInitializer.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="153">
-          <caret line="27" column="32" selection-start-line="27" selection-start-column="32" selection-end-line="27" selection-end-column="32" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/network-configuration-server/src/main/java/en/ubb/networkconfiguration/persistence/domain/network/runtime/Layer.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-293">
-          <caret line="45" column="32" selection-start-line="45" selection-start-column="32" selection-end-line="45" selection-end-column="32" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/network-configuration-server/src/main/java/en/ubb/networkconfiguration/boundary/dto/runtime/LayerDto.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="153">
-          <caret line="14" column="13" selection-start-line="14" selection-start-column="13" selection-end-line="14" selection-end-column="13" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/network-configuration-server/src/main/java/en/ubb/networkconfiguration/business/service/FileService.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="170">
-          <caret line="16" selection-start-line="16" selection-end-line="16" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/network-configuration-server/src/main/java/en/ubb/networkconfiguration/persistence/domain/network/runtime/NetworkFileId.java" />
-    <entry file="file://$PROJECT_DIR$/network-configuration-server/src/main/java/en/ubb/networkconfiguration/business/service/impl/NetworkInitServiceImpl.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-191">
-          <caret line="15" column="13" selection-start-line="15" selection-start-column="13" selection-end-line="15" selection-end-column="13" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/network-configuration-server/src/main/java/en/ubb/networkconfiguration/business/service/impl/NetworkServiceImpl.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="933">
-          <caret line="98" column="40" selection-start-line="98" selection-start-column="40" selection-end-line="98" selection-end-column="40" />
+        <state relative-caret-position="221">
+          <caret line="24" lean-forward="true" selection-start-line="24" selection-end-line="24" />
           <folding>
             <element signature="imports" expanded="true" />
           </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/network-configuration-server/src/main/java/en/ubb/networkconfiguration/business/listener/LifecycleEvent.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="170">
+          <caret line="10" column="33" selection-start-line="10" selection-start-column="33" selection-end-line="10" selection-end-column="33" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/network-configuration-server/src/main/java/en/ubb/networkconfiguration/business/listener/LifecycleResponseHandler.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="17">
+          <caret line="13" column="6" selection-start-line="13" selection-start-column="6" selection-end-line="13" selection-end-column="6" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.aspectj/aspectjweaver/1.9.2/7aa564f5753105f884c50bc84ffa49a282c10a00/aspectjweaver-1.9.2-sources.jar!/org/aspectj/lang/Signature.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="51">
+          <caret line="43" column="17" selection-start-line="43" selection-start-column="17" selection-end-line="43" selection-end-column="17" />
         </state>
       </provider>
     </entry>
@@ -1410,235 +1541,244 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/network-configuration-server/src/main/java/en/ubb/networkconfiguration/persistence/domain/network/runtime/DataFile.java">
+    <entry file="file://$PROJECT_DIR$/network-configuration-server/src/main/java/en/ubb/networkconfiguration/persistence/domain/network/setup/NetworkInitializer.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="136">
-          <caret line="17" column="37" selection-start-line="17" selection-start-column="37" selection-end-line="17" selection-end-column="37" />
+        <state relative-caret-position="204">
+          <caret line="40" column="24" lean-forward="true" selection-start-line="40" selection-start-column="24" selection-end-line="40" selection-end-column="24" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/network-configuration-server/src/main/java/en/ubb/networkconfiguration/persistence/domain/network/runtime/NetworkConnection.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="206">
-          <caret line="20" column="15" selection-start-line="20" selection-start-column="5" selection-end-line="20" selection-end-column="15" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/network-configuration-server/src/main/java/en/ubb/networkconfiguration/persistence/domain/network/runtime/NetworkFile.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="255">
-          <caret line="22" column="30" lean-forward="true" selection-start-line="22" selection-start-column="30" selection-end-line="22" selection-end-column="30" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/network-configuration-server/src/main/java/en/ubb/networkconfiguration/persistence/domain/network/runtime/Network.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="147">
-          <caret line="118" column="16" selection-start-line="118" selection-start-column="16" selection-end-line="118" selection-end-column="16" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/network-configuration-server/src/main/java/en/ubb/networkconfiguration/business/service/impl/FileServiceImpl.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="266">
-          <caret line="58" column="49" selection-start-line="58" selection-start-column="49" selection-end-line="58" selection-end-column="49" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/network-configuration-server/src/main/java/en/ubb/networkconfiguration/business/service/NetworkDebuggingService.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="34">
-          <caret line="2" column="72" selection-start-line="2" selection-start-column="72" selection-end-line="2" selection-end-column="72" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/network-configuration-server/src/main/java/en/ubb/networkconfiguration/business/service/impl/NetworkDebuggingServiceImpl.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="153">
-          <caret line="9" column="13" selection-start-line="9" selection-start-column="13" selection-end-line="9" selection-end-column="13" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/network-configuration-server/src/main/java/en/ubb/networkconfiguration/boundary/rest/DataFileApi.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-191">
-          <caret line="19" column="13" selection-start-line="19" selection-start-column="13" selection-end-line="19" selection-end-column="13" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/network-configuration-server/src/main/java/en/ubb/networkconfiguration/boundary/dto/debugging/DebuggingNode.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="255">
-          <caret line="15" column="30" selection-start-line="15" selection-start-column="30" selection-end-line="15" selection-end-column="30" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/network-configuration-server/src/main/java/en/ubb/networkconfiguration/boundary/dto/debugging/NodeStatus.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="119">
-          <caret line="7" column="10" selection-start-line="7" selection-start-column="10" selection-end-line="7" selection-end-column="10" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/network-configuration-server/src/main/java/en/ubb/networkconfiguration/persistence/domain/network/runtime/NetworkLink.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="306">
-          <caret line="21" selection-start-line="21" selection-end-line="22" selection-end-column="40" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/network-configuration-server/src/main/java/en/ubb/networkconfiguration/persistence/domain/network/runtime/NetworkIterationLog.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="263">
-          <caret line="16" selection-start-line="16" selection-end-line="21" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/network-configuration-server/src/main/java/en/ubb/networkconfiguration/persistence/domain/network/runtime/NetworkTrainLog.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="476">
-          <caret line="41" column="79" lean-forward="true" selection-start-line="20" selection-start-column="1" selection-end-line="41" selection-end-column="79" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/network-configuration-server/src/main/java/en/ubb/networkconfiguration/boundary/dto/runtime/NetworkDto.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-32">
-          <caret line="7" selection-start-line="7" selection-end-line="11" selection-end-column="7" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/network-configuration-server/src/main/java/en/ubb/networkconfiguration/boundary/dto/runtime/LinkDto.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="153">
-          <caret line="10" column="13" selection-start-line="10" selection-start-column="13" selection-end-line="10" selection-end-column="13" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/network-configuration-server/src/main/java/en/ubb/networkconfiguration/boundary/rest/NodeApi.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="102">
-          <caret line="7" column="13" selection-start-line="7" selection-start-column="13" selection-end-line="7" selection-end-column="13" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/network-configuration-server/src/main/java/en/ubb/networkconfiguration/boundary/dto/runtime/NetworkIterationLogDto.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="255">
-          <caret line="15" column="28" selection-start-line="15" selection-start-column="28" selection-end-line="15" selection-end-column="28" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/network-configuration-server/src/main/java/en/ubb/networkconfiguration/boundary/dto/runtime/NetworkTrainLogDto.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="136">
-          <caret line="17" column="41" selection-start-line="17" selection-start-column="41" selection-end-line="17" selection-end-column="41" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/network-configuration-server/src/main/java/en/ubb/networkconfiguration/boundary/util/DtoMapper.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="323">
-          <caret line="29" selection-start-line="29" selection-end-line="29" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/network-configuration-server/src/main/java/en/ubb/networkconfiguration/persistence/domain/enums/LayerType.java">
+    <entry file="file://$PROJECT_DIR$/network-configuration-server/src/main/java/en/ubb/networkconfiguration/persistence/domain/network/enums/LayerType.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="34">
           <caret line="2" column="12" selection-start-line="2" selection-start-column="12" selection-end-line="2" selection-end-column="12" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/network-configuration-server/src/main/java/en/ubb/networkconfiguration/persistence/domain/enums/FileType.java">
+    <entry file="file://$PROJECT_DIR$/network-configuration-server/src/main/java/en/ubb/networkconfiguration/persistence/domain/network/enums/FileType.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="34">
-          <caret line="2" column="16" selection-start-line="2" selection-start-column="16" selection-end-line="2" selection-end-column="16" />
+          <caret line="2" column="17" selection-start-line="2" selection-start-column="17" selection-end-line="2" selection-end-column="17" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/network-configuration-server/src/main/java/en/ubb/networkconfiguration/boundary/rest/NetworkInitApi.java">
+    <entry file="file://$PROJECT_DIR$/network-configuration-server/src/main/java/en/ubb/networkconfiguration/persistence/domain/network/setup/LayerInitializer.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="663">
-          <caret line="50" selection-start-line="50" selection-end-line="50" />
+        <state relative-caret-position="-114">
+          <caret line="16" column="13" selection-start-line="16" selection-start-column="13" selection-end-line="16" selection-end-column="13" />
           <folding>
             <element signature="imports" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/network-configuration-server/src/main/resources/application.properties">
+    <entry file="file://$PROJECT_DIR$/network-configuration-server/src/main/java/en/ubb/networkconfiguration/persistence/domain/authentication/enums/Role.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="85">
-          <caret line="5" column="33" lean-forward="true" selection-start-line="5" selection-start-column="33" selection-end-line="5" selection-end-column="33" />
+        <state relative-caret-position="34">
+          <caret line="2" column="12" selection-start-line="2" selection-start-column="12" selection-end-line="2" selection-end-column="12" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/network-configuration-server/src/main/java/en/ubb/networkconfiguration/boundary/rest/NetworkApi.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="479">
-          <caret line="204" selection-start-line="204" selection-end-line="204" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/network-configuration-server/src/main/java/en/ubb/networkconfiguration/business/service/NetworkTrainLogService.java">
+    <entry file="file://$PROJECT_DIR$/network-configuration-server/src/main/java/en/ubb/networkconfiguration/business/aspect/cache/CCachable.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="136">
-          <caret line="8" column="26" selection-start-line="8" selection-start-column="26" selection-end-line="8" selection-end-column="26" />
+          <caret line="8" column="8" lean-forward="true" selection-start-line="8" selection-start-column="8" selection-end-line="8" selection-end-column="26" />
           <folding>
             <element signature="imports" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="jar://$PROJECT_DIR$/../../../Programs/JDK/jre/lib/rt.jar!/sun/reflect/DelegatingMethodAccessorImpl.class">
+    <entry file="jar://$PROJECT_DIR$/../../../Programs/JDK/src.zip!/java/lang/annotation/ElementType.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="204">
-          <caret line="17" selection-start-line="17" selection-end-line="17" />
+        <state relative-caret-position="213">
+          <caret line="72" column="12" selection-start-line="72" selection-start-column="12" selection-end-line="72" selection-end-column="12" />
         </state>
       </provider>
     </entry>
-    <entry file="jar://$PROJECT_DIR$/../../../Programs/JDK/src.zip!/java/lang/reflect/Method.java">
+    <entry file="file://$PROJECT_DIR$/network-configuration-server/src/main/java/en/ubb/networkconfiguration/business/service/NetworkService.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="181">
-          <caret line="497" selection-start-line="497" selection-end-line="497" />
+        <state relative-caret-position="85">
+          <caret line="12" column="17" selection-start-line="12" selection-start-column="17" selection-end-line="12" selection-end-column="17" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/network-configuration-server/src/main/java/en/ubb/networkconfiguration/persistence/dao/specification/NetworkInitSpec.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="102">
+          <caret line="7" selection-start-line="7" selection-end-line="9" selection-end-column="5" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/network-configuration-server/src/main/java/en/ubb/networkconfiguration/persistence/dao/NetworkTrainLogRepo.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="238">
-          <caret line="14" lean-forward="true" selection-start-line="14" selection-end-line="14" />
+        <state relative-caret-position="68">
+          <caret line="9" column="17" selection-start-line="9" selection-start-column="17" selection-end-line="9" selection-end-column="17" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/network-configuration-server/src/main/java/en/ubb/networkconfiguration/persistence/dao/NodeRepo.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="102">
+          <caret line="9" column="17" selection-start-line="9" selection-start-column="17" selection-end-line="9" selection-end-column="17" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/network-configuration-server/src/main/java/en/ubb/networkconfiguration/persistence/dao/NetworkInitRepo.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="68">
+          <caret line="6" column="79" lean-forward="true" selection-start-line="6" selection-start-column="79" selection-end-line="6" selection-end-column="125" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/network-configuration-server/src/main/java/en/ubb/networkconfiguration/persistence/dao/LinkRepo.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="68">
+          <caret line="5" column="17" selection-start-line="5" selection-start-column="17" selection-end-line="5" selection-end-column="17" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/network-configuration-server/src/main/java/en/ubb/networkconfiguration/persistence/dao/NetworkConnectionRepo.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="68">
+          <caret line="6" column="17" selection-start-line="6" selection-start-column="17" selection-end-line="6" selection-end-column="17" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/network-configuration-server/src/main/java/en/ubb/networkconfiguration/persistence/dao/UserRepo.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="102">
+          <caret line="6" column="58" lean-forward="true" selection-start-line="6" selection-start-column="58" selection-end-line="6" selection-end-column="58" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/network-configuration-server/src/main/java/en/ubb/networkconfiguration/persistence/dao/DataFileRepo.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="68">
+          <caret line="6" column="17" selection-start-line="6" selection-start-column="17" selection-end-line="6" selection-end-column="17" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/network-configuration-server/src/main/java/en/ubb/networkconfiguration/business/service/impl/NetworkInitServiceImpl.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="85">
+          <caret line="15" column="13" selection-start-line="15" selection-start-column="13" selection-end-line="15" selection-end-column="13" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/network-configuration-server/src/main/java/en/ubb/networkconfiguration/persistence/dao/specification/UserSpec.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="136">
+          <caret line="8" column="56" selection-start-line="8" selection-start-column="56" selection-end-line="8" selection-end-column="56" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/network-configuration-server/src/main/java/en/ubb/networkconfiguration/business/service/impl/NetworkServiceImpl.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-1139">
+          <caret line="79" selection-start-line="79" selection-end-line="79" />
+          <folding>
+            <element signature="imports" expanded="true" />
+            <element signature="e#3389#3390#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/network-configuration-server/src/main/java/en/ubb/networkconfiguration/business/validation/exception/DuplicateBussExc.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="34">
+          <caret line="2" column="13" selection-start-line="2" selection-start-column="13" selection-end-line="2" selection-end-column="13" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/network-configuration-server/src/main/java/en/ubb/networkconfiguration/business/validation/exception/AuthorizationBussExc.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="68">
+          <caret line="4" column="4" selection-start-line="4" selection-start-column="4" selection-end-line="4" selection-end-column="4" />
+          <folding>
+            <element signature="e#221#222#0" expanded="true" />
+            <element signature="e#251#252#0" expanded="true" />
+            <element signature="e#319#320#0" expanded="true" />
+            <element signature="e#356#357#0" expanded="true" />
+            <element signature="e#408#409#0" expanded="true" />
+            <element signature="e#436#437#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/network-configuration-server/src/main/java/en/ubb/networkconfiguration/business/util/EncryptionUtil.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="374">
+          <caret line="43" column="80" lean-forward="true" selection-start-line="43" selection-start-column="80" selection-end-line="43" selection-end-column="80" />
+          <folding>
+            <element signature="imports" expanded="true" />
+            <element signature="e#762#763#0" expanded="true" />
+            <element signature="e#796#797#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/network-configuration-server/src/main/java/en/ubb/networkconfiguration/business/service/UserService.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="323">
+          <caret line="19" column="24" selection-start-line="19" selection-start-column="24" selection-end-line="19" selection-end-column="24" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.aspectj/aspectjweaver/1.9.2/7aa564f5753105f884c50bc84ffa49a282c10a00/aspectjweaver-1.9.2-sources.jar!/org/aspectj/lang/JoinPoint.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="315">
+          <caret line="76" column="13" selection-start-line="76" selection-start-column="13" selection-end-line="76" selection-end-column="13" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/network-configuration-server/src/main/java/en/ubb/networkconfiguration/business/service/impl/UserServiceImpl.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1348">
+          <caret line="82" column="32" selection-start-line="82" selection-start-column="32" selection-end-line="82" selection-end-column="32" />
+          <folding>
+            <element signature="imports" expanded="true" />
+            <element signature="e#590#591#0" expanded="true" />
+            <element signature="e#630#631#0" expanded="true" />
+            <element signature="e#407#408#0" expanded="true" />
+            <element signature="e#434#435#0" expanded="true" />
+            <element signature="e#495#496#0" expanded="true" />
+            <element signature="e#534#535#0" expanded="true" />
+            <element signature="e#814#815#0" expanded="true" />
+            <element signature="e#841#842#0" expanded="true" />
+            <element signature="e#2300#2301#0" expanded="true" />
+            <element signature="e#2333#2334#0" expanded="true" />
+            <element signature="e#2385#2386#0" expanded="true" />
+            <element signature="e#2406#2407#0" expanded="true" />
+            <element signature="e#2477#2478#0" expanded="true" />
+            <element signature="e#2515#2516#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/network-configuration-server/src/main/java/en/ubb/networkconfiguration/business/aspect/security/SecurityAnnotation.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="170">
+          <caret line="10" column="9" selection-start-line="10" selection-start-column="9" selection-end-line="10" selection-end-column="9" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/network-configuration-server/src/main/java/en/ubb/networkconfiguration/persistence/domain/authentication/User.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="357">
+          <caret line="24" column="22" lean-forward="true" selection-start-line="24" selection-start-column="22" selection-end-line="24" selection-end-column="22" />
           <folding>
             <element signature="imports" expanded="true" />
           </folding>
@@ -1647,25 +1787,47 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/network-configuration-server/src/main/java/en/ubb/networkconfiguration/App.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="68">
-          <caret line="5" selection-start-line="5" selection-end-line="5" />
+        <state relative-caret-position="170">
+          <caret line="11" column="47" lean-forward="true" selection-start-line="11" selection-start-column="47" selection-end-line="11" selection-end-column="47" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/network-configuration-server/src/main/java/en/ubb/networkconfiguration/boundary/rest/NetworkTrainLogApi.java">
+    <entry file="file://$PROJECT_DIR$/network-configuration-server/src/main/java/en/ubb/networkconfiguration/business/aspect/cache/CustomCache.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="367">
-          <caret line="27" column="88" lean-forward="true" selection-start-line="27" selection-start-column="88" selection-end-line="27" selection-end-column="88" />
+        <state relative-caret-position="283">
+          <caret line="17" selection-start-line="17" selection-end-line="17" selection-end-column="23" />
           <folding>
             <element signature="imports" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/network-configuration-server/src/main/java/en/ubb/networkconfiguration/business/service/impl/NetworkTrainLogServiceImpl.java">
+    <entry file="file://$PROJECT_DIR$/network-configuration-server/src/main/java/en/ubb/networkconfiguration/business/aspect/security/SecurityInterceptor.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="391">
-          <caret line="23" selection-start-line="23" selection-end-line="23" />
+        <state relative-caret-position="714">
+          <caret line="42" lean-forward="true" selection-start-line="42" selection-end-line="42" />
+          <folding>
+            <element signature="imports" expanded="true" />
+            <element signature="e#962#963#0" expanded="true" />
+            <element signature="e#1008#1009#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/network-configuration-server/src/main/java/en/ubb/networkconfiguration/business/aspect/ServiceLogger.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="323">
+          <caret line="19" column="4" selection-start-line="19" selection-start-column="4" selection-end-line="19" selection-end-column="87" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/network-configuration-server/src/main/java/en/ubb/networkconfiguration/business/aspect/NetworkRunMonitor.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="187">
+          <caret line="11" column="10" selection-start-line="11" selection-start-column="10" selection-end-line="11" selection-end-column="10" />
           <folding>
             <element signature="imports" expanded="true" />
           </folding>
@@ -1753,5 +1915,8 @@
         </settings>
       </state>
     </states>
+  </component>
+  <component name="se.expertsystem.intellij.aop.aspectj.AspectJProjectComponent">
+    <setting name="isActivated" value="false" />
   </component>
 </project>

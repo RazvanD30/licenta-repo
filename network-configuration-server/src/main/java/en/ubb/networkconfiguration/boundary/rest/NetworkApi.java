@@ -4,8 +4,8 @@ package en.ubb.networkconfiguration.boundary.rest;
 import en.ubb.networkconfiguration.boundary.dto.runtime.NetworkDto;
 import en.ubb.networkconfiguration.boundary.dto.runtime.RunConfigDto;
 import en.ubb.networkconfiguration.boundary.util.DtoMapper;
-import en.ubb.networkconfiguration.persistence.domain.enums.FileType;
-import en.ubb.networkconfiguration.persistence.domain.enums.LayerType;
+import en.ubb.networkconfiguration.persistence.domain.network.enums.FileType;
+import en.ubb.networkconfiguration.persistence.domain.network.enums.LayerType;
 import en.ubb.networkconfiguration.persistence.domain.network.runtime.DataFile;
 import en.ubb.networkconfiguration.persistence.domain.network.runtime.Network;
 import en.ubb.networkconfiguration.persistence.domain.network.setup.LayerInitializer;
@@ -54,9 +54,14 @@ public class NetworkApi {
     }
 
 
-    @InitBinder
-    protected void initBinder(WebDataBinder binder) {
-        binder.addValidators(networkDtoValidator, runConfigDtoValidator);
+    @InitBinder("networkDto")
+    protected void initNetworkBinder(WebDataBinder binder) {
+        binder.addValidators(networkDtoValidator);
+    }
+
+    @InitBinder("runConfigDto")
+    protected void initRunConfigBinder(WebDataBinder binder) {
+        binder.addValidators(runConfigDtoValidator);
     }
 
 
@@ -81,13 +86,13 @@ public class NetworkApi {
     }
 
     @PutMapping("networks")
-    public void update(@Validated @RequestBody NetworkDto dto, BindingResult result, SessionStatus status) throws NotFoundException {
+    public void update(@Validated @RequestBody NetworkDto networkDto, BindingResult result, SessionStatus status) throws NotFoundException {
 
         if (result.hasErrors()) {
             return;
         }
         try {
-            this.networkService.update(DtoMapper.fromDto(dto));
+            this.networkService.update(DtoMapper.fromDto(networkDto));
             status.setComplete();
         } catch (NotFoundBussExc ex) {
             throw new NotFoundException(ex);
@@ -96,16 +101,16 @@ public class NetworkApi {
 
     @GetMapping("networks/run/{id}")
     public String run(@NotNull @PathVariable Long id,
-                      @Validated @NotNull @RequestBody RunConfigDto runConfig) throws NotFoundException, FileAccessException {
+                      @Validated @NotNull @RequestBody RunConfigDto runConfigDto) throws NotFoundException, FileAccessException {
 
         Network network = this.networkService.findById(id)
                 .orElseThrow(() -> new NotFoundException("Network not found."));
         try {
 
-            DataFile trainFile = this.fileService.findFile(runConfig.getTrainFileId())
+            DataFile trainFile = this.fileService.findFile(runConfigDto.getTrainFileId())
                     .orElseThrow(() -> new NotFoundException("Train file not found."));
 
-            DataFile testFile = this.fileService.findFile(runConfig.getTestFileId())
+            DataFile testFile = this.fileService.findFile(runConfigDto.getTestFileId())
                     .orElseThrow(() -> new NotFoundException("Test file not found."));
 
             this.networkService.run(network, trainFile, testFile);

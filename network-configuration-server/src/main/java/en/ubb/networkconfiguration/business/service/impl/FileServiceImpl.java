@@ -5,9 +5,10 @@ import en.ubb.networkconfiguration.business.validation.exception.NotFoundBussExc
 import en.ubb.networkconfiguration.persistence.dao.DataFileRepo;
 import en.ubb.networkconfiguration.persistence.dao.NetworkRepo;
 import en.ubb.networkconfiguration.persistence.dao.specification.DataFileSpec;
-import en.ubb.networkconfiguration.persistence.domain.enums.FileType;
+import en.ubb.networkconfiguration.persistence.domain.network.enums.FileType;
 import en.ubb.networkconfiguration.persistence.domain.network.runtime.DataFile;
 import en.ubb.networkconfiguration.persistence.domain.network.runtime.Network;
+import en.ubb.networkconfiguration.persistence.domain.network.runtime.NetworkFile;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
@@ -15,6 +16,7 @@ import org.springframework.stereotype.Service;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 public class FileServiceImpl implements FileService {
@@ -111,5 +113,27 @@ public class FileServiceImpl implements FileService {
     @Override
     public List<DataFile> getAll() {
         return this.dataFileRepo.findAll();
+    }
+
+    @Override
+    public List<DataFile> getTrainFiles(long networkId) throws NotFoundBussExc {
+        final Network persistedNetwork = this.networkRepo.findById(networkId)
+                .orElseThrow(() -> new NotFoundBussExc("Network with id " + networkId + " not found"));
+
+        return persistedNetwork.getFiles().stream()
+                .filter(networkFile -> networkFile.getType().equals(FileType.TRAIN))
+                .map(NetworkFile::getDataFile)
+                .collect(Collectors.toList());
+    }
+
+    @Override
+    public List<DataFile> getTestFiles(long networkId) throws NotFoundBussExc {
+        final Network persistedNetwork = this.networkRepo.findById(networkId)
+                .orElseThrow(() -> new NotFoundBussExc("Network with id " + networkId + " not found"));
+
+        return persistedNetwork.getFiles().stream()
+                .filter(networkFile -> networkFile.getType().equals(FileType.TEST))
+                .map(NetworkFile::getDataFile)
+                .collect(Collectors.toList());
     }
 }

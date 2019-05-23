@@ -1,7 +1,7 @@
 package en.ubb.networkconfiguration.persistence.domain.network.runtime;
 
 import en.ubb.networkconfiguration.persistence.domain.BaseEntity;
-import en.ubb.networkconfiguration.persistence.domain.enums.LayerType;
+import en.ubb.networkconfiguration.persistence.domain.network.enums.LayerType;
 import lombok.*;
 import org.hibernate.validator.constraints.Range;
 import org.nd4j.linalg.activations.Activation;

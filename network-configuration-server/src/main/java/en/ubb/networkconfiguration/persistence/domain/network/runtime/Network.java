@@ -1,7 +1,7 @@
 package en.ubb.networkconfiguration.persistence.domain.network.runtime;
 
 import en.ubb.networkconfiguration.persistence.domain.BaseEntity;
-import en.ubb.networkconfiguration.persistence.domain.enums.FileType;
+import en.ubb.networkconfiguration.persistence.domain.network.enums.FileType;
 import en.ubb.networkconfiguration.business.util.NetworkUtil;
 import lombok.*;
 import org.deeplearning4j.nn.multilayer.MultiLayerNetwork;

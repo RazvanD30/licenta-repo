@@ -47,24 +47,22 @@ dependencyManagement {
     }
 }
 
-configurations {
-    implementation {
-        exclude module : 'spring-boot-starter-logging'
-    }
-}
-
 dependencies {
     implementation 'org.springframework.boot:spring-boot-starter-web'
     implementation 'org.projectlombok:lombok'
     implementation 'org.springframework.boot:spring-boot-starter-validation'
     implementation "org.deeplearning4j:deeplearning4j-core:1.0.0-beta3"
     implementation "org.nd4j:nd4j-native-platform:1.0.0-beta3"
-    implementation "org.slf4j:slf4j-simple:1.7.25"
-    implementation "org.slf4j:slf4j-api:1.7.25"
+    implementation 'org.springframework.boot:spring-boot-starter-log4j2'
     implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
     implementation 'mysql:mysql-connector-java'
     implementation 'org.hibernate:hibernate-core'
-    compileOnly 'org.projectlombok:lombok'
     //runtimeOnly('mysql:mysql-connector-java')
 
+}
+
+configurations {
+    all {
+        exclude group: 'org.springframework.boot', module: 'spring-boot-starter-logging'
+    }
 }
