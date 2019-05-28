@@ -10,10 +10,10 @@ import {ActiveView} from '../../models/ActiveView';
 
 @Component({
   selector: 'app-network-create',
-  templateUrl: './network-create.component.html',
-  styleUrls: ['./network-create.component.scss']
+  templateUrl: './network-management.component.html',
+  styleUrls: ['./network-management.component.scss']
 })
-export class NetworkCreateComponent implements OnInit {
+export class NetworkManagementComponent implements OnInit {
 
 
   networks: Network[];

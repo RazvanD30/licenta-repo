@@ -38,11 +38,13 @@ public class NetworkTrainLog extends BaseEntity<Long> {
     @JoinColumn(name = "network_id")
     private Network network;
 
+    @Builder.Default
     @OneToMany(mappedBy = "networkTrainLog", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<NetworkIterationLog> networkIterationLogs = new ArrayList<>();
 
     @Builder(toBuilder = true)
-    public NetworkTrainLog(Long id, LocalDateTime createDateTime, double accuracy, double precision, double recall, double f1Score, Network network, List<NetworkIterationLog> networkIterationLogs) {
+    public NetworkTrainLog(Long id, LocalDateTime createDateTime, double accuracy, double precision, double recall,
+                           double f1Score, Network network, List<NetworkIterationLog> networkIterationLogs) {
         super(id);
         this.createDateTime = createDateTime;
         this.accuracy = accuracy;

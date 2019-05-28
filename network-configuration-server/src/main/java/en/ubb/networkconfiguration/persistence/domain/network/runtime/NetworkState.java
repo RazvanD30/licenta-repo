@@ -21,6 +21,7 @@ public class NetworkState extends BaseEntity<Long> {
     @Column(name = "descriptor")
     private byte[] descriptor;
 
+    @Builder.Default
     @OneToMany(mappedBy = "state", cascade = CascadeType.ALL)
     private List<Network> networks = new ArrayList<>();
 
@@ -29,6 +30,10 @@ public class NetworkState extends BaseEntity<Long> {
         super(id);
         this.descriptor = descriptor;
         this.networks = networks;
+    }
+
+    public NetworkState(NetworkState networkState){
+        this.descriptor = networkState.getDescriptor();
     }
 
     public void addNetwork(Network network) {

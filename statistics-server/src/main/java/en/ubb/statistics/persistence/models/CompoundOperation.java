@@ -7,7 +7,7 @@ import javax.persistence.*;
 import java.util.*;
 
 
-// update(node) set w1 = 2, w3 = 4
+// update(offlineNode) set w1 = 2, w3 = 4
 @Entity
 @Table(name = "operations")
 public class CompoundOperation extends BaseEntity<Long> {

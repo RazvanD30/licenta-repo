@@ -24,9 +24,9 @@ export class NetworkDebuggingComponent implements OnInit {
   private offsetX: number;
   private offsetY: number;
   private MARGIN_LEFT = 40;
-  private MARGIN_RIGHT = 70; // generally you want to take into account the node radius for this
+  private MARGIN_RIGHT = 70; // generally you want to take into account the offlineNode radius for this
   private MARGIN_TOP = 40;
-  private MARGIN_BOTTOM = 40; // generally you want to take into account the node radius for this
+  private MARGIN_BOTTOM = 40; // generally you want to take into account the offlineNode radius for this
   private NODE_RADIUS = NeuralNodeGui.RADIUS; // 15;
   private DISTANCE_BETWEEN_POINTS_X = 100; // 100;
   private DISTANCE_BETWEEN_POINTS_Y = 50; // 50;
@@ -131,12 +131,12 @@ export class NetworkDebuggingComponent implements OnInit {
         connections.forEach(connection => {
           let source: LayerGui = null;
           let destination: LayerGui = null;
-          this.networkDebugService.layers.forEach(layer => {
-            if (layer.id === connection.sourceLayerId) {
-              source = layer;
+          this.networkDebugService.layers.forEach(offlineLayer => {
+            if (offlineLayer.id === connection.sourceLayerId) {
+              source = offlineLayer;
             }
-            if (layer.id === connection.destinationLayerId) {
-              destination = layer;
+            if (offlineLayer.id === connection.destinationLayerId) {
+              destination = offlineLayer;
             }
           });
           if (source !== null && destination !== null) {
@@ -169,18 +169,18 @@ export class NetworkDebuggingComponent implements OnInit {
         let y;
         let yMax = 0;
 
-        this.networkDebugService.layers.forEach(layer => {
+        this.networkDebugService.layers.forEach(offlineLayer => {
           y = this.MARGIN_TOP;
-          layer.xPos = x;
-          layer.nodes.forEach(node => {
-            node.pos = new Pos(x, y);
+          offlineLayer.xPos = x;
+          offlineLayer.nodes.forEach(offlineNode => {
+            offlineNode.pos = new Pos(x, y);
             y += this.DISTANCE_BETWEEN_POINTS_Y;
           });
           x += this.DISTANCE_BETWEEN_POINTS_X;
           if (y > yMax) {
             yMax = y;
           }
-          if(layer.next === null) {
+          if(offlineLayer.next === null) {
             this.MARGIN_TOP += this.NETWORK_OFFSET_TOP_INCREMENT;
           }
         });

@@ -165,30 +165,30 @@ export class AuthenticateMock implements HttpInterceptor {
 
     // layers
     for (let i = 0; i < TOTAL_LAYERS; i++) {
-      const layer: Layer = new Layer(ID_ADD + i);
+      const offlineLayer: Layer = new Layer(ID_ADD + i);
       if (i > 0) {
-        layers[i - 1].next = layer;
+        layers[i - 1].next = offlineLayer;
       }
-      layers.push(layer);
+      layers.push(offlineLayer);
     }
 
     // input nNodes
     for (let i = 0; i < INPUT_NODES; i++) {
-      const node: Node = new Node(ID_ADD + i, Status.INPUT);
-      layers[0].nodes.push(node);
+      const offlineNode: Node = new Node(ID_ADD + i, Status.INPUT);
+      layers[0].nodes.push(offlineNode);
     }
 
     // output nNodes
     for (let i = 0; i < OUTPUT_NODES; i++) {
-      const node: Node = new Node(ID_ADD + (layers.length - 1) * 1000 + i, Status.IGNORED);
-      layers[layers.length - 1].nodes.push(node);
+      const offlineNode: Node = new Node(ID_ADD + (layers.length - 1) * 1000 + i, Status.IGNORED);
+      layers[layers.length - 1].nodes.push(offlineNode);
     }
 
     // hidden nNodes
     for (let l = 1; l <= HIDDEN_LAYERS; l++) {
       for (let n = 0; n < NODES_PER_HIDDEN_LAYER; n++) {
-        const node: Node = new Node(ID_ADD + l * 1000 + n, Status.IGNORED);
-        layers[l].nodes.push(node);
+        const offlineNode: Node = new Node(ID_ADD + l * 1000 + n, Status.IGNORED);
+        layers[l].nodes.push(offlineNode);
       }
     }
 

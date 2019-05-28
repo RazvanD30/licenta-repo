@@ -160,7 +160,7 @@ public class NetworkApi {
                 .type(LayerType.INPUT)
                 .nInputs(0)
                 .nNodes(2)
-                .nOutputs(20) // outputs == nodes on next layer
+                .nOutputs(20) // outputs == nodes on next offlineLayer
                 .build());
 
         /*networkInitializer.addLayer(new LayerInitializer().toBuilder()
@@ -221,9 +221,9 @@ public class NetworkApi {
 
         config = networkService.saveProgress(config);
 
-        Node node = config.getLayers().get(0).getNodes().get(0);
-        Node newNode = node.toBuilder().bias(0.5).outputLinks(
-                node.getOutputLinks().stream()
+        Node offlineNode = config.getLayers().get(0).getNodes().get(0);
+        Node newNode = offlineNode.toBuilder().bias(0.5).outputLinks(
+                offlineNode.getOutputLinks().stream()
                         .map(link -> link.toBuilder()
                                 .weight(link.getWeight() * 100)
                                 .build())

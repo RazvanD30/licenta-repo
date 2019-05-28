@@ -36,13 +36,19 @@ public class SecurityInterceptor {
 
     @Around("pointcut()")
     public Object checkAuthorization(ProceedingJoinPoint joinPoint) throws Throwable {
+        if(true) //TODO REMOVE
+            return joinPoint.proceed();
+
         Object[] arguments = joinPoint.getArgs();
-        if (arguments.length == 0) {
-            return null;
+        if (arguments.length == 0) {  //TODO ASTA NU MERGE (inainte returna null, am schimbat-o)
+            return joinPoint.proceed();
         }
+
 
         Annotation annotation = checkTheAnnotation(arguments);
         boolean securityAnnotationPresent = (annotation != null);
+
+
 
         User currentUser = userService.getCurrentUser();
 
@@ -63,7 +69,7 @@ public class SecurityInterceptor {
     private boolean verifyRole(Annotation annotation, User currentUser) {
         SecurityAnnotation annotationRule = (SecurityAnnotation) annotation;
         List<Role> requiredRolesList = Arrays.asList(annotationRule.allowedRole());
-        Role userRole = currentUser.getRole();
+        Role userRole = currentUser.getAuthority().getRole();
         return requiredRolesList.contains(userRole);
     }
 

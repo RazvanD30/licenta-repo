@@ -25,6 +25,7 @@ public class NetworkConnection extends BaseEntity<Long> {
     @JoinColumn(name = "destination_id")
     private Network destination;
 
+    @Builder.Default
     @OneToMany(mappedBy = "networkConnection", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<NetworkLink> networkLinks = new ArrayList<>();
 

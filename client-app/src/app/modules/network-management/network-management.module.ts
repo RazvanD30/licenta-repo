@@ -9,7 +9,7 @@ import {ErrorHandlerInterceptor} from '../../core/interceptors/error-handler.int
 import {authenticateMockProvider} from '../../core/mocks/authenticate.mock';
 import {NetworkDebuggingComponent} from './partial-components/network-debugging/network-debugging.component';
 import {NetworkConsoleComponent} from './pages/network-console/network-console.component';
-import {NetworkCreateComponent} from './pages/network-create/network-create.component';
+import {NetworkManagementComponent} from './pages/network-create/network-management.component';
 import {UsersViewComponent} from '../user-management/pages/users-view/users-view.component';
 import {UsersTableComponent} from '../user-management/partial-components/users-table/users-table.component';
 import {UserService} from '../../core/services/user.service';
@@ -28,7 +28,7 @@ import { LogsTableComponent } from './partial-components/logs-table/logs-table.c
     NetworkSpecialRoutineComponent,
     NetworkDebuggingComponent,
     NetworkConsoleComponent,
-    NetworkCreateComponent,
+    NetworkManagementComponent,
     UsersViewComponent,
     UsersTableComponent,
     NetworkTableComponent,

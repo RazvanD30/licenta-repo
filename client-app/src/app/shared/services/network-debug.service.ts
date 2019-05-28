@@ -46,7 +46,7 @@ export class NetworkDebugService {
         previousLayerGui.next = currentLayerGui;
       }
       currentLayer.nodes
-        .map(node => new NeuralNodeGui(node.id,node.status,currentLayerGui))
+        .map(offlineNode => new NeuralNodeGui(offlineNode.id,offlineNode.status,currentLayerGui))
         .forEach(nodeGui => {
           currentLayerGui.addNode(nodeGui);
         });
@@ -57,8 +57,8 @@ export class NetworkDebugService {
     // initialize the connections
     currentLayer = network.firstLayer;
     while (currentLayer !== null) {
-      currentLayer.nodes.forEach(node => {
-        node.outputLinks.forEach(link => {
+      currentLayer.nodes.forEach(offlineNode => {
+        offlineNode.outputLinks.forEach(link => {
           let layerGui = this._layers.get(currentLayer.id);
           let sourceNode = layerGui.findNode(link.sourceId);
           let destinationNode = layerGui.next.findNode(link.destinationId);

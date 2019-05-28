@@ -1,9 +1,11 @@
 package en.ubb.networkconfiguration.boundary.util;
 
+import en.ubb.networkconfiguration.boundary.dto.authentication.UserDto;
 import en.ubb.networkconfiguration.boundary.dto.runtime.*;
 import en.ubb.networkconfiguration.boundary.dto.setup.DataFileDto;
 import en.ubb.networkconfiguration.boundary.dto.setup.LayerInitDto;
 import en.ubb.networkconfiguration.boundary.dto.setup.NetworkInitDto;
+import en.ubb.networkconfiguration.persistence.domain.authentication.User;
 import en.ubb.networkconfiguration.persistence.domain.network.runtime.*;
 import en.ubb.networkconfiguration.persistence.domain.network.setup.LayerInitializer;
 import en.ubb.networkconfiguration.persistence.domain.network.setup.NetworkInitializer;
@@ -210,6 +212,14 @@ public class DtoMapper {
                         .map(DtoMapper::toDto)
                         .collect(Collectors.toList())
                 ).build();
+    }
+
+    public static UserDto toDto(User user){
+        return UserDto.builder()
+                .username(user.getUsername())
+                .password(user.getPassword())
+                .role(user.getAuthority().getRole())
+                .build();
     }
 
 
