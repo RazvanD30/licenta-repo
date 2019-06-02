@@ -1,7 +1,7 @@
 import {Injectable} from '@angular/core';
 import {LayerGui} from '../models/network/gui/LayerGui';
-import {Network} from '../models/network/Network';
-import {Layer} from '../models/network/Layer';
+import {NetworkDto} from '../models/network/runtime/NetworkDto';
+import {LayerDto} from '../models/network/runtime/LayerDto';
 import {NeuralNodeGui} from '../models/network/gui/NeuralNodeGui';
 import {LinkGui} from '../models/network/gui/LinkGui';
 import {Pos} from '../models/network/gui/Pos';
@@ -23,7 +23,7 @@ export class NetworkDebugService {
   }
 
   getAll() {
-    return this.http.get<Network[]>(APP_SETTINGS.URLS.NETWORK_DEBUG.GET_ALL);
+    return this.http.get<NetworkDto[]>(APP_SETTINGS.URLS.NETWORK_DEBUG.GET_ALL);
   }
 
   getConnections(){
@@ -31,9 +31,9 @@ export class NetworkDebugService {
   }
 
 
-  public loadNetwork(network: Network) {
+  public loadNetwork(network: NetworkDto) {
     /*
-    let currentLayer: Layer = network.firstLayer;
+    let currentLayer: LayerDto = network.firstLayer;
 
 
     let currentLayerGui: LayerGui = null;

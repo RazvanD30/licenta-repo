@@ -1,6 +1,6 @@
 package en.ubb.networkconfiguration.business.service.impl;
 
-import en.ubb.networkconfiguration.boundary.dto.debugging.DebuggingNode;
+import en.ubb.networkconfiguration.boundary.dto.network.debugging.DebuggingNode;
 import en.ubb.networkconfiguration.persistence.domain.network.runtime.Network;
 import en.ubb.networkconfiguration.business.service.NetworkDebuggingService;
 

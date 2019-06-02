@@ -24,7 +24,6 @@ public class DataFile extends BaseEntity<Long> {
     @Range(min = 1)
     private int nLabels;
 
-    @Builder.Default
     @OneToMany(mappedBy = "dataFile", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<NetworkFile> networks = new ArrayList<>();
 

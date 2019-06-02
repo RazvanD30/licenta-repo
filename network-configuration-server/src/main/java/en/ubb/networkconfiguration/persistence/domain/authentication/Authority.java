@@ -8,8 +8,8 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.*;
-import java.util.HashSet;
-import java.util.Set;
+import java.util.ArrayList;
+import java.util.List;
 
 @Getter
 @Setter
@@ -22,24 +22,24 @@ public class Authority extends BaseEntity<Long> {
     @Enumerated(EnumType.STRING)
     private Role role;
 
-    @OneToMany(mappedBy = "authority", cascade = CascadeType.ALL)
-    private Set<User> users = new HashSet<>();
+    @ManyToMany(mappedBy = "authorities")
+    private List<User> users = new ArrayList<>();
 
     @Builder(toBuilder = true)
-    public Authority(Role role, Set<User> users) {
+    public Authority(Role role, List<User> users) {
         this.role = role;
         this.users = users;
     }
 
     public void addUser(User user) {
         this.users.add(user);
-        user.setAuthority(this);
+        user.getAuthorities().add(this);
     }
 
     public boolean removeUser(User user) {
-        boolean removed = this.users.contains(user);
+        boolean removed = this.users.remove(user);
         if (removed) {
-            this.users.remove(user);
+            user.getAuthorities().remove(this);
         }
         return removed;
     }

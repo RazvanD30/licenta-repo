@@ -5,17 +5,13 @@ import en.ubb.networkconfiguration.business.validation.exception.DuplicateBussEx
 import en.ubb.networkconfiguration.business.validation.exception.NotFoundBussExc;
 import en.ubb.networkconfiguration.persistence.dao.AuthorityRepo;
 import en.ubb.networkconfiguration.persistence.dao.UserRepo;
-import en.ubb.networkconfiguration.persistence.dao.specification.AuthoritySpec;
 import en.ubb.networkconfiguration.persistence.dao.specification.UserSpec;
-import en.ubb.networkconfiguration.persistence.domain.authentication.Authority;
 import en.ubb.networkconfiguration.persistence.domain.authentication.User;
 import en.ubb.networkconfiguration.persistence.domain.authentication.enums.Role;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.jpa.domain.Specification;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import java.util.HashSet;
 import java.util.List;
 import java.util.Optional;
 
@@ -26,15 +22,13 @@ public class UserServiceImpl implements UserService {
 
     private final AuthorityRepo authorityRepo;
 
-    private final BCryptPasswordEncoder encoder;
 
     private User currentUser;
 
     @Autowired
-    public UserServiceImpl(UserRepo userRepo, AuthorityRepo authorityRepo, BCryptPasswordEncoder encoder) {
+    public UserServiceImpl(UserRepo userRepo, AuthorityRepo authorityRepo) {
         this.userRepo = userRepo;
         this.authorityRepo = authorityRepo;
-        this.encoder = encoder;
     }
 
     @Override
@@ -53,37 +47,13 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public boolean credentialsMatch(String username, String password) throws NotFoundBussExc {
-        User user = this.findByUsername(username)
-                .orElseThrow(() -> new NotFoundBussExc("User with username " + username + " not found"));
-
-        BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
-        return encoder.matches(user.getPassword(), password);
+    public boolean credentialsMatch(String username, String password) {
+        return true;
     }
 
     @Override
-    public User create(String username, String password, Role role) throws DuplicateBussExc {
-
-        if (findByUsername(username).isPresent()) {
-            throw new DuplicateBussExc("Username " + username + " has been already taken.");
-        }
-
-
-        Authority authority = this.authorityRepo.findOne(Specification.where(AuthoritySpec.hasRole(role)))
-                .orElseGet(() -> {
-                    Authority newAuthority = Authority.builder()
-                            .role(role)
-                            .users(new HashSet<>())
-                            .build();
-                    return this.authorityRepo.save(newAuthority); //TODO authority service
-                });
-        User user = User.builder()
-                .username(username)
-                .password(encoder.encode(password))
-                .enabled(true)
-                .build();
-        authority.addUser(user);
-        return user;
+    public User create(String username, String password, List<Role> roles) throws DuplicateBussExc {
+        return null;
     }
 
     @Override

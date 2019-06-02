@@ -48,9 +48,11 @@ services:
     links:
       - central-config-server:central-config-server
       - discovery-server:discovery-server
+      - oauth-authorization-server:oauth-authorization-server
     depends_on:
       - central-config-server
       - discovery-server
+      - oauth-authorization-server
     command: >
       /bin/sh -c "
         echo Waiting for discovery-server service start...;
@@ -60,16 +62,16 @@ services:
         done;
         java -jar /app/gateway-server.jar
       "
-  test-microservice:
-    container_name: test-microservice
+  oauth-authorization-server:
+    container_name: oauth-authorization-server
     build:
-      context: ./test-microservice
+      context: ./oauth-authorization-server
       dockerfile: Dockerfile
-    image: test-microservice:latest
+    image: oauth-authorization-server:latest
     expose:
-      - 8810
+      - 8804
     ports:
-      - 8810:8810
+      - 8804:8804
     links:
       - central-config-server:central-config-server
       - discovery-server:discovery-server
@@ -83,9 +85,7 @@ services:
         do
           sleep 1;
         done;
-        java -jar /app/test-microservice.jar
+        java -jar /app/central-config-server.jar
       "
-
-
 
 

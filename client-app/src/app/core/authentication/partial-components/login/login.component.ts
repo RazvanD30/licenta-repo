@@ -1,8 +1,7 @@
-import {AfterViewInit, Component, ElementRef, EventEmitter, OnInit, Output, Renderer2, ViewChild} from '@angular/core';
+import {Component, EventEmitter, OnInit, Output} from '@angular/core';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {AuthenticationService} from '../../../services/authentication.service';
 import {first} from 'rxjs/operators';
-import {Router} from '@angular/router';
 import {MatSnackBar} from '@angular/material';
 
 
@@ -32,17 +31,19 @@ export class LoginComponent implements OnInit {
   }
 
   onSubmit() {
-    this.authenticationService.login(this.form.value)
+    this.authenticationService.obtainAccessToken(this.form.value)
       .pipe(first())
       .subscribe(
         data => {
           this.clearData();
+          this.authenticationService.saveToken(data);
           this.snackBar.open('Login successful.', 'Dismiss');
           this.submitEmitter.emit();
         },
         error => {
           this.snackBar.open('Error', 'Dismiss');
         });
+
   }
 
   clearData() {

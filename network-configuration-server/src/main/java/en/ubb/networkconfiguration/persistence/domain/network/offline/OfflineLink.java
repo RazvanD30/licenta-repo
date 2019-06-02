@@ -16,11 +16,11 @@ import javax.persistence.*;
 @Table(name = "offline_links")
 public class OfflineLink extends BaseEntity<Long> {
 
-    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "link_id")
     private Link link;
 
-    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "offline_node_id")
     private OfflineNode offlineNode;
 

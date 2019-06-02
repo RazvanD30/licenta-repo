@@ -1,7 +1,6 @@
 import {Component, Input, OnInit, ViewChild} from '@angular/core';
 import {MatPaginator, MatSort, MatTableDataSource} from '@angular/material';
-import {MyErrorStateMatcher} from '../../../user-management/partial-components/users-table/users-table.component';
-import {NetworkTrainLog} from '../../../../shared/models/network/NetworkTrainLog';
+import {NetworkTrainLog} from '../../../../shared/models/network/log/NetworkTrainLog';
 
 @Component({
   selector: 'app-logs-table',
@@ -55,7 +54,6 @@ export class LogsTableComponent implements OnInit {
     this.resetFilters();
     this.displayedColumns = ['createDateTime', 'accuracy', 'precision', 'recall', 'f1Score', 'iterations'];
     this.editable = true;
-    this.gradeErrorMatcher = new MyErrorStateMatcher();
     this.fc = [];
     this.resetFormControl();
 

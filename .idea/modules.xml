@@ -18,12 +18,14 @@
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/network-configuration-server/licenta.network-configuration-server.main.iml" filepath="$PROJECT_DIR$/.idea/modules/network-configuration-server/licenta.network-configuration-server.main.iml" />
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/network-configuration-server/licenta.network-configuration-server.test.iml" filepath="$PROJECT_DIR$/.idea/modules/network-configuration-server/licenta.network-configuration-server.test.iml" />
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/network-debugger/licenta.network-debugger.iml" filepath="$PROJECT_DIR$/.idea/modules/network-debugger/licenta.network-debugger.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/oauth-authorization-server/licenta.oauth-authorization-server.iml" filepath="$PROJECT_DIR$/.idea/modules/oauth-authorization-server/licenta.oauth-authorization-server.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/oauth-authorization-server/licenta.oauth-authorization-server.main.iml" filepath="$PROJECT_DIR$/.idea/modules/oauth-authorization-server/licenta.oauth-authorization-server.main.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/oauth-authorization-server/licenta.oauth-authorization-server.test.iml" filepath="$PROJECT_DIR$/.idea/modules/oauth-authorization-server/licenta.oauth-authorization-server.test.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/oauth-resource-server/licenta.oauth-resource-server.iml" filepath="$PROJECT_DIR$/.idea/modules/oauth-resource-server/licenta.oauth-resource-server.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/oauth-resource-server/licenta.oauth-resource-server.main.iml" filepath="$PROJECT_DIR$/.idea/modules/oauth-resource-server/licenta.oauth-resource-server.main.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/oauth-resource-server/licenta.oauth-resource-server.test.iml" filepath="$PROJECT_DIR$/.idea/modules/oauth-resource-server/licenta.oauth-resource-server.test.iml" />
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/statistics-server/licenta.statistics-server.iml" filepath="$PROJECT_DIR$/.idea/modules/statistics-server/licenta.statistics-server.iml" />
-      <module fileurl="file://$PROJECT_DIR$/.idea/modules/statistics-server/licenta.statistics-server.main.iml" filepath="$PROJECT_DIR$/.idea/modules/statistics-server/licenta.statistics-server.main.iml" />
-      <module fileurl="file://$PROJECT_DIR$/.idea/modules/statistics-server/licenta.statistics-server.test.iml" filepath="$PROJECT_DIR$/.idea/modules/statistics-server/licenta.statistics-server.test.iml" />
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/test-microservice/licenta.test-microservice.iml" filepath="$PROJECT_DIR$/.idea/modules/test-microservice/licenta.test-microservice.iml" />
-      <module fileurl="file://$PROJECT_DIR$/.idea/modules/test-microservice/licenta.test-microservice.main.iml" filepath="$PROJECT_DIR$/.idea/modules/test-microservice/licenta.test-microservice.main.iml" />
-      <module fileurl="file://$PROJECT_DIR$/.idea/modules/test-microservice/licenta.test-microservice.test.iml" filepath="$PROJECT_DIR$/.idea/modules/test-microservice/licenta.test-microservice.test.iml" />
     </modules>
   </component>
 </project>

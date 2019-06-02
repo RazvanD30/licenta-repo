@@ -65,27 +65,23 @@ public class Network extends BaseEntity<Long> {
     @Transient
     private MultiLayerNetwork model;
 
-    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     @JoinColumn(name = "state_id")
     private NetworkState state;
 
-    @Builder.Default
     @OneToMany(mappedBy = "network", cascade = CascadeType.ALL)
     private List<Layer> layers = new ArrayList<>();
 
-    @Builder.Default
     @OneToMany(mappedBy = "network", cascade = CascadeType.ALL)
     private List<OfflineNetwork> offlineNetworks = new ArrayList<>();
 
-    @Builder.Default
     @OneToMany(mappedBy = "network", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<NetworkFile> files = new ArrayList<>();
 
-    @Builder.Default
     @OneToMany(mappedBy = "network", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<NetworkTrainLog> networkTrainLogs = new ArrayList<>();
 
-    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "branch_id")
     private NetworkBranch branch;
 

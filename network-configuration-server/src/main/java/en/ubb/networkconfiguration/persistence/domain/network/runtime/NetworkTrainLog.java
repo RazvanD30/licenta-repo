@@ -34,11 +34,10 @@ public class NetworkTrainLog extends BaseEntity<Long> {
     @Column(name = "f1_score")
     private double f1Score;
 
-    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "network_id")
     private Network network;
 
-    @Builder.Default
     @OneToMany(mappedBy = "networkTrainLog", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<NetworkIterationLog> networkIterationLogs = new ArrayList<>();
 

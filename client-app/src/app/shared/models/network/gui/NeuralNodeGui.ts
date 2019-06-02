@@ -1,5 +1,5 @@
 import {Pos} from './Pos';
-import {Status} from '../Status';
+import {Status} from './Status';
 import {LinkGui} from './LinkGui';
 import {LayerGui} from './LayerGui';
 

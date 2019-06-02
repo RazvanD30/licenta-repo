@@ -23,7 +23,8 @@
 hs_err_pid*
 
 .DS_STORE
-
+build/
+out/
 /dist/
 /bazel-out
 /integration/bazel/bazel-*

@@ -2,7 +2,7 @@ import {Component, OnInit, Renderer2} from '@angular/core';
 import {NetworkRunService} from '../../../../core/services/network-run.service';
 import {MatDialog} from '@angular/material';
 import {NetworkInitService} from '../../../../core/services/network-init.service';
-import {Network} from '../../../../shared/models/network/Network';
+import {NetworkDto} from '../../../../shared/models/network/runtime/NetworkDto';
 import {faTimes} from '@fortawesome/free-solid-svg-icons';
 import {SelectedTableType} from '../../models/SelectedTableType';
 import {ActiveView} from '../../models/ActiveView';
@@ -16,7 +16,7 @@ import {ActiveView} from '../../models/ActiveView';
 export class NetworkManagementComponent implements OnInit {
 
 
-  networks: Network[];
+  networks: NetworkDto[];
   faTimes = faTimes;
 
   activeViews: ActiveView[] = [];
@@ -80,7 +80,7 @@ export class NetworkManagementComponent implements OnInit {
   }
 
 
-  addNetworkToSelections(network: Network, selectedTableType: SelectedTableType) {
+  addNetworkToSelections(network: NetworkDto, selectedTableType: SelectedTableType) {
 
     const sel = this.activeViews.find(n => {
       return (n.network == null || n.network.id === network.id) && n.tableType === selectedTableType;
@@ -108,7 +108,7 @@ export class NetworkManagementComponent implements OnInit {
   }
 
 
-  addNetworkToLayerWise(network: Network) {
+  addNetworkToLayerWise(network: NetworkDto) {
     this.addNetworkToSelections(network, SelectedTableType.LAYER_TABLE);
   }
 

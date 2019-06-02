@@ -38,9 +38,10 @@ repositories {
 
 dependencyManagement {
     imports {
-        mavenBom "org.springframework.cloud:spring-cloud-dependencies:Finchley.SR2"
+        mavenBom "org.springframework.cloud:spring-cloud-dependencies:Greenwich.RELEASE"
     }
 }
+
 
 dependencies {
     implementation('org.springframework.cloud:spring-cloud-starter-netflix-eureka-client')
@@ -48,6 +49,9 @@ dependencies {
     implementation('org.springframework.boot:spring-boot-starter-actuator')
     implementation('org.springframework.cloud:spring-cloud-starter-config')
     //implementation('org.springframework.cloud:spring-cloud-starter-bus-kafka')
-    //implementation('com.netflix.zuul:zuul-netflix')
+    compile "org.springframework.cloud:spring-cloud-starter-netflix-zuul:${netflixZuulVersion}"
+    compile "org.springframework.security.oauth:spring-security-oauth2:${oauthVersion}"
+    compile "org.springframework.security:spring-security-jwt:${jwtVersion}"
+    compile "org.springframework.security.oauth.boot:spring-security-oauth2-autoconfigure:${oauthAutoconfigVersion}"
 
 }

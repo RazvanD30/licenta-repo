@@ -39,6 +39,10 @@
       <module name="licenta.licenta-server.test" target="1.8" />
       <module name="licenta.network-configuration-server.main" target="1.8" />
       <module name="licenta.network-configuration-server.test" target="1.8" />
+      <module name="licenta.oauth-authorization-server.main" target="1.8" />
+      <module name="licenta.oauth-authorization-server.test" target="1.8" />
+      <module name="licenta.oauth-resource-server.main" target="1.8" />
+      <module name="licenta.oauth-resource-server.test" target="1.8" />
       <module name="licenta.statistics-server.main" target="1.8" />
       <module name="licenta.statistics-server.test" target="1.8" />
       <module name="licenta.test-microservice.main" target="1.8" />

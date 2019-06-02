@@ -1,11 +1,17 @@
 package en.ubb.networkconfiguration.boundary.util;
 
-import en.ubb.networkconfiguration.boundary.dto.authentication.UserDto;
-import en.ubb.networkconfiguration.boundary.dto.runtime.*;
-import en.ubb.networkconfiguration.boundary.dto.setup.DataFileDto;
-import en.ubb.networkconfiguration.boundary.dto.setup.LayerInitDto;
-import en.ubb.networkconfiguration.boundary.dto.setup.NetworkInitDto;
+import en.ubb.networkconfiguration.boundary.dto.branch.BranchDto;
+import en.ubb.networkconfiguration.boundary.dto.authentication.PrivateUserDto;
+import en.ubb.networkconfiguration.boundary.dto.authentication.PublicUserDto;
+import en.ubb.networkconfiguration.boundary.dto.network.log.NetworkIterationLogDto;
+import en.ubb.networkconfiguration.boundary.dto.network.log.NetworkTrainLogDto;
+import en.ubb.networkconfiguration.boundary.dto.network.runtime.*;
+import en.ubb.networkconfiguration.boundary.dto.network.setup.DataFileDto;
+import en.ubb.networkconfiguration.boundary.dto.network.setup.LayerInitDto;
+import en.ubb.networkconfiguration.boundary.dto.network.setup.NetworkInitDto;
+import en.ubb.networkconfiguration.persistence.domain.authentication.Authority;
 import en.ubb.networkconfiguration.persistence.domain.authentication.User;
+import en.ubb.networkconfiguration.persistence.domain.network.NetworkBranch;
 import en.ubb.networkconfiguration.persistence.domain.network.runtime.*;
 import en.ubb.networkconfiguration.persistence.domain.network.setup.LayerInitializer;
 import en.ubb.networkconfiguration.persistence.domain.network.setup.NetworkInitializer;
@@ -214,12 +220,49 @@ public class DtoMapper {
                 ).build();
     }
 
-    public static UserDto toDto(User user){
-        return UserDto.builder()
+    public static User fromPrivateDto(PrivateUserDto dto) {
+        return User.builder()
+                .id(dto.getId())
+                .username(dto.getUsername())
+                .password(dto.getPassword())
+                .build();
+    }
+
+    public static PrivateUserDto toPrivateDto(User user) {
+        return PrivateUserDto.builder()
+                .id(user.getId())
                 .username(user.getUsername())
                 .password(user.getPassword())
-                .role(user.getAuthority().getRole())
+                .roles(user.getAuthorities().stream().map(Authority::getRole).collect(Collectors.toList()))
                 .build();
+    }
+
+    public static User fromPublicDto(PublicUserDto dto) {
+        return User.builder()
+                .id(dto.getId())
+                .username(dto.getUsername())
+                .build();
+    }
+
+    public static PublicUserDto toPublicDto(User user) {
+        return PublicUserDto.builder()
+                .username(user.getUsername())
+                .roles(user.getAuthorities().stream().map(Authority::getRole).collect(Collectors.toList()))
+                .build();
+    }
+
+    public static NetworkBranch fromDto(BranchDto dto) {
+        return NetworkBranch.builder()
+                .id(dto.getId())
+                .name(dto.getName())
+                .type(dto.getType())
+                .createDateTime(dto.getCreateDateTime())
+                .updateDateTime(dto.getUpdateDateTime())
+                .owner(fromPublicDto(dto.getOwner()))
+                .contributors(dto.getContributors().stream()
+                        .map(DtoMapper::fromPublicDto)
+                        .collect(Collectors.toList())
+                ).build();
     }
 
 

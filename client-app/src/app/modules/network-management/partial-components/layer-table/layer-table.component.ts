@@ -1,7 +1,6 @@
 import {Component, Input, OnInit, ViewChild} from '@angular/core';
 import {MatPaginator, MatSort, MatTableDataSource} from '@angular/material';
-import {MyErrorStateMatcher} from '../../../user-management/partial-components/users-table/users-table.component';
-import {Layer} from '../../../../shared/models/network/Layer';
+import {LayerDto} from '../../../../shared/models/network/runtime/LayerDto';
 
 @Component({
   selector: 'app-layer-table',
@@ -10,10 +9,10 @@ import {Layer} from '../../../../shared/models/network/Layer';
 })
 export class LayerTableComponent implements OnInit {
 
-  @Input() layers: Layer[];
+  @Input() layers: LayerDto[];
   displayedColumns: string[];
   editable: boolean;
-  layerDataSource: MatTableDataSource<Layer>;
+  layerDataSource: MatTableDataSource<LayerDto>;
   filters;
   gradeErrorMatcher;
   fc;
@@ -39,19 +38,18 @@ export class LayerTableComponent implements OnInit {
 
     this.layerDataSource = new MatTableDataSource(this.layers);
     this.layerDataSource.paginator = this.paginator;
-    this.layerDataSource.sortingDataAccessor = (layer: Layer, property: string) => {
+    this.layerDataSource.sortingDataAccessor = (layer: LayerDto, property: string) => {
       switch (property) {
         default:
           return layer[property];
       }
     };
-    this.layerDataSource.filterPredicate = (layer: Layer, filters: string) => this.filterPredicate(layer);
+    this.layerDataSource.filterPredicate = (layer: LayerDto, filters: string) => this.filterPredicate(layer);
     this.layerDataSource.sort = this.sort;
 
     this.resetFilters();
     this.displayedColumns = ['id', 'nInputs', 'nNodes', 'nOutputs', 'type', 'activation'];
     this.editable = true;
-    this.gradeErrorMatcher = new MyErrorStateMatcher();
     this.fc = [];
     this.resetFormControl();
 
@@ -71,7 +69,7 @@ export class LayerTableComponent implements OnInit {
     }
   }
 
-  filterPredicate(layer: Layer): boolean {
+  filterPredicate(layer: LayerDto): boolean {
     let ok = true;
     if (this.filters.nInputs !== '') {
       ok = ok === true && this.compare(layer.nInputs, this.filters.nInputs, this.filters.comparison.nInputs);
@@ -92,7 +90,7 @@ export class LayerTableComponent implements OnInit {
   }
 
 
-  getRowIndexFor(layer: Layer) {
+  getRowIndexFor(layer: LayerDto) {
     return this.layers.findIndex(n => n.id === layer.id);
   }
 

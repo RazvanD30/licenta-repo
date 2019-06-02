@@ -1,4 +1,4 @@
-import {Status} from '../Status';
+import {Status} from './Status';
 import {NeuralNodeGui} from './NeuralNodeGui';
 export class LinkGui {
   private readonly _id: number;

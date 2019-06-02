@@ -1,8 +1,6 @@
 import {Component, EventEmitter, OnInit, Output} from '@angular/core';
-import {Router} from '@angular/router';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {first} from 'rxjs/operators';
-import {AlertService} from '../../../services/alert.service';
 import {AuthenticationService} from '../../../services/authentication.service';
 import {MatSnackBar} from '@angular/material';
 
@@ -22,6 +20,11 @@ export class RegisterComponent implements OnInit {
     private snackBar: MatSnackBar) {
   }
 
+  // convenience getter for easy access to form fields
+  get f() {
+    return this.form.controls;
+  }
+
   ngOnInit(): void {
     this.form = this.formBuilder.group({
       username: ['', Validators.required],
@@ -31,29 +34,12 @@ export class RegisterComponent implements OnInit {
     });
   }
 
-  // convenience getter for easy access to form fields
-  get f() {
-    return this.form.controls;
-  }
-
   onSubmit() {
 
     // stop here if form is invalid
     if (this.form.invalid) {
       return;
     }
-
-    this.authenticationService.register(this.form.value)
-      .pipe(first())
-      .subscribe(
-        data => {
-          this.clearData();
-          this.snackBar.open('Registration successful.', 'Dismiss');
-          this.submitEmitter.emit();
-        },
-        error => {
-          this.snackBar.open('Error', 'Dismiss');
-        });
   }
 
   clearData() {

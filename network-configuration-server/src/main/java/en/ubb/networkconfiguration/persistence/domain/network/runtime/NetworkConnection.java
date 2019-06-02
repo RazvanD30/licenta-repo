@@ -17,15 +17,14 @@ import java.util.List;
         uniqueConstraints = @UniqueConstraint(columnNames = {"source_id", "destination_id"}))
 public class NetworkConnection extends BaseEntity<Long> {
 
-    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "source_id")
     private Network source;
 
-    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "destination_id")
     private Network destination;
 
-    @Builder.Default
     @OneToMany(mappedBy = "networkConnection", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<NetworkLink> networkLinks = new ArrayList<>();
 
@@ -37,12 +36,12 @@ public class NetworkConnection extends BaseEntity<Long> {
         this.networkLinks = networkLinks;
     }
 
-    public void addLink(NetworkLink networkLink){
+    public void addLink(NetworkLink networkLink) {
         this.networkLinks.add(networkLink);
         networkLink.setNetworkConnection(this);
     }
 
-    public boolean removeLink(NetworkLink networkLink){
+    public boolean removeLink(NetworkLink networkLink) {
         boolean removed = this.networkLinks.remove(networkLink);
         if (removed) {
             networkLink.setNetworkConnection(null);

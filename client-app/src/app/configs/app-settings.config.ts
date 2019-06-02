@@ -4,7 +4,8 @@ export const APP_SETTINGS = {
     AUTHENTICATION: {
       LOGIN: 'http://localhost:8080/authentication/login',
       REGISTER: 'http://localhost:8080/authentication/register',
-      LOGOUT: 'http://localhost:8080/authentication/logout'
+      LOGOUT: 'http://localhost:8080/authentication/logout',
+      GET_TOKEN: 'http://localhost:8804/spring-security-oauth-server/oauth/token'
     },
     USER_MANAGEMENT: {
       GET_ALL: 'http://localhost:8080/users',

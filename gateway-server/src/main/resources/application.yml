@@ -1,0 +1,17 @@
+server:
+  port: 8803
+zuul:
+  sensitiveHeaders: Cookie,Set-Cookie
+  routes:
+    network-configuration-server:
+      path: /network-configuration/**
+      url: http://localhost:8011/
+    oauth:
+      path: /oauth/**
+      url: http://localhost:8804/spring-security-oauth-server/oauth
+
+security:
+  oauth2:
+    resource:
+      jwt:
+        key-value: 123

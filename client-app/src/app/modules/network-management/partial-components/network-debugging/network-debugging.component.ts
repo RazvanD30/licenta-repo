@@ -4,7 +4,7 @@ import {NodeDetailsComponent} from '../node-details/node-details.component';
 import {Pos} from '../../../../shared/models/network/gui/Pos';
 import {NetworkDebugService} from '../../../../shared/services/network-debug.service';
 import {NeuralNodeGui} from '../../../../shared/models/network/gui/NeuralNodeGui';
-import {Status} from '../../../../shared/models/network/Status';
+import {Status} from '../../../../shared/models/network/gui/Status';
 import {LayerGui} from '../../../../shared/models/network/gui/LayerGui';
 import {LinkGui} from '../../../../shared/models/network/gui/LinkGui';
 

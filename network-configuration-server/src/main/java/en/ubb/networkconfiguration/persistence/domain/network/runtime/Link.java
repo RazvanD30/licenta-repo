@@ -19,11 +19,10 @@ public class Link extends BaseEntity<Long> {
     @Column(name = "weight", nullable = false)
     private double weight;
 
-    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     @JoinColumn(name = "node_id")
     private Node node;
 
-    @Builder.Default
     @OneToMany(mappedBy = "link", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<OfflineLink> offlineLinks = new ArrayList<>();
 
@@ -35,7 +34,7 @@ public class Link extends BaseEntity<Long> {
         this.offlineLinks = offlineLinks;
     }
 
-    public Link(Link link){
+    public Link(Link link) {
         this.weight = link.getWeight();
     }
 }

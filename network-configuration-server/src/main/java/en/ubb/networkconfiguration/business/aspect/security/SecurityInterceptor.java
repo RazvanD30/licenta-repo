@@ -2,6 +2,7 @@ package en.ubb.networkconfiguration.business.aspect.security;
 
 import en.ubb.networkconfiguration.business.service.UserService;
 import en.ubb.networkconfiguration.business.validation.exception.AuthorizationBussExc;
+import en.ubb.networkconfiguration.persistence.domain.authentication.Authority;
 import en.ubb.networkconfiguration.persistence.domain.authentication.User;
 import en.ubb.networkconfiguration.persistence.domain.authentication.enums.Role;
 import org.aspectj.lang.ProceedingJoinPoint;
@@ -16,6 +17,7 @@ import java.lang.annotation.Annotation;
 import java.lang.reflect.AnnotatedElement;
 import java.util.Arrays;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Component
 @EnableAspectJAutoProxy
@@ -69,8 +71,11 @@ public class SecurityInterceptor {
     private boolean verifyRole(Annotation annotation, User currentUser) {
         SecurityAnnotation annotationRule = (SecurityAnnotation) annotation;
         List<Role> requiredRolesList = Arrays.asList(annotationRule.allowedRole());
-        Role userRole = currentUser.getAuthority().getRole();
-        return requiredRolesList.contains(userRole);
+        List<Role> roles = currentUser.getAuthorities().stream()
+                .map(Authority::getRole)
+                .collect(Collectors.toList());
+
+        return roles.containsAll(requiredRolesList);
     }
 
     /**

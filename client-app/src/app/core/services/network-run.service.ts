@@ -1,9 +1,9 @@
 import { Injectable } from '@angular/core';
 import {HttpClient} from '@angular/common/http';
-import {Network} from '../../shared/models/network/Network';
+import {NetworkDto} from '../../shared/models/network/runtime/NetworkDto';
 import {APP_SETTINGS} from '../../configs/app-settings.config';
 import {Observable} from 'rxjs';
-import {NetworkTrainLog} from '../../shared/models/network/NetworkTrainLog';
+import {NetworkTrainLog} from '../../shared/models/network/log/NetworkTrainLog';
 
 @Injectable({
   providedIn: 'root'
@@ -12,15 +12,15 @@ export class NetworkRunService {
 
   constructor(private http: HttpClient) { }
 
-  getAll(): Observable<Network[]> {
-    return this.http.get<Network[]>(APP_SETTINGS.URLS.NETWORK_RUN.GET_ALL);
+  getAll(): Observable<NetworkDto[]> {
+    return this.http.get<NetworkDto[]>(APP_SETTINGS.URLS.NETWORK_RUN.GET_ALL);
   }
 
-  getById(id: number): Observable<Network> {
-    return this.http.get<Network>(APP_SETTINGS.URLS.NETWORK_RUN.GET_BY_ID + id);
+  getById(id: number): Observable<NetworkDto> {
+    return this.http.get<NetworkDto>(APP_SETTINGS.URLS.NETWORK_RUN.GET_BY_ID + id);
   }
 
-  update(network: Network) {
+  update(network: NetworkDto) {
     return this.http.put(APP_SETTINGS.URLS.NETWORK_RUN.UPDATE, network);
   }
 

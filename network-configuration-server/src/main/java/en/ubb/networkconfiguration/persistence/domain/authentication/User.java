@@ -28,24 +28,33 @@ public class User extends BaseEntity<Long> {
     @Column(name = "enabled", nullable = false)
     private boolean enabled;
 
-    @OneToMany(mappedBy = "owner", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "owner")
     private List<NetworkBranch> branchesWithOwnership = new ArrayList<>();
 
-    @ManyToOne(fetch = FetchType.LAZY, optional = false)
-    @JoinColumn(name = "authority_id")
-    private Authority authority;
+    @ManyToMany(fetch = FetchType.LAZY, cascade = {CascadeType.PERSIST, CascadeType.MERGE})
+    @JoinTable(
+            name = "users_authorities",
+            joinColumns = @JoinColumn(name = "user_id"),
+            inverseJoinColumns = @JoinColumn(name = "authority_id")
+    )
+    private List<Authority> authorities = new ArrayList<>();
 
-    @ManyToMany
+    @ManyToMany(mappedBy = "contributors")
     private List<NetworkBranch> branches = new ArrayList<>();
 
     @Builder(toBuilder = true)
-    public User(String username, String password, boolean enabled, List<NetworkBranch> branchesWithOwnership,
-                Authority authority, List<NetworkBranch> branches) {
+    public User(Long id, String username, String password, boolean enabled, List<NetworkBranch> branchesWithOwnership, List<Authority> authorities, List<NetworkBranch> branches) {
+        super(id);
         this.username = username;
         this.password = password;
         this.enabled = enabled;
         this.branchesWithOwnership = branchesWithOwnership;
-        this.authority = authority;
+        this.authorities = authorities;
         this.branches = branches;
+    }
+
+    public void addAuthority(Authority authority){
+        this.authorities.add(authority);
+        authority.getUsers().add(this);
     }
 }

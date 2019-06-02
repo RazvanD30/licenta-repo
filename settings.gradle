@@ -7,4 +7,4 @@ include 'statistics-server'
 include 'statistics-server'
 include 'network-debugger'
 include 'network-configuration-server'
-
+include 'oauth-authorization-server'

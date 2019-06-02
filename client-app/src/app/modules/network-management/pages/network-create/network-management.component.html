@@ -6,13 +6,13 @@
 
       <ng-container *ngIf="isNetworkTable(selected) === true">
         <mat-button-toggle [value]="selected" (click)="setCurrentSelection(selected)">
-          Network configurations
+          NetworkDto configurations
         </mat-button-toggle>
       </ng-container>
 
       <ng-container *ngIf="isLayerTable(selected) === true">
         <mat-button-toggle (click)="setCurrentSelection(selected)" [value]="selected" >
-          Layer-wise configuration for {{selected.network.name }}
+          LayerDto-wise configuration for {{selected.network.name }}
           <fa-icon [icon]="faTimes" (click)="removeSelection(selected)"></fa-icon>
         </mat-button-toggle>
       </ng-container>

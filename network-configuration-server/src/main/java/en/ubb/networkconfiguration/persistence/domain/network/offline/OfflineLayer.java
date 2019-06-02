@@ -18,15 +18,14 @@ import java.util.List;
 @Table(name = "offline_layers")
 public class OfflineLayer extends BaseEntity<Long> {
 
-    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "layer_id")
     private Layer layer;
 
-    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "offline_network_id")
     private OfflineNetwork offlineNetwork;
 
-    @Builder.Default
     @OneToMany(mappedBy = "offlineLayer", cascade = CascadeType.ALL)
     private List<OfflineNode> nodes = new ArrayList<>();
 

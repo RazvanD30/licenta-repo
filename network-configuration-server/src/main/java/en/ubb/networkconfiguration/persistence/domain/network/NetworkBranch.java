@@ -33,7 +33,7 @@ public class NetworkBranch extends BaseEntity<Long> {
     @OneToMany(mappedBy = "branch", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Network> networks = new ArrayList<>();
 
-    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "owner_id")
     private User owner;
 
@@ -54,13 +54,18 @@ public class NetworkBranch extends BaseEntity<Long> {
     private List<User> contributors = new ArrayList<>();
 
     @Builder(toBuilder = true)
-    public NetworkBranch(String name, BranchType type, List<Network> networks, User owner, List<User> contributors) {
+    public NetworkBranch(Long id, String name, BranchType type, List<Network> networks, User owner,
+                         LocalDateTime createDateTime, LocalDateTime updateDateTime, List<User> contributors) {
+        super(id);
         this.name = name;
         this.type = type;
         this.networks = networks;
         this.owner = owner;
+        this.createDateTime = createDateTime;
+        this.updateDateTime = updateDateTime;
         this.contributors = contributors;
     }
+
 
     public void addNetwork(Network network){
         this.networks.add(network);

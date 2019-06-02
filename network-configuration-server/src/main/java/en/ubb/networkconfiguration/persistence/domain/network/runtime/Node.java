@@ -21,15 +21,13 @@ public class Node extends BaseEntity<Long> {
     @Column(name = "bias")
     private double bias;
 
-    @Builder.Default
     @OneToMany(mappedBy = "node", cascade = CascadeType.ALL)
     private List<Link> outputLinks = new ArrayList<>();
 
-    @Builder.Default
     @OneToMany(mappedBy = "node", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<OfflineNode> offlineNodes = new ArrayList<>();
 
-    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "layer_id")
     private Layer layer;
 

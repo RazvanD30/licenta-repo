@@ -13,8 +13,8 @@ public interface UserService {
     List<User> getAll();
     Optional<User> findById(long id);
     Optional<User> findByUsername(String username);
-    boolean credentialsMatch(String username, String password) throws NotFoundBussExc;
-    User create(String username, String password, Role role) throws DuplicateBussExc;
+    boolean credentialsMatch(String username, String password);
+    User create(String username, String password, List<Role> roles) throws DuplicateBussExc;
     User update(User user) throws NotFoundBussExc;
     User deleteById(long id) throws NotFoundBussExc;
     void setCurrentUser(User user);

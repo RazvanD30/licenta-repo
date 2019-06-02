@@ -1,7 +1,7 @@
 package en.ubb.networkconfiguration.boundary.rest;
 
-import en.ubb.networkconfiguration.boundary.dto.runtime.RunConfigDto;
-import en.ubb.networkconfiguration.boundary.dto.setup.DataFileDto;
+import en.ubb.networkconfiguration.boundary.dto.network.runtime.RunConfigDto;
+import en.ubb.networkconfiguration.boundary.dto.network.setup.DataFileDto;
 import en.ubb.networkconfiguration.boundary.util.DtoMapper;
 import en.ubb.networkconfiguration.boundary.validation.exception.NotFoundException;
 import en.ubb.networkconfiguration.boundary.validation.validator.DataFileDtoValidator;
@@ -9,6 +9,7 @@ import en.ubb.networkconfiguration.business.service.FileService;
 import en.ubb.networkconfiguration.business.validation.exception.NotFoundBussExc;
 import en.ubb.networkconfiguration.persistence.domain.network.runtime.DataFile;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.*;
@@ -18,6 +19,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("network-management")
+@PreAuthorize("hasAuthority('ROLE_ADMIN') or hasAuthority('ROLE_USER')")
 public class DataFileApi {
 
 

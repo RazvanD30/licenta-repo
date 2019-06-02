@@ -24,14 +24,13 @@ public class OfflineNetwork extends BaseEntity<Long> {
     @CreationTimestamp
     private LocalDateTime createDateTime;
 
-    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "network_id")
     private Network network;
 
     @Column(name = "name")
     private String name;
 
-    @Builder.Default
     @OneToMany(mappedBy = "offlineNetwork", cascade = CascadeType.ALL)
     private List<OfflineLayer> layers = new ArrayList<>();
 

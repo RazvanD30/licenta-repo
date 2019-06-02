@@ -6,11 +6,12 @@ import {Observable} from 'rxjs';
 export class HttpTokenInterceptor implements HttpInterceptor {
 
   intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
-    const currentUser = JSON.parse(localStorage.getItem('current-user'));
-    if (currentUser && currentUser.token) {
+    const accessToken = localStorage.getItem('access_token');
+    if (accessToken) {
+      console.log('i will do shit');
       request = request.clone({
         setHeaders: {
-          Authorization: `Bearer ${currentUser.token}`
+          Authorization: `Bearer ${accessToken}`
         }
       });
     }

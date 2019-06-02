@@ -32,15 +32,13 @@ public class Layer extends BaseEntity<Long> {
     @Range(min = 0)
     private int nOutputs;
 
-    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "network_id")
     private Network network;
 
-    @Builder.Default
     @OneToMany(mappedBy = "layer", cascade = CascadeType.ALL)
     private List<Node> nodes = new ArrayList<>();
 
-    @Builder.Default
     @OneToMany(mappedBy = "layer", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<OfflineLayer> offlineLayers = new ArrayList<>();
 
