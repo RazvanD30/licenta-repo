@@ -1,6 +1,6 @@
 package en.ubb.networkconfiguration.business.service.impl;
 
-import en.ubb.networkconfiguration.boundary.dto.debugging.DebuggingNode;
+import en.ubb.networkconfiguration.boundary.dto.network.debugging.DebuggingNode;
 import en.ubb.networkconfiguration.persistence.domain.network.runtime.Network;
 import en.ubb.networkconfiguration.business.service.NetworkDebuggingService;
 
@@ -38,11 +38,11 @@ public class NetworkDebuggingServiceImpl implements NetworkDebuggingService {
         while()
 
 
-        network.getLayers().forEach(layer -> {
-            if(layer.getType().equals(LayerType.INPUT))
+        network.getLayers().forEach(offlineLayer -> {
+            if(offlineLayer.getType().equals(LayerType.INPUT))
 
-            layer.getNodes().forEach(node -> {
-                node.getOutputLinks().
+            offlineLayer.getNodes().forEach(offlineNode -> {
+                offlineNode.getOutputLinks().
 
             });
         });

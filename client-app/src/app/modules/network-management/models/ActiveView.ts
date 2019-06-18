@@ -1,8 +1,8 @@
-import {Network} from '../../../shared/models/network/Network';
+import {NetworkDto} from '../../../shared/models/network/runtime/NetworkDto';
 import {SelectedTableType} from './SelectedTableType';
 
 export class ActiveView {
-  network: Network;
+  network: NetworkDto;
   tableType: SelectedTableType;
   additionalData;
 }

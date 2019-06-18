@@ -2,14 +2,20 @@ package en.ubb.gateway;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.security.config.annotation.web.builders.HttpSecurity;
+import org.springframework.security.oauth2.config.annotation.web.configuration.EnableResourceServer;
+import org.springframework.security.oauth2.config.annotation.web.configuration.ResourceServerConfigurerAdapter;
 import org.springframework.web.client.RestTemplate;
 
 @Configuration
-public class GatewayConfiguration {
-
-    @Bean
-    public RestTemplate restTemplate(){
-        return new RestTemplate();
+@EnableResourceServer
+public class GatewayConfiguration extends ResourceServerConfigurerAdapter {
+    @Override
+    public void configure(final HttpSecurity http) throws Exception {
+        http.authorizeRequests().
+                antMatchers("/authentication/**","/actuator/**","/banane/**").
+                permitAll().
+                antMatchers("/**").
+                authenticated();
     }
-
 }

@@ -24,3 +24,4 @@ public class NetworkTrainLogServiceImpl implements NetworkTrainLogService {
         return networkTrainLogRepo.getAllOrderByDateAsc(networkId);
     }
 }
+

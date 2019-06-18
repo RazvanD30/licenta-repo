@@ -1,7 +1,7 @@
 package en.ubb.networkconfiguration.boundary.validation.validator;
 
-import en.ubb.networkconfiguration.boundary.dto.setup.LayerInitDto;
-import en.ubb.networkconfiguration.boundary.dto.setup.NetworkInitDto;
+import en.ubb.networkconfiguration.boundary.dto.network.setup.LayerInitDto;
+import en.ubb.networkconfiguration.boundary.dto.network.setup.NetworkInitDto;
 import org.jetbrains.annotations.NotNull;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;

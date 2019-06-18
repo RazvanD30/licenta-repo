@@ -2,15 +2,16 @@ package en.ubb.networkconfiguration.persistence.domain.network.runtime;
 
 
 import en.ubb.networkconfiguration.persistence.domain.BaseEntity;
+import en.ubb.networkconfiguration.persistence.domain.network.offline.OfflineNode;
 import lombok.*;
 
 import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Getter
 @Setter
-@AllArgsConstructor
 @NoArgsConstructor
 @EqualsAndHashCode(callSuper = true)
 @Entity
@@ -23,17 +24,33 @@ public class Node extends BaseEntity<Long> {
     @OneToMany(mappedBy = "node", cascade = CascadeType.ALL)
     private List<Link> outputLinks = new ArrayList<>();
 
-    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @OneToMany(mappedBy = "node", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<OfflineNode> offlineNodes = new ArrayList<>();
+
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "layer_id")
     private Layer layer;
 
     @Builder(toBuilder = true)
-    public Node(Long id, double bias, List<Link> outputLinks, Layer layer) {
+    public Node(Long id, double bias, List<Link> outputLinks, List<OfflineNode> offlineNodes, Layer layer) {
         super(id);
         this.bias = bias;
         this.outputLinks = outputLinks;
+        this.offlineNodes = offlineNodes;
         this.layer = layer;
     }
+
+    public Node(Node node){
+        this.bias = node.getBias();
+        this.setOutputLinks(node.getOutputLinks().stream()
+                .map(link -> {
+                    link = new Link(link);
+                    link.setNode(this);
+                    return link;
+                })
+                .collect(Collectors.toList()));
+    }
+
 
     public void addLink(Link link) {
         this.outputLinks.add(link);

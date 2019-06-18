@@ -34,7 +34,7 @@ public class NetworkTrainLog extends BaseEntity<Long> {
     @Column(name = "f1_score")
     private double f1Score;
 
-    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "network_id")
     private Network network;
 
@@ -42,7 +42,8 @@ public class NetworkTrainLog extends BaseEntity<Long> {
     private List<NetworkIterationLog> networkIterationLogs = new ArrayList<>();
 
     @Builder(toBuilder = true)
-    public NetworkTrainLog(Long id, LocalDateTime createDateTime, double accuracy, double precision, double recall, double f1Score, Network network, List<NetworkIterationLog> networkIterationLogs) {
+    public NetworkTrainLog(Long id, LocalDateTime createDateTime, double accuracy, double precision, double recall,
+                           double f1Score, Network network, List<NetworkIterationLog> networkIterationLogs) {
         super(id);
         this.createDateTime = createDateTime;
         this.accuracy = accuracy;

@@ -1,7 +1,9 @@
 package en.ubb.networkconfiguration.boundary.rest;
 
-import en.ubb.networkconfiguration.boundary.dto.setup.NetworkInitDto;
+import en.ubb.networkconfiguration.boundary.dto.network.setup.NetworkInitDto;
 import en.ubb.networkconfiguration.boundary.util.DtoMapper;
+import en.ubb.networkconfiguration.boundary.validation.exception.DuplicateException;
+import en.ubb.networkconfiguration.business.service.BranchService;
 import en.ubb.networkconfiguration.business.service.NetworkInitService;
 import en.ubb.networkconfiguration.business.service.NetworkService;
 import en.ubb.networkconfiguration.boundary.validation.exception.NetworkAccessException;
@@ -10,7 +12,10 @@ import en.ubb.networkconfiguration.boundary.validation.exception.ValidationExcep
 import en.ubb.networkconfiguration.business.validation.exception.DuplicateBussExc;
 import en.ubb.networkconfiguration.business.validation.exception.NetworkAccessBussExc;
 import en.ubb.networkconfiguration.boundary.validation.validator.NetworkInitDtoValidator;
+import en.ubb.networkconfiguration.business.validation.exception.NotFoundBussExc;
+import en.ubb.networkconfiguration.persistence.domain.network.NetworkBranch;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.*;
@@ -23,19 +28,23 @@ import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("network-management")
+@PreAuthorize("hasAuthority('ROLE_ADMIN') or hasAuthority('ROLE_USER')")
 public class NetworkInitApi {
 
     private final NetworkService networkService;
 
     private final NetworkInitService networkInitService;
 
+    private final BranchService branchService;
+
     private final NetworkInitDtoValidator networkInitDtoValidator;
 
     @Autowired
-    public NetworkInitApi(NetworkService networkService, NetworkInitDtoValidator networkInitDtoValidator, NetworkInitService networkInitService) {
+    public NetworkInitApi(NetworkService networkService, NetworkInitDtoValidator networkInitDtoValidator, NetworkInitService networkInitService, BranchService branchService) {
         this.networkService = networkService;
         this.networkInitDtoValidator = networkInitDtoValidator;
         this.networkInitService = networkInitService;
+        this.branchService = branchService;
     }
 
     @InitBinder
@@ -47,17 +56,26 @@ public class NetworkInitApi {
     public void create(
             @Valid @RequestBody NetworkInitDto dto,
             BindingResult result,
-            SessionStatus status) throws NetworkAccessException, ValidationException {
+            SessionStatus status) throws NetworkAccessException, ValidationException, DuplicateException, NotFoundException {
+
         if (result.hasErrors()) {
             throw new ValidationException(result);
         }
+
         try {
+
+            NetworkBranch branch = branchService.findById(dto.getBranchId()).orElseThrow(() ->
+                    new NotFoundException("Branch with id " + dto.getBranchId() + " not found"));
+
             this.networkInitService.create(DtoMapper.fromDto(dto));
-            this.networkService.create(DtoMapper.fromDto(dto));
+            this.networkService.create(branch,DtoMapper.fromDto(dto));
+
         } catch (NetworkAccessBussExc ex) {
             throw new NetworkAccessException(ex);
         } catch (DuplicateBussExc ex){
-
+            throw new DuplicateException(ex);
+        } catch (NotFoundBussExc ex) {
+            throw new NotFoundException(ex);
         }
         status.setComplete();
     }

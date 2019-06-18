@@ -31,6 +31,10 @@ public class NetworkState extends BaseEntity<Long> {
         this.networks = networks;
     }
 
+    public NetworkState(NetworkState networkState){
+        this.descriptor = networkState.getDescriptor();
+    }
+
     public void addNetwork(Network network) {
         this.networks.add(network);
         network.setState(this);

@@ -2,7 +2,7 @@ import {AfterViewInit, ChangeDetectorRef, Component, Inject, Input, OnInit} from
 import {faDirections, faInfo, faWeightHanging} from '@fortawesome/free-solid-svg-icons';
 import {MAT_DIALOG_DATA, MatDialogRef} from '@angular/material';
 import {NeuralNodeGui} from '../../../../shared/models/network/gui/NeuralNodeGui';
-import {Status} from '../../../../shared/models/network/Status';
+import {Status} from '../../../../shared/models/network/gui/Status';
 import {LinkGui} from '../../../../shared/models/network/gui/LinkGui';
 
 @Component({

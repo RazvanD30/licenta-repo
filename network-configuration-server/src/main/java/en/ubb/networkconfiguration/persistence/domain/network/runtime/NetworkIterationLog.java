@@ -20,7 +20,7 @@ public class NetworkIterationLog extends BaseEntity<Long> {
     @Column(name = "iteration")
     private int iteration;
 
-    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "network_train_log_id")
     private NetworkTrainLog networkTrainLog;
 

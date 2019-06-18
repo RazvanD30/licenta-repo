@@ -1,7 +1,7 @@
 package en.ubb.networkconfiguration.persistence.domain.network.runtime;
 
 import en.ubb.networkconfiguration.persistence.domain.BaseEntity;
-import en.ubb.networkconfiguration.persistence.domain.enums.FileType;
+import en.ubb.networkconfiguration.persistence.domain.network.enums.FileType;
 import lombok.*;
 
 import javax.persistence.*;
@@ -9,7 +9,7 @@ import javax.persistence.*;
 @Getter
 @Setter
 @NoArgsConstructor
-@EqualsAndHashCode
+@EqualsAndHashCode(callSuper = true)
 @Entity
 @Table(name = "networks_files")
 public class NetworkFile extends BaseEntity<Long> {

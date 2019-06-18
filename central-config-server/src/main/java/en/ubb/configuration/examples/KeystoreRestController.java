@@ -7,8 +7,12 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 class KeystoreRestController {
 
+    private final PropertyService propertyService;
+
     @Autowired
-    private PropertyService propertyService;
+    public KeystoreRestController(PropertyService propertyService) {
+        this.propertyService = propertyService;
+    }
 
 
     @RequestMapping("/get")

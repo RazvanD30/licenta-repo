@@ -1,9 +1,10 @@
 package en.ubb.networkconfiguration.boundary.rest;
 
-import en.ubb.networkconfiguration.boundary.dto.runtime.NetworkTrainLogDto;
+import en.ubb.networkconfiguration.boundary.dto.network.log.NetworkTrainLogDto;
 import en.ubb.networkconfiguration.boundary.util.DtoMapper;
 import en.ubb.networkconfiguration.business.service.NetworkTrainLogService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -15,6 +16,7 @@ import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("network-management")
+@PreAuthorize("hasAuthority('ROLE_ADMIN') or hasAuthority('ROLE_USER')")
 public class NetworkTrainLogApi {
 
     private final NetworkTrainLogService networkTrainLogService;

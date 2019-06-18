@@ -1,5 +1,5 @@
 import {NeuralNodeGui} from './NeuralNodeGui';
-import {Status} from '../Status';
+import {Status} from './Status';
 
 export class LayerGui {
   private readonly _id: number;

@@ -1,7 +1,7 @@
 package en.ubb.networkconfiguration.business.service;
 
 import en.ubb.networkconfiguration.business.validation.exception.NotFoundBussExc;
-import en.ubb.networkconfiguration.persistence.domain.enums.FileType;
+import en.ubb.networkconfiguration.persistence.domain.network.enums.FileType;
 import en.ubb.networkconfiguration.persistence.domain.network.runtime.DataFile;
 import en.ubb.networkconfiguration.persistence.domain.network.runtime.Network;
 
@@ -25,4 +25,8 @@ public interface FileService {
     Optional<DataFile> findFile(long id);
 
     List<DataFile> getAll();
+
+    List<DataFile> getTrainFiles(long networkId) throws NotFoundBussExc;
+
+    List<DataFile> getTestFiles(long networkId) throws NotFoundBussExc;
 }

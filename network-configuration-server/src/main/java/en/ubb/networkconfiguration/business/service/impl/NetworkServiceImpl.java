@@ -1,5 +1,8 @@
 package en.ubb.networkconfiguration.business.service.impl;
 
+import en.ubb.networkconfiguration.business.aspect.cache.CCachable;
+import en.ubb.networkconfiguration.business.listener.LifecycleUpdateEventSource;
+import en.ubb.networkconfiguration.business.listener.NetworkLifecycleState;
 import en.ubb.networkconfiguration.business.listener.ScoreIterationLogListener;
 import en.ubb.networkconfiguration.business.service.NetworkService;
 import en.ubb.networkconfiguration.business.util.LayerUtil;
@@ -7,9 +10,11 @@ import en.ubb.networkconfiguration.business.validation.exception.FileAccessBussE
 import en.ubb.networkconfiguration.business.validation.exception.NetworkAccessBussExc;
 import en.ubb.networkconfiguration.business.validation.exception.NotFoundBussExc;
 import en.ubb.networkconfiguration.persistence.dao.*;
+import en.ubb.networkconfiguration.persistence.domain.network.NetworkBranch;
 import en.ubb.networkconfiguration.persistence.domain.network.runtime.*;
 import en.ubb.networkconfiguration.persistence.domain.network.setup.NetworkInitializer;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.logging.log4j.util.TriConsumer;
 import org.datavec.api.records.reader.RecordReader;
 import org.datavec.api.records.reader.impl.csv.CSVRecordReader;
 import org.datavec.api.split.FileSplit;
@@ -19,7 +24,6 @@ import org.deeplearning4j.nn.conf.MultiLayerConfiguration;
 import org.deeplearning4j.nn.conf.NeuralNetConfiguration;
 import org.deeplearning4j.nn.multilayer.MultiLayerNetwork;
 import org.deeplearning4j.nn.weights.WeightInit;
-import org.deeplearning4j.optimize.listeners.ScoreIterationListener;
 import org.deeplearning4j.util.ModelSerializer;
 import org.nd4j.linalg.api.ndarray.INDArray;
 import org.nd4j.linalg.dataset.api.DataSet;
@@ -49,15 +53,23 @@ public class NetworkServiceImpl implements NetworkService {
 
     private final LinkRepo linkRepo;
 
+    private final BranchRepo branchRepo;
+
     private static final Logger LOGGER = LoggerFactory.getLogger(NetworkServiceImpl.class);
 
+    private final LifecycleUpdateEventSource lifecycleUpdateEventSource;
+
     @Autowired
-    public NetworkServiceImpl(NetworkRepo networkRepo, NodeRepo nodeRepo, LayerRepo layerRepo, NetworkStateRepo networkStateRepo, LinkRepo linkRepo) {
+    public NetworkServiceImpl(NetworkRepo networkRepo, NodeRepo nodeRepo, LayerRepo layerRepo,
+                              NetworkStateRepo networkStateRepo, LinkRepo linkRepo,
+                              LifecycleUpdateEventSource lifecycleUpdateEventSource, BranchRepo branchRepo) {
         this.networkRepo = networkRepo;
         this.nodeRepo = nodeRepo;
         this.layerRepo = layerRepo;
         this.networkStateRepo = networkStateRepo;
         this.linkRepo = linkRepo;
+        this.lifecycleUpdateEventSource = lifecycleUpdateEventSource;
+        this.branchRepo = branchRepo;
     }
 
     @Override
@@ -65,6 +77,14 @@ public class NetworkServiceImpl implements NetworkService {
         return networkRepo.findAll();
     }
 
+    @Override
+    public List<Network> getAllForBranchID(long branchId) throws NotFoundBussExc {
+        return branchRepo.findById(branchId)
+                .orElseThrow(() -> new NotFoundBussExc("Branch with id " + branchId + " not found"))
+                .getNetworks();
+    }
+
+    @CCachable
     @Override
     public Optional<Network> findById(long id) {
         return networkRepo.findById(id);
@@ -116,9 +136,13 @@ public class NetworkServiceImpl implements NetworkService {
     }
 
     @Override
-    public Network create(NetworkInitializer initializer) throws NetworkAccessBussExc {
+    public Network create(NetworkBranch branch, NetworkInitializer initializer) throws NetworkAccessBussExc, NotFoundBussExc {
+
+        NetworkBranch persistedBranch = branchRepo.findById(branch.getId())
+                .orElseThrow(() -> new NotFoundBussExc("The given branch is not saved"));
 
         Network network = this.getInitialNetwork(initializer);
+        persistedBranch.addNetwork(network);
 
         NeuralNetConfiguration.ListBuilder networkBuilder = new NeuralNetConfiguration.Builder()
                 .seed(network.getSeed())
@@ -137,7 +161,9 @@ public class NetworkServiceImpl implements NetworkService {
         MultiLayerNetwork model = new MultiLayerNetwork(conf);
         model.init();
         network.setModel(model);
+        lifecycleUpdateEventSource.accept(network, NetworkLifecycleState.NEW);
         this.saveProgress(network);
+        lifecycleUpdateEventSource.accept(network, NetworkLifecycleState.INITIALIZED);
         return network;
     }
 
@@ -183,30 +209,43 @@ public class NetworkServiceImpl implements NetworkService {
 
             NetworkTrainLog networkTrainLog = new NetworkTrainLog();
 
-            ScoreIterationLogListener scoreIterationLogListener = new ScoreIterationLogListener(10, networkTrainLog);
+
+            TriConsumer<Integer, Double, Double> onIterationGroupEnd = (iterationC, newScore, oldScore) -> {
+                if (newScore > oldScore) {
+                    lifecycleUpdateEventSource.accept(network, NetworkLifecycleState.SCORE_IMPROVED);
+                }
+            };
+
+            ScoreIterationLogListener scoreIterationLogListener =
+                    new ScoreIterationLogListener(10, networkTrainLog, onIterationGroupEnd);
 
             model.setListeners(scoreIterationLogListener);
             model.fit(trainIter, network.getNEpochs());
+            lifecycleUpdateEventSource.accept(network, NetworkLifecycleState.STARTED);
 
             Evaluation eval = new Evaluation(network.getNOutputs());
             while (testIter.hasNext()) {
                 DataSet t = testIter.next();
                 INDArray features = t.getFeatures();
                 INDArray lables = t.getLabels();
-                INDArray predicted = model.output(features, false);
+                INDArray predicted = model.output(features);
                 eval.eval(lables, predicted);
             }
+
+            lifecycleUpdateEventSource.accept(network, NetworkLifecycleState.STOPPING);
             networkTrainLog = scoreIterationLogListener.getTrainlog();
 
-            log.info("Stats are {}",eval.stats());
+            log.info("Stats are {}", eval.stats());
             networkTrainLog.setAccuracy(eval.accuracy());
             networkTrainLog.setPrecision(eval.precision());
             networkTrainLog.setF1Score(eval.f1());
             networkTrainLog.setRecall(eval.recall());
             network.addNetworkTrainLog(networkTrainLog);
 
+            lifecycleUpdateEventSource.accept(network, NetworkLifecycleState.STOPPED);
             return network;
         } catch (IOException | InterruptedException ex) {
+            lifecycleUpdateEventSource.accept(network, NetworkLifecycleState.FAILED);
             throw new FileAccessBussExc("Could not access the train/test files for the network with id "
                     + network.getId() + ". " + ex.getMessage());
         }
@@ -223,7 +262,6 @@ public class NetworkServiceImpl implements NetworkService {
             NetworkState state = new NetworkState();
             state.setDescriptor(stream.toByteArray());
 
-            state = networkStateRepo.save(state);
             state.addNetwork(network);
 
             String weightKey = "W";

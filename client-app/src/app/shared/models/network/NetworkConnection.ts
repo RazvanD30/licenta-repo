@@ -1,4 +1,4 @@
-import {Link} from './Link';
+import {LinkDto} from './runtime/LinkDto';
 
 export class NetworkConnection {
 
@@ -6,7 +6,7 @@ export class NetworkConnection {
   private readonly destinationNetworkId: number;
   private readonly _sourceLayerId: number;
   private readonly _destinationLayerId: number;
-  private readonly _links: Link[];
+  private readonly _links: LinkDto[];
 
 
   constructor(sourceNetworkId: number, destinationNetworkId: number, sourceLayerId: number, destinationLayerId: number) {
@@ -25,7 +25,7 @@ export class NetworkConnection {
     return this._destinationLayerId;
   }
 
-  get links(): Link[] {
+  get links(): LinkDto[] {
     return this._links;
   }
 }

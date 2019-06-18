@@ -102,7 +102,7 @@ export class CytoscapeComponent implements OnChanges {
 
 
     cy.cxtmenu({
-      selector: 'node, edge',
+      selector: 'offlineNode, edge',
       commands: [
         {
           content: 'Add special routine',

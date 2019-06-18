@@ -15,15 +15,15 @@ import javax.persistence.*;
         uniqueConstraints = @UniqueConstraint(columnNames = {"source_id", "destination_id"}))
 public class NetworkLink extends BaseEntity<Long> {
 
-    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "source_id")
     private Node source;
 
-    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "destination_id")
     private Node destination;
 
-    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "network_connection_id")
     private NetworkConnection networkConnection;
 

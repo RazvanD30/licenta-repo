@@ -1,7 +1,6 @@
 import {Component, EventEmitter, Input, OnInit, Output, ViewChild} from '@angular/core';
 import {MatMenuTrigger, MatPaginator, MatSort, MatTableDataSource} from '@angular/material';
-import {MyErrorStateMatcher} from '../../../user-management/partial-components/users-table/users-table.component';
-import {Network} from '../../../../shared/models/network/Network';
+import {NetworkDto} from '../../../../shared/models/network/runtime/NetworkDto';
 import {NetworkRunService} from '../../../../core/services/network-run.service';
 import {faList} from '@fortawesome/free-solid-svg-icons';
 import {ActiveView} from '../../models/ActiveView';
@@ -15,10 +14,10 @@ import {SelectedTableType} from '../../models/SelectedTableType';
 })
 export class NetworkTableComponent implements OnInit {
 
-  @Input() networks: Network[];
+  @Input() networks: NetworkDto[];
   displayedColumns: string[];
   editable: boolean;
-  networkDataSource: MatTableDataSource<Network>;
+  networkDataSource: MatTableDataSource<NetworkDto>;
   filters;
   gradeErrorMatcher;
   fc;
@@ -56,7 +55,7 @@ export class NetworkTableComponent implements OnInit {
 
     this.networkDataSource = new MatTableDataSource(this.networks);
     this.networkDataSource.paginator = this.paginator;
-    this.networkDataSource.sortingDataAccessor = (network: Network, property: string) => {
+    this.networkDataSource.sortingDataAccessor = (network: NetworkDto, property: string) => {
       switch (property) {
         case 'nLayers':
           return network.layers.length;
@@ -64,19 +63,18 @@ export class NetworkTableComponent implements OnInit {
           return network[property];
       }
     };
-    this.networkDataSource.filterPredicate = (network: Network, filters: string) => this.filterPredicate(network);
+    this.networkDataSource.filterPredicate = (network: NetworkDto, filters: string) => this.filterPredicate(network);
     this.networkDataSource.sort = this.sort;
 
     this.resetFilters();
     this.displayedColumns = ['id', 'name', 'seed', 'learningRate', 'batchSize', 'nEpochs', 'nInputs', 'nOutputs', 'nLayers', 'actions'];
     this.editable = true;
-    this.gradeErrorMatcher = new MyErrorStateMatcher();
     this.fc = [];
     this.resetFormControl();
 
   }
 
-  onContextMenuActionLayerView(item: Network) {
+  onContextMenuActionLayerView(item: NetworkDto) {
     const newView: ActiveView = {
       network: item,
       tableType: SelectedTableType.LAYER_TABLE,
@@ -85,7 +83,7 @@ export class NetworkTableComponent implements OnInit {
     this.onLayersView.emit(newView);
   }
 
-  onContextMenuActionLogView(item: Network) {
+  onContextMenuActionLogView(item: NetworkDto) {
     const newView: ActiveView = {
       network: item,
       tableType: SelectedTableType.LOG_TABLE,
@@ -107,7 +105,7 @@ export class NetworkTableComponent implements OnInit {
     }
   }
 
-  filterPredicate(network: Network): boolean {
+  filterPredicate(network: NetworkDto): boolean {
     let ok = true;
     if (this.filters.name !== '') {
       ok = ok === true && network.name.toLowerCase().includes(this.filters.name.toLowerCase());
@@ -137,7 +135,7 @@ export class NetworkTableComponent implements OnInit {
   }
 
 
-  getRowIndexFor(network: Network) {
+  getRowIndexFor(network: NetworkDto) {
     return this.networks.findIndex(n => n.id === network.id);
   }
 

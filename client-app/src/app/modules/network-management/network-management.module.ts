@@ -6,12 +6,9 @@ import {NetworkSpecialRoutineComponent} from './partial-components/network-speci
 import {HTTP_INTERCEPTORS} from '@angular/common/http';
 import {HttpTokenInterceptor} from '../../core/interceptors/http-token.interceptor';
 import {ErrorHandlerInterceptor} from '../../core/interceptors/error-handler.interceptor';
-import {authenticateMockProvider} from '../../core/mocks/authenticate.mock';
 import {NetworkDebuggingComponent} from './partial-components/network-debugging/network-debugging.component';
 import {NetworkConsoleComponent} from './pages/network-console/network-console.component';
-import {NetworkCreateComponent} from './pages/network-create/network-create.component';
-import {UsersViewComponent} from '../user-management/pages/users-view/users-view.component';
-import {UsersTableComponent} from '../user-management/partial-components/users-table/users-table.component';
+import {NetworkManagementComponent} from './pages/network-create/network-management.component';
 import {UserService} from '../../core/services/user.service';
 import {CoreModule} from '../../core/core.module';
 import { NetworkTableComponent } from './partial-components/network-table/network-table.component';
@@ -28,9 +25,7 @@ import { LogsTableComponent } from './partial-components/logs-table/logs-table.c
     NetworkSpecialRoutineComponent,
     NetworkDebuggingComponent,
     NetworkConsoleComponent,
-    NetworkCreateComponent,
-    UsersViewComponent,
-    UsersTableComponent,
+    NetworkManagementComponent,
     NetworkTableComponent,
     LayerTableComponent,
     NodeDetailsComponent,

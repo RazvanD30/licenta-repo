@@ -1,6 +1,6 @@
 package en.ubb.networkconfiguration.business.util;
 
-import en.ubb.networkconfiguration.persistence.domain.enums.LayerType;
+import en.ubb.networkconfiguration.persistence.domain.network.enums.LayerType;
 import org.deeplearning4j.nn.conf.layers.DenseLayer;
 import org.deeplearning4j.nn.conf.layers.FeedForwardLayer;
 import org.deeplearning4j.nn.conf.layers.OutputLayer;

@@ -1,6 +1,6 @@
 package en.ubb.networkconfiguration.boundary.validation.validator;
 
-import en.ubb.networkconfiguration.boundary.dto.setup.LayerInitDto;
+import en.ubb.networkconfiguration.boundary.dto.network.setup.LayerInitDto;
 import org.jetbrains.annotations.NotNull;
 import org.springframework.stereotype.Component;
 import org.springframework.validation.Errors;
