@@ -2,7 +2,7 @@ package en.ubb.networkconfiguration.persistence.domain.authentication;
 
 
 import en.ubb.networkconfiguration.persistence.domain.BaseEntity;
-import en.ubb.networkconfiguration.persistence.domain.network.NetworkBranch;
+import en.ubb.networkconfiguration.persistence.domain.branch.NetworkBranch;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;

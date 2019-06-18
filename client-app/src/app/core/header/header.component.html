@@ -5,7 +5,11 @@
       <ul class="nav pull-right">
         <ng-container *ngFor="let link of links; let i = index">
           <li class="dropdown">
-            <a *ngIf="link.multiple === false" class="nav-link" type="button" [href]="link.href">
+            <a *ngIf="link.href !== '/logout' && link.multiple === false" class="nav-link" type="button" [href]="link.href">
+              <fa-icon *ngIf="link.icon" [icon]="link.icon"></fa-icon>
+              {{link.text}}
+            </a>
+            <a *ngIf="link.href === '/logout'" class="nav-link" type="button" (click)="logout()">
               <fa-icon *ngIf="link.icon" [icon]="link.icon"></fa-icon>
               {{link.text}}
             </a>

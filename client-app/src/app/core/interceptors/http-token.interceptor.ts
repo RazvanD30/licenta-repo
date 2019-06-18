@@ -37,7 +37,9 @@ export class HttpTokenInterceptor implements HttpInterceptor {
         // use the newly returned token
         const authReq = request.clone({
           headers: request.headers.set('token', newToken ? newToken : '')
+            .set('Authorization', 'Basic ' + btoa('fooClientIdPassword:secret'))
         });
+        console.log(authReq);
 
         return next.handle(authReq);
       }),
@@ -74,6 +76,7 @@ export class HttpTokenInterceptor implements HttpInterceptor {
               // clone the original request
               const authReqRepeat = request.clone({
                 headers: request.headers.set('token', newToken)
+                  .set('Authorization', 'Basic ' + btoa('fooClientIdPassword:secret'))
               });
 
               // resend the request

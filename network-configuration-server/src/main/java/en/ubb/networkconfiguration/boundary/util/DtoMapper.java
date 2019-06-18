@@ -18,7 +18,7 @@ import en.ubb.networkconfiguration.boundary.dto.network.setup.LayerInitDto;
 import en.ubb.networkconfiguration.boundary.dto.network.setup.NetworkInitDto;
 import en.ubb.networkconfiguration.persistence.domain.authentication.Authority;
 import en.ubb.networkconfiguration.persistence.domain.authentication.User;
-import en.ubb.networkconfiguration.persistence.domain.network.NetworkBranch;
+import en.ubb.networkconfiguration.persistence.domain.branch.NetworkBranch;
 import en.ubb.networkconfiguration.persistence.domain.network.offline.OfflineLayer;
 import en.ubb.networkconfiguration.persistence.domain.network.offline.OfflineLink;
 import en.ubb.networkconfiguration.persistence.domain.network.offline.OfflineNetwork;

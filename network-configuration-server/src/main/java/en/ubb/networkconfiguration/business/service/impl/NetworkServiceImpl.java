@@ -10,7 +10,7 @@ import en.ubb.networkconfiguration.business.validation.exception.FileAccessBussE
 import en.ubb.networkconfiguration.business.validation.exception.NetworkAccessBussExc;
 import en.ubb.networkconfiguration.business.validation.exception.NotFoundBussExc;
 import en.ubb.networkconfiguration.persistence.dao.*;
-import en.ubb.networkconfiguration.persistence.domain.network.NetworkBranch;
+import en.ubb.networkconfiguration.persistence.domain.branch.NetworkBranch;
 import en.ubb.networkconfiguration.persistence.domain.network.runtime.*;
 import en.ubb.networkconfiguration.persistence.domain.network.setup.NetworkInitializer;
 import lombok.extern.slf4j.Slf4j;

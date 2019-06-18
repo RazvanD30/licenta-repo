@@ -1,0 +1,28 @@
+
+<div style="margin-top: 10%">
+<button (click)="loadForUser()"> GET FOR USER </button>
+<button (click)="loadForContributor()"> GET FOR CONTRIBUTOR </button>
+<button (click)="loadForOwner()"> GET FOR OWNER </button>
+<button (click)="create()"> CREATE </button>
+<button (click)="update()"> UPDATE </button>
+<button (click)="remove()"> DELETE </button>
+<ul *ngFor="let branch of branches">
+  <li>
+  ID {{branch.id}}, NAME {{branch.name}}, TYPE {{branch.type}}, OWNER {{branch.owner.username}},
+    #CONTRIBUTORS {{branch.contributors.length}}, CREATED {{branch.created}}, UPDATED {{branch.updated}}, SOURCE {{branch.sourceId}}
+  </li>
+</ul>
+<br>------------------------------------------------------------------------------
+<p>NAME </p><input [(ngModel)]="branch.name" >
+
+<p>TYPE </p>
+  <mat-select [(value)]="branch.type">
+    <mat-option *ngFor="let type of types" [value]="type"> {{type}} </mat-option>
+  </mat-select>
+<p>OWNER </p><input [(ngModel)]="branch.owner.username" >
+<p>SOURCE ID </p><input [(ngModel)]="branch.sourceId" >
+<br>--------------------------------------------------------------------------------
+<br>UPDATE_and_DELETE
+<p>ID </p><input [(ngModel)]="branch.id" >
+
+</div>

@@ -16,7 +16,7 @@ import en.ubb.networkconfiguration.business.service.UserService;
 import en.ubb.networkconfiguration.business.validation.exception.FileAccessBussExc;
 import en.ubb.networkconfiguration.business.validation.exception.NetworkAccessBussExc;
 import en.ubb.networkconfiguration.business.validation.exception.NotFoundBussExc;
-import en.ubb.networkconfiguration.persistence.domain.network.NetworkBranch;
+import en.ubb.networkconfiguration.persistence.domain.branch.NetworkBranch;
 import en.ubb.networkconfiguration.persistence.domain.network.enums.BranchType;
 import en.ubb.networkconfiguration.persistence.domain.network.enums.FileType;
 import en.ubb.networkconfiguration.persistence.domain.network.enums.LayerType;
@@ -215,7 +215,7 @@ public class NetworkApi {
                 .contributors(new ArrayList<>())
                 .build();
 
-        branch = branchService.create(branch);
+        branch = branchService.create(branch,null);
 
         Network network = networkService.create(branch, networkInitializer);
 

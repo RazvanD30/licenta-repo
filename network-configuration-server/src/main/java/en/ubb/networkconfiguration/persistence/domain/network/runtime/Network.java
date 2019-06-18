@@ -2,7 +2,7 @@ package en.ubb.networkconfiguration.persistence.domain.network.runtime;
 
 import en.ubb.networkconfiguration.business.util.NetworkUtil;
 import en.ubb.networkconfiguration.persistence.domain.BaseEntity;
-import en.ubb.networkconfiguration.persistence.domain.network.NetworkBranch;
+import en.ubb.networkconfiguration.persistence.domain.branch.NetworkBranch;
 import en.ubb.networkconfiguration.persistence.domain.network.enums.FileType;
 import en.ubb.networkconfiguration.persistence.domain.network.offline.OfflineNetwork;
 import lombok.*;
@@ -38,6 +38,9 @@ public class Network extends BaseEntity<Long> {
     @Column(name = "name", nullable = false, length = 100)
     @NotEmpty
     private String name;
+
+    @Column(name = "origin_id")
+    private Long originId;
 
     @Column(name = "seed", nullable = false)
     private int seed;
@@ -117,6 +120,7 @@ public class Network extends BaseEntity<Long> {
      * @param network the network from which to copy the fields recursively.
      */
     public Network(Network network) {
+        this.originId = network.getId();
         this.createDateTime = network.getCreateDateTime();
         this.updateDateTime = network.getUpdateDateTime();
         this.name = network.getName();

@@ -13,7 +13,7 @@ import en.ubb.networkconfiguration.business.validation.exception.DuplicateBussEx
 import en.ubb.networkconfiguration.business.validation.exception.NetworkAccessBussExc;
 import en.ubb.networkconfiguration.boundary.validation.validator.NetworkInitDtoValidator;
 import en.ubb.networkconfiguration.business.validation.exception.NotFoundBussExc;
-import en.ubb.networkconfiguration.persistence.domain.network.NetworkBranch;
+import en.ubb.networkconfiguration.persistence.domain.branch.NetworkBranch;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.validation.BindingResult;

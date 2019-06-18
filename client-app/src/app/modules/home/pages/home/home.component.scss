@@ -1,0 +1,27 @@
+
+
+.brain-logo {
+  z-index: -1;
+  position: absolute;
+  left: 50%;
+  top: 20%;
+  height: 100%;
+  width: 100%;
+  transform: translate(-50%,-20%);
+}
+
+.home-info {
+  z-index: 9001;
+  position: absolute;
+  bottom: 5%;
+  left: 5%;
+  width: 90%;
+}
+
+.canvas {
+  position:absolute;
+  left: 30%;
+  top: 0;
+  margin: auto;
+  z-index: -1;
+}

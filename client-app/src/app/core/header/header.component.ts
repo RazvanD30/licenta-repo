@@ -10,6 +10,7 @@ import {
   faSignInAlt, faWrench
 } from '@fortawesome/free-solid-svg-icons';
 import {faCodeBranch} from '@fortawesome/free-solid-svg-icons/faCodeBranch';
+import {AuthenticationService} from '../services/authentication.service';
 
 
 export function getMarginTop() {
@@ -69,7 +70,7 @@ export class HeaderComponent implements OnInit {
   public marginTop = 100;
 
 
-  constructor() {
+  constructor(private authenticationService: AuthenticationService) {
 
   }
 
@@ -86,7 +87,6 @@ export class HeaderComponent implements OnInit {
   ngOnInit() {
     this.links = [
       {text: 'HOME', multiple: false, href: '', icon: faHome},
-      {text: 'AUTHENTICATION', multiple: false, href: '/authenticate', icon: faSignInAlt},
       {
         text: 'NETWORK MANAGEMENT', multiple: true, icon: faNetworkWired, choices: [
           {text: 'CREATE NETWORK', href: '/network/create', icon: faPlusSquare},
@@ -96,13 +96,23 @@ export class HeaderComponent implements OnInit {
       },
       {
         text: 'BRANCH MANAGEMENT', multiple: true, icon: faCodeBranch, choices: [
-          {text: 'BRANCH DASHBOARD', href: ''},
+          {text: 'BRANCH DASHBOARD', href: '/branch-management/dashboard'},
           {text: 'CREATE BRANCH', href: '', icon: faPlusSquare},
           {text: 'UPDATE BRANCH', href: ''}
         ]
       },
       {text: 'JOB MANAGEMENT', multiple: false, icon: faCalendarAlt, href: ''}
     ];
+    if (this.authenticationService.isLoggedIn()) {
+      this.links.push({text: 'LOGOUT', multiple: false, href: '/logout', icon: faSignInAlt});
+    } else {
+      this.links.push({text: 'AUTHENTICATION', multiple: false, href: '/authenticate', icon: faSignInAlt});
+    }
+
+  }
+
+  logout() {
+    this.authenticationService.logout();
   }
 
   openClose(event) {

@@ -4,11 +4,14 @@ import {APP_SETTINGS} from '../../configs/app-settings.config';
 import {Observable, of} from 'rxjs';
 import {map, share} from 'rxjs/operators';
 import {JwtHelper} from 'angular2-jwt';
+import {Router} from "@angular/router";
 
 @Injectable()
 export class AuthenticationService {
 
-  constructor(private http: HttpClient, private decoder: JwtHelper) {
+  constructor(private http: HttpClient,
+              private decoder: JwtHelper,
+              private router: Router) {
   }
 
 
@@ -69,26 +72,25 @@ export class AuthenticationService {
     const httpOptions = {
       headers: new HttpHeaders({
         'Content-type': 'application/x-www-form-urlencoded; charset=utf-8',
-        'Authorization': 'Basic ' + btoa('fooClientIdPassword:secret'
-        )
+        Authorization: 'Basic ' + btoa('fooClientIdPassword:secret')
       })
     };
-
-    console.log(params);
     console.log(APP_SETTINGS.URLS.AUTHENTICATION.TOKEN_REQUEST);
     return this.http.post(APP_SETTINGS.URLS.AUTHENTICATION.TOKEN_REQUEST, params, httpOptions);
   }
 
-  saveToken(token) {
-    localStorage.setItem('access_token', token.access_token);
+  isLoggedIn(): boolean {
+    return localStorage.getItem('token') != null;
   }
 
-  checkCredentials() {
-    return localStorage.getItem('access_token');
+  saveToken(token) {
+    localStorage.setItem('token', token.access_token);
+    localStorage.setItem('refreshToken', token.refresh_token);
   }
 
   logout() {
-    localStorage.removeItem('access_token');
+    localStorage.removeItem('token');
+    this.router.navigateByUrl('/authenticate');
   }
 
 }

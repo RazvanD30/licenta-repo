@@ -3,6 +3,7 @@ import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {AuthenticationService} from '../../../services/authentication.service';
 import {first} from 'rxjs/operators';
 import {MatSnackBar} from '@angular/material';
+import {Router} from "@angular/router";
 
 
 @Component({
@@ -18,7 +19,8 @@ export class LoginComponent implements OnInit {
   constructor(
     private formBuilder: FormBuilder,
     private authenticationService: AuthenticationService,
-    private snackBar: MatSnackBar
+    private snackBar: MatSnackBar,
+    private router: Router
   ) {
   }
 
@@ -35,6 +37,7 @@ export class LoginComponent implements OnInit {
       .pipe(first())
       .subscribe(
         data => {
+          localStorage.setItem('username', this.form.value.username);
           this.clearData();
           this.authenticationService.saveToken(data);
           this.snackBar.open('Login successful.', 'Dismiss');

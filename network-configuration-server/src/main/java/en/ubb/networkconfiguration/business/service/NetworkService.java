@@ -4,7 +4,7 @@ package en.ubb.networkconfiguration.business.service;
 import en.ubb.networkconfiguration.business.validation.exception.FileAccessBussExc;
 import en.ubb.networkconfiguration.business.validation.exception.NetworkAccessBussExc;
 import en.ubb.networkconfiguration.business.validation.exception.NotFoundBussExc;
-import en.ubb.networkconfiguration.persistence.domain.network.NetworkBranch;
+import en.ubb.networkconfiguration.persistence.domain.branch.NetworkBranch;
 import en.ubb.networkconfiguration.persistence.domain.network.runtime.*;
 import en.ubb.networkconfiguration.persistence.domain.network.setup.NetworkInitializer;
 

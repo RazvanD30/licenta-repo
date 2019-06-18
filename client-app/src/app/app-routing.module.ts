@@ -9,6 +9,11 @@ import {AlertComponent} from './shared/components/alert/alert.component';
 const routes: Routes = [
   {path: '', loadChildren: './modules/home/home.module#HomeModule', canLoad: [AuthenticationGuard], pathMatch: 'full'},
   {path: 'user-management', loadChildren: './modules/user-management/user-management.module#UserManagementModule'},
+  {
+    path: 'branch-management',
+    loadChildren: './modules/branch-management/branch-management.module#BranchManagementModule',
+    canLoad: [AuthenticationGuard]
+  },
   {path: 'authenticate', component: AuthenticationComponent},
   {path: 'loader', component: LoaderComponent, canActivate: [AuthenticationGuard]},
   {path: 'alert', component: AlertComponent},

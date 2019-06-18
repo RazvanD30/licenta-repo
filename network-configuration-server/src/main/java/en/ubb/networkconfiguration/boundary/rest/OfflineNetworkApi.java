@@ -30,7 +30,8 @@ public class OfflineNetworkApi  {
 
 
 
-        if(offlineNetworkService.hasNext(DtoMapper.fromDto(offlineNetworkDto)))
+       // if(offlineNetworkService.hasNext(DtoMapper.fromDto(offlineNetworkDto)))
+        return null;
     }
 
 }

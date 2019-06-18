@@ -19,6 +19,8 @@ import {NetworkRunService} from '../../core/services/network-run.service';
 import {NetworkInitService} from '../../core/services/network-init.service';
 import { LayerTableComponent } from './partial-components/layer-table/layer-table.component';
 import { LogsTableComponent } from './partial-components/logs-table/logs-table.component';
+import { GlobalTableComponent } from './partial-components/global-table/global-table.component';
+import { NetworkCreateComponent } from './partial-components/network-create/network-create.component';
 @NgModule({
   declarations: [
     CytoscapeComponent,
@@ -30,7 +32,9 @@ import { LogsTableComponent } from './partial-components/logs-table/logs-table.c
     LayerTableComponent,
     NodeDetailsComponent,
     LayerTableComponent,
-    LogsTableComponent
+    LogsTableComponent,
+    GlobalTableComponent,
+    NetworkCreateComponent
   ],
   imports: [
     CoreModule,
@@ -40,9 +44,10 @@ import { LogsTableComponent } from './partial-components/logs-table/logs-table.c
   ],
   providers: [
     UserService,
-    AuthenticationGuard,
     NetworkRunService,
     NetworkInitService,
+
+    AuthenticationGuard,
     {provide: HTTP_INTERCEPTORS, useClass: HttpTokenInterceptor, multi: true},
     {provide: HTTP_INTERCEPTORS, useClass: ErrorHandlerInterceptor, multi: true}
 

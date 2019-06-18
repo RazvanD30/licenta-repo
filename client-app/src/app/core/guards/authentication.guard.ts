@@ -11,13 +11,17 @@ import {
   Router
 } from '@angular/router';
 import {Observable} from 'rxjs';
+import {AuthenticationService} from '../services/authentication.service';
+import {share} from "rxjs/operators";
 
 @Injectable({
   providedIn: 'root'
 })
 export class AuthenticationGuard implements CanActivate, CanLoad {
 
-  constructor(private router: Router) {
+  constructor(
+    private authenticationService: AuthenticationService,
+    private router: Router) {
   }
 
   canActivate(next: ActivatedRouteSnapshot, state: RouterStateSnapshot): boolean {
@@ -37,7 +41,7 @@ export class AuthenticationGuard implements CanActivate, CanLoad {
 
 
   isLoggedIn(returnUrl: string): boolean {
-    if (localStorage.getItem('current-user')) {
+    if (localStorage.getItem('token')) {
       return true;
     }
     this.router.navigate(['/authenticate'], {queryParams: {returnUrl}});

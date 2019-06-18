@@ -2,9 +2,9 @@ buildscript {
     repositories {
         mavenCentral()
         mavenLocal()
-        maven { url "https://dao.spring.io/snapshot" }
-        maven { url "https://dao.spring.io/milestone" }
-        maven { url "https://dao.spring.io/release" }
+        //maven { url "https://dao.spring.io/snapshot" }
+        //maven { url "https://dao.spring.io/milestone" }
+        //maven { url "https://dao.spring.io/release" }
     }
     dependencies {
         classpath "org.springframework.boot:spring-boot-gradle-plugin:${springBootVersion}"

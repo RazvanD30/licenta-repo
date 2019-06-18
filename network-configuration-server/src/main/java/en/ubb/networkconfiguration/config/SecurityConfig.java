@@ -12,22 +12,23 @@ import javax.sql.DataSource;
 @Configuration
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
-    @Autowired
-    private DataSource dataSource;
+    private final DataSource dataSource;
+
+    private final BCryptPasswordEncoder encoder;
 
     @Autowired
-    private BCryptPasswordEncoder encoder;
+    public SecurityConfig(DataSource dataSource, BCryptPasswordEncoder encoder) {
+        this.dataSource = dataSource;
+        this.encoder = encoder;
+    }
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http
                 .csrf().disable()
                 .authorizeRequests()
-                .antMatchers("/network-management").access("hasRole('ADMIN')")
+                .antMatchers("/network-management").permitAll()
                 .anyRequest().permitAll()
-                .and()
-                    .formLogin().loginPage("/login")
-                    .usernameParameter("username").passwordParameter("password")
                 .and()
                 .httpBasic();
     }

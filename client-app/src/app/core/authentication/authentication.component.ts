@@ -125,7 +125,7 @@ export class AuthenticationComponent implements OnInit, AfterViewInit {
 
   redirectToHome(event: Event) {
     this.hideLogin();
-    //this.router.navigateByUrl(this.returnUrl);
+    return this.router.navigateByUrl(this.returnUrl);
   }
 
   loadScript(src: any) {

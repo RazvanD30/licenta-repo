@@ -8,6 +8,7 @@ import org.springframework.core.env.Environment;
 import org.springframework.jdbc.datasource.DriverManagerDataSource;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
+import javax.sql.DataSource;
 import java.util.Objects;
 
 @Configuration
@@ -21,8 +22,7 @@ public class AppConfig {
         this.env = env;
     }
 
-    @Bean(name = "dataSource")
-    public DriverManagerDataSource dataSource() {
+    public DataSource dataSource() {
         DriverManagerDataSource dataSource = new DriverManagerDataSource();
         dataSource.setDriverClassName(Objects.requireNonNull(env.getProperty("mysql.driver")));
         dataSource.setUrl(env.getProperty("mysql.jdbcUrl"));
