@@ -35,4 +35,7 @@ public class BranchDto {
 
     @JsonProperty("updated")
     private LocalDateTime updateDateTime;
+
+    @JsonProperty("source")
+    private Long sourceId;
 }

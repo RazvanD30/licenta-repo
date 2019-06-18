@@ -46,9 +46,12 @@ public class OAuth2AuthorizationServerConfigJwt extends AuthorizationServerConfi
 
     private final AuthenticationManager authenticationManager;
 
+    private final BCryptPasswordEncoder passwordEncoder;
+
     @Autowired
-    public OAuth2AuthorizationServerConfigJwt(@Qualifier("authenticationManagerBean") AuthenticationManager authenticationManager) {
+    public OAuth2AuthorizationServerConfigJwt(@Qualifier("authenticationManagerBean") AuthenticationManager authenticationManager, BCryptPasswordEncoder passwordEncoder) {
         this.authenticationManager = authenticationManager;
+        this.passwordEncoder = passwordEncoder;
     }
 
     @Override
@@ -58,20 +61,49 @@ public class OAuth2AuthorizationServerConfigJwt extends AuthorizationServerConfi
 
     @Override
     public void configure(final ClientDetailsServiceConfigurer clients) throws Exception {
-        clients
-                .inMemory()
-                .withClient(clientId)
-                .secret(clientSecret)
-                .authorizedGrantTypes(grantType)
-                .scopes(scopeRead, scopeWrite)
-                .resourceIds(resourceIds)
+//        clients
+//                .inMemory()
+//                .withClient(clientId)
+//                .secret(clientSecret)
+//                .authorizedGrantTypes(grantType)
+//                .scopes(scopeRead, scopeWrite)
+//                .resourceIds(resourceIds)
+//                .accessTokenValiditySeconds(3600)       // 1 hour
+//                .refreshTokenValiditySeconds(2592000);  // 30 days
+        clients.inMemory()
+                .withClient("sampleClientId")
+                .authorizedGrantTypes("implicit")
+                .scopes("read", "write", "foo", "bar")
+                .autoApprove(false)
+                .accessTokenValiditySeconds(3600)
+                .redirectUris("http://localhost:8083/","http://localhost:8086/")
+                .and()
+                .withClient("fooClientIdPassword")
+                .secret(passwordEncoder.encode("secret"))
+                .authorizedGrantTypes("password", "authorization_code", "refresh_token", "client_credentials")
+                .scopes("foo", "read", "write")
                 .accessTokenValiditySeconds(3600)       // 1 hour
-                .refreshTokenValiditySeconds(2592000);  // 30 days
+                .refreshTokenValiditySeconds(2592000)  // 30 days
+                .redirectUris("http://www.example.com","http://localhost:8089/","http://localhost:8080/login/oauth2/code/custom","http://localhost:8080/ui-thymeleaf/login/oauth2/code/custom", "http://localhost:8080/authorize/oauth2/code/bael", "http://localhost:8080/login/oauth2/code/bael")
+                .and()
+                .withClient("barClientIdPassword")
+                .secret(passwordEncoder.encode("secret"))
+                .authorizedGrantTypes("password", "authorization_code", "refresh_token")
+                .scopes("bar", "read", "write")
+                .accessTokenValiditySeconds(3600)       // 1 hour
+                .refreshTokenValiditySeconds(2592000)  // 30 days
+                .and()
+                .withClient("testImplicitClientId")
+                .authorizedGrantTypes("implicit")
+                .scopes("read", "write", "foo", "bar")
+                .autoApprove(true)
+                .redirectUris("http://www.example.com");
     }
 
     @Bean
     @Primary
     public DefaultTokenServices tokenServices() {
+        //TODO OK
         final DefaultTokenServices defaultTokenServices = new DefaultTokenServices();
         defaultTokenServices.setTokenStore(tokenStore());
         defaultTokenServices.setSupportRefreshToken(true);
@@ -80,32 +112,29 @@ public class OAuth2AuthorizationServerConfigJwt extends AuthorizationServerConfi
 
     @Override
     public void configure(final AuthorizationServerEndpointsConfigurer endpoints) {
+        //TODO OK
         endpoints.tokenStore(tokenStore())
                 .authenticationManager(authenticationManager)
                 .accessTokenConverter(accessTokenConverter());
-        /*
-        final TokenEnhancerChain tokenEnhancerChain = new TokenEnhancerChain();
-        tokenEnhancerChain.setTokenEnhancers(Arrays.asList(tokenEnhancer(), accessTokenConverter()));
-        endpoints.tokenStore(tokenStore()).tokenEnhancer(tokenEnhancerChain).authenticationManager(authenticationManager);
-        */
+//        final TokenEnhancerChain tokenEnhancerChain = new TokenEnhancerChain();
+//        tokenEnhancerChain.setTokenEnhancers(Arrays.asList(tokenEnhancer(), accessTokenConverter()));
+//        endpoints.tokenStore(tokenStore()).tokenEnhancer(tokenEnhancerChain).authenticationManager(authenticationManager);
     }
 
     @Bean
     public TokenStore tokenStore() {
+        //TODO OK
         return new JwtTokenStore(accessTokenConverter());
     }
 
     @Bean
     public JwtAccessTokenConverter accessTokenConverter() {
+        //TODO OK
         final JwtAccessTokenConverter converter = new JwtAccessTokenConverter();
         converter.setSigningKey("123");
         return converter;
     }
 
-    @Bean
-    public TokenEnhancer tokenEnhancer() {
-        return new CustomTokenEnhancer();
-    }
 
 
 }

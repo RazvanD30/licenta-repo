@@ -5,10 +5,10 @@ zuul:
   routes:
     network-configuration-server:
       path: /network-configuration/**
-      url: http://localhost:8011/
+      url: http://localhost:8011/network-configuration
     oauth:
-      path: /oauth/**
-      url: http://localhost:8804/spring-security-oauth-server/oauth
+      path: /authentication/**
+      url: http://localhost:8804/spring-security-oauth-server
 
 security:
   oauth2:

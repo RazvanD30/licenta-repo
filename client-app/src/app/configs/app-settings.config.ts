@@ -2,7 +2,8 @@ export const APP_SETTINGS = {
 
   URLS: {
     AUTHENTICATION: {
-      LOGIN: 'http://localhost:8080/authentication/login',
+      LOGIN: 'http://localhost:8803/authentication/requestTokens',
+      TOKEN_REQUEST: 'http://localhost:8803/authentication/oauth/token',
       REGISTER: 'http://localhost:8080/authentication/register',
       LOGOUT: 'http://localhost:8080/authentication/logout',
       GET_TOKEN: 'http://localhost:8804/spring-security-oauth-server/oauth/token'

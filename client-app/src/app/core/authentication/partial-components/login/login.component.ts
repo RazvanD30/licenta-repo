@@ -41,7 +41,7 @@ export class LoginComponent implements OnInit {
           this.submitEmitter.emit();
         },
         error => {
-          this.snackBar.open('Error', 'Dismiss');
+          this.snackBar.open('Invalid credentials', 'Dismiss');
         });
 
   }

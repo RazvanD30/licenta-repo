@@ -41,4 +41,9 @@ public class OfflineNetwork extends BaseEntity<Long> {
         this.name = name;
         this.layers = layers;
     }
+
+    public void addLayer(OfflineLayer layer){
+        this.layers.add(layer);
+        layer.setOfflineNetwork(this);
+    }
 }

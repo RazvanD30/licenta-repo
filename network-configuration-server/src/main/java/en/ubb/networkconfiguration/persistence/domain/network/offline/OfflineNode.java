@@ -20,7 +20,7 @@ import java.util.List;
 public class OfflineNode extends BaseEntity<Long> {
 
     @Column(name = "value")
-    private double value;
+    private Double value;
 
     @Column(name = "status")
     @Enumerated(EnumType.STRING)
@@ -38,11 +38,16 @@ public class OfflineNode extends BaseEntity<Long> {
     private List<OfflineLink> links = new ArrayList<>();
 
     @Builder(toBuilder = true)
-    public OfflineNode(double value, OfflineNodeStatus status, Node node, OfflineLayer offlineLayer, List<OfflineLink> links) {
+    public OfflineNode(Double value, OfflineNodeStatus status, Node node, OfflineLayer offlineLayer, List<OfflineLink> links) {
         this.value = value;
         this.status = status;
         this.node = node;
         this.offlineLayer = offlineLayer;
         this.links = links;
+    }
+
+    public void addLink(OfflineLink link){
+        this.links.add(link);
+        link.setOfflineNode(this);
     }
 }
