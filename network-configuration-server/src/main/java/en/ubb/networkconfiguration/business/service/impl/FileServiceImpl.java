@@ -1,6 +1,8 @@
 package en.ubb.networkconfiguration.business.service.impl;
 
 import en.ubb.networkconfiguration.business.service.FileService;
+import en.ubb.networkconfiguration.business.validation.exception.BusinessException;
+import en.ubb.networkconfiguration.business.validation.exception.FileAccessBussExc;
 import en.ubb.networkconfiguration.business.validation.exception.NotFoundBussExc;
 import en.ubb.networkconfiguration.persistence.dao.DataFileRepo;
 import en.ubb.networkconfiguration.persistence.dao.NetworkRepo;
@@ -12,7 +14,11 @@ import en.ubb.networkconfiguration.persistence.domain.network.runtime.NetworkFil
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
+import org.springframework.util.StringUtils;
+import org.springframework.web.multipart.MultipartFile;
 
+import javax.validation.constraints.NotNull;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -33,12 +39,28 @@ public class FileServiceImpl implements FileService {
 
 
     @Override
-    public DataFile addFile(String classPath, int nLabels) {
-        DataFile dataFile = DataFile.builder()
-                .classPath(classPath)
-                .nLabels(nLabels)
-                .networks(new ArrayList<>())
-                .build();
+    public DataFile addFile(@NotNull MultipartFile file, int nLabels) throws BusinessException {
+
+        if(file.getOriginalFilename() == null){
+            throw new FileAccessBussExc("Filename not found");
+        }
+        String filename = StringUtils.cleanPath(file.getOriginalFilename());
+
+        if(filename.contains("..")){
+            throw new FileAccessBussExc("Filename contains invalid path sequence: " + filename);
+        }
+
+        DataFile dataFile = null;
+        try {
+            dataFile = DataFile.builder()
+                    .name(filename)
+                    .data(file.getBytes())
+                    .nLabels(nLabels)
+                    .networks(new ArrayList<>())
+                    .build();
+        } catch (IOException e) {
+            throw new FileAccessBussExc("Erro")
+        }
         return dataFileRepo.save(dataFile);
     }
 

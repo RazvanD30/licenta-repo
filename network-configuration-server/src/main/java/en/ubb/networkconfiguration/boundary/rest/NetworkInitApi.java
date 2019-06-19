@@ -27,7 +27,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @RestController
-@RequestMapping("network-init")
+@RequestMapping("network-configuration")
 public class NetworkInitApi {
 
     private final NetworkService networkService;
@@ -51,7 +51,7 @@ public class NetworkInitApi {
         binder.addValidators(networkInitDtoValidator);
     }
 
-    @PostMapping
+    @PostMapping("/init")
     public void create(
             @Valid @RequestBody NetworkInitDto dto,
             BindingResult result,
@@ -79,20 +79,20 @@ public class NetworkInitApi {
         status.setComplete();
     }
 
-    @GetMapping
+    @GetMapping("/init")
     public List<NetworkInitDto> getAll(){
         return this.networkInitService.getAll().stream()
                 .map(DtoMapper::toDto)
                 .collect(Collectors.toList());
     }
 
-    @GetMapping("/{id}")
+    @GetMapping("/init/{id}")
     public NetworkInitDto getById(@NotNull @PathVariable Long id) throws NotFoundException {
         return this.networkInitService.findById(id).map(DtoMapper::toDto)
                 .orElseThrow(() -> new NotFoundException("Network initializer not found."));
     }
 
-    @DeleteMapping("/{id}")
+    @DeleteMapping("/init/{id}")
     public void deleteById(@NotNull @PathVariable Long id) throws NotFoundException {
         if (!this.networkInitService.deleteById(id)) {
             throw new NotFoundException("Network initializer not found.");

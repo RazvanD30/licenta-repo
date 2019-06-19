@@ -26,7 +26,6 @@ import en.ubb.networkconfiguration.persistence.domain.network.setup.LayerInitial
 import en.ubb.networkconfiguration.persistence.domain.network.setup.NetworkInitializer;
 import org.nd4j.linalg.activations.Activation;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.WebDataBinder;
@@ -40,7 +39,7 @@ import java.util.Random;
 import java.util.stream.Collectors;
 
 @RestController
-@RequestMapping("network-management")
+@RequestMapping("network-configuration")
 public class NetworkApi {
 
     private final NetworkDtoValidator networkDtoValidator;
@@ -77,27 +76,27 @@ public class NetworkApi {
     }
 
 
-    @GetMapping(value = "/networks", produces = "application/json")
+    @GetMapping(value = "/runtime", produces = "application/json")
     public List<NetworkDto> getAll() {
         return this.networkService.getAll().stream()
                 .map(DtoMapper::toDto)
                 .collect(Collectors.toList());
     }
 
-    @GetMapping(value = "/networks/{id}", produces = "application/json")
+    @GetMapping(value = "/runtime/{id}", produces = "application/json")
     public NetworkDto getById(@NotNull @PathVariable Long id) throws NotFoundException {
         return this.networkService.findById(id).map(DtoMapper::toDto)
                 .orElseThrow(() -> new NotFoundException("Network not found."));
     }
 
-    @DeleteMapping(value = "/networks/{id}")
+    @DeleteMapping(value = "/runtime/{id}")
     public void deleteById(@NotNull @PathVariable Long id) throws NotFoundException {
         if (!this.networkService.deleteById(id)) {
             throw new NotFoundException("Network not found.");
         }
     }
 
-    @PutMapping("networks")
+    @PutMapping("/runtime")
     public void update(@Validated @RequestBody NetworkDto networkDto, BindingResult result, SessionStatus status) throws NotFoundException {
 
         if (result.hasErrors()) {
@@ -111,7 +110,7 @@ public class NetworkApi {
         }
     }
 
-    @GetMapping("networks/run/{id}")
+    @GetMapping("runtime/run/{id}")
     public String run(@NotNull @PathVariable Long id,
                       @Validated @NotNull @RequestBody RunConfigDto runConfigDto) throws NotFoundException, FileAccessException {
 
@@ -132,7 +131,7 @@ public class NetworkApi {
         return "success"; //TODO RETURN RESULT / IMPROVEMENT ETC.
     }
 
-    @GetMapping("networks/save-progress/{id}")
+    @GetMapping("runtime/save-progress/{id}")
     public String saveProgress(@NotNull @PathVariable Long id) throws NotFoundException, NetworkAccessException {
 
         Network network = this.networkService.findById(id)
@@ -145,6 +144,11 @@ public class NetworkApi {
         return "success"; //TODO RETURN RESULT / IMPROVEMENT ETC.
     }
 
+
+
+
+
+    //TODO REMOVE BELOW
 
     @GetMapping(value = "/testing/create", produces = "application/json")
     public NetworkDto testCreate() throws NetworkAccessBussExc, NotFoundBussExc {
@@ -214,7 +218,7 @@ public class NetworkApi {
                 .contributors(new ArrayList<>())
                 .build();
 
-        branch = branchService.create(branch,null);
+        branch = branchService.create(branch, null);
 
         Network network = networkService.create(branch, networkInitializer);
 

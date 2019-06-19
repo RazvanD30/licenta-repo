@@ -17,8 +17,15 @@ import java.util.List;
 @Table(name = "data_files")
 public class DataFile extends BaseEntity<Long> {
 
-    @Column(name = "class_path", nullable = false, unique = true, length = 100)
-    private String classPath;
+    @Column(name = "filename", nullable = false, unique = true, length = 64)
+    private String name;
+
+    @Column(name = "type", nullable = false)
+    private String type;
+
+    @Lob
+    @Column(name = "class_path", nullable = false)
+    private byte[] data;
 
     @Column(name = "labels")
     @Range(min = 1)
@@ -28,9 +35,11 @@ public class DataFile extends BaseEntity<Long> {
     private List<NetworkFile> networks = new ArrayList<>();
 
     @Builder(toBuilder = true)
-    public DataFile(Long id, String classPath, @Range(min = 1) int nLabels, List<NetworkFile> networks) {
+    public DataFile(Long id, String name, String type, byte[] data, @Range(min = 1) int nLabels, List<NetworkFile> networks) {
         super(id);
-        this.classPath = classPath;
+        this.name = name;
+        this.type = type;
+        this.data = data;
         this.nLabels = nLabels;
         this.networks = networks;
     }

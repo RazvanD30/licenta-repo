@@ -3,7 +3,7 @@ const BASE_URL = 'http://localhost:8803';
 const AUTHORIZATION_SERVICE_URL = BASE_URL + '/authentication';
 const NETWORK_SERVICE_URL = BASE_URL + '/network-configuration';
 const BRANCH_MANAGEMENT_URL = BASE_URL + '/branch-management';
-const NETWORK_INIT_URL = NETWORK_SERVICE_URL + '/network-init';
+const NETWORK_INIT_URL = NETWORK_SERVICE_URL + '/init';
 
 export const APP_SETTINGS = {
   URLS: {
