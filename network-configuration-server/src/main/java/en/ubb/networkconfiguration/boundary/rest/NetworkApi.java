@@ -41,7 +41,6 @@ import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("network-management")
-@PreAuthorize("hasAuthority('ROLE_ADMIN') or hasAuthority('ROLE_USER')")
 public class NetworkApi {
 
     private final NetworkDtoValidator networkDtoValidator;

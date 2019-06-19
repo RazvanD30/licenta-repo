@@ -3,7 +3,7 @@ import {NetworkDto} from '../../../../shared/models/network/runtime/NetworkDto';
 import {faTimes} from '@fortawesome/free-solid-svg-icons';
 import {ActiveView} from '../../models/ActiveView';
 import {NetworkRunService} from '../../../../core/services/network-run.service';
-import {NetworkInitService} from '../../../../core/services/network-init.service';
+import {NetworkInitService} from '../../../../shared/services/network-init.service';
 import {MatDialog} from '@angular/material';
 import {SelectedTableType} from '../../models/SelectedTableType';
 

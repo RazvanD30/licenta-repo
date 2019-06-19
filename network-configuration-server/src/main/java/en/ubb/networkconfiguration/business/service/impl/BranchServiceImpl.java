@@ -38,7 +38,7 @@ public class BranchServiceImpl implements BranchService {
     @Override
     public NetworkBranch create(NetworkBranch newBranch, NetworkBranch origin) throws NotFoundBussExc {
 
-        if(origin != null) {
+        if (origin != null) {
             origin.getNetworks().forEach(network -> newBranch.addNetwork(new Network(network)));
             newBranch.setSourceId(origin.getSourceId());
         }
@@ -54,62 +54,41 @@ public class BranchServiceImpl implements BranchService {
 
     @Override
     public NetworkBranch pull(long toId, long fromId) throws NotFoundBussExc {
-        //TODO to.setUpdateDateTime(LocalDateTime.now());
-
-
         NetworkBranch to = branchRepo.findById(toId)
                 .orElseThrow(() -> new NotFoundBussExc("Destination network with id " + toId + " not found"));
         NetworkBranch from = branchRepo.findById(fromId)
                 .orElseThrow(() -> new NotFoundBussExc("Origin network with id " + fromId + " not found"));
-
-
-        Iterator<Network> iterator = to.getNetworks().iterator();
-        while (iterator.hasNext()){
-            Network next = iterator.next();
-            if(next.getOriginId() != null){ // if it's not null it might be updated by origin
-                from.getNetworks().stream()
-                        .filter(n -> n.getOriginId() != null && n.getOriginId().equals(next.getOriginId())) // IF THEY BOTH COME FROM THE SAME NETWORK
-                        .findFirst()
-                        .ifPresent(conflict -> {
-                            if(next.getUpdateDateTime().isBefore(conflict.getUpdateDateTime())){ // IF SOURCE IF OLDER THAN ORIGIN
-                                iterator.remove();
-                                to.addNetwork(conflict);
-                            }
-                        });
-            } else {
-                from.getNetworks().stream()
-                        .filter(n -> n.getOriginId() != null && n.getOriginId().equals(next.getId()))
-                        .findFirst()
-                        .ifPresent(conflict -> {
-                            if(next.getUpdateDateTime().isBefore(conflict.getUpdateDateTime())){ // IF SOURCE IF OLDER THAN ORIGIN
-                                iterator.remove();
-                                to.addNetwork(conflict);
-                            }
-                        });
-
-            }
-
-
-            if(from.getNetworks().stream().anyMatch(n -> n.getId().equals(next.getId()))){
-
-            }
-
-        }
-
-
-
-
-        from.getNetworks().forEach(network -> {
-            Iterator<Network> iterator = to.getNetworks().iterator();
-            while(iterator.hasNext()){
-                Network next = iterator.next();
-                if(network.getId())
-            }
-
-            to.getNetworks().removeIf(next -> network.getId().equals(next.getId()));
-            to.addNetwork(new Network(network));
-        });
+        solveConflicts(to,from);
+        to.setUpdateDateTime(LocalDateTime.now());
         return branchRepo.save(to);
+    }
+
+
+    private boolean shareCommonOrigin(Network originN, Network sourceN){
+        return originN.getOriginId() != null && sourceN.getOriginId() != null && sourceN.getOriginId().equals(originN.getOriginId())
+                || (sourceN.getOriginId() != null && sourceN.getOriginId().equals(originN.getId()))
+                || (originN.getOriginId() != null && sourceN.getId().equals(originN.getOriginId()));
+    }
+
+
+    public void solveConflicts(NetworkBranch to, NetworkBranch from) {
+        for (int i = 0; i < from.getNetworks().size(); i++){
+            Network sourceN = from.getNetworks().get(i);
+            boolean shouldAdd = true;
+            for (int j = 0; j < to.getNetworks().size(); j++) {
+                Network originN = to.getNetworks().get(j);
+                if (shareCommonOrigin(originN,sourceN)) {
+                    if(originN.getUpdateDateTime().isBefore(sourceN.getUpdateDateTime())) {
+                        to.removeNetwork(originN);
+                    } else {
+                        shouldAdd = false;
+                    }
+                    break;
+                }
+            }
+            if(shouldAdd)
+                to.addNetwork(sourceN);
+        }
     }
 
     @Override
@@ -119,21 +98,21 @@ public class BranchServiceImpl implements BranchService {
         NetworkBranch networkBranch = this.branchRepo.findById(id)
                 .orElseThrow(() -> new NotFoundBussExc("Branch with id " + id + " not found"));
 
-        if(newBranch.getName() != null){
+        if (newBranch.getName() != null) {
             networkBranch.setName(newBranch.getName());
         }
 
-        if(newBranch.getType() != null){
+        if (newBranch.getType() != null) {
             networkBranch.setType(newBranch.getType());
         }
 
-        if(newBranch.getOwner() != null) {
+        if (newBranch.getOwner() != null) {
             User owner = userService.findByUsername(newBranch.getOwner().getUsername())
                     .orElseThrow(() -> new NotFoundBussExc("Owner with username " + newBranch.getOwner().getUsername() + " not found"));
             networkBranch.setOwner(owner);
         }
 
-        if(newBranch.getContributors() != null && !newBranch.getContributors().isEmpty()) {
+        if (newBranch.getContributors() != null && !newBranch.getContributors().isEmpty()) {
             networkBranch.getContributors().forEach(networkBranch::removeContributor);
             for (User contrib : newBranch.getContributors()) {
                 networkBranch.addContributor(userService.findByUsername(contrib.getUsername())
@@ -142,11 +121,11 @@ public class BranchServiceImpl implements BranchService {
             }
         }
 
-        if(newBranch.getNetworks() != null && !newBranch.getNetworks().isEmpty()){
+        if (newBranch.getNetworks() != null && !newBranch.getNetworks().isEmpty()) {
             networkBranch.getNetworks().forEach(networkBranch::removeNetwork);
-            for(Network network: newBranch.getNetworks()){
+            for (Network network : newBranch.getNetworks()) {
                 networkBranch.addNetwork(networkService.findById(network.getId())
-                    .orElseThrow(() -> new NotFoundBussExc("Network with id " + network.getId() + " not found"))
+                        .orElseThrow(() -> new NotFoundBussExc("Network with id " + network.getId() + " not found"))
                 );
             }
         }
@@ -179,7 +158,7 @@ public class BranchServiceImpl implements BranchService {
     @Override
     public List<NetworkBranch> getAllForContributor(String username) throws NotFoundBussExc {
         return userService.findByUsername(username).map(contributor ->
-            branchRepo.findAll(Specification.where(BranchSpec.hasContributor(contributor)))
+                branchRepo.findAll(Specification.where(BranchSpec.hasContributor(contributor)))
         ).orElseThrow(() -> new NotFoundBussExc("User with username " + username + " not found"));
     }
 

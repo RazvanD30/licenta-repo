@@ -6,6 +6,7 @@ zuul:
     network-configuration-server:
       path: /network-configuration/**
       url: http://localhost:8811/network-configuration
+
     branch-management:
       path: /branch-management/**
       url: http://localhost:8811/branch-management

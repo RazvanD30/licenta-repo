@@ -2,7 +2,7 @@ import {Component, OnInit, Renderer2} from '@angular/core';
 
 
 @Component({
-  selector: 'app-network-create',
+  selector: 'app-network-management',
   templateUrl: './network-management.component.html',
   styleUrls: ['./network-management.component.scss']
 })

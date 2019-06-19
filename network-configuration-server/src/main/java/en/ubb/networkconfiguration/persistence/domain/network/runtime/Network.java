@@ -94,7 +94,7 @@ public class Network extends BaseEntity<Long> {
                    @Range(min = 1) int batchSize, @Range(min = 1) int nEpochs, @Range(min = 1) int nInputs,
                    @Range(min = 1) int nOutputs, MultiLayerNetwork model, NetworkState state, List<Layer> layers,
                    List<OfflineNetwork> offlineNetworks, List<NetworkFile> files, List<NetworkTrainLog> networkTrainLogs,
-                   NetworkBranch branch) {
+                   NetworkBranch branch, Long originId) {
         super(id);
         this.createDateTime = createDateTime;
         this.updateDateTime = updateDateTime;
@@ -112,6 +112,7 @@ public class Network extends BaseEntity<Long> {
         this.files = files;
         this.networkTrainLogs = networkTrainLogs;
         this.branch = branch;
+        this.originId = originId;
     }
 
     /**

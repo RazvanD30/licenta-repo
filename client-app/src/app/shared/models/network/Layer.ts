@@ -1,6 +1,6 @@
 import {Node} from './Node';
-import {LayerType} from './LayerType';
-import {Activation} from './Activation';
+import {Activation} from './shared/Activation';
+import {LayerType} from './shared/LayerType';
 
 export interface Layer {
   id: number;

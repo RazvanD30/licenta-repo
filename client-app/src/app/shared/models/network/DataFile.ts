@@ -1,4 +1,5 @@
-import {FileType} from './FileType';
+import {FileType} from './shared/FileType';
+
 
 export interface DataFile {
   id: number;

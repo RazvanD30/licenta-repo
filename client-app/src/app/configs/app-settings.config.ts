@@ -3,6 +3,7 @@ const BASE_URL = 'http://localhost:8803';
 const AUTHORIZATION_SERVICE_URL = BASE_URL + '/authentication';
 const NETWORK_SERVICE_URL = BASE_URL + '/network-configuration';
 const BRANCH_MANAGEMENT_URL = BASE_URL + '/branch-management';
+const NETWORK_INIT_URL = NETWORK_SERVICE_URL + '/network-init';
 
 export const APP_SETTINGS = {
   URLS: {
@@ -23,18 +24,19 @@ export const APP_SETTINGS = {
       PUT_UPDATE: BRANCH_MANAGEMENT_URL,
       DELETE_DELETE: BRANCH_MANAGEMENT_URL + '/'
     },
+    NETWORK_INIT: {
+      GET_ALL: NETWORK_INIT_URL,
+      GET_BY_ID: NETWORK_INIT_URL + '/',
+      POST_CREATE: NETWORK_INIT_URL,
+      DELETE_BY_ID: NETWORK_INIT_URL + '/'
+    },
     USER_MANAGEMENT: {
       GET_ALL: 'http://localhost:8080/users',
       GET_BY_ID: 'http://localhost:8080/users/',
       UPDATE: 'http://localhost:8080/users/',
       DELETE: 'http://localhost:8080/users/'
     },
-    NETWORK_INIT: {
-      CREATE: 'http://localhost:8080/network-management/init',
-      GET_ALL: 'http://localhost:8080/network-management/init',
-      GET_BY_ID: 'http://localhost:8080/network-management/init/',
-      DELETE_BY_ID: 'http://localhost:8080/network-management/init/'
-    },
+
     NETWORK_RUN: {
       GET_ALL: 'http://localhost:8803/network-configuration/networks',
       GET_BY_ID: 'http://localhost:8080/network-management/networks/',

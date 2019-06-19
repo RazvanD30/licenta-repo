@@ -1,5 +1,6 @@
-import {LayerType} from './LayerType';
-import {Activation} from './Activation';
+import {Activation} from './shared/Activation';
+import {LayerType} from './shared/LayerType';
+
 
 export interface LayerInit {
   id: number;

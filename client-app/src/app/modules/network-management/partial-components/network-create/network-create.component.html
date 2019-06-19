@@ -1,3 +1,51 @@
-<p>
-  network-create works!
-</p>
+<div style="margin-top: 10%">
+  <button (click)="loadAll()"> GET FOR USER </button>
+  <button (click)="create()"> CREATE </button>
+  <button (click)="remove()"> DELETE </button>
+  <ul *ngFor="let init of networkInits">
+    <li>
+      ID {{ init.id }}, NAME {{ init.name }}, SEED {{init.seed}}, LEARNRATE {{init.learningRate}}, BATCHS {{init.batchSize}},
+      EPOCHS {{init.nEpochs}}, INPUTS {{init.nInputs}}, OUTPUTS {{init.nOutputs}}, BRANCH {{init.branchId}}
+
+      <ul *ngFor="let layer of init.layers">
+        <li>
+          ID {{layer.id}}}, INPUTS {{layer.nInputs}}, NODES {{layer.nNodes}}, OUTPUTS {{layer.nOutputs}}, TYPE {{layer.type}},
+          ACTIVATION {{layer.activation}}
+        </li>
+      </ul>
+    </li>
+  </ul>
+  <br>------------------------------------------------------------------------------
+  <p>NAME </p><input [(ngModel)]="networkInit.name" >
+  <p>SEED </p><input [(ngModel)]="networkInit.seed" >
+  <p>LEARNRATE </p><input [(ngModel)]="networkInit.learningRate" >
+  <p>BATCHS </p><input [(ngModel)]="networkInit.batchSize" >
+  <p>EPOCHS </p><input [(ngModel)]="networkInit.nEpochs" >
+  <p>INPUTS </p><input [(ngModel)]="networkInit.nInputs" >
+  <p>OUTPUTS </p><input [(ngModel)]="networkInit.nOutputs" >
+  <p>BRANCH </p><input [(ngModel)]="networkInit.branchId" >
+  <p>LAYER COUNT</p><input (keyup)="updateLayerCount()" [(ngModel)]="layerCount" >
+
+  <ul *ngFor="let layer of networkInit.layers">
+    <li>
+      <p>INPUTS </p><input [(ngModel)]="layer.nInputs" >
+      <p>NODES </p><input [(ngModel)]="layer.nNodes" >
+      <p>OUTPUTS  </p><input [(ngModel)]="layer.nOutputs" >
+
+      <p>TYPE</p>
+      <mat-select [(value)]="layer.type">
+        <mat-option *ngFor="let type of layerTypes" [value]="type"> {{type}} </mat-option>
+      </mat-select>
+
+      <p>ACTIVATION</p>
+      <mat-select [(value)]="layer.activation">
+        <mat-option *ngFor="let act of activationTypes" [value]="act"> {{act}} </mat-option>
+      </mat-select>
+    </li>
+  </ul>
+
+  <br>--------------------------------------------------------------------------------
+  <br>DELETE
+  <p>ID </p><input [(ngModel)]="deleteId" >
+
+</div>

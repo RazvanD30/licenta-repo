@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import {HttpClient} from '@angular/common/http';
 import {Observable} from 'rxjs';
 import {APP_SETTINGS} from '../../configs/app-settings.config';
-import {NetworkInitDto} from '../../shared/models/network/setup/NetworkInitDto';
+import {NetworkInitDto} from '../models/network/setup/NetworkInitDto';
 
 @Injectable({
   providedIn: 'root'
@@ -12,7 +12,7 @@ export class NetworkInitService {
   constructor(private http: HttpClient) { }
 
   create(networkInit: NetworkInitDto) {
-    return this.http.post(APP_SETTINGS.URLS.NETWORK_INIT.CREATE,networkInit);
+    return this.http.post(APP_SETTINGS.URLS.NETWORK_INIT.POST_CREATE, networkInit);
   }
 
   getAll(): Observable<NetworkInitDto[]> {

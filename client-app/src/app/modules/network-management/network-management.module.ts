@@ -8,7 +8,7 @@ import {HttpTokenInterceptor} from '../../core/interceptors/http-token.intercept
 import {ErrorHandlerInterceptor} from '../../core/interceptors/error-handler.interceptor';
 import {NetworkDebuggingComponent} from './partial-components/network-debugging/network-debugging.component';
 import {NetworkConsoleComponent} from './pages/network-console/network-console.component';
-import {NetworkManagementComponent} from './pages/network-create/network-management.component';
+import {NetworkManagementComponent} from './pages/network-management/network-management.component';
 import {UserService} from '../../core/services/user.service';
 import {CoreModule} from '../../core/core.module';
 import { NetworkTableComponent } from './partial-components/network-table/network-table.component';
@@ -16,7 +16,7 @@ import {MaterialModule} from '../material/material.module';
 import {ScrollingModule} from '@angular/cdk/scrolling';
 import { NodeDetailsComponent } from './partial-components/node-details/node-details.component';
 import {NetworkRunService} from '../../core/services/network-run.service';
-import {NetworkInitService} from '../../core/services/network-init.service';
+import {NetworkInitService} from '../../shared/services/network-init.service';
 import { LayerTableComponent } from './partial-components/layer-table/layer-table.component';
 import { LogsTableComponent } from './partial-components/logs-table/logs-table.component';
 import { GlobalTableComponent } from './partial-components/global-table/global-table.component';

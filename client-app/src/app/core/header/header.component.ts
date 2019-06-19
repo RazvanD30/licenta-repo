@@ -89,7 +89,7 @@ export class HeaderComponent implements OnInit {
       {text: 'HOME', multiple: false, href: '', icon: faHome},
       {
         text: 'NETWORK MANAGEMENT', multiple: true, icon: faNetworkWired, choices: [
-          {text: 'CREATE NETWORK', href: '/network/create', icon: faPlusSquare},
+          {text: 'DASHBOARD', href: '/network/dashboard', icon: faPlusSquare},
           {text: 'NETWORK CONFIGURATION', href: '/network/config', icon: faWrench},
           {text: 'NETWORK DEBUG', href: '/network/debug', icon: faBug}
         ]

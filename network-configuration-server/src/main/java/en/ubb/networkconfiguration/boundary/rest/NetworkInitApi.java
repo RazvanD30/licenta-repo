@@ -27,8 +27,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @RestController
-@RequestMapping("network-management")
-@PreAuthorize("hasAuthority('ROLE_ADMIN') or hasAuthority('ROLE_USER')")
+@RequestMapping("network-init")
 public class NetworkInitApi {
 
     private final NetworkService networkService;
@@ -52,7 +51,7 @@ public class NetworkInitApi {
         binder.addValidators(networkInitDtoValidator);
     }
 
-    @PostMapping("init")
+    @PostMapping
     public void create(
             @Valid @RequestBody NetworkInitDto dto,
             BindingResult result,
@@ -80,20 +79,20 @@ public class NetworkInitApi {
         status.setComplete();
     }
 
-    @GetMapping(value = "init", produces = "application/json")
+    @GetMapping
     public List<NetworkInitDto> getAll(){
         return this.networkInitService.getAll().stream()
                 .map(DtoMapper::toDto)
                 .collect(Collectors.toList());
     }
 
-    @GetMapping(value = "init/{id}", produces = "application/json")
+    @GetMapping("/{id}")
     public NetworkInitDto getById(@NotNull @PathVariable Long id) throws NotFoundException {
         return this.networkInitService.findById(id).map(DtoMapper::toDto)
                 .orElseThrow(() -> new NotFoundException("Network initializer not found."));
     }
 
-    @DeleteMapping(value = "init/{id}")
+    @DeleteMapping("/{id}")
     public void deleteById(@NotNull @PathVariable Long id) throws NotFoundException {
         if (!this.networkInitService.deleteById(id)) {
             throw new NotFoundException("Network initializer not found.");
