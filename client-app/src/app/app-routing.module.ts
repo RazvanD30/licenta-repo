@@ -21,6 +21,11 @@ const routes: Routes = [
     path: 'network',
     loadChildren: './modules/network-management/network-management.module#NetworkManagementModule',
     canLoad: [AuthenticationGuard]
+  },
+  {
+    path: 'file-management',
+    loadChildren: './modules/file-management/file-management.module#FileManagementModule',
+    canLoad: [AuthenticationGuard]
   }
 
 

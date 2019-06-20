@@ -17,7 +17,7 @@ import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {LoaderComponent} from './shared/components/loader/loader.component';
 import {MDBBootstrapModule} from 'angular-bootstrap-md';
 import {JwtHelper} from 'angular2-jwt';
-import { BranchTableComponent } from './modules/branch-management/partial-components/branch-table/branch-table.component';
+import {BranchService} from './shared/services/branch.service';
 
 @NgModule({
   declarations: [
@@ -39,6 +39,7 @@ import { BranchTableComponent } from './modules/branch-management/partial-compon
     UserService,
     AuthenticationService,
     JwtHelper,
+    BranchService,
 
     {provide: HTTP_INTERCEPTORS, useClass: HttpTokenInterceptor, multi: true},
     {provide: HTTP_INTERCEPTORS, useClass: ErrorHandlerInterceptor, multi: true},

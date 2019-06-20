@@ -27,7 +27,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @RestController
-@RequestMapping("network-configuration")
+@RequestMapping("network-management/init")
 public class NetworkInitApi {
 
     private final NetworkService networkService;
@@ -51,7 +51,7 @@ public class NetworkInitApi {
         binder.addValidators(networkInitDtoValidator);
     }
 
-    @PostMapping("/init")
+    @PostMapping
     public void create(
             @Valid @RequestBody NetworkInitDto dto,
             BindingResult result,
@@ -62,12 +62,8 @@ public class NetworkInitApi {
         }
 
         try {
-
-            NetworkBranch branch = branchService.findById(dto.getBranchId()).orElseThrow(() ->
-                    new NotFoundException("Branch with id " + dto.getBranchId() + " not found"));
-
             this.networkInitService.create(DtoMapper.fromDto(dto));
-            this.networkService.create(branch,DtoMapper.fromDto(dto));
+            this.networkService.create(dto.getBranchId(),DtoMapper.fromDto(dto));
 
         } catch (NetworkAccessBussExc ex) {
             throw new NetworkAccessException(ex);
@@ -79,20 +75,20 @@ public class NetworkInitApi {
         status.setComplete();
     }
 
-    @GetMapping("/init")
+    @GetMapping
     public List<NetworkInitDto> getAll(){
         return this.networkInitService.getAll().stream()
                 .map(DtoMapper::toDto)
                 .collect(Collectors.toList());
     }
 
-    @GetMapping("/init/{id}")
+    @GetMapping("/{id}")
     public NetworkInitDto getById(@NotNull @PathVariable Long id) throws NotFoundException {
         return this.networkInitService.findById(id).map(DtoMapper::toDto)
                 .orElseThrow(() -> new NotFoundException("Network initializer not found."));
     }
 
-    @DeleteMapping("/init/{id}")
+    @DeleteMapping("/{id}")
     public void deleteById(@NotNull @PathVariable Long id) throws NotFoundException {
         if (!this.networkInitService.deleteById(id)) {
             throw new NotFoundException("Network initializer not found.");

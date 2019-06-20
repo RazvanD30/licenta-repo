@@ -12,5 +12,5 @@ import java.util.List;
 public interface NetworkTrainLogRepo extends JpaRepository<NetworkTrainLog,Long> {
 
     @Query("SELECT trainLog FROM NetworkTrainLog trainLog WHERE trainLog.network.id = :id ORDER BY trainLog.createDateTime DESC ")
-    List<NetworkTrainLog> getAllOrderByDateAsc(@Param("id") long id);
+    List<NetworkTrainLog> getAllOrderByDateDesc(@Param("id") long id);
 }

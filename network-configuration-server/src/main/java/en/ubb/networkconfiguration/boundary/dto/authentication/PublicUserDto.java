@@ -21,4 +21,7 @@ public class PublicUserDto {
 
     @JsonProperty("roles")
     private List<Role> roles;
+
+    @JsonProperty("currentBranchName")
+    private String currentBranchName;
 }

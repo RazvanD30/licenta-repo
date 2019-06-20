@@ -24,7 +24,7 @@ public class DataFile extends BaseEntity<Long> {
     private String type;
 
     @Lob
-    @Column(name = "class_path", nullable = false)
+    @Column(name = "data", nullable = false)
     private byte[] data;
 
     @Column(name = "labels")

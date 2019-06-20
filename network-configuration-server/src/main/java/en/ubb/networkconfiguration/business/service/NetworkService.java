@@ -1,12 +1,14 @@
 package en.ubb.networkconfiguration.business.service;
 
 
+import en.ubb.networkconfiguration.business.nonpersisted.NetworkEval;
 import en.ubb.networkconfiguration.business.validation.exception.FileAccessBussExc;
 import en.ubb.networkconfiguration.business.validation.exception.NetworkAccessBussExc;
 import en.ubb.networkconfiguration.business.validation.exception.NotFoundBussExc;
 import en.ubb.networkconfiguration.persistence.domain.branch.NetworkBranch;
 import en.ubb.networkconfiguration.persistence.domain.network.runtime.*;
 import en.ubb.networkconfiguration.persistence.domain.network.setup.NetworkInitializer;
+import sun.nio.ch.Net;
 
 import java.util.List;
 import java.util.Optional;
@@ -19,15 +21,17 @@ public interface NetworkService {
 
     Optional<Network> findById(long id);
 
-    boolean deleteById(long id);
+    Optional<Network> findByName(String name);
 
-    Network create(NetworkBranch branch, NetworkInitializer initializer) throws NetworkAccessBussExc, NotFoundBussExc;
+    Network deleteById(long id) throws NotFoundBussExc;
+
+    Network create(long branchId, NetworkInitializer initializer) throws NetworkAccessBussExc, NotFoundBussExc;
 
     Network update(Network updatedNetwork) throws NotFoundBussExc;
 
-    Network run(Network network, DataFile trainFile, DataFile testFile) throws FileAccessBussExc;
+    NetworkEval run(Network network, DataFile trainFile, DataFile testFile) throws FileAccessBussExc;
 
-    Network saveProgress(Network network) throws NetworkAccessBussExc;
+    void saveProgress(Network network) throws NetworkAccessBussExc;
 
     Network loadNetwork(Network network) throws NetworkAccessBussExc;
 

@@ -3,18 +3,17 @@
 
   var width, height, canvas, ctx, points, target, animateHeader = true;
   var minConnectionsPerNode = 10; // was 5 before
-  var numberOfPoints = 300;
-  var closestNeighbourDistance = 30000; // was 4000
-  var closeNeighbourDistance = 60000; // was 20000
-  var farNeighbourDistance = 80000; // was 40000
+  var numberOfPoints = 200;
+  var closestNeighbourDistance = 8000; // was 4000
+  var closeNeighbourDistance = 24000; // was 20000
+  var farNeighbourDistance = 60000; // was 40000
   var radiusConstant = 6;
-  var listenForMouse = false;
+  const delay = ms => new Promise(res => setTimeout(res, ms));
 
   // Main
   initCircles();
   initAnimation();
   initPos();
-  addListeners();
 
   function initCircles() {
     width = window.innerWidth < 1920 ? window.innerWidth/2.5 : 1920/2.5;
@@ -30,8 +29,8 @@
     points = [];
     for (var x = 0; x < canvas.width; x = x + canvas.width / Math.sqrt(numberOfPoints)) {
       for (var y = 0; y < canvas.height; y = y + canvas.height / Math.sqrt(numberOfPoints)) {
-        var px = x + Math.random() * 80;
-        var py = y + Math.random() * 80;
+        var px = x + 80;
+        var py = y + 80;
         var p = {x: px, originX: px, y: py, originY: py};
         points.push(p);
       }
@@ -74,47 +73,11 @@
     }
   }
 
-  // Event handling
-  function addListeners() {
-    if (!('ontouchstart' in window)) {
-      window.addEventListener('mousemove', mouseMove);
-    }
-    window.addEventListener('scroll', scrollCheck);
-    window.addEventListener('resize', resize);
-  }
-
-
-  function mouseMove(e) {
-
-    if (listenForMouse === false)
-      return;
-    target.x = width / 2;
-    target.y = height / 2;
-  }
-
-  function scrollCheck() {
-    if (document.body.scrollTop > height) {
-      animateHeader = false;
-    } else {
-      animateHeader = true;
-    }
-  }
-
-  function resize() {
-    width = window.innerWidth < 1920 ? window.innerWidth : 1920;
-    height = window.innerHeight < 1080 ? window.innerHeight : 1080;
-    closestNeighbourDistance  = 15.6 * width;
-    closeNeighbourDistance = 31.3 * width;
-    farNeighbourDistance = 41.7 * width;
-    canvas.width = width;
-    canvas.height = height;
-    initCircles();
-    initAnimation();
-  }
 
   // animation
-  function initAnimation() {
+  async function initAnimation() {
     animate();
+    await delay(2000);
     for (var i in points) {
       shiftPoint(points[i]);
     }
@@ -145,11 +108,11 @@
         } else if (Math.abs(getDistance(target, points[i])) < closeNeighbourDistance) {
 
           points[i].active = 0.2;
-          points[i].circle.active = 0.4;
+          points[i].circle.active = 0.5;
         } else if (Math.abs(getDistance(target, points[i])) < farNeighbourDistance) {
 
           points[i].active = 0.05;
-          points[i].circle.active = 0.1;
+          points[i].circle.active = 0.2;
         } else {
           points[i].active = points[i].active > 0.005 ? 0.997 * points[i].active : 0;
           points[i].circle.active = points[i].circle.active > 0.01 ? 0.997 * points[i].circle.active : 0;
@@ -164,9 +127,9 @@
   }
 
   function shiftPoint(p) {
-    TweenLite.to(p, 1 + Math.random(), {
-      x: p.originX - 50 + Math.random() * 100,
-      y: p.originY - 50 + Math.random() * 100, ease: Circ.easeInOut,
+    TweenLite.to(p, 4 + Math.random(), {
+      x: p.originX + (Math.random() * 20 - 10),
+      y: p.originY + (Math.random() * 20 - 10), ease: Circ.easeInOut,
       onComplete: function () {
         shiftPoint(p);
       }
@@ -180,11 +143,8 @@
       ctx.beginPath();
       ctx.moveTo(p.x, p.y);
       ctx.lineTo(p.closest[i].x, p.closest[i].y);
-
-
-      var middleXOfLine = (p.x + p.closest[i].x) / 2;
-      ctx.strokeStyle = 'rgba(0, 0, 0,' + p.active + ')';
-
+      ctx.strokeStyle = 'rgba(0, 0, 0,' + p.active / 2 + ')';
+      ctx.lineWidth = 2;
       ctx.stroke();
     }
   }

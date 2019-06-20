@@ -4,7 +4,6 @@ import en.ubb.networkconfiguration.boundary.dto.network.log.NetworkTrainLogDto;
 import en.ubb.networkconfiguration.boundary.util.DtoMapper;
 import en.ubb.networkconfiguration.business.service.NetworkTrainLogService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -15,8 +14,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @RestController
-@RequestMapping("network-management")
-@PreAuthorize("hasAuthority('ROLE_ADMIN') or hasAuthority('ROLE_USER')")
+@RequestMapping("network-management/log")
 public class NetworkTrainLogApi {
 
     private final NetworkTrainLogService networkTrainLogService;
@@ -26,9 +24,9 @@ public class NetworkTrainLogApi {
         this.networkTrainLogService = networkTrainLogService;
     }
 
-    @GetMapping(value = "logs/{id}", produces = "application/json")
-    public List<NetworkTrainLogDto> getAllSortedByDate(@NotNull @PathVariable Long id) {
-        return networkTrainLogService.getAllSorted(id).stream()
+    @GetMapping(value = "/{networkId}")
+    public List<NetworkTrainLogDto> getAllSortedByDate(@NotNull @PathVariable Long networkId) {
+        return networkTrainLogService.getAllSorted(networkId).stream()
                 .map(DtoMapper::toDto)
                 .collect(Collectors.toList());
     }

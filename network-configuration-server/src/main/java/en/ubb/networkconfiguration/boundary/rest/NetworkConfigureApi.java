@@ -1,11 +1,10 @@
 package en.ubb.networkconfiguration.boundary.rest;
 
 
+import en.ubb.networkconfiguration.boundary.dto.file.FileLinkDto;
 import en.ubb.networkconfiguration.boundary.dto.network.runtime.NetworkDto;
-import en.ubb.networkconfiguration.boundary.dto.network.runtime.RunConfigDto;
 import en.ubb.networkconfiguration.boundary.util.DtoMapper;
 import en.ubb.networkconfiguration.boundary.validation.exception.FileAccessException;
-import en.ubb.networkconfiguration.boundary.validation.exception.NetworkAccessException;
 import en.ubb.networkconfiguration.boundary.validation.exception.NotFoundException;
 import en.ubb.networkconfiguration.boundary.validation.validator.NetworkDtoValidator;
 import en.ubb.networkconfiguration.boundary.validation.validator.RunConfigDtoValidator;
@@ -18,7 +17,6 @@ import en.ubb.networkconfiguration.business.validation.exception.NetworkAccessBu
 import en.ubb.networkconfiguration.business.validation.exception.NotFoundBussExc;
 import en.ubb.networkconfiguration.persistence.domain.branch.NetworkBranch;
 import en.ubb.networkconfiguration.persistence.domain.network.enums.BranchType;
-import en.ubb.networkconfiguration.persistence.domain.network.enums.FileType;
 import en.ubb.networkconfiguration.persistence.domain.network.enums.LayerType;
 import en.ubb.networkconfiguration.persistence.domain.network.runtime.DataFile;
 import en.ubb.networkconfiguration.persistence.domain.network.runtime.Network;
@@ -39,8 +37,8 @@ import java.util.Random;
 import java.util.stream.Collectors;
 
 @RestController
-@RequestMapping("network-configuration")
-public class NetworkApi {
+@RequestMapping("network-management/configure")
+public class NetworkConfigureApi {
 
     private final NetworkDtoValidator networkDtoValidator;
 
@@ -55,7 +53,7 @@ public class NetworkApi {
     private final UserService userService;
 
     @Autowired
-    public NetworkApi(NetworkService networkService, NetworkDtoValidator networkDtoValidator, FileService fileService, RunConfigDtoValidator runConfigDtoValidator, BranchService branchService, UserService userService) {
+    public NetworkConfigureApi(NetworkService networkService, NetworkDtoValidator networkDtoValidator, FileService fileService, RunConfigDtoValidator runConfigDtoValidator, BranchService branchService, UserService userService) {
         this.networkService = networkService;
         this.networkDtoValidator = networkDtoValidator;
         this.fileService = fileService;
@@ -76,27 +74,35 @@ public class NetworkApi {
     }
 
 
-    @GetMapping(value = "/runtime", produces = "application/json")
+    @GetMapping
     public List<NetworkDto> getAll() {
         return this.networkService.getAll().stream()
                 .map(DtoMapper::toDto)
                 .collect(Collectors.toList());
     }
 
-    @GetMapping(value = "/runtime/{id}", produces = "application/json")
-    public NetworkDto getById(@NotNull @PathVariable Long id) throws NotFoundException {
+    @GetMapping(value = "/{id}")
+    public NetworkDto getById(@NotNull @PathVariable long id) throws NotFoundException {
         return this.networkService.findById(id).map(DtoMapper::toDto)
-                .orElseThrow(() -> new NotFoundException("Network not found."));
+                .orElseThrow(() -> new NotFoundException("Network with id " + id + "not found."));
     }
 
-    @DeleteMapping(value = "/runtime/{id}")
-    public void deleteById(@NotNull @PathVariable Long id) throws NotFoundException {
-        if (!this.networkService.deleteById(id)) {
-            throw new NotFoundException("Network not found.");
+    @GetMapping(value = "/withName/{name}")
+    public NetworkDto getByName(@NotNull @PathVariable String name) throws NotFoundException {
+        return this.networkService.findByName(name).map(DtoMapper::toDto)
+                .orElseThrow(() -> new NotFoundException("Network with name " + name + " not found"));
+    }
+
+    @DeleteMapping(value = "/{id}")
+    public NetworkDto deleteById(@NotNull @PathVariable long id) throws NotFoundException {
+        try {
+            return DtoMapper.toDto(this.networkService.deleteById(id));
+        } catch (NotFoundBussExc notFoundBussExc) {
+            throw new NotFoundException(notFoundBussExc);
         }
     }
 
-    @PutMapping("/runtime")
+    @PutMapping
     public void update(@Validated @RequestBody NetworkDto networkDto, BindingResult result, SessionStatus status) throws NotFoundException {
 
         if (result.hasErrors()) {
@@ -110,42 +116,25 @@ public class NetworkApi {
         }
     }
 
-    @GetMapping("runtime/run/{id}")
-    public String run(@NotNull @PathVariable Long id,
-                      @Validated @NotNull @RequestBody RunConfigDto runConfigDto) throws NotFoundException, FileAccessException {
-
-        Network network = this.networkService.findById(id)
-                .orElseThrow(() -> new NotFoundException("Network not found."));
-        try {
-
-            DataFile trainFile = this.fileService.findFile(runConfigDto.getTrainFileId())
-                    .orElseThrow(() -> new NotFoundException("Train file not found."));
-
-            DataFile testFile = this.fileService.findFile(runConfigDto.getTestFileId())
-                    .orElseThrow(() -> new NotFoundException("Test file not found."));
-
-            this.networkService.run(network, trainFile, testFile);
-        } catch (FileAccessBussExc ex) {
-            throw new FileAccessException("Could not access the given files.");
+    @PostMapping("/link")
+    public void linkFile(@RequestBody FileLinkDto dto) throws NotFoundException, FileAccessException {
+        try{
+            this.fileService.linkFile(dto.getNetworkId(),dto.getFileName(),dto.getFileType());
+        } catch (NotFoundBussExc notFoundBussExc) {
+            throw new NotFoundException(notFoundBussExc);
+        } catch (FileAccessBussExc fileAccessBussExc) {
+            throw new FileAccessException(fileAccessBussExc);
         }
-        return "success"; //TODO RETURN RESULT / IMPROVEMENT ETC.
     }
 
-    @GetMapping("runtime/save-progress/{id}")
-    public String saveProgress(@NotNull @PathVariable Long id) throws NotFoundException, NetworkAccessException {
-
-        Network network = this.networkService.findById(id)
-                .orElseThrow(() -> new NotFoundException("Network not found."));
-        try {
-            this.networkService.saveProgress(network);
-        } catch (NetworkAccessBussExc ex) {
-            throw new NetworkAccessException("Could not access the given network.");
+    @PostMapping("/unlink")
+    public void unlinkFile(@RequestBody FileLinkDto dto) throws NotFoundException {
+        try{
+            this.fileService.unlinkFile(dto.getNetworkId(),dto.getFileName());
+        } catch (NotFoundBussExc notFoundBussExc) {
+            throw new NotFoundException(notFoundBussExc);
         }
-        return "success"; //TODO RETURN RESULT / IMPROVEMENT ETC.
     }
-
-
-
 
 
     //TODO REMOVE BELOW
@@ -220,7 +209,7 @@ public class NetworkApi {
 
         branch = branchService.create(branch, null);
 
-        Network network = networkService.create(branch, networkInitializer);
+        Network network = networkService.create(branch.getId(), networkInitializer);
 
         String trainClassPath = "classification/train.csv";
         String testClassPath = "classification/eval.csv";
@@ -229,8 +218,8 @@ public class NetworkApi {
         int trainLabels = 2;
         int testLabels = 2;
 
-        fileService.addFile(network.getId(), trainClassPath, trainLabels, FileType.TRAIN);
-        fileService.addFile(network.getId(), testClassPath, testLabels, FileType.TEST);
+        //fileService.linkFile(network.getId(), trainClassPath, trainLabels, FileType.TRAIN);
+        //fileService.linkFile(network.getId(), testClassPath, testLabels, FileType.TEST);
 
         return DtoMapper.toDto(network);
     }
@@ -247,7 +236,7 @@ public class NetworkApi {
         List<Network> all = networkService.getAll();
         Network network = all.get(all.size() - 1);
 
-        network = networkService.run(network, trainFile, testFile);
+        //network = networkService.run(network, trainFile, testFile);
         /*
         config = networkService.loadNetwork(config);
 

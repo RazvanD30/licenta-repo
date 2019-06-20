@@ -4,16 +4,20 @@ import en.ubb.networkconfiguration.business.aspect.cache.CCachable;
 import en.ubb.networkconfiguration.business.listener.LifecycleUpdateEventSource;
 import en.ubb.networkconfiguration.business.listener.NetworkLifecycleState;
 import en.ubb.networkconfiguration.business.listener.ScoreIterationLogListener;
+import en.ubb.networkconfiguration.business.nonpersisted.NetworkEval;
 import en.ubb.networkconfiguration.business.service.NetworkService;
+import en.ubb.networkconfiguration.business.service.NetworkTrainLogService;
 import en.ubb.networkconfiguration.business.util.LayerUtil;
 import en.ubb.networkconfiguration.business.validation.exception.FileAccessBussExc;
 import en.ubb.networkconfiguration.business.validation.exception.NetworkAccessBussExc;
 import en.ubb.networkconfiguration.business.validation.exception.NotFoundBussExc;
 import en.ubb.networkconfiguration.persistence.dao.*;
+import en.ubb.networkconfiguration.persistence.dao.specification.NetworkSpec;
 import en.ubb.networkconfiguration.persistence.domain.branch.NetworkBranch;
 import en.ubb.networkconfiguration.persistence.domain.network.runtime.*;
 import en.ubb.networkconfiguration.persistence.domain.network.setup.NetworkInitializer;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.io.FileUtils;
 import org.apache.logging.log4j.util.TriConsumer;
 import org.datavec.api.records.reader.RecordReader;
 import org.datavec.api.records.reader.impl.csv.CSVRecordReader;
@@ -33,6 +37,7 @@ import org.nd4j.linalg.learning.config.Nesterovs;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 
 import java.io.*;
@@ -55,6 +60,8 @@ public class NetworkServiceImpl implements NetworkService {
 
     private final BranchRepo branchRepo;
 
+    private final NetworkTrainLogService networkTrainLogService;
+
     private static final Logger LOGGER = LoggerFactory.getLogger(NetworkServiceImpl.class);
 
     private final LifecycleUpdateEventSource lifecycleUpdateEventSource;
@@ -62,7 +69,7 @@ public class NetworkServiceImpl implements NetworkService {
     @Autowired
     public NetworkServiceImpl(NetworkRepo networkRepo, NodeRepo nodeRepo, LayerRepo layerRepo,
                               NetworkStateRepo networkStateRepo, LinkRepo linkRepo,
-                              LifecycleUpdateEventSource lifecycleUpdateEventSource, BranchRepo branchRepo) {
+                              LifecycleUpdateEventSource lifecycleUpdateEventSource, BranchRepo branchRepo, NetworkTrainLogService networkTrainLogService) {
         this.networkRepo = networkRepo;
         this.nodeRepo = nodeRepo;
         this.layerRepo = layerRepo;
@@ -70,6 +77,7 @@ public class NetworkServiceImpl implements NetworkService {
         this.linkRepo = linkRepo;
         this.lifecycleUpdateEventSource = lifecycleUpdateEventSource;
         this.branchRepo = branchRepo;
+        this.networkTrainLogService = networkTrainLogService;
     }
 
     @Override
@@ -91,12 +99,17 @@ public class NetworkServiceImpl implements NetworkService {
     }
 
     @Override
-    public boolean deleteById(long id) {
-        if (networkRepo.findById(id).isPresent()) {
-            networkRepo.deleteById(id);
-            return true;
-        }
-        return false;
+    public Optional<Network> findByName(String name) {
+        return networkRepo.findOne(Specification.where(NetworkSpec.hasName(name)));
+    }
+
+    @Override
+    public Network deleteById(long id) throws NotFoundBussExc {
+        return networkRepo.findById(id)
+                .map(network -> {
+                    networkRepo.deleteById(id);
+                    return network;
+                }).orElseThrow(() -> new NotFoundBussExc("Network with id " + id + " not found"));
     }
 
     private Network getInitialNetwork(NetworkInitializer initializer) {
@@ -136,10 +149,10 @@ public class NetworkServiceImpl implements NetworkService {
     }
 
     @Override
-    public Network create(NetworkBranch branch, NetworkInitializer initializer) throws NetworkAccessBussExc, NotFoundBussExc {
+    public Network create(long branchId, NetworkInitializer initializer) throws NetworkAccessBussExc, NotFoundBussExc {
 
-        NetworkBranch persistedBranch = branchRepo.findById(branch.getId())
-                .orElseThrow(() -> new NotFoundBussExc("The given branch is not saved"));
+        NetworkBranch persistedBranch = branchRepo.findById(branchId)
+                .orElseThrow(() -> new NotFoundBussExc("Branch with id " + branchId + " not found"));
 
         Network network = this.getInitialNetwork(initializer);
         persistedBranch.addNetwork(network);
@@ -188,21 +201,37 @@ public class NetworkServiceImpl implements NetworkService {
     }
 
     @Override
-    public Network run(Network network, DataFile trainFile, DataFile testFile) throws FileAccessBussExc {
+    public NetworkEval run(Network network, DataFile trainFile, DataFile testFile) throws FileAccessBussExc {
         try {
+
+            NetworkEval previous = null;
+            List<NetworkTrainLog> trainLogsSorted = this.networkTrainLogService.getAllSorted(network.getId());
+            if(!trainLogsSorted.isEmpty()){
+                NetworkTrainLog last = trainLogsSorted.get(0);
+                previous = NetworkEval.builder()
+                        .accuracy(last.getAccuracy())
+                        .precision(last.getPrecision())
+                        .f1Score(last.getF1Score())
+                        .recall(last.getRecall())
+                        .previousEval(null)
+                        .build();
+            }
+
             MultiLayerNetwork model = network.getModel();
 
-            final String filenameTrain = new ClassPathResource(trainFile.getClassPath()).getFile().getPath();
-            final String filenameTest = new ClassPathResource(testFile.getClassPath()).getFile().getPath();
+            File trainTempFile = new File(trainFile.getName());
+            File testTempFile = new File(testFile.getName());
+            FileUtils.writeByteArrayToFile(trainTempFile,trainFile.getData());
+            FileUtils.writeByteArrayToFile(testTempFile,testFile.getData());
 
             RecordReader rr = new CSVRecordReader();
-            rr.initialize(new FileSplit(new File(filenameTrain)));
+            rr.initialize(new FileSplit(trainTempFile));
             DataSetIterator trainIter =
                     new RecordReaderDataSetIterator(rr, network.getBatchSize(), 0, trainFile.getNLabels());
 
             // Load the test/evaluation data
             RecordReader rrTest = new CSVRecordReader();
-            rrTest.initialize(new FileSplit(new File(filenameTest)));
+            rrTest.initialize(new FileSplit(testTempFile));
             DataSetIterator testIter =
                     new RecordReaderDataSetIterator(rrTest, network.getBatchSize(), 0, testFile.getNLabels());
 
@@ -240,10 +269,18 @@ public class NetworkServiceImpl implements NetworkService {
             networkTrainLog.setPrecision(eval.precision());
             networkTrainLog.setF1Score(eval.f1());
             networkTrainLog.setRecall(eval.recall());
-            network.addNetworkTrainLog(networkTrainLog);
 
+            NetworkEval networkEval = NetworkEval.builder()
+                    .accuracy(eval.accuracy())
+                    .precision(eval.precision())
+                    .f1Score(eval.f1())
+                    .recall(eval.recall())
+                    .previousEval(previous)
+                    .build();
+
+            network.addNetworkTrainLog(networkTrainLog);
             lifecycleUpdateEventSource.accept(network, NetworkLifecycleState.STOPPED);
-            return network;
+            return networkEval;
         } catch (IOException | InterruptedException ex) {
             lifecycleUpdateEventSource.accept(network, NetworkLifecycleState.FAILED);
             throw new FileAccessBussExc("Could not access the train/test files for the network with id "
@@ -253,7 +290,7 @@ public class NetworkServiceImpl implements NetworkService {
     }
 
     @Override
-    public Network saveProgress(Network network) throws NetworkAccessBussExc {
+    public void saveProgress(Network network) throws NetworkAccessBussExc {
         MultiLayerNetwork model = network.getModel();
         ByteArrayOutputStream stream = new ByteArrayOutputStream();
         try {
@@ -288,7 +325,6 @@ public class NetworkServiceImpl implements NetworkService {
                 }
 
             }
-            return networkRepo.save(network);
         } catch (IOException ex) {
             throw new NetworkAccessBussExc("Could not save the model state. " + ex.getMessage());
         }

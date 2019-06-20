@@ -1,5 +1,6 @@
 package en.ubb.networkconfiguration.business.service;
 
+import en.ubb.networkconfiguration.business.validation.exception.ForbiddenAccessBussExc;
 import en.ubb.networkconfiguration.business.validation.exception.NotFoundBussExc;
 import en.ubb.networkconfiguration.persistence.domain.authentication.User;
 import en.ubb.networkconfiguration.persistence.domain.branch.NetworkBranch;
@@ -21,6 +22,8 @@ public interface BranchService {
     Optional<NetworkBranch> findById(long id);
 
     Optional<NetworkBranch> findByName(String name);
+
+    NetworkBranch assign(String branchName, String username) throws NotFoundBussExc, ForbiddenAccessBussExc;
 
     NetworkBranch create(NetworkBranch newBranch, NetworkBranch origin) throws NotFoundBussExc;
 

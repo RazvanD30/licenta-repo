@@ -3,6 +3,7 @@ package en.ubb.networkconfiguration.business.service.impl;
 import en.ubb.networkconfiguration.business.service.BranchService;
 import en.ubb.networkconfiguration.business.service.NetworkService;
 import en.ubb.networkconfiguration.business.service.UserService;
+import en.ubb.networkconfiguration.business.validation.exception.ForbiddenAccessBussExc;
 import en.ubb.networkconfiguration.business.validation.exception.NotFoundBussExc;
 import en.ubb.networkconfiguration.persistence.dao.BranchRepo;
 import en.ubb.networkconfiguration.persistence.dao.specification.BranchSpec;
@@ -33,6 +34,22 @@ public class BranchServiceImpl implements BranchService {
         this.branchRepo = branchRepo;
         this.userService = userService;
         this.networkService = networkService;
+    }
+
+    @Override
+    public NetworkBranch assign(String branchName, String username) throws NotFoundBussExc, ForbiddenAccessBussExc {
+        User user = userService.findByUsername(username)
+                .orElseThrow(() -> new NotFoundBussExc("User not found"));
+        NetworkBranch networkBranch = this.findByName(branchName)
+                .orElseThrow(() -> new NotFoundBussExc("Branch with name " + branchName + " not found"));
+        if(!networkBranch.getOwner().getUsername().equals(username)){
+            if(networkBranch.getContributors().stream()
+                    .noneMatch(c -> c.getUsername().equals(username))){
+                throw new ForbiddenAccessBussExc("You are not a contributor or the owner of this branch");
+            }
+        }
+        networkBranch.addCurrentUser(user);
+        return branchRepo.save(networkBranch);
     }
 
     @Override

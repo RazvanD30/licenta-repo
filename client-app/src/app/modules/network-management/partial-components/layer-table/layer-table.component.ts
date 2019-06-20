@@ -63,9 +63,9 @@ export class LayerTableComponent implements OnInit {
       case 'gt':
         return cell > expected;
       case 'eq':
-        return cell == expected;
+        return cell === expected;
       case 'nq':
-        return cell != expected;
+        return cell !== expected;
     }
   }
 
@@ -84,7 +84,8 @@ export class LayerTableComponent implements OnInit {
       ok = ok === true && layer.type.toString().toLowerCase().includes(this.filters.type.toLowerCase());
     }
     if (this.filters.activation !== '') {
-      ok = ok === true && layer.activation != null && layer.activation.toString().toLowerCase().includes(this.filters.activation.toLowerCase());
+      ok = ok === true && layer.activation != null && layer.activation.toString().toLowerCase()
+        .includes(this.filters.activation.toLowerCase());
     }
     return ok;
   }

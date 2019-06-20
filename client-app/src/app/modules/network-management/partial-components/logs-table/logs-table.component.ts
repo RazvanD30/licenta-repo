@@ -1,6 +1,6 @@
 import {Component, Input, OnInit, ViewChild} from '@angular/core';
 import {MatPaginator, MatSort, MatTableDataSource} from '@angular/material';
-import {NetworkTrainLog} from '../../../../shared/models/network/log/NetworkTrainLog';
+import {NetworkTrainLogDto} from '../../../../shared/models/network/log/NetworkTrainLogDto';
 
 @Component({
   selector: 'app-logs-table',
@@ -9,10 +9,10 @@ import {NetworkTrainLog} from '../../../../shared/models/network/log/NetworkTrai
 })
 export class LogsTableComponent implements OnInit {
 
-  @Input() logs: NetworkTrainLog[];
+  @Input() logs: NetworkTrainLogDto[];
   displayedColumns: string[];
   editable: boolean;
-  logDataSource: MatTableDataSource<NetworkTrainLog>;
+  logDataSource: MatTableDataSource<NetworkTrainLogDto>;
   filters;
   gradeErrorMatcher;
   fc;
@@ -42,13 +42,13 @@ export class LogsTableComponent implements OnInit {
 
     this.logDataSource = new MatTableDataSource(this.logs);
     this.logDataSource.paginator = this.paginator;
-    this.logDataSource.sortingDataAccessor = (log: NetworkTrainLog, property: string) => {
+    this.logDataSource.sortingDataAccessor = (log: NetworkTrainLogDto, property: string) => {
       switch (property) {
         default:
           return log[property];
       }
     };
-    this.logDataSource.filterPredicate = (log: NetworkTrainLog, filters: string) => this.filterPredicate(log);
+    this.logDataSource.filterPredicate = (log: NetworkTrainLogDto, filters: string) => this.filterPredicate(log);
     this.logDataSource.sort = this.sort;
 
     this.resetFilters();
@@ -67,9 +67,9 @@ export class LogsTableComponent implements OnInit {
       case 'gt':
         return cell > expected;
       case 'eq':
-        return cell == expected;
+        return cell === expected;
       case 'nq':
-        return cell != expected;
+        return cell !== expected;
     }
     this.filters = {
       createDateTime: '',
@@ -90,7 +90,7 @@ export class LogsTableComponent implements OnInit {
   }
 
 
-  filterPredicate(log: NetworkTrainLog): boolean {
+  filterPredicate(log: NetworkTrainLogDto): boolean {
     let ok = true;
     if (this.filters.createDateTime !== '') {
       const d1 = new Date(log.createDateTime);

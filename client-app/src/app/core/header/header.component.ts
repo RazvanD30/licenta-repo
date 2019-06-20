@@ -1,16 +1,20 @@
-import {Component, ElementRef, HostListener, OnInit, Renderer2, ViewChild} from '@angular/core';
+import {Component, ElementRef, OnInit, ViewChild} from '@angular/core';
 import {animate, state, style, transition, trigger} from '@angular/animations';
 import {
   faBug,
   faCalendarAlt,
   faChevronDown,
+  faFileCsv,
   faHome,
   faNetworkWired,
   faPlusSquare,
-  faSignInAlt, faWrench
+  faSignInAlt,
+  faWrench
 } from '@fortawesome/free-solid-svg-icons';
 import {faCodeBranch} from '@fortawesome/free-solid-svg-icons/faCodeBranch';
 import {AuthenticationService} from '../services/authentication.service';
+import {BranchService} from '../../shared/services/branch.service';
+import {BranchDto} from '../../shared/models/branch/BranchDto';
 
 
 export function getMarginTop() {
@@ -68,9 +72,14 @@ export class HeaderComponent implements OnInit {
   public isOpen = false;
   public links = [];
   public marginTop = 100;
+  public isLoggedIn = false;
+  public currentBranch: BranchDto;
+  public username: string;
+  public availableBranches: BranchDto[] = [];
 
 
-  constructor(private authenticationService: AuthenticationService) {
+  constructor(private authenticationService: AuthenticationService,
+              private branchService: BranchService) {
 
   }
 
@@ -85,6 +94,11 @@ export class HeaderComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.username = localStorage.getItem('username');
+    this.isLoggedIn = this.username != null;
+    if (this.isLoggedIn === true) {
+      this.loadBranchData();
+    }
     this.links = [
       {text: 'HOME', multiple: false, href: '', icon: faHome},
       {
@@ -101,6 +115,7 @@ export class HeaderComponent implements OnInit {
           {text: 'UPDATE BRANCH', href: ''}
         ]
       },
+      {text: 'FILE MANAGEMENT', multiple: false, icon: faFileCsv, href: '/file-management/dashboard'},
       {text: 'JOB MANAGEMENT', multiple: false, icon: faCalendarAlt, href: ''}
     ];
     if (this.authenticationService.isLoggedIn()) {
@@ -111,6 +126,19 @@ export class HeaderComponent implements OnInit {
 
   }
 
+  loadBranchData() {
+    this.branchService.getAllForUser(this.username)
+      .subscribe(branches => {
+        this.branchService.getCurrentWorkingBranch(this.username)
+          .subscribe(current => {
+            this.availableBranches = branches.filter(branch => {
+              return branch.name !== current.name;
+            });
+            this.currentBranch = current;
+          });
+      });
+  }
+
   logout() {
     this.authenticationService.logout();
   }
@@ -118,5 +146,10 @@ export class HeaderComponent implements OnInit {
   openClose(event) {
     event.preventDefault();
     this.isOpen = !this.isOpen;
+  }
+
+  selectBranch(branch: BranchDto) {
+    this.branchService.assignWorkingBranch(this.username, branch.name)
+      .subscribe(response => this.loadBranchData());
   }
 }

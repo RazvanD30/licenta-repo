@@ -13,7 +13,8 @@ import en.ubb.networkconfiguration.boundary.dto.network.runtime.LayerDto;
 import en.ubb.networkconfiguration.boundary.dto.network.runtime.LinkDto;
 import en.ubb.networkconfiguration.boundary.dto.network.runtime.NetworkDto;
 import en.ubb.networkconfiguration.boundary.dto.network.runtime.NodeDto;
-import en.ubb.networkconfiguration.boundary.dto.network.setup.DataFileDto;
+import en.ubb.networkconfiguration.boundary.dto.file.DataFileDto;
+import en.ubb.networkconfiguration.boundary.dto.file.FileLinkDto;
 import en.ubb.networkconfiguration.boundary.dto.network.setup.LayerInitDto;
 import en.ubb.networkconfiguration.boundary.dto.network.setup.NetworkInitDto;
 import en.ubb.networkconfiguration.persistence.domain.authentication.Authority;
@@ -27,7 +28,7 @@ import en.ubb.networkconfiguration.persistence.domain.network.runtime.*;
 import en.ubb.networkconfiguration.persistence.domain.network.setup.LayerInitializer;
 import en.ubb.networkconfiguration.persistence.domain.network.setup.NetworkInitializer;
 
-import java.util.ArrayList;
+import java.io.IOException;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -176,6 +177,32 @@ public class DtoMapper {
 
     }
 
+    public static DataFileDto toDto(DataFile dataFile) {
+        return DataFileDto.builder()
+                .id(dataFile.getId())
+                .name(dataFile.getName())
+                .nLabels(dataFile.getNLabels())
+                .build();
+    }
+
+    public static DataFile fromDto(DataFileDto dataFile) throws IOException {
+        return DataFile.builder()
+                .id(dataFile.getId())
+                .name(dataFile.getName())
+                .nLabels(dataFile.getNLabels())
+                .build();
+    }
+
+
+    public static List<FileLinkDto> toDtos(DataFile dataFile) {
+        return dataFile.getNetworks().stream()
+                .map(fileNetwork -> FileLinkDto.builder()
+                        .fileName(dataFile.getName())
+                        .fileType(fileNetwork.getType())
+                        .networkId(fileNetwork.getNetwork().getId())
+                        .build())
+                .collect(Collectors.toList());
+    }
 
     public static LayerInitializer fromDto(LayerInitDto layer) {
         return LayerInitializer.builder()
@@ -185,29 +212,6 @@ public class DtoMapper {
                 .nOutputs(layer.getNOutputs())
                 .activation(layer.getActivation())
                 .type(layer.getType())
-                .build();
-    }
-
-    public static List<DataFileDto> toDtos(DataFile dataFile) {
-        List<DataFileDto> dtos = new ArrayList<>();
-
-        dataFile.getNetworks().forEach(networkFile -> {
-            DataFileDto dto = DataFileDto.builder()
-                    .networkId(networkFile.getNetwork().getId())
-                    .classPath(dataFile.getClassPath())
-                    .nLabels(dataFile.getNLabels())
-                    .type(networkFile.getType())
-                    .build();
-            dtos.add(dto);
-        });
-        return dtos;
-    }
-
-    public static DataFile fromDtoPartial(DataFileDto dto) {
-        return DataFile.builder()
-                .id(dto.getId())
-                .classPath(dto.getClassPath())
-                .nLabels(dto.getNLabels())
                 .build();
     }
 

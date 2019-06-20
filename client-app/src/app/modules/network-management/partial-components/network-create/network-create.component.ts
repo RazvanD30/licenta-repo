@@ -1,8 +1,10 @@
 import {Component, OnInit} from '@angular/core';
 import {NetworkInitService} from '../../../../shared/services/network-init.service';
-import {NetworkInitDto} from '../../../../shared/models/network/setup/NetworkInitDto';
+import {NetworkInitDto} from '../../../../shared/models/network/init/NetworkInitDto';
 import {Activation, ActivationParser} from '../../../../shared/models/network/shared/Activation';
 import {LayerType, LayerTypeParser} from '../../../../shared/models/network/shared/LayerType';
+import {BranchService} from "../../../../shared/services/branch.service";
+import {BranchDto} from "../../../../shared/models/branch/BranchDto";
 
 @Component({
   selector: 'app-network-create',
@@ -17,8 +19,10 @@ export class NetworkCreateComponent implements OnInit {
   networkInits: NetworkInitDto[] = [];
   activationTypes =  ActivationParser.names();
   layerTypes = LayerTypeParser.names();
+  availableBranches: BranchDto[] = [];
 
-  constructor(private networkInitService: NetworkInitService) {
+  constructor(private networkInitService: NetworkInitService,
+              private branchService: BranchService) {
   }
 
   reset() {
@@ -40,6 +44,8 @@ export class NetworkCreateComponent implements OnInit {
 
   ngOnInit() {
     this.reset();
+    this.branchService.getAllForUser(localStorage.getItem('username'))
+      .subscribe(resp => this.availableBranches = resp);
   }
 
   loadAll() {

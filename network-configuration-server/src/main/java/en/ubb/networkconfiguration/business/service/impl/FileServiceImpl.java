@@ -39,65 +39,42 @@ public class FileServiceImpl implements FileService {
 
 
     @Override
-    public DataFile addFile(@NotNull MultipartFile file, int nLabels) throws BusinessException {
+    public DataFile addFile(@NotNull MultipartFile file, int nLabels) throws FileAccessBussExc {
 
-        if(file.getOriginalFilename() == null){
+        if (file.getOriginalFilename() == null) {
             throw new FileAccessBussExc("Filename not found");
         }
         String filename = StringUtils.cleanPath(file.getOriginalFilename());
 
-        if(filename.contains("..")){
+        if (filename.contains("..")) {
             throw new FileAccessBussExc("Filename contains invalid path sequence: " + filename);
         }
 
-        DataFile dataFile = null;
+        DataFile dataFile;
         try {
             dataFile = DataFile.builder()
                     .name(filename)
+                    .type(file.getContentType())
                     .data(file.getBytes())
                     .nLabels(nLabels)
                     .networks(new ArrayList<>())
                     .build();
         } catch (IOException e) {
-            throw new FileAccessBussExc("Erro")
+            throw new FileAccessBussExc("Error encountered while accessing the file contents");
         }
         return dataFileRepo.save(dataFile);
     }
 
     @Override
-    public Network addFile(long networkID, String classPath, int nLabels, FileType fileType) throws NotFoundBussExc {
-        return this.networkRepo.findById(networkID).map(persistedNetwork ->
-                this.findFile(classPath)
-                        .map(dataFile -> {
-                            persistedNetwork.addFile(dataFile, fileType);
-                            return persistedNetwork;
-                        })
-                        .orElseGet(() -> {
-                            DataFile dataFile = DataFile.builder()
-                                    .classPath(classPath)
-                                    .nLabels(nLabels)
-                                    .networks(new ArrayList<>())
-                                    .build();
-                            DataFile persistedFile = dataFileRepo.save(dataFile);
+    public Network linkFile(long networkID, String fileName, FileType fileType) throws NotFoundBussExc, FileAccessBussExc {
 
-                            persistedNetwork.addFile(persistedFile, fileType);
-                            this.networkRepo.save(persistedNetwork);
-                            return persistedNetwork;
-                        })
-        ).orElseThrow(() -> new NotFoundBussExc("Network with id " + networkID + " not found"));
-    }
+        DataFile dataFile = this.findFile(fileName)
+                .orElseThrow(() -> new FileAccessBussExc("File with name " + fileName + " not found"));
 
-    @Override
-    public Network unlinkFile(long networkID, String classPath) throws NotFoundBussExc {
-
-        final Network persistedNetwork = this.networkRepo.findById(networkID)
-                .orElseThrow(() -> new NotFoundBussExc("Network with id " + networkID + " not found"));
-
-        final DataFile persistedDataFile = this.findFile(classPath)
-                .orElseThrow(() -> new NotFoundBussExc("File with classpath " + classPath + " not found"));
-
-        persistedNetwork.removeFile(persistedDataFile);
-        return persistedNetwork;
+        return this.networkRepo.findById(networkID).map(persistedNetwork -> {
+            persistedNetwork.addFile(dataFile, fileType);
+            return this.networkRepo.save(persistedNetwork);
+        }).orElseThrow(() -> new NotFoundBussExc("Network with id " + networkID + " not found"));
     }
 
     @Override
@@ -108,8 +85,30 @@ public class FileServiceImpl implements FileService {
 
         return this.networkRepo.findById(networkId).map(persistedNetwork -> {
             persistedNetwork.addFile(persistedDataFile, fileType);
-            return persistedNetwork;
+            return this.networkRepo.save(persistedNetwork);
         }).orElseThrow(() -> new NotFoundBussExc("Network with id " + networkId + " not found"));
+    }
+
+    @Override
+    public Network unlinkFile(long networkID, String fileName) throws NotFoundBussExc {
+
+        final Network persistedNetwork = this.networkRepo.findById(networkID)
+                .orElseThrow(() -> new NotFoundBussExc("Network with id " + networkID + " not found"));
+
+        final DataFile persistedDataFile = this.findFile(fileName)
+                .orElseThrow(() -> new NotFoundBussExc("File with name " + fileName + " not found"));
+
+        persistedNetwork.removeFile(persistedDataFile);
+        return this.networkRepo.save(persistedNetwork);
+    }
+
+    @Override
+    public DataFile removeFile(String fileName) throws NotFoundBussExc {
+        DataFile dataFile = this.findFile(fileName)
+                .orElseThrow(() -> new NotFoundBussExc("File with name " + fileName + " not found "));
+
+        this.dataFileRepo.deleteById(dataFile.getId());
+        return dataFile;
     }
 
     @Override
@@ -123,8 +122,8 @@ public class FileServiceImpl implements FileService {
     }
 
     @Override
-    public Optional<DataFile> findFile(String classPath) {
-        return this.dataFileRepo.findOne(Specification.where(DataFileSpec.hasClasspath(classPath)));
+    public Optional<DataFile> findFile(String fileName) {
+        return this.dataFileRepo.findOne(Specification.where(DataFileSpec.hasName(fileName)));
     }
 
     @Override

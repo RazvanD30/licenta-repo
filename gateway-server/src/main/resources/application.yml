@@ -4,11 +4,14 @@ zuul:
   ignored-headers: Access-Control-Allow-Credentials, Access-Control-Allow-Origin
   routes:
     network-configuration-server:
-      path: /network-configuration/**
-      url: http://localhost:8811/network-configuration
+      path: /network-management/**
+      url: http://localhost:8811/network-management
     branch-management:
       path: /branch-management/**
       url: http://localhost:8811/branch-management
+    file-management:
+      path: /file-management/**
+      url: http://localhost:8811/file-management
     oauth:
       path: /authentication/**
       url: http://localhost:8804/spring-security-oauth-server

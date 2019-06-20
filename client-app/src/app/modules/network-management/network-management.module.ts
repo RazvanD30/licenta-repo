@@ -15,12 +15,12 @@ import { NetworkTableComponent } from './partial-components/network-table/networ
 import {MaterialModule} from '../material/material.module';
 import {ScrollingModule} from '@angular/cdk/scrolling';
 import { NodeDetailsComponent } from './partial-components/node-details/node-details.component';
-import {NetworkRunService} from '../../core/services/network-run.service';
 import {NetworkInitService} from '../../shared/services/network-init.service';
 import { LayerTableComponent } from './partial-components/layer-table/layer-table.component';
 import { LogsTableComponent } from './partial-components/logs-table/logs-table.component';
 import { GlobalTableComponent } from './partial-components/global-table/global-table.component';
 import { NetworkCreateComponent } from './partial-components/network-create/network-create.component';
+import { NetworkTablesComponent } from './pages/network-tables/network-tables.component';
 @NgModule({
   declarations: [
     CytoscapeComponent,
@@ -34,7 +34,8 @@ import { NetworkCreateComponent } from './partial-components/network-create/netw
     LayerTableComponent,
     LogsTableComponent,
     GlobalTableComponent,
-    NetworkCreateComponent
+    NetworkCreateComponent,
+    NetworkTablesComponent
   ],
   imports: [
     CoreModule,
@@ -44,7 +45,6 @@ import { NetworkCreateComponent } from './partial-components/network-create/netw
   ],
   providers: [
     UserService,
-    NetworkRunService,
     NetworkInitService,
 
     AuthenticationGuard,

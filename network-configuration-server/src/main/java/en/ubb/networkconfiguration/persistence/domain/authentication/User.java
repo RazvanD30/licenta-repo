@@ -28,6 +28,9 @@ public class User extends BaseEntity<Long> {
     @Column(name = "enabled", nullable = false)
     private boolean enabled;
 
+    @ManyToOne(fetch = FetchType.LAZY)
+    private NetworkBranch currentBranch;
+
     @OneToMany(mappedBy = "owner")
     private List<NetworkBranch> branchesWithOwnership = new ArrayList<>();
 

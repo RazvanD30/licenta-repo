@@ -1,10 +1,10 @@
 import {Component, EventEmitter, Input, OnInit, Output, ViewChild} from '@angular/core';
 import {MatMenuTrigger, MatPaginator, MatSort, MatTableDataSource} from '@angular/material';
 import {NetworkDto} from '../../../../shared/models/network/runtime/NetworkDto';
-import {NetworkRunService} from '../../../../core/services/network-run.service';
 import {faList} from '@fortawesome/free-solid-svg-icons';
 import {ActiveView} from '../../models/ActiveView';
 import {SelectedTableType} from '../../models/SelectedTableType';
+import {NetworkConfigureService} from '../../../../shared/services/network-configure.service';
 
 
 @Component({
@@ -29,7 +29,7 @@ export class NetworkTableComponent implements OnInit {
 
   @ViewChild(MatMenuTrigger) contextMenu: MatMenuTrigger;
 
-  constructor(private networkRunService: NetworkRunService) {
+  constructor(private networkConfigureService: NetworkConfigureService) {
   }
 
   ngOnInit() {
@@ -99,9 +99,9 @@ export class NetworkTableComponent implements OnInit {
       case 'gt':
         return cell > expected;
       case 'eq':
-        return cell == expected;
+        return cell === expected;
       case 'nq':
-        return cell != expected;
+        return cell !== expected;
     }
   }
 

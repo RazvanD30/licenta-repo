@@ -23,7 +23,12 @@
   <p>EPOCHS </p><input [(ngModel)]="networkInit.nEpochs" >
   <p>INPUTS </p><input [(ngModel)]="networkInit.nInputs" >
   <p>OUTPUTS </p><input [(ngModel)]="networkInit.nOutputs" >
-  <p>BRANCH </p><input [(ngModel)]="networkInit.branchId" >
+  <p>BRANCH </p>
+  <mat-select [(value)]="networkInit.branchId">
+    <mat-option *ngFor="let branch of availableBranches" [value]="branch.id"> {{branch.name}} </mat-option>
+  </mat-select>
+
+
   <p>LAYER COUNT</p><input (keyup)="updateLayerCount()" [(ngModel)]="layerCount" >
 
   <ul *ngFor="let layer of networkInit.layers">

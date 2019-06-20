@@ -40,6 +40,9 @@ public class NetworkBranch extends BaseEntity<Long> {
     @JoinColumn(name = "owner_id")
     private User owner;
 
+    @OneToMany(mappedBy = "currentBranch", cascade = CascadeType.ALL)
+    private List<User> currentUsers = new ArrayList<>();
+
     @Column(name = "created_datetime")
     @CreationTimestamp
     private LocalDateTime createDateTime;
@@ -58,7 +61,8 @@ public class NetworkBranch extends BaseEntity<Long> {
 
     @Builder(toBuilder = true)
     public NetworkBranch(Long id, String name, BranchType type, List<Network> networks, Long sourceId, User owner,
-                         LocalDateTime createDateTime, LocalDateTime updateDateTime, List<User> contributors) {
+                         LocalDateTime createDateTime, LocalDateTime updateDateTime, List<User> contributors,
+                         List<User> currentUsers) {
         super(id);
         this.name = name;
         this.type = type;
@@ -68,6 +72,7 @@ public class NetworkBranch extends BaseEntity<Long> {
         this.createDateTime = createDateTime;
         this.updateDateTime = updateDateTime;
         this.contributors = contributors;
+        this.currentUsers = currentUsers;
     }
 
 
@@ -93,5 +98,10 @@ public class NetworkBranch extends BaseEntity<Long> {
     public void removeContributor(User user){
         this.contributors.removeIf(u -> u.getId().equals(user.getId()));
         user.getBranches().removeIf(b -> b.getId().equals(this.getId()));
+    }
+
+    public void addCurrentUser(User user){
+        this.currentUsers.add(user);
+        user.setCurrentBranch(this);
     }
 }

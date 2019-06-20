@@ -18,10 +18,9 @@ public class NetworkTrainLogServiceImpl implements NetworkTrainLogService {
         this.networkTrainLogRepo = networkTrainLogRepo;
     }
 
-
     @Override
     public List<NetworkTrainLog> getAllSorted(long networkId) {
-        return networkTrainLogRepo.getAllOrderByDateAsc(networkId);
+        return networkTrainLogRepo.getAllOrderByDateDesc(networkId);
     }
 }
 

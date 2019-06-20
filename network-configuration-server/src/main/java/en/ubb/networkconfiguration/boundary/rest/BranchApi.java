@@ -3,14 +3,19 @@ package en.ubb.networkconfiguration.boundary.rest;
 import en.ubb.networkconfiguration.boundary.dto.authentication.PublicUserDto;
 import en.ubb.networkconfiguration.boundary.dto.branch.BranchDto;
 import en.ubb.networkconfiguration.boundary.util.DtoMapper;
+import en.ubb.networkconfiguration.boundary.validation.exception.ForbiddenAccessException;
 import en.ubb.networkconfiguration.boundary.validation.exception.NotFoundException;
 import en.ubb.networkconfiguration.business.service.BranchService;
+import en.ubb.networkconfiguration.business.service.UserService;
+import en.ubb.networkconfiguration.business.validation.exception.ForbiddenAccessBussExc;
 import en.ubb.networkconfiguration.business.validation.exception.NotFoundBussExc;
+import en.ubb.networkconfiguration.persistence.domain.authentication.User;
 import en.ubb.networkconfiguration.persistence.domain.branch.NetworkBranch;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.constraints.NotNull;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -21,16 +26,21 @@ public class BranchApi {
 
     private final BranchService branchService;
 
+    private final UserService userService;
+
     @Autowired
-    public BranchApi(BranchService branchService) {
+    public BranchApi(BranchService branchService, UserService userService) {
         this.branchService = branchService;
+        this.userService = userService;
     }
 
     @PostMapping
     public BranchDto create(@RequestBody BranchDto dto) throws NotFoundException {
         if(dto.getSourceId() == null) {
             try {
-                return DtoMapper.toDto(this.branchService.create(DtoMapper.fromDto(dto),null));
+                NetworkBranch networkBranch = DtoMapper.fromDto(dto);
+                networkBranch.setCurrentUsers(new ArrayList<>());
+                return DtoMapper.toDto(this.branchService.create(networkBranch,null));
             } catch (NotFoundBussExc notFoundBussExc) {
                 throw new NotFoundException(notFoundBussExc);
             }
@@ -44,6 +54,25 @@ public class BranchApi {
         } catch (NotFoundBussExc notFoundBussExc) {
             throw new NotFoundException(notFoundBussExc);
         }
+    }
+
+    @PostMapping("/workingBranch/{branchName}")
+    public void assign(@PathVariable String branchName, @RequestBody String username) throws NotFoundException, ForbiddenAccessException {
+        try {
+            this.branchService.assign(branchName,username);
+        } catch (NotFoundBussExc notFoundBussExc) {
+            throw new NotFoundException(notFoundBussExc);
+        } catch (ForbiddenAccessBussExc forbiddenAccessBussExc) {
+            throw new ForbiddenAccessException(forbiddenAccessBussExc);
+        }
+    }
+
+    @GetMapping("/workingBranch/{username}")
+    public BranchDto getCurrentBranchForUsername(@PathVariable String username) throws NotFoundException {
+        User user = this.userService.findByUsername(username)
+                .orElseThrow(() -> new NotFoundException("User not found"));
+
+        return user.getCurrentBranch() != null ? DtoMapper.toDto(user.getCurrentBranch()) : null;
     }
 
     @PutMapping

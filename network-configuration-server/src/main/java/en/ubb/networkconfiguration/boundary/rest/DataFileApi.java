@@ -1,25 +1,34 @@
 package en.ubb.networkconfiguration.boundary.rest;
 
-import en.ubb.networkconfiguration.boundary.dto.network.runtime.RunConfigDto;
-import en.ubb.networkconfiguration.boundary.dto.network.setup.DataFileDto;
+import en.ubb.networkconfiguration.boundary.dto.file.RunConfigDto;
+import en.ubb.networkconfiguration.boundary.dto.file.DataFileDto;
+import en.ubb.networkconfiguration.boundary.dto.file.FileLinkDto;
 import en.ubb.networkconfiguration.boundary.util.DtoMapper;
+import en.ubb.networkconfiguration.boundary.validation.exception.FileAccessException;
 import en.ubb.networkconfiguration.boundary.validation.exception.NotFoundException;
 import en.ubb.networkconfiguration.boundary.validation.validator.DataFileDtoValidator;
 import en.ubb.networkconfiguration.business.service.FileService;
+import en.ubb.networkconfiguration.business.validation.exception.FileAccessBussExc;
 import en.ubb.networkconfiguration.business.validation.exception.NotFoundBussExc;
 import en.ubb.networkconfiguration.persistence.domain.network.runtime.DataFile;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.core.io.ByteArrayResource;
+import org.springframework.core.io.Resource;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.multipart.commons.CommonsMultipartFile;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @RestController
-@RequestMapping("network-management")
-@PreAuthorize("hasAuthority('ROLE_ADMIN') or hasAuthority('ROLE_USER')")
+@RequestMapping("file-management")
 public class DataFileApi {
 
 
@@ -39,35 +48,15 @@ public class DataFileApi {
     }
 
 
-    @GetMapping(value = "/files", produces = "application/json")
+    @GetMapping
     public List<DataFileDto> getAll() {
-        List<DataFileDto> dtos = new ArrayList<>();
-        List<DataFile> dataFiles = this.fileService.getAll();
-        dataFiles.forEach(dataFile -> {
-            dtos.addAll(DtoMapper.toDtos(dataFile));
-        });
-        return dtos;
+        return this.fileService.getAll().stream()
+                .map(DtoMapper::toDto)
+                .collect(Collectors.toList());
     }
 
-    @PostMapping("/files")
-    public void addFile(@Validated @RequestBody DataFileDto dto) throws NotFoundException {
-        try {
-            this.fileService.addFile(dto.getNetworkId(), dto.getClassPath(), dto.getNLabels(), dto.getType());
-        } catch (NotFoundBussExc ex) {
-            throw new NotFoundException(ex);
-        }
-    }
-
-    @DeleteMapping("/files")
-    public void removeFile(@Validated @RequestBody DataFileDto dto) throws NotFoundException {
-        try {
-            this.fileService.unlinkFile(dto.getNetworkId(), dto.getClassPath());
-        } catch (NotFoundBussExc ex) {
-            throw new NotFoundException(ex);
-        }
-    }
-
-    public List<RunConfigDto> getAllPossibleRunningConfigurations(long networkId) throws NotFoundException {
+    @GetMapping("/run-configs/{networkId}")
+    public List<RunConfigDto> getAllPossibleRunningConfigurations(@PathVariable long networkId) throws NotFoundException {
         try {
             List<DataFile> trainFiles = this.fileService.getTrainFiles(networkId);
             List<DataFile> testFiles = this.fileService.getTestFiles(networkId);
@@ -77,7 +66,9 @@ public class DataFileApi {
                     runConfigDtos.add(RunConfigDto.builder()
                             .networkId(networkId)
                             .trainFileId(trainFile.getId())
+                            .trainFileName(trainFile.getName())
                             .testFileId(testFile.getId())
+                            .testFileName(testFile.getName())
                             .build());
                 });
             });
@@ -86,6 +77,45 @@ public class DataFileApi {
             throw new NotFoundException(ex);
         }
     }
+
+    @GetMapping("/{fileName}")
+    public DataFileDto getByName(@PathVariable String fileName) throws NotFoundException {
+        return DtoMapper.toDto(this.fileService.findFile(fileName)
+                .orElseThrow(() -> new NotFoundException("File with name " + fileName + " not found")));
+    }
+
+
+    @PostMapping
+    public void addFile(@RequestParam("file") MultipartFile file, @RequestParam String nLabels) throws FileAccessException {
+        try {
+            this.fileService.addFile(file,Integer.parseInt(nLabels));
+        } catch (FileAccessBussExc ex) {
+            throw new FileAccessException(ex);
+        }
+    }
+
+    @DeleteMapping("/{fileName}")
+    public void removeFile(@PathVariable String fileName) throws NotFoundException {
+        try {
+            this.fileService.removeFile(fileName);
+        } catch (NotFoundBussExc ex) {
+            throw new NotFoundException(ex);
+        }
+    }
+
+
+
+    @GetMapping("/download/{fileName}")
+    public ResponseEntity<Resource> downloadFile(@PathVariable String fileName) throws NotFoundException {
+        DataFile dataFile = this.fileService.findFile(fileName)
+                .orElseThrow(() -> new NotFoundException("File with name " + fileName + " not found"));
+
+        return ResponseEntity.ok()
+                .contentType(MediaType.parseMediaType(dataFile.getType()))
+                .header(HttpHeaders.CONTENT_DISPOSITION,"attachment; filename=\"" + dataFile.getName() + "\"")
+                .body(new ByteArrayResource(dataFile.getData()));
+    }
+
 
 
 }

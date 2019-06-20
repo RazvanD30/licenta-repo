@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import {Injectable} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
 import {BranchDto} from '../models/branch/BranchDto';
 import {Observable} from 'rxjs';
@@ -9,7 +9,8 @@ import {APP_SETTINGS} from '../../configs/app-settings.config';
 })
 export class BranchService {
 
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient) {
+  }
 
 
   getAllForOwner(username: string): Observable<BranchDto[]> {
@@ -42,6 +43,14 @@ export class BranchService {
 
   delete(id: number): Observable<BranchDto> {
     return this.http.delete<BranchDto>(APP_SETTINGS.URLS.BRANCH_MANAGEMENT.DELETE_DELETE + id);
+  }
+
+  assignWorkingBranch(username: string, branchName: string): Observable<void> {
+    return this.http.post<void>(APP_SETTINGS.URLS.BRANCH_MANAGEMENT.POST_ASSIGN_WORKING_BRANCH + branchName, username);
+  }
+
+  getCurrentWorkingBranch(username: string): Observable<BranchDto> {
+    return this.http.get<BranchDto>(APP_SETTINGS.URLS.BRANCH_MANAGEMENT.GET_WORKING_BRANCH + username);
   }
 
 }

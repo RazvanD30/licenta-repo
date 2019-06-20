@@ -2,10 +2,11 @@ import {Component, OnInit, Renderer2} from '@angular/core';
 import {NetworkDto} from '../../../../shared/models/network/runtime/NetworkDto';
 import {faTimes} from '@fortawesome/free-solid-svg-icons';
 import {ActiveView} from '../../models/ActiveView';
-import {NetworkRunService} from '../../../../core/services/network-run.service';
 import {NetworkInitService} from '../../../../shared/services/network-init.service';
 import {MatDialog} from '@angular/material';
 import {SelectedTableType} from '../../models/SelectedTableType';
+import {NetworkConfigureService} from '../../../../shared/services/network-configure.service';
+import {NetworkLogService} from '../../../../shared/services/network-log.service';
 
 @Component({
   selector: 'app-global-table',
@@ -22,14 +23,15 @@ export class GlobalTableComponent implements OnInit {
 
   selectedView: ActiveView;
 
-  constructor(private networkRunService: NetworkRunService,
+  constructor(private networkConfigureService: NetworkConfigureService,
+              private networkLogService: NetworkLogService,
               private networkInitService: NetworkInitService,
               public dialog: MatDialog,
               private renderer: Renderer2) {
   }
 
   ngOnInit() {
-    this.networkRunService.getAll().subscribe(networks => {
+    this.networkConfigureService.getAll().subscribe(networks => {
       this.networks = networks;
       this.selectedView = {
         network: null,
@@ -41,7 +43,7 @@ export class GlobalTableComponent implements OnInit {
   }
 
   loadWithLogs(selection: ActiveView) {
-    this.networkRunService.getAllLogs(selection.network.id).subscribe(logs => {
+    this.networkLogService.getAllForNetworkId(selection.network.id).subscribe(logs => {
       selection.additionalData = logs;
       this.activeViews.push(selection);
       this.setCurrentSelection(selection);
@@ -55,7 +57,7 @@ export class GlobalTableComponent implements OnInit {
   }
 
   isCurrentSelection(selection: ActiveView) {
-    return (this.selectedView.network == null || selection.network == null || this.selectedView.network.id == selection.network.id)
+    return (this.selectedView.network == null || selection.network == null || this.selectedView.network.id === selection.network.id)
       && this.selectedView.tableType === selection.tableType;
   }
 

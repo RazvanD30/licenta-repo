@@ -35,7 +35,7 @@ public class Network extends BaseEntity<Long> {
     @UpdateTimestamp
     private LocalDateTime updateDateTime;
 
-    @Column(name = "name", nullable = false, length = 100)
+    @Column(name = "name", nullable = false, length = 64, unique = true)
     @NotEmpty
     private String name;
 
