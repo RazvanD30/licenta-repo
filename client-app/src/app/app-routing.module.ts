@@ -18,7 +18,7 @@ const routes: Routes = [
   {path: 'loader', component: LoaderComponent, canActivate: [AuthenticationGuard]},
   {path: 'alert', component: AlertComponent},
   {
-    path: 'network',
+    path: 'network-management',
     loadChildren: './modules/network-management/network-management.module#NetworkManagementModule',
     canLoad: [AuthenticationGuard]
   },

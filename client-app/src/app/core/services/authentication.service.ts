@@ -90,6 +90,9 @@ export class AuthenticationService {
 
   logout() {
     localStorage.removeItem('token');
+    localStorage.removeItem('refreshToken');
+    localStorage.removeItem('branch');
+    localStorage.removeItem('username');
     this.router.navigateByUrl('/authenticate');
   }
 

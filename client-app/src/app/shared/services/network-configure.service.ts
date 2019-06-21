@@ -16,6 +16,9 @@ export class NetworkConfigureService {
     return this.http.get<NetworkDto[]>(APP_SETTINGS.URLS.NETWORK_MANAGEMENT.NETWORK_CONFIGURE.GET_ALL);
   }
 
+  getAllForUser(username: string): Observable<NetworkDto[]> {
+    return this.http.get<NetworkDto[]>(APP_SETTINGS.URLS.NETWORK_MANAGEMENT.NETWORK_CONFIGURE.GET_ALL_FOR_USER + username);
+  }
   getById(id: number): Observable<NetworkDto> {
     return this.http.get<NetworkDto>(APP_SETTINGS.URLS.NETWORK_MANAGEMENT.NETWORK_CONFIGURE.GET_BY_ID + id);
   }

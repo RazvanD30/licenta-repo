@@ -53,6 +53,7 @@ export const APP_SETTINGS = {
       },
       NETWORK_CONFIGURE: {
         GET_ALL: NETWORK_CONFIGURE_URL,
+        GET_ALL_FOR_USER: NETWORK_CONFIGURE_URL + '/withUser/',
         GET_BY_ID: NETWORK_CONFIGURE_URL + '/',
         GET_BY_NAME: NETWORK_CONFIGURE_URL + '/withName/',
         DELETE_BY_ID: NETWORK_CONFIGURE_URL + '/',
@@ -71,21 +72,21 @@ export const APP_SETTINGS = {
 
     NETWORK_RUN: {
       GET_ALL: 'http://localhost:8803/network-configuration/networks',
-      GET_BY_ID: 'http://localhost:8080/network-management/networks/',
-      DELETE_BY_ID: 'http://localhost:8080/network-management/networks/',
-      UPDATE: 'http://localhost:8080/network-management/networks',
-      RUN_BY_ID: 'http://localhost:8080/network-management/networks/run/',
-      SAVE_PROGRESS_BY_ID: 'http://localhost:8080/network-management/networks/save-progress/'
+      GET_BY_ID: 'http://localhost:8080/network-initialization/networks/',
+      DELETE_BY_ID: 'http://localhost:8080/network-initialization/networks/',
+      UPDATE: 'http://localhost:8080/network-initialization/networks',
+      RUN_BY_ID: 'http://localhost:8080/network-initialization/networks/run/',
+      SAVE_PROGRESS_BY_ID: 'http://localhost:8080/network-initialization/networks/save-progress/'
     },
     NETWORK_DEBUG: {
-      GET_ALL: 'http://localhost:8080/network-management/networks',
+      GET_ALL: 'http://localhost:8080/network-initialization/networks',
       GET_CONNECTIONS: 'http://localhost:8080/network/connections',
       GET_BY_ID: '',
       UPDATE: '',
       DELETE: ''
     },
     NETWORK_LOGS: {
-      GET_ALL_SORTED_BY_NET_ID: 'http://localhost:8080/network-management/logs/'
+      GET_ALL_SORTED_BY_NET_ID: 'http://localhost:8080/network-initialization/logs/'
     }
   }
 };

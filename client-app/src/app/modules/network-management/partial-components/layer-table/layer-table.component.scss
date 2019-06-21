@@ -38,6 +38,11 @@ tr.custom-table-row:hover{
   margin-left: 5vw;
 }
 
+/deep/ .mat-menu-content:not(:empty) {
+  padding-top: 0 !important;
+  padding-bottom: 0!important;
+}
+
 
 /deep/ .mat-tab-label {
   opacity: 1 !important;

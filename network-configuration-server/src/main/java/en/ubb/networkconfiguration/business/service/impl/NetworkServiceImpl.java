@@ -177,7 +177,7 @@ public class NetworkServiceImpl implements NetworkService {
         lifecycleUpdateEventSource.accept(network, NetworkLifecycleState.NEW);
         this.saveProgress(network);
         lifecycleUpdateEventSource.accept(network, NetworkLifecycleState.INITIALIZED);
-        return network;
+        return this.networkRepo.save(network);
     }
 
     @Override

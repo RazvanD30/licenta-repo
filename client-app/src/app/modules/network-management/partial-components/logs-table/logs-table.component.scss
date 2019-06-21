@@ -22,6 +22,12 @@ tr.custom-table-row:hover{
   border-bottom: none;
 }
 
+/deep/ .mat-menu-content:not(:empty) {
+  padding-top: 0 !important;
+  padding-bottom: 0!important;
+}
+
+
 .example-second-header-row {
   font-style: italic;
 }

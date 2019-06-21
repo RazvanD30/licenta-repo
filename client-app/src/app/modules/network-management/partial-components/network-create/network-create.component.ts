@@ -3,8 +3,9 @@ import {NetworkInitService} from '../../../../shared/services/network-init.servi
 import {NetworkInitDto} from '../../../../shared/models/network/init/NetworkInitDto';
 import {Activation, ActivationParser} from '../../../../shared/models/network/shared/Activation';
 import {LayerType, LayerTypeParser} from '../../../../shared/models/network/shared/LayerType';
-import {BranchService} from "../../../../shared/services/branch.service";
-import {BranchDto} from "../../../../shared/models/branch/BranchDto";
+import {BranchService} from '../../../../shared/services/branch.service';
+import {BranchDto} from '../../../../shared/models/branch/BranchDto';
+import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 
 @Component({
   selector: 'app-network-create',
@@ -20,9 +21,12 @@ export class NetworkCreateComponent implements OnInit {
   activationTypes =  ActivationParser.names();
   layerTypes = LayerTypeParser.names();
   availableBranches: BranchDto[] = [];
+  networkInitFormGroup: FormGroup;
+
 
   constructor(private networkInitService: NetworkInitService,
-              private branchService: BranchService) {
+              private branchService: BranchService,
+              private formBuilder: FormBuilder) {
   }
 
   reset() {
@@ -42,7 +46,17 @@ export class NetworkCreateComponent implements OnInit {
     this.deleteId = null;
   }
 
+
   ngOnInit() {
+    this.networkInitFormGroup = this.formBuilder.group({
+      name: ['', [Validators.required, Validators.minLength(4)]],
+      seed: ['', [Validators.required, Validators.min(0)]],
+      learningRate: ['', [Validators.required, Validators.min(0.000001)]],
+      batchSize: ['', [Validators.required, Validators.min(1)]],
+      nEpochs: ['', [Validators.required, Validators.min(1)]],
+      branchId: ['', Validators.required]
+    });
+
     this.reset();
     this.branchService.getAllForUser(localStorage.getItem('username'))
       .subscribe(resp => this.availableBranches = resp);
@@ -76,4 +90,8 @@ export class NetworkCreateComponent implements OnInit {
     }
   }
 
+  a() {
+    console.log(this.networkInitFormGroup.controls.name.hasError('minlength'));
+    console.log(this.networkInitFormGroup.errors);
+  }
 }

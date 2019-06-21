@@ -1,13 +1,13 @@
 import {RouterModule, Routes} from '@angular/router';
 import {NgModule} from '@angular/core';
 import {NetworkDebuggingComponent} from './partial-components/network-debugging/network-debugging.component';
-import {NetworkManagementComponent} from './pages/network-management/network-management.component';
+import {NetworkInitializationComponent} from './pages/network-initialization/network-initialization.component';
 import {NetworkTablesComponent} from './pages/network-tables/network-tables.component';
 
 const routes: Routes = [
   // {path: '', redirectTo: 'home', canActivate: [AuthenticationGuard], pathMatch: 'full'},
   {path: 'debug', component: NetworkDebuggingComponent},
-  {path: 'dashboard', component: NetworkManagementComponent},
+  {path: 'init', component: NetworkInitializationComponent},
   {path: 'config', component: NetworkTablesComponent}
 ];
 

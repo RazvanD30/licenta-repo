@@ -20,10 +20,8 @@ import {BranchDto} from '../../shared/models/branch/BranchDto';
 export function getMarginTop() {
   const el: HTMLCollectionOf<Element> = document.getElementsByClassName('navigation-bar-inner');
   if (el.length > 0) {
-    console.log('yes');
     return 100;
   }
-  console.log('nope');
   return 63;
 }
 
@@ -72,7 +70,6 @@ export class HeaderComponent implements OnInit {
   public isOpen = false;
   public links = [];
   public marginTop = 100;
-  public isLoggedIn = false;
   public currentBranch: BranchDto;
   public username: string;
   public availableBranches: BranchDto[] = [];
@@ -95,17 +92,16 @@ export class HeaderComponent implements OnInit {
 
   ngOnInit() {
     this.username = localStorage.getItem('username');
-    this.isLoggedIn = this.username != null;
-    if (this.isLoggedIn === true) {
+    if (this.isLoggedIn()) {
       this.loadBranchData();
     }
     this.links = [
       {text: 'HOME', multiple: false, href: '', icon: faHome},
       {
         text: 'NETWORK MANAGEMENT', multiple: true, icon: faNetworkWired, choices: [
-          {text: 'DASHBOARD', href: '/network/dashboard', icon: faPlusSquare},
-          {text: 'NETWORK CONFIGURATION', href: '/network/config', icon: faWrench},
-          {text: 'NETWORK DEBUG', href: '/network/debug', icon: faBug}
+          {text: 'NETWORK INITIALIZATION', href: '/network-management/init', icon: faPlusSquare},
+          {text: 'NETWORK CONFIGURATION', href: '/network-management/config', icon: faWrench},
+          {text: 'NETWORK DEBUG', href: '/network-management/debug', icon: faBug}
         ]
       },
       {
@@ -118,7 +114,7 @@ export class HeaderComponent implements OnInit {
       {text: 'FILE MANAGEMENT', multiple: false, icon: faFileCsv, href: '/file-management/dashboard'},
       {text: 'JOB MANAGEMENT', multiple: false, icon: faCalendarAlt, href: ''}
     ];
-    if (this.authenticationService.isLoggedIn()) {
+    if (this.isLoggedIn()) {
       this.links.push({text: 'LOGOUT', multiple: false, href: '/logout', icon: faSignInAlt});
     } else {
       this.links.push({text: 'AUTHENTICATION', multiple: false, href: '/authenticate', icon: faSignInAlt});
@@ -148,8 +144,15 @@ export class HeaderComponent implements OnInit {
     this.isOpen = !this.isOpen;
   }
 
+  isLoggedIn(): boolean{
+    return this.authenticationService.isLoggedIn();
+  }
+
   selectBranch(branch: BranchDto) {
     this.branchService.assignWorkingBranch(this.username, branch.name)
-      .subscribe(response => this.loadBranchData());
+      .subscribe(response => {
+        this.loadBranchData();
+        this.branchService.signalBranchChange(branch.name);
+      });
   }
 }

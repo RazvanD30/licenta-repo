@@ -26,7 +26,7 @@
             </div>
           </li>
         </ng-container>
-        <li class="dropdown"  *ngIf="isLoggedIn === true">
+        <li class="dropdown"  *ngIf="isLoggedIn()">
           <a class="dropdown-toggle nav-link" type="button" [id]="50" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
             Branch: {{currentBranch == null ? 'None' : currentBranch.name }}
           </a>

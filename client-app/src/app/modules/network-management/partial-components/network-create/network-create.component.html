@@ -1,4 +1,115 @@
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 <div style="margin-top: 10%">
+
+
+  <form class="input-container" [formGroup]="networkInitFormGroup">
+    <mat-form-field class="network-init-field">
+      <input matInput type="text" placeholder="Name" formControlName="name" required>
+      <button mat-button *ngIf="networkInitFormGroup.value.name" matSuffix mat-icon-button aria-label="Clear" (click)="networkInitFormGroup.reset('name')">
+        <mat-icon>close</mat-icon>
+      </button>
+      <mat-error *ngIf="networkInitFormGroup.controls.name.hasError('minlength')">
+        The name of the network must have at least 4 characters
+      </mat-error>
+      <mat-error *ngIf="networkInitFormGroup.controls.name.hasError('required')">
+        The name of the network is required
+      </mat-error>
+    </mat-form-field>
+
+    <mat-form-field class="half-width-continue">
+      <input matInput type="number" placeholder="Seed" formControlName="seed" required>
+      <button mat-button *ngIf="networkInitFormGroup.value.seed" matSuffix mat-icon-button aria-label="Clear" (click)="networkInitFormGroup.reset('seed')">
+        <mat-icon>close</mat-icon>
+      </button>
+      <mat-error *ngIf="networkInitFormGroup.controls.seed.hasError('required')">
+        The seed of the network is required
+      </mat-error>
+      <mat-error *ngIf="networkInitFormGroup.controls.seed.hasError('min')">
+        The seed of the network must be a positive value
+      </mat-error>
+    </mat-form-field>
+
+    <mat-form-field class="half-width-end">
+      <input matInput type="number" placeholder="Learning Rate" formControlName="learningRate" required>
+      <button mat-button *ngIf="networkInitFormGroup.value.learningRate" matSuffix mat-icon-button aria-label="Clear" (click)="networkInitFormGroup.reset('learningRate')">
+        <mat-icon>close</mat-icon>
+      </button>
+      <mat-error *ngIf="networkInitFormGroup.controls.learningRate.hasError('required')">
+        The learning rate of the network is required
+      </mat-error>
+      <mat-error *ngIf="networkInitFormGroup.controls.learningRate.hasError('min')">
+        The learning rate of the network must be a positive value greater than 0.000001
+      </mat-error>
+    </mat-form-field>
+
+    <mat-form-field class="half-width-continue">
+      <input matInput type="number" placeholder="Batch Size" formControlName="batchSize" required>
+      <button mat-button *ngIf="networkInitFormGroup.value.batchSize" matSuffix mat-icon-button aria-label="Clear" (click)="networkInitFormGroup.reset('batchSize')">
+        <mat-icon>close</mat-icon>
+      </button>
+      <mat-error *ngIf="networkInitFormGroup.controls.batchSize.hasError('required')">
+        The batch size of the network is required
+      </mat-error>
+      <mat-error *ngIf="networkInitFormGroup.controls.batchSize.hasError('min')">
+        The batch size of the network must be a positive value greater than 1
+      </mat-error>
+    </mat-form-field>
+
+    <mat-form-field class="half-width-end">
+      <input matInput type="number" placeholder="Epochs" formControlName="nEpochs" required>
+      <button mat-button *ngIf="networkInitFormGroup.value.learningRate" matSuffix mat-icon-button aria-label="Clear" (click)="networkInitFormGroup.reset('nEpochs')">
+        <mat-icon>close</mat-icon>
+      </button>
+      <mat-error *ngIf="networkInitFormGroup.controls.nEpochs.hasError('required')">
+        The epoch count of the network is required
+      </mat-error>
+      <mat-error *ngIf="networkInitFormGroup.controls.nEpochs.hasError('min')">
+        The epoch count of the network must be a positive value greater than 1
+      </mat-error>
+    </mat-form-field>
+
+    <mat-form-field class="network-init-field">
+      <mat-label> Branch </mat-label>
+      <mat-select formControlName="branchId" placeholder="Select branch" >
+        <mat-option *ngFor="let branch of availableBranches" [value]="branch.id"> {{branch.name}} </mat-option>
+      </mat-select>
+      <mat-error *ngIf="networkInitFormGroup.controls.branchId.hasError('required')">
+        The branch on which the network will be created is required
+      </mat-error>
+    </mat-form-field>
+
+
+  <button (click)="a()"> fdssfgfgdg </button>
+  </form>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
   <button (click)="loadAll()"> GET FOR USER </button>
   <button (click)="create()"> CREATE </button>
   <button (click)="remove()"> DELETE </button>

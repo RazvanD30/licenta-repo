@@ -1,25 +1,32 @@
-import {Component, Input, OnInit, ViewChild} from '@angular/core';
+import {Component, EventEmitter, Input, OnChanges, OnInit, Output, ViewChild} from '@angular/core';
 import {MatPaginator, MatSort, MatTableDataSource} from '@angular/material';
 import {LayerDto} from '../../../../shared/models/network/runtime/LayerDto';
+import {ActiveView} from '../../models/ActiveView';
+import {SelectedTableType} from '../../models/SelectedTableType';
+import {NetworkDto} from '../../../../shared/models/network/runtime/NetworkDto';
 
 @Component({
   selector: 'app-layer-table',
   templateUrl: './layer-table.component.html',
   styleUrls: ['./layer-table.component.scss']
 })
-export class LayerTableComponent implements OnInit {
+export class LayerTableComponent implements OnInit, OnChanges {
 
-  @Input() layers: LayerDto[];
+  @Input() network: NetworkDto;
   displayedColumns: string[];
-  editable: boolean;
   layerDataSource: MatTableDataSource<LayerDto>;
   filters;
-  gradeErrorMatcher;
-  fc;
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
+  @Output() nodeView = new EventEmitter();
 
   constructor() {
+  }
+
+  ngOnChanges(changes): void {
+    if (this.layerDataSource) {
+      this.layerDataSource.data = this.network.layers;
+    }
   }
 
   ngOnInit() {
@@ -36,7 +43,7 @@ export class LayerTableComponent implements OnInit {
       }
     };
 
-    this.layerDataSource = new MatTableDataSource(this.layers);
+    this.layerDataSource = new MatTableDataSource(this.network.layers);
     this.layerDataSource.paginator = this.paginator;
     this.layerDataSource.sortingDataAccessor = (layer: LayerDto, property: string) => {
       switch (property) {
@@ -48,10 +55,7 @@ export class LayerTableComponent implements OnInit {
     this.layerDataSource.sort = this.sort;
 
     this.resetFilters();
-    this.displayedColumns = ['id', 'nInputs', 'nNodes', 'nOutputs', 'type', 'activation'];
-    this.editable = true;
-    this.fc = [];
-    this.resetFormControl();
+    this.displayedColumns = ['id', 'nInputs', 'nNodes', 'nOutputs', 'type', 'activation', 'actions'];
 
   }
 
@@ -90,16 +94,6 @@ export class LayerTableComponent implements OnInit {
     return ok;
   }
 
-
-  getRowIndexFor(layer: LayerDto) {
-    return this.layers.findIndex(n => n.id === layer.id);
-  }
-
-  resetFormControl() {
-    // this.fc = this.gradeFormControls;
-    // this.gradeFormControls.forEach(f => this.fc.push(new FormControl(f.value)));
-  }
-
   applyFilter(filterValue: string, filterColumn: string) {
 
     if (filterValue === null || filterColumn === null) {
@@ -130,17 +124,17 @@ export class LayerTableComponent implements OnInit {
     this.applyFilter('', null);
   }
 
-  getAveragePresence(): number {
-    return 5;
-  }
-
-  getAverageGrade(): number {
-    return 10;
-
-  }
-
   save() {
 
+  }
+
+  onContextMenuActionNodeView(item: LayerDto) {
+    const newView: ActiveView = {
+      uniqueNameParam: item.id + '',
+      dataParam: item,
+      tableType: SelectedTableType.NODE_TABLE
+    };
+    this.nodeView.emit(newView);
   }
 
 

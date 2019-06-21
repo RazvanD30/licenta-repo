@@ -1,4 +1,4 @@
-import {Component, EventEmitter, Input, OnInit, Output, ViewChild} from '@angular/core';
+import {ChangeDetectorRef, Component, EventEmitter, Input, OnChanges, OnInit, Output, ViewChild} from '@angular/core';
 import {MatMenuTrigger, MatPaginator, MatSort, MatTableDataSource} from '@angular/material';
 import {NetworkDto} from '../../../../shared/models/network/runtime/NetworkDto';
 import {faList} from '@fortawesome/free-solid-svg-icons';
@@ -12,7 +12,7 @@ import {NetworkConfigureService} from '../../../../shared/services/network-confi
   templateUrl: './network-table.component.html',
   styleUrls: ['./network-table.component.scss']
 })
-export class NetworkTableComponent implements OnInit {
+export class NetworkTableComponent implements OnInit, OnChanges {
 
   @Input() networks: NetworkDto[];
   displayedColumns: string[];
@@ -29,8 +29,16 @@ export class NetworkTableComponent implements OnInit {
 
   @ViewChild(MatMenuTrigger) contextMenu: MatMenuTrigger;
 
-  constructor(private networkConfigureService: NetworkConfigureService) {
+  constructor() {
   }
+
+
+  ngOnChanges(changes): void {
+    if (this.networkDataSource) {
+      this.networkDataSource.data = this.networks;
+    }
+  }
+
 
   ngOnInit() {
     this.filters = {
@@ -76,18 +84,18 @@ export class NetworkTableComponent implements OnInit {
 
   onContextMenuActionLayerView(item: NetworkDto) {
     const newView: ActiveView = {
-      network: item,
-      tableType: SelectedTableType.LAYER_TABLE,
-      additionalData: null
+      uniqueNameParam: item.name + '',
+      dataParam: item,
+      tableType: SelectedTableType.LAYER_TABLE
     };
     this.onLayersView.emit(newView);
   }
 
   onContextMenuActionLogView(item: NetworkDto) {
     const newView: ActiveView = {
-      network: item,
-      tableType: SelectedTableType.LOG_TABLE,
-      additionalData: null
+      uniqueNameParam: item.name + '',
+      dataParam: item,
+      tableType: SelectedTableType.LOG_TABLE
     };
     this.onLayersView.emit(newView);
   }

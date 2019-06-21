@@ -1,4 +1,4 @@
-import {Injectable} from '@angular/core';
+import {EventEmitter, Injectable} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
 import {BranchDto} from '../models/branch/BranchDto';
 import {Observable} from 'rxjs';
@@ -8,6 +8,9 @@ import {APP_SETTINGS} from '../../configs/app-settings.config';
   providedIn: 'root'
 })
 export class BranchService {
+
+
+  public branchChanged = new EventEmitter<string>();
 
   constructor(private http: HttpClient) {
   }
@@ -47,6 +50,10 @@ export class BranchService {
 
   assignWorkingBranch(username: string, branchName: string): Observable<void> {
     return this.http.post<void>(APP_SETTINGS.URLS.BRANCH_MANAGEMENT.POST_ASSIGN_WORKING_BRANCH + branchName, username);
+  }
+
+  signalBranchChange(branchName: string) {
+    this.branchChanged.emit(branchName);
   }
 
   getCurrentWorkingBranch(username: string): Observable<BranchDto> {

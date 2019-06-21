@@ -1,6 +1,7 @@
 import {Component, Input, OnInit, ViewChild} from '@angular/core';
 import {MatPaginator, MatSort, MatTableDataSource} from '@angular/material';
 import {NetworkTrainLogDto} from '../../../../shared/models/network/log/NetworkTrainLogDto';
+import {NetworkDto} from "../../../../shared/models/network/runtime/NetworkDto";
 
 @Component({
   selector: 'app-logs-table',
@@ -10,6 +11,7 @@ import {NetworkTrainLogDto} from '../../../../shared/models/network/log/NetworkT
 export class LogsTableComponent implements OnInit {
 
   @Input() logs: NetworkTrainLogDto[];
+  @Input() network: NetworkDto;
   displayedColumns: string[];
   editable: boolean;
   logDataSource: MatTableDataSource<NetworkTrainLogDto>;

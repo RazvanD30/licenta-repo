@@ -8,7 +8,7 @@ import {HttpTokenInterceptor} from '../../core/interceptors/http-token.intercept
 import {ErrorHandlerInterceptor} from '../../core/interceptors/error-handler.interceptor';
 import {NetworkDebuggingComponent} from './partial-components/network-debugging/network-debugging.component';
 import {NetworkConsoleComponent} from './pages/network-console/network-console.component';
-import {NetworkManagementComponent} from './pages/network-management/network-management.component';
+import {NetworkInitializationComponent} from './pages/network-initialization/network-initialization.component';
 import {UserService} from '../../core/services/user.service';
 import {CoreModule} from '../../core/core.module';
 import { NetworkTableComponent } from './partial-components/network-table/network-table.component';
@@ -21,13 +21,15 @@ import { LogsTableComponent } from './partial-components/logs-table/logs-table.c
 import { GlobalTableComponent } from './partial-components/global-table/global-table.component';
 import { NetworkCreateComponent } from './partial-components/network-create/network-create.component';
 import { NetworkTablesComponent } from './pages/network-tables/network-tables.component';
+import { LinkTableComponent } from './partial-components/link-table/link-table.component';
+import { NodeTableComponent } from './partial-components/node-table/node-table.component';
 @NgModule({
   declarations: [
     CytoscapeComponent,
     NetworkSpecialRoutineComponent,
     NetworkDebuggingComponent,
     NetworkConsoleComponent,
-    NetworkManagementComponent,
+    NetworkInitializationComponent,
     NetworkTableComponent,
     LayerTableComponent,
     NodeDetailsComponent,
@@ -35,7 +37,9 @@ import { NetworkTablesComponent } from './pages/network-tables/network-tables.co
     LogsTableComponent,
     GlobalTableComponent,
     NetworkCreateComponent,
-    NetworkTablesComponent
+    NetworkTablesComponent,
+    LinkTableComponent,
+    NodeTableComponent
   ],
   imports: [
     CoreModule,

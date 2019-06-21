@@ -1,20 +1,20 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { GlobalTableComponent } from './global-table.component';
+import { NetworkInitialization } from './network-initialization.component';
 
-describe('GlobalTableComponent', () => {
-  let component: GlobalTableComponent;
-  let fixture: ComponentFixture<GlobalTableComponent>;
+describe('NetworkInitialization', () => {
+  let component: NetworkInitialization;
+  let fixture: ComponentFixture<NetworkInitialization>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ GlobalTableComponent ]
+      declarations: [ NetworkInitialization ]
     })
     .compileComponents();
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(GlobalTableComponent);
+    fixture = TestBed.createComponent(NetworkInitialization);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

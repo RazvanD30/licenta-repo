@@ -15,6 +15,7 @@ import en.ubb.networkconfiguration.business.service.UserService;
 import en.ubb.networkconfiguration.business.validation.exception.FileAccessBussExc;
 import en.ubb.networkconfiguration.business.validation.exception.NetworkAccessBussExc;
 import en.ubb.networkconfiguration.business.validation.exception.NotFoundBussExc;
+import en.ubb.networkconfiguration.persistence.domain.authentication.User;
 import en.ubb.networkconfiguration.persistence.domain.branch.NetworkBranch;
 import en.ubb.networkconfiguration.persistence.domain.network.enums.BranchType;
 import en.ubb.networkconfiguration.persistence.domain.network.enums.LayerType;
@@ -79,6 +80,21 @@ public class NetworkConfigureApi {
         return this.networkService.getAll().stream()
                 .map(DtoMapper::toDto)
                 .collect(Collectors.toList());
+    }
+
+    @GetMapping(value = "withUser/{username}")
+    public List<NetworkDto> getAllForUser(@PathVariable String username) throws NotFoundException {
+        User user = this.userService.findByUsername(username)
+                .orElseThrow(() -> new NotFoundException("User not found"));
+        try {
+            List<NetworkDto> collect = this.networkService.getAllForBranchID(user.getCurrentBranch().getId()).stream()
+                    .map(DtoMapper::toDto)
+                    .collect(Collectors.toList());
+            System.out.println(collect);
+            return collect;
+        } catch (NotFoundBussExc notFoundBussExc) {
+            throw new NotFoundException(notFoundBussExc);
+        }
     }
 
     @GetMapping(value = "/{id}")
