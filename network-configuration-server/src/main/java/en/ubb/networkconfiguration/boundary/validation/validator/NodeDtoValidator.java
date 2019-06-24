@@ -17,7 +17,7 @@ public class NodeDtoValidator implements Validator {
 
     @Override
     public void validate(@NotNull Object target, @NotNull Errors errors) {
-        ValidationUtils.rejectIfEmpty(errors,"links","node.links.null");
-        // the output nodes do not have any links, so no validation on this
+        ValidationUtils.rejectIfEmpty(errors,"outputLinks","node.links.null");
+        // the output nodes do not have any outputLinks, so no validation on this
     }
 }

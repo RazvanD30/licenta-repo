@@ -1,4 +1,4 @@
-import {Status} from './Status';
+import {Status} from './gui/Status';
 
 export interface Link {
   id: number;

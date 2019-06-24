@@ -3,30 +3,30 @@ package en.ubb.networkconfiguration.boundary.util;
 import en.ubb.networkconfiguration.boundary.dto.authentication.PrivateUserDto;
 import en.ubb.networkconfiguration.boundary.dto.authentication.PublicUserDto;
 import en.ubb.networkconfiguration.boundary.dto.branch.BranchDto;
+import en.ubb.networkconfiguration.boundary.dto.file.DataFileDto;
+import en.ubb.networkconfiguration.boundary.dto.file.FileLinkDto;
 import en.ubb.networkconfiguration.boundary.dto.network.log.NetworkIterationLogDto;
 import en.ubb.networkconfiguration.boundary.dto.network.log.NetworkTrainLogDto;
-import en.ubb.networkconfiguration.boundary.dto.network.offline.OfflineLayerDto;
-import en.ubb.networkconfiguration.boundary.dto.network.offline.OfflineLinkDto;
-import en.ubb.networkconfiguration.boundary.dto.network.offline.OfflineNetworkDto;
-import en.ubb.networkconfiguration.boundary.dto.network.offline.OfflineNodeDto;
 import en.ubb.networkconfiguration.boundary.dto.network.runtime.LayerDto;
 import en.ubb.networkconfiguration.boundary.dto.network.runtime.LinkDto;
 import en.ubb.networkconfiguration.boundary.dto.network.runtime.NetworkDto;
 import en.ubb.networkconfiguration.boundary.dto.network.runtime.NodeDto;
-import en.ubb.networkconfiguration.boundary.dto.file.DataFileDto;
-import en.ubb.networkconfiguration.boundary.dto.file.FileLinkDto;
 import en.ubb.networkconfiguration.boundary.dto.network.setup.LayerInitDto;
 import en.ubb.networkconfiguration.boundary.dto.network.setup.NetworkInitDto;
+import en.ubb.networkconfiguration.boundary.dto.network.virtual.VirtualLayerDto;
+import en.ubb.networkconfiguration.boundary.dto.network.virtual.VirtualLinkDto;
+import en.ubb.networkconfiguration.boundary.dto.network.virtual.VirtualNetworkDto;
+import en.ubb.networkconfiguration.boundary.dto.network.virtual.VirtualNodeDto;
 import en.ubb.networkconfiguration.persistence.domain.authentication.Authority;
 import en.ubb.networkconfiguration.persistence.domain.authentication.User;
 import en.ubb.networkconfiguration.persistence.domain.branch.NetworkBranch;
-import en.ubb.networkconfiguration.persistence.domain.network.offline.OfflineLayer;
-import en.ubb.networkconfiguration.persistence.domain.network.offline.OfflineLink;
-import en.ubb.networkconfiguration.persistence.domain.network.offline.OfflineNetwork;
-import en.ubb.networkconfiguration.persistence.domain.network.offline.OfflineNode;
 import en.ubb.networkconfiguration.persistence.domain.network.runtime.*;
 import en.ubb.networkconfiguration.persistence.domain.network.setup.LayerInitializer;
 import en.ubb.networkconfiguration.persistence.domain.network.setup.NetworkInitializer;
+import en.ubb.networkconfiguration.persistence.domain.network.virtual.VirtualLayer;
+import en.ubb.networkconfiguration.persistence.domain.network.virtual.VirtualLink;
+import en.ubb.networkconfiguration.persistence.domain.network.virtual.VirtualNetwork;
+import en.ubb.networkconfiguration.persistence.domain.network.virtual.VirtualNode;
 
 import java.io.IOException;
 import java.util.List;
@@ -293,42 +293,48 @@ public class DtoMapper {
                 .build();
     }
 
-    public static OfflineLinkDto toDto(OfflineLink offlineLink) {
-        return OfflineLinkDto.builder()
-                .id(offlineLink.getId())
-                .weight(offlineLink.getLink().getWeight())
+    public static VirtualLinkDto toDto(VirtualLink virtualLink) {
+        return VirtualLinkDto.builder()
+                .id(virtualLink.getId())
+                .weight(virtualLink.getLink().getWeight())
+                .sourceNodeId(virtualLink.getSourceNode() == null ? null : virtualLink.getSourceNode().getId())
+                .destinationNodeId(virtualLink.getDestinationNode() == null ? null : virtualLink.getDestinationNode().getId())
                 .build();
     }
 
-    public static OfflineNodeDto toDto(OfflineNode offlineNode) {
-        return OfflineNodeDto.builder()
-                .id(offlineNode.getId())
-                .bias(offlineNode.getNode().getBias())
-                .status(offlineNode.getStatus())
-                .value(offlineNode.getValue())
-                .links(offlineNode.getLinks().stream()
+    public static VirtualNodeDto toDto(VirtualNode virtualNode) {
+        return VirtualNodeDto.builder()
+                .id(virtualNode.getId())
+                .bias(virtualNode.getNode().getBias())
+                .status(virtualNode.getStatus())
+                .value(virtualNode.getValue())
+                .position(virtualNode.getPosition())
+                .outputLinks(virtualNode.getOutputLinks().stream()
+                        .map(DtoMapper::toDto)
+                        .collect(Collectors.toList()))
+                .inputLinks(virtualNode.getInputsLinks().stream()
                         .map(DtoMapper::toDto)
                         .collect(Collectors.toList()))
                 .build();
     }
 
-    public static OfflineLayerDto toDto(OfflineLayer offlineLayer) {
-        return OfflineLayerDto.builder()
-                .id(offlineLayer.getId())
-                .type(offlineLayer.getLayer().getType())
-                .nodes(offlineLayer.getNodes().stream()
+    public static VirtualLayerDto toDto(VirtualLayer virtualLayer) {
+        return VirtualLayerDto.builder()
+                .id(virtualLayer.getId())
+                .type(virtualLayer.getLayer().getType())
+                .nodes(virtualLayer.getNodes().stream()
                         .map(DtoMapper::toDto)
                         .collect(Collectors.toList()))
                 .build();
     }
 
-    public static OfflineNetworkDto toDto(OfflineNetwork offlineNetwork) {
-        return OfflineNetworkDto.builder()
-                .id(offlineNetwork.getId())
-                .name(offlineNetwork.getName())
-                .layers(offlineNetwork.getLayers().stream()
-                        .map(DtoMapper::toDto)
-                        .collect(Collectors.toList()))
+    public static VirtualNetworkDto toDto(VirtualNetwork virtualNetwork) {
+        return VirtualNetworkDto.builder()
+                .id(virtualNetwork.getId())
+                .name(virtualNetwork.getName())
+                .networkName(virtualNetwork.getNetwork().getName())
+                .networkId(virtualNetwork.getNetwork().getId())
+                .layerCount(virtualNetwork.getLayers().size())
                 .build();
     }
 

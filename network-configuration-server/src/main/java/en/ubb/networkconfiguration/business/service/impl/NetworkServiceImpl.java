@@ -32,7 +32,6 @@ import org.deeplearning4j.util.ModelSerializer;
 import org.nd4j.linalg.api.ndarray.INDArray;
 import org.nd4j.linalg.dataset.api.DataSet;
 import org.nd4j.linalg.dataset.api.iterator.DataSetIterator;
-import org.nd4j.linalg.io.ClassPathResource;
 import org.nd4j.linalg.learning.config.Nesterovs;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -41,6 +40,7 @@ import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 
 import java.io.*;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -140,11 +140,26 @@ public class NetworkServiceImpl implements NetworkService {
                 Node node = new Node();
                 for (int currentLink = 0; currentLink < currentLayer.getNOutputs(); currentLink++) {
                     Link link = new Link();
-                    node.addLink(link);
+                    node.addOutputLink(link);
                 }
                 currentLayer.addNode(node);
             }
         }
+
+        for(int i = 0; i < network.getLayers().size() - 1; i ++){
+            Layer currentLayer = network.getLayers().get(i);
+            Layer nextLayer = network.getLayers().get(i + 1);
+
+            for(int j = 0; j < currentLayer.getNodes().size(); j++){
+                Node node = currentLayer.getNodes().get(j);
+
+                for(int k = 0; k < node.getOutputLinks().size(); k++){
+                    Link link = node.getOutputLinks().get(k);
+                    nextLayer.getNodes().get(k).addInputLink(link);
+                }
+            }
+        }
+
         return network;
     }
 
@@ -177,6 +192,15 @@ public class NetworkServiceImpl implements NetworkService {
         lifecycleUpdateEventSource.accept(network, NetworkLifecycleState.NEW);
         this.saveProgress(network);
         lifecycleUpdateEventSource.accept(network, NetworkLifecycleState.INITIALIZED);
+
+        final List<Layer> layers = new ArrayList<>(network.getLayers());
+        network.setLayers(new ArrayList<>());
+        this.networkRepo.save(network);
+        layers.forEach(layer -> {
+            network.addLayer(layer);
+            this.networkRepo.save(network);
+        });
+
         return this.networkRepo.save(network);
     }
 
@@ -355,7 +379,7 @@ public class NetworkServiceImpl implements NetworkService {
         }
 
         persistedNode.setBias(updatedNode.getBias());
-        updatedNode.getOutputLinks().forEach(persistedNode::updateLink);
+        updatedNode.getOutputLinks().forEach(persistedNode::updateOutputLink);
         this.saveProgress(persistedNetwork);
 
         return persistedNode;
@@ -364,7 +388,7 @@ public class NetworkServiceImpl implements NetworkService {
     @Override
     public Link updateLink(Link updatedLink) throws NetworkAccessBussExc {
         Link persistedLink = this.linkRepo.getOne(updatedLink.getId());
-        Node persistedNode = persistedLink.getNode();
+        Node persistedNode = persistedLink.getSource();
         Layer persistedLayer = persistedNode.getLayer();
         Network persistedNetwork = persistedNode.getLayer().getNetwork();
         MultiLayerNetwork model = persistedNetwork.getModel();

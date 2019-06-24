@@ -1,7 +1,32 @@
 
-.input-container {
+
+
+.action-container {
+  position: absolute;
+  width: 30%;
+  height: 10%;
+  top: 5%;
+  left: 15%;
+  right: auto;
+}
+
+.right-container {
+  position: absolute;
+  width: 40%;
+  left: 35%;
+  top: 20%;
+}
+
+
+.left-container {
+  position: absolute;
   width: 25%;
-  margin-left: 5%;
+  left: 5%;
+  top: 20%;
+}
+
+.layer-form-group {
+  width: 100%;
   margin-bottom: 5%;
 }
 
@@ -10,6 +35,21 @@
   width: 100%;
   margin-bottom: 30px;
 }
+
+
+.third-width-continue {
+  display: inline-block;
+  width: 30%;
+  margin-right: 5%;
+  margin-bottom: 30px;
+}
+
+.third-width-end {
+  display: inline-block;
+  width: 30%;
+  margin-bottom: 30px;
+}
+
 
 .half-width-continue {
   display: inline-block;
@@ -22,4 +62,79 @@
   margin-left: 8%;
   width: 46%;
   margin-bottom: 30px;
+}
+
+@mixin md-icon-size($size: 24px) {
+  font-size: $size !important;
+  height: $size !important;
+  width: $size !important;
+}
+
+.title-text {
+  height: 16px;
+  line-height: 16px;
+  text-align: center;
+}
+
+.valid-layer {
+  color: rgb(141, 219, 45);
+  height: 16px;
+  line-height: 16px;
+  text-align: center;
+}
+
+.invalid-layer {
+  color: rgb(220, 53, 69);
+  height: 16px;
+  line-height: 16px;
+  text-align: center;
+}
+
+.right-container /deep/.mat-expansion-panel-header-description, /deep/.mat-expansion-panel-header-title {
+  align-items: center;
+}
+
+.right-container /deep/.mat-expansion-panel-header-title {
+  width: 30%;
+}
+
+.right-container /deep/.mat-icon-button[disabled][disabled] /deep/mat-icon {
+  color: darkgray;
+}
+
+.right-container /deep/.mat-raised-button[disabled][disabled] /deep/mat-icon {
+  color: darkgray;
+}
+
+
+.container-title {
+  width: 50%;
+  text-align: center;
+  font-family: Roboto,"Helvetica Neue",sans-serif;
+  font-size: 24px;
+  font-weight: 400;
+  margin-bottom: 20px;
+  display: inline-block;
+
+  &.disabled {
+    color: rgba(0,0,0,.26);
+  }
+}
+
+.container-action {
+  width: 45%;
+  margin-left: 5%;
+  display: inline-block;
+}
+
+mat-icon {
+  @include md-icon-size(24px);
+}
+
+.add-button {
+  margin-left: 5%;
+}
+
+.remove-button {
+  margin-left: 5%;
 }

@@ -4,7 +4,7 @@ import en.ubb.networkconfiguration.business.util.NetworkUtil;
 import en.ubb.networkconfiguration.persistence.domain.BaseEntity;
 import en.ubb.networkconfiguration.persistence.domain.branch.NetworkBranch;
 import en.ubb.networkconfiguration.persistence.domain.network.enums.FileType;
-import en.ubb.networkconfiguration.persistence.domain.network.offline.OfflineNetwork;
+import en.ubb.networkconfiguration.persistence.domain.network.virtual.VirtualNetwork;
 import lombok.*;
 import org.deeplearning4j.nn.multilayer.MultiLayerNetwork;
 import org.hibernate.annotations.CreationTimestamp;
@@ -76,7 +76,7 @@ public class Network extends BaseEntity<Long> {
     private List<Layer> layers = new ArrayList<>();
 
     @OneToMany(mappedBy = "network", cascade = CascadeType.ALL)
-    private List<OfflineNetwork> offlineNetworks = new ArrayList<>();
+    private List<VirtualNetwork> virtualNetworks = new ArrayList<>();
 
     @OneToMany(mappedBy = "network", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<NetworkFile> files = new ArrayList<>();
@@ -93,7 +93,7 @@ public class Network extends BaseEntity<Long> {
                    @NotEmpty String name, int seed, @Range(min = 0, max = 10) double learningRate,
                    @Range(min = 1) int batchSize, @Range(min = 1) int nEpochs, @Range(min = 1) int nInputs,
                    @Range(min = 1) int nOutputs, MultiLayerNetwork model, NetworkState state, List<Layer> layers,
-                   List<OfflineNetwork> offlineNetworks, List<NetworkFile> files, List<NetworkTrainLog> networkTrainLogs,
+                   List<VirtualNetwork> virtualNetworks, List<NetworkFile> files, List<NetworkTrainLog> networkTrainLogs,
                    NetworkBranch branch, Long originId) {
         super(id);
         this.createDateTime = createDateTime;
@@ -108,7 +108,7 @@ public class Network extends BaseEntity<Long> {
         this.model = model;
         this.state = state;
         this.layers = layers;
-        this.offlineNetworks = offlineNetworks;
+        this.virtualNetworks = virtualNetworks;
         this.files = files;
         this.networkTrainLogs = networkTrainLogs;
         this.branch = branch;
@@ -116,7 +116,7 @@ public class Network extends BaseEntity<Long> {
     }
 
     /**
-     * Copy constructor, will not initialize id, branch and offline networks.
+     * Copy constructor, will not initialize id, branch and virtual networks.
      *
      * @param network the network from which to copy the fields recursively.
      */
@@ -179,15 +179,15 @@ public class Network extends BaseEntity<Long> {
     }
 
 
-    public void addOfflineNetwork(OfflineNetwork offlineNetwork) {
-        this.offlineNetworks.add(offlineNetwork);
-        offlineNetwork.setNetwork(this);
+    public void addOfflineNetwork(VirtualNetwork virtualNetwork) {
+        this.virtualNetworks.add(virtualNetwork);
+        virtualNetwork.setNetwork(this);
     }
 
-    public boolean removeOfflineNetwork(OfflineNetwork offlineNetwork) {
-        boolean removed = this.offlineNetworks.remove(offlineNetwork);
+    public boolean removeOfflineNetwork(VirtualNetwork virtualNetwork) {
+        boolean removed = this.virtualNetworks.remove(virtualNetwork);
         if (removed) {
-            offlineNetwork.setNetwork(null);
+            virtualNetwork.setNetwork(null);
         }
         return removed;
     }

@@ -1,23 +1,40 @@
 export enum StatusInternal {
-  UNDER_WATCH,
-  IGNORED,
+  IGNORE,
+  WATCH,
   BREAKPOINT,
-  WAIT,
-  INPUT
+  INPUT,
+  WAIT
 }
 
 
 export class Status {
 
-  public static UNDER_WATCH = new Status(StatusInternal.UNDER_WATCH);
-  public static IGNORED = new Status(StatusInternal.IGNORED);
+  constructor(status: StatusInternal) {
+    this.status = status;
+  }
+
+  public static UNDER_WATCH = new Status(StatusInternal.WATCH);
+  public static IGNORED = new Status(StatusInternal.IGNORE);
   public static BREAKPOINT = new Status(StatusInternal.BREAKPOINT);
   public static WAIT = new Status(StatusInternal.WAIT);
   public static INPUT = new Status(StatusInternal.INPUT);
   private readonly status: StatusInternal;
 
-  constructor(status: StatusInternal) {
-    this.status = status;
+  public fromInternal(statusInternal: StatusInternal): Status {
+    switch (statusInternal) {
+      case StatusInternal.WATCH:
+        return Status.UNDER_WATCH;
+      case StatusInternal.IGNORE:
+        return Status.IGNORED;
+      case StatusInternal.BREAKPOINT:
+        return Status.BREAKPOINT;
+      case StatusInternal.WAIT:
+        return Status.WAIT;
+      case StatusInternal.INPUT:
+        return Status.INPUT;
+      default:
+        return Status.IGNORED;
+    }
   }
 
   public isWaiting(): boolean {
@@ -25,11 +42,11 @@ export class Status {
   }
 
   public isUnderWatch(): boolean {
-    return this.status === StatusInternal.UNDER_WATCH;
+    return this.status === StatusInternal.WATCH;
   }
 
   public isIgnored(): boolean {
-    return this.status === StatusInternal.IGNORED;
+    return this.status === StatusInternal.IGNORE;
   }
 
   public isBreakpoint(): boolean {

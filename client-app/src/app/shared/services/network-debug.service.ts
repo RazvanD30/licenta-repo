@@ -2,7 +2,7 @@ import {Injectable} from '@angular/core';
 import {LayerGui} from '../models/network/gui/LayerGui';
 import {NetworkDto} from '../models/network/runtime/NetworkDto';
 import {LayerDto} from '../models/network/runtime/LayerDto';
-import {NeuralNodeGui} from '../models/network/gui/NeuralNodeGui';
+import {NodeGui} from '../models/network/gui/NodeGui';
 import {LinkGui} from '../models/network/gui/LinkGui';
 import {Pos} from '../models/network/gui/Pos';
 import {HttpClient} from '@angular/common/http';
@@ -46,7 +46,7 @@ export class NetworkDebugService {
         previousLayerGui.next = currentLayerGui;
       }
       currentLayer.nodes
-        .map(offlineNode => new NeuralNodeGui(offlineNode.id,offlineNode.status,currentLayerGui))
+        .map(targetNode => new NodeGui(targetNode.id,targetNode.status,currentLayerGui))
         .forEach(nodeGui => {
           currentLayerGui.addNode(nodeGui);
         });
@@ -57,8 +57,8 @@ export class NetworkDebugService {
     // initialize the connections
     currentLayer = network.firstLayer;
     while (currentLayer !== null) {
-      currentLayer.nodes.forEach(offlineNode => {
-        offlineNode.outputLinks.forEach(link => {
+      currentLayer.nodes.forEach(targetNode => {
+        targetNode.outputLinks.forEach(link => {
           let layerGui = this._layers.get(currentLayer.id);
           let sourceNode = layerGui.findNode(link.sourceId);
           let destinationNode = layerGui.next.findNode(link.destinationId);
@@ -74,52 +74,6 @@ export class NetworkDebugService {
   }
 
 
-
-  private findLayerForPosX(posX: number): LayerGui {
-    for (let [key, layer] of this._layers) {
-      const distance = this.getDistanceForAxis(layer.xPos, posX);
-      if (this.isDistanceAcceptable(distance)) {
-        return layer;
-      }
-    }
-    return null;
-  }
-
-  public findNodeForPos(pos: Pos): NeuralNodeGui {
-    const layerOnX = this.findLayerForPosX(pos.x);
-    if(layerOnX !== null) {
-      for (let [key, node] of layerOnX.nodes) {
-        if (this.isDistanceAcceptable(this.getDistanceForPoints(pos, node.pos))) {
-          return node;
-        }
-      }
-    }
-    return null;
-  }
-
-  private isDistanceAcceptable(distance: number) {
-    return distance < NeuralNodeGui.RADIUS * 1.2 + 1;
-  }
-
-  private getDistanceForAxis(x1: number, x2: number) {
-    return Math.abs(x1 - x2);
-  }
-
-  private getDistanceForPoints(pos1: Pos, pos2: Pos): number {
-    return Math.sqrt(Math.pow(pos2.x - pos1.x, 2) + Math.pow(pos2.y - pos1.y, 2));
-  }
-
-  public getLayerForNodeId(id: number): LayerGui {
-
-    let result: LayerGui = null;
-    for (let [key, layer] of this._layers) {
-      if (layer.findNode(id) !== null) {
-        result = layer;
-        break;
-      }
-    }
-    return result;
-  }
 
 
   get layers(): Map<number, LayerGui> {

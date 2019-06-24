@@ -1,7 +1,7 @@
 package en.ubb.networkconfiguration.persistence.domain.network.runtime;
 
 import en.ubb.networkconfiguration.persistence.domain.BaseEntity;
-import en.ubb.networkconfiguration.persistence.domain.network.offline.OfflineLink;
+import en.ubb.networkconfiguration.persistence.domain.network.virtual.VirtualLink;
 import lombok.*;
 
 import javax.persistence.*;
@@ -13,25 +13,30 @@ import java.util.List;
 @NoArgsConstructor
 @EqualsAndHashCode(callSuper = true)
 @Entity
-@Table(name = "links")
+@Table(name = "outputLinks")
 public class Link extends BaseEntity<Long> {
 
     @Column(name = "weight", nullable = false)
     private double weight;
 
     @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    @JoinColumn(name = "node_id")
-    private Node node;
+    @JoinColumn(name = "source_id")
+    private Node source;
+
+    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @JoinColumn(name = "destination_id")
+    private Node destination;
 
     @OneToMany(mappedBy = "link", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<OfflineLink> offlineLinks = new ArrayList<>();
+    private List<VirtualLink> virtualLinks = new ArrayList<>();
 
     @Builder(toBuilder = true)
-    public Link(Long id, double weight, Node node, List<OfflineLink> offlineLinks) {
+    public Link(Long id, double weight, Node source, Node destination, List<VirtualLink> virtualLinks) {
         super(id);
         this.weight = weight;
-        this.node = node;
-        this.offlineLinks = offlineLinks;
+        this.source = source;
+        this.destination = destination;
+        this.virtualLinks = virtualLinks;
     }
 
     public Link(Link link) {

@@ -18,6 +18,6 @@ public class NodeDto {
     @JsonProperty("bias")
     private double bias;
 
-    @JsonProperty("links")
+    @JsonProperty("outputLinks")
     private List<LinkDto> links;
 }

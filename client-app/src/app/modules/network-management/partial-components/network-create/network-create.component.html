@@ -1,167 +1,256 @@
 
 
 
+  <mat-card class="action-container">
+    <button mat-button mat-raised-button color="primary" (click)="saveNetwork()"> Save </button>
+  </mat-card>
 
+  <mat-card class="left-container">
+    <form [formGroup]="networkInitFormGroup">
+      <mat-form-field class="network-init-field">
+        <input matInput type="text" placeholder="Name" formControlName="name" required>
+        <button mat-button *ngIf="networkInitFormGroup.value.name" matSuffix mat-icon-button aria-label="Clear"
+                (click)="networkInitFormGroup.controls['name'].reset()">
+          <mat-icon>close</mat-icon>
+        </button>
+        <mat-error *ngIf="networkInitFormGroup.controls.name.hasError('minlength')">
+          The name of the network must have at least 4 characters
+        </mat-error>
+        <mat-error *ngIf="networkInitFormGroup.controls.name.hasError('required')">
+          The name of the network is required
+        </mat-error>
+      </mat-form-field>
 
+      <mat-divider></mat-divider>
 
+      <mat-form-field class="half-width-continue">
+        <input matInput type="number" placeholder="Seed" formControlName="seed" required>
+        <button mat-button *ngIf="networkInitFormGroup.value.seed" matSuffix mat-icon-button aria-label="Clear"
+                (click)="networkInitFormGroup.controls['seed'].reset()">
+          <mat-icon>close</mat-icon>
+        </button>
+        <mat-error *ngIf="networkInitFormGroup.controls.seed.hasError('required')">
+          The seed of the network is required
+        </mat-error>
+        <mat-error *ngIf="networkInitFormGroup.controls.seed.hasError('min')">
+          The seed of the network must be a positive value
+        </mat-error>
+      </mat-form-field>
 
+      <mat-form-field class="half-width-end">
+        <input matInput type="number" placeholder="Learning Rate" formControlName="learningRate" required>
+        <button mat-button *ngIf="networkInitFormGroup.value.learningRate" matSuffix mat-icon-button aria-label="Clear"
+                (click)="networkInitFormGroup.controls['learningRate'].reset()">
+          <mat-icon>close</mat-icon>
+        </button>
+        <mat-error *ngIf="networkInitFormGroup.controls.learningRate.hasError('required')">
+          The learning rate of the network is required
+        </mat-error>
+        <mat-error *ngIf="networkInitFormGroup.controls.learningRate.hasError('min')">
+          The learning rate of the network must be a positive value greater than 0.000001
+        </mat-error>
+        <mat-error *ngIf="networkInitFormGroup.controls.learningRate.hasError('max')">
+          The learning rate of the network must be a positive value less than 10
+        </mat-error>
+      </mat-form-field>
 
+      <mat-divider></mat-divider>
 
+      <mat-form-field class="half-width-continue">
+        <input matInput type="number" placeholder="Batch Size" formControlName="batchSize" required>
+        <button mat-button *ngIf="networkInitFormGroup.value.batchSize" matSuffix mat-icon-button aria-label="Clear"
+                (click)="networkInitFormGroup.controls['batchSize'].reset()">
+          <mat-icon>close</mat-icon>
+        </button>
+        <mat-error *ngIf="networkInitFormGroup.controls.batchSize.hasError('required')">
+          The batch size of the network is required
+        </mat-error>
+        <mat-error *ngIf="networkInitFormGroup.controls.batchSize.hasError('min')">
+          The batch size of the network must be a positive value greater than 1
+        </mat-error>
+      </mat-form-field>
 
+      <mat-form-field class="half-width-end">
+        <input matInput type="number" placeholder="Epochs" formControlName="nEpochs" required>
+        <button mat-button *ngIf="networkInitFormGroup.value.nEpochs" matSuffix mat-icon-button aria-label="Clear"
+                (click)="networkInitFormGroup.controls['nEpochs'].reset()">
+          <mat-icon>close</mat-icon>
+        </button>
+        <mat-error *ngIf="networkInitFormGroup.controls.nEpochs.hasError('required')">
+          The epoch count of the network is required
+        </mat-error>
+        <mat-error *ngIf="networkInitFormGroup.controls.nEpochs.hasError('min')">
+          The epoch count of the network must be a positive value greater than 1
+        </mat-error>
+      </mat-form-field>
 
+      <mat-divider></mat-divider>
 
+      <mat-form-field class="network-init-field">
+        <mat-label> Branch</mat-label>
+        <mat-select formControlName="branchId" placeholder="Select branch">
+          <mat-option *ngFor="let branch of availableBranches" [value]="branch.id"> {{branch.name}} </mat-option>
+        </mat-select>
+        <mat-error *ngIf="networkInitFormGroup.controls.branchId.hasError('required')">
+          The branch on which the network will be created is required
+        </mat-error>
+      </mat-form-field>
 
+      <mat-divider></mat-divider>
 
-<div style="margin-top: 10%">
+      <mat-form-field class="half-width-continue">
+        <input matInput type="number" placeholder="Number of inputs" formControlName="nInputs" required>
+        <button mat-button *ngIf="networkInitFormGroup.value.nInputs" matSuffix mat-icon-button aria-label="Clear"
+                (click)="networkInitFormGroup.controls['nInputs'].reset()">
+          <mat-icon>close</mat-icon>
+        </button>
+        <mat-error *ngIf="networkInitFormGroup.controls.nInputs.hasError('required')">
+          The number of inputs for the network is required
+        </mat-error>
+        <mat-error *ngIf="networkInitFormGroup.controls.nInputs.hasError('min')">
+          The number of inputs for the network must be a positive value greater than 1
+        </mat-error>
+      </mat-form-field>
 
+      <mat-form-field class="half-width-end">
+        <input matInput type="number" placeholder="Number of outputs" formControlName="nOutputs" required>
+        <button mat-button *ngIf="networkInitFormGroup.value.nOutputs" matSuffix mat-icon-button aria-label="Clear"
+                (click)="networkInitFormGroup.controls['nOutputs'].reset()">
+          <mat-icon>close</mat-icon>
+        </button>
+        <mat-error *ngIf="networkInitFormGroup.controls.nOutputs.hasError('required')">
+          The number of outputs for the network is required
+        </mat-error>
+        <mat-error *ngIf="networkInitFormGroup.controls.nOutputs.hasError('min')">
+          The number of outputs for the network must be a positive value greater than 1
+        </mat-error>
+      </mat-form-field>
 
-  <form class="input-container" [formGroup]="networkInitFormGroup">
-    <mat-form-field class="network-init-field">
-      <input matInput type="text" placeholder="Name" formControlName="name" required>
-      <button mat-button *ngIf="networkInitFormGroup.value.name" matSuffix mat-icon-button aria-label="Clear" (click)="networkInitFormGroup.reset('name')">
-        <mat-icon>close</mat-icon>
+      <mat-divider></mat-divider>
+
+      <mat-form-field class="half-width-continue">
+        <mat-label> Default hidden layer type </mat-label>
+        <mat-select formControlName="defaultType"
+                    placeholder="'Select default hidden layer type' ">
+          <mat-option *ngFor="let type of hiddenLayerTypes" [value]="type"> {{type}} </mat-option>
+        </mat-select>
+      </mat-form-field>
+
+      <mat-form-field class="half-width-end">
+        <mat-label> Default activation function </mat-label>
+        <mat-select formControlName="defaultActivation" placeholder="Select default activation function">
+          <mat-option *ngFor="let activation of activationTypes" [value]="activation"> {{activation}} </mat-option>
+        </mat-select>
+      </mat-form-field>
+
+      <mat-form-field class="network-init-field">
+        <mat-label> Default neuron count for all hidden layers </mat-label>
+          <input matInput type="number" placeholder="Select default neuron count for all hidden layers " formControlName="defaultNNeurons" required>
+          <button mat-button *ngIf="networkInitFormGroup.value.defaultNNeurons" matSuffix mat-icon-button aria-label="Clear"
+                  (click)="networkInitFormGroup.controls['defaultNNeurons'].reset()">
+            <mat-icon>close</mat-icon>
+          </button>
+      </mat-form-field>
+
+    </form>
+  </mat-card>
+
+  <mat-card class="right-container">
+    <div  [className]="networkInitFormGroup.invalid === true ? 'container-title disabled' : 'container-title'">
+      Layer configuration
+    </div>
+    <div class="container-action">
+
+      <button class="size-16 add-button" mat-raised-button aria-label="Remove"
+              [disabled]="networkInitFormGroup.invalid === true"
+              (click)="addHiddenLayer()">
+        <mat-icon color="primary" class="size-16">add</mat-icon>
+        Add hidden layer
       </button>
-      <mat-error *ngIf="networkInitFormGroup.controls.name.hasError('minlength')">
-        The name of the network must have at least 4 characters
-      </mat-error>
-      <mat-error *ngIf="networkInitFormGroup.controls.name.hasError('required')">
-        The name of the network is required
-      </mat-error>
-    </mat-form-field>
-
-    <mat-form-field class="half-width-continue">
-      <input matInput type="number" placeholder="Seed" formControlName="seed" required>
-      <button mat-button *ngIf="networkInitFormGroup.value.seed" matSuffix mat-icon-button aria-label="Clear" (click)="networkInitFormGroup.reset('seed')">
-        <mat-icon>close</mat-icon>
-      </button>
-      <mat-error *ngIf="networkInitFormGroup.controls.seed.hasError('required')">
-        The seed of the network is required
-      </mat-error>
-      <mat-error *ngIf="networkInitFormGroup.controls.seed.hasError('min')">
-        The seed of the network must be a positive value
-      </mat-error>
-    </mat-form-field>
-
-    <mat-form-field class="half-width-end">
-      <input matInput type="number" placeholder="Learning Rate" formControlName="learningRate" required>
-      <button mat-button *ngIf="networkInitFormGroup.value.learningRate" matSuffix mat-icon-button aria-label="Clear" (click)="networkInitFormGroup.reset('learningRate')">
-        <mat-icon>close</mat-icon>
-      </button>
-      <mat-error *ngIf="networkInitFormGroup.controls.learningRate.hasError('required')">
-        The learning rate of the network is required
-      </mat-error>
-      <mat-error *ngIf="networkInitFormGroup.controls.learningRate.hasError('min')">
-        The learning rate of the network must be a positive value greater than 0.000001
-      </mat-error>
-    </mat-form-field>
-
-    <mat-form-field class="half-width-continue">
-      <input matInput type="number" placeholder="Batch Size" formControlName="batchSize" required>
-      <button mat-button *ngIf="networkInitFormGroup.value.batchSize" matSuffix mat-icon-button aria-label="Clear" (click)="networkInitFormGroup.reset('batchSize')">
-        <mat-icon>close</mat-icon>
-      </button>
-      <mat-error *ngIf="networkInitFormGroup.controls.batchSize.hasError('required')">
-        The batch size of the network is required
-      </mat-error>
-      <mat-error *ngIf="networkInitFormGroup.controls.batchSize.hasError('min')">
-        The batch size of the network must be a positive value greater than 1
-      </mat-error>
-    </mat-form-field>
-
-    <mat-form-field class="half-width-end">
-      <input matInput type="number" placeholder="Epochs" formControlName="nEpochs" required>
-      <button mat-button *ngIf="networkInitFormGroup.value.learningRate" matSuffix mat-icon-button aria-label="Clear" (click)="networkInitFormGroup.reset('nEpochs')">
-        <mat-icon>close</mat-icon>
-      </button>
-      <mat-error *ngIf="networkInitFormGroup.controls.nEpochs.hasError('required')">
-        The epoch count of the network is required
-      </mat-error>
-      <mat-error *ngIf="networkInitFormGroup.controls.nEpochs.hasError('min')">
-        The epoch count of the network must be a positive value greater than 1
-      </mat-error>
-    </mat-form-field>
-
-    <mat-form-field class="network-init-field">
-      <mat-label> Branch </mat-label>
-      <mat-select formControlName="branchId" placeholder="Select branch" >
-        <mat-option *ngFor="let branch of availableBranches" [value]="branch.id"> {{branch.name}} </mat-option>
-      </mat-select>
-      <mat-error *ngIf="networkInitFormGroup.controls.branchId.hasError('required')">
-        The branch on which the network will be created is required
-      </mat-error>
-    </mat-form-field>
+    </div>
 
 
-  <button (click)="a()"> fdssfgfgdg </button>
-  </form>
+    <mat-accordion>
+      <ng-container  *ngFor="let layerFormGroup of layerFormGroups; let i = index">
+      <mat-expansion-panel *ngIf="layerFormGroup"
+                           [expanded]="step === i"
+                           (opened)="setStep(i)"
+                           [disabled]="networkInitFormGroup.invalid === true"
+                           (afterCollapse)="markFormGroupForValidation(layerFormGroup)">
+        <mat-expansion-panel-header>
+          <mat-panel-title>
+            <div *ngIf="layerFormGroup.touched === true && layerFormGroup.valid === true" class="title-text valid-layer">
+            {{isInputLayer(i) === true ? 'Input Layer' : (
+              (isOutputLayer(i) === true) ? 'Output Layer' : ('Hidden Layer #' + (i - 1)))}}
+            </div>
+            <div *ngIf="layerFormGroup.touched === true && layerFormGroup.valid === false" class="title-text invalid-layer">
+              {{(isInputLayer(i) === true ? 'Input Layer' : (
+                (isOutputLayer(i) === true) ? 'Output Layer' : ('Hidden Layer #' + (i - 1)))) + ' (INVALID)'}}
+            </div>
+            <div *ngIf="layerFormGroup.touched === false" class="title-text">
+              {{isInputLayer(i) === true ? 'Input Layer' : (
+              (isOutputLayer(i) === true) ? 'Output Layer' : ('Hidden Layer #' + (i - 1)))}}
+            </div>
+          </mat-panel-title>
+          <mat-panel-description>
+              Remove
+              <button class="size-16 remove-button" mat-button mat-icon-button aria-label="Remove"
+                      (click)="removeLayer(i)"
+                      [disabled]="networkInitFormGroup.invalid === true">
+                <mat-icon color="warn" class="size-16">close</mat-icon>
+              </button>
+          </mat-panel-description>
+        </mat-expansion-panel-header>
 
 
+        <form [formGroup]="layerFormGroup">
+          <mat-form-field class="third-width-continue" [hidden]="isInputLayer(i) === true">
+            <input  matInput type="number" placeholder="Number of inputs (auto-configured)" formControlName="nInputs">
+          </mat-form-field>
 
+          <mat-form-field class="third-width-continue">
+            <input matInput type="number" [placeholder]="'Number of nodes' + (isBoundaryLayer(i) === true ? ' (auto-configured)' : '')" formControlName="nNodes" required>
+            <button mat-button *ngIf="layerFormGroup.value.nNodes" matSuffix mat-icon-button aria-label="Clear"
+                    (click)="layerFormGroup.controls['nNodes'].reset()">
+              <mat-icon>close</mat-icon>
+            </button>
+            <mat-error *ngIf="layerFormGroup.controls.nNodes.hasError('required')">
+              The number of nodes for the layer is required
+            </mat-error>
+            <mat-error *ngIf="layerFormGroup.controls.nNodes.hasError('min')">
+              The number of nodes for the layer must be a positive value greater than 1
+            </mat-error>
+          </mat-form-field>
 
+          <mat-form-field class="third-width-end">
+            <input  matInput type="number" placeholder="Number of outputs (auto-configured)" formControlName="nOutputs">
+          </mat-form-field>
 
+          <mat-form-field class="half-width-continue">
+            <mat-label> {{'Layer Type' + (isBoundaryLayer(i) === true ? ' (auto-configured)' : '') }} </mat-label>
+            <mat-select formControlName="type"
+                        placeholder="'Select layer type' ">
+              <mat-option *ngFor="let type of getLayerTypesForIdx(i)" [value]="type"> {{type}} </mat-option>
+            </mat-select>
+            <mat-error *ngIf="layerFormGroup.controls.type.hasError('required')">
+              The type of the layer is required
+            </mat-error>
+          </mat-form-field>
 
+          <mat-form-field class="half-width-end">
+            <mat-label> Activation function </mat-label>
+            <mat-select formControlName="activation" placeholder="Select activation function">
+              <mat-option *ngFor="let activation of activationTypes" [value]="activation"> {{activation}} </mat-option>
+            </mat-select>
+            <mat-error *ngIf="layerFormGroup.controls.activation.hasError('required')">
+              The activation function is required
+            </mat-error>
+          </mat-form-field>
 
+        </form>
 
+      </mat-expansion-panel>
+      </ng-container>
+    </mat-accordion>
 
-
-
-
-
-
-
-
-  <button (click)="loadAll()"> GET FOR USER </button>
-  <button (click)="create()"> CREATE </button>
-  <button (click)="remove()"> DELETE </button>
-  <ul *ngFor="let init of networkInits">
-    <li>
-      ID {{ init.id }}, NAME {{ init.name }}, SEED {{init.seed}}, LEARNRATE {{init.learningRate}}, BATCHS {{init.batchSize}},
-      EPOCHS {{init.nEpochs}}, INPUTS {{init.nInputs}}, OUTPUTS {{init.nOutputs}}, BRANCH {{init.branchId}}
-
-      <ul *ngFor="let layer of init.layers">
-        <li>
-          ID {{layer.id}}}, INPUTS {{layer.nInputs}}, NODES {{layer.nNodes}}, OUTPUTS {{layer.nOutputs}}, TYPE {{layer.type}},
-          ACTIVATION {{layer.activation}}
-        </li>
-      </ul>
-    </li>
-  </ul>
-  <br>------------------------------------------------------------------------------
-  <p>NAME </p><input [(ngModel)]="networkInit.name" >
-  <p>SEED </p><input [(ngModel)]="networkInit.seed" >
-  <p>LEARNRATE </p><input [(ngModel)]="networkInit.learningRate" >
-  <p>BATCHS </p><input [(ngModel)]="networkInit.batchSize" >
-  <p>EPOCHS </p><input [(ngModel)]="networkInit.nEpochs" >
-  <p>INPUTS </p><input [(ngModel)]="networkInit.nInputs" >
-  <p>OUTPUTS </p><input [(ngModel)]="networkInit.nOutputs" >
-  <p>BRANCH </p>
-  <mat-select [(value)]="networkInit.branchId">
-    <mat-option *ngFor="let branch of availableBranches" [value]="branch.id"> {{branch.name}} </mat-option>
-  </mat-select>
-
-
-  <p>LAYER COUNT</p><input (keyup)="updateLayerCount()" [(ngModel)]="layerCount" >
-
-  <ul *ngFor="let layer of networkInit.layers">
-    <li>
-      <p>INPUTS </p><input [(ngModel)]="layer.nInputs" >
-      <p>NODES </p><input [(ngModel)]="layer.nNodes" >
-      <p>OUTPUTS  </p><input [(ngModel)]="layer.nOutputs" >
-
-      <p>TYPE</p>
-      <mat-select [(value)]="layer.type">
-        <mat-option *ngFor="let type of layerTypes" [value]="type"> {{type}} </mat-option>
-      </mat-select>
-
-      <p>ACTIVATION</p>
-      <mat-select [(value)]="layer.activation">
-        <mat-option *ngFor="let act of activationTypes" [value]="act"> {{act}} </mat-option>
-      </mat-select>
-    </li>
-  </ul>
-
-  <br>--------------------------------------------------------------------------------
-  <br>DELETE
-  <p>ID </p><input [(ngModel)]="deleteId" >
-
-</div>
+  </mat-card>

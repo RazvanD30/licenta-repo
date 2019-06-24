@@ -127,10 +127,14 @@ export class HeaderComponent implements OnInit {
       .subscribe(branches => {
         this.branchService.getCurrentWorkingBranch(this.username)
           .subscribe(current => {
-            this.availableBranches = branches.filter(branch => {
-              return branch.name !== current.name;
-            });
-            this.currentBranch = current;
+            if (!current) {
+              this.availableBranches = branches;
+            } else {
+              this.availableBranches = branches.filter(branch => {
+                return branch.name !== current.name;
+              });
+              this.currentBranch = current;
+            }
           });
       });
   }
@@ -144,7 +148,7 @@ export class HeaderComponent implements OnInit {
     this.isOpen = !this.isOpen;
   }
 
-  isLoggedIn(): boolean{
+  isLoggedIn(): boolean {
     return this.authenticationService.isLoggedIn();
   }
 

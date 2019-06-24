@@ -10,11 +10,13 @@ import {ErrorHandlerInterceptor} from '../../core/interceptors/error-handler.int
 import {FileManagementRoutingModule} from './file-management-routing.module';
 import {FileService} from '../../shared/services/file.service';
 import {FileUploadComponent} from './partial-components/file-upload/file-upload.component';
+import { FileLinkComponent } from './partial-components/file-link/file-link.component';
 
 @NgModule({
   declarations: [
     FileDashboardComponent,
-    FileUploadComponent
+    FileUploadComponent,
+    FileLinkComponent
   ],
   imports: [
     CoreModule,

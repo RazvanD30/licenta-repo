@@ -1,7 +1,7 @@
 import {AfterViewInit, ChangeDetectorRef, Component, Inject, Input, OnInit} from '@angular/core';
 import {faDirections, faInfo, faWeightHanging} from '@fortawesome/free-solid-svg-icons';
 import {MAT_DIALOG_DATA, MatDialogRef} from '@angular/material';
-import {NeuralNodeGui} from '../../../../shared/models/network/gui/NeuralNodeGui';
+import {NodeGui} from '../../../../shared/models/network/gui/NodeGui';
 import {Status} from '../../../../shared/models/network/gui/Status';
 import {LinkGui} from '../../../../shared/models/network/gui/LinkGui';
 
@@ -20,12 +20,12 @@ export class NodeDetailsComponent implements OnInit, AfterViewInit {
   public WAIT = Status.WAIT;
   public BREAKPOINT = Status.BREAKPOINT;
   public UNDER_WATCH = Status.UNDER_WATCH;
-  public neighbours: NeuralNodeGui[];
+  public neighbours: NodeGui[];
 
 
   constructor(
     public dialogRef: MatDialogRef<NodeDetailsComponent>,
-    @Inject(MAT_DIALOG_DATA) public data: NeuralNodeGui,
+    @Inject(MAT_DIALOG_DATA) public data: NodeGui,
     public cdRef: ChangeDetectorRef
   ) {
     this.neighbours = this.getNeighours();
@@ -41,7 +41,7 @@ export class NodeDetailsComponent implements OnInit, AfterViewInit {
     this.cdRef.detectChanges();
   }
 
-  private getNeighours(): NeuralNodeGui[] {
+  private getNeighours(): NodeGui[] {
     const result = [];
     this.data.inputLinks.forEach(conn => result.push(conn.source));
     this.data.inputLinks.forEach(conn => result.push(conn.destination));

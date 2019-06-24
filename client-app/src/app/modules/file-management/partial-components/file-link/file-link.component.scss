@@ -1,0 +1,158 @@
+.btn-items{
+  padding-top:5px;
+}
+
+.fa-caret-right, .fa-caret-down{
+  padding-left:10px;
+  padding-right:10px;
+}
+
+.containerTitle{
+  margin-left:-15px;
+}
+
+/* Fonts */
+#itemMachine{
+  font-size:12px;
+}
+.subitem{
+  padding:5px;
+  padding-top: 8px;
+  margin-bottom: 5px;
+  font-size: 16px;
+}
+.subItemEdit{
+  padding: 5px;
+  padding-top: 5px;
+  margin-bottom: -1px;
+  font-size: 16px;
+}
+
+/* Forms */
+.addItem{
+  height: 30px;
+  padding: 5px 10px;
+  font-size: 16px;
+  line-height: 1.5;
+  border-radius: 3px;
+  width:initial;
+  display:inline-block;
+}
+
+.enabledInput{
+  color: white;
+  background-color: rgba(238, 238, 238, 0.1);
+  height: 30px;
+  padding: 5px 10px;
+  font-size: 16px;
+  line-height: 1.5;
+  border-radius: 3px;
+  width:inherit;
+  display:inline-block;
+}
+.containerEdit{
+  color:black;
+}
+
+.form-control[readonly], .disabledInput{
+  color: white;
+  background-color: #337ab7;
+  font-size:16px;
+  height: 30px;
+  line-height: 1.5;
+  border:none;
+  width:inherit;
+  display:inline-block;
+  box-shadow: none;
+  width:auto;
+}
+
+/* Category draggable */
+ul[dnd-list] {
+  min-height: 42px;
+  padding: 0;
+}
+
+ul[dnd-list] > li {
+  border-bottom: 1px solid #ddd;
+  display: block;
+  padding: 10px 15px;
+}
+
+ul[dnd-list] > li.dndDraggingSource {
+  display: none;
+}
+
+ul[dnd-list] > li.dndPlaceholder {
+  background-color: #ddd;
+  min-height: 42px;
+}
+
+.panel .panel-body {
+  padding: 0;
+}
+
+/***************************** Dropzone Styling *****************************/
+
+/**
+ * The dnd-list should always have a min-height,
+ * otherwise you can't drop to it once it's empty
+ */
+.dndCatDemo .dropzone ul[dnd-list] {
+  min-height: 8px;
+  margin: 0px;
+  padding-left: 0px;
+}
+
+
+/**
+ * Reduce opacity of elements during the drag operation. This allows the user
+ * to see where he is dropping his element, even if the element is huge. The
+ * .dndDragging class is automatically set during the drag operation.
+ */
+.dndCatDemo .dropzone .dndDragging {
+  opacity: 0.7;
+}
+
+/**
+ * The dndDraggingSource class will be applied to the source element of a drag
+ * operation.
+ */
+.dndCatDemo .dropzone .dndDraggingSource {
+  opacity: 0.5;
+}
+
+/**
+ * An element with .dndPlaceholder class will be added as child of the dnd-list
+ * while the user is dragging over it.
+ */
+.dndCatDemo .dropzone .dndPlaceholder {
+  background-color: #ddd !important;
+  display: block;
+  min-height: 42px;
+}
+
+/***************************** Element type specific styles *****************************/
+
+.dndCatDemo .dropzone .itemlist > li {
+  background-color: #337ab7;
+  border: none;
+  border-radius: .25em;
+  color: #fff;
+  margin: 5px;
+  padding: 3px;
+  margin-left: 12px;
+  margin-right: 12px;
+}
+
+.dndCatDemo .dropzone .container-element {
+  margin: 10px;
+}
+.dndCatDemo .handle {
+  cursor: move;
+  float:left;
+  padding: 5px;
+  padding-top: 8px;
+  padding-bottom: 0px;
+  margin-bottom: 0px;
+}

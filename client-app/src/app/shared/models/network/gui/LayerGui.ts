@@ -1,57 +1,17 @@
-import {NeuralNodeGui} from './NeuralNodeGui';
-import {Status} from './Status';
+import {NodeGui} from './NodeGui';
 
 export class LayerGui {
   private readonly _id: number;
-  private readonly _nodes: Map<number,NeuralNodeGui>;
-  private _previous: LayerGui;
-  private _next: LayerGui;
-  private _xPos: number;
+  private readonly _nodes: Map<number, NodeGui>;
 
   constructor(id: number) {
     this._id = id;
-    this._nodes = new Map<number,NeuralNodeGui>();
+    this._nodes = new Map<number, NodeGui>();
     this._previous = null;
     this._next = null;
   }
 
-
-  drawNodes(context: CanvasRenderingContext2D){
-    this.nodes.forEach(node => node.draw(context));
-  }
-
-  drawText(context: CanvasRenderingContext2D){
-    this.nodes.forEach(node => node.drawText(context));
-  }
-
-  drawLines(context: CanvasRenderingContext2D){
-    this.nodes.forEach(node => {
-      if(node.status === Status.IGNORED) {
-        if(node.layer.next !== null) {
-          node.outputLinks.forEach(link => link.draw(context));
-        }
-        if(node.layer.previous !== null) {
-          node.inputLinks.forEach(link => link.draw(context));
-        }
-      }
-    });
-    this.nodes.forEach(node => {
-      if(node.status !== Status.IGNORED) {
-        if(node.layer.next !== null) {
-          node.outputLinks.forEach(link => link.draw(context));
-        }
-        if(node.layer.previous !== null) {
-          node.inputLinks.forEach(link => link.draw(context));
-        }
-      }
-    });
-  }
-
-  drawLayer(context: CanvasRenderingContext2D){
-    this.drawLines(context);
-    this.drawNodes(context);
-    this.drawText(context);
-  }
+  private _previous: LayerGui;
 
   get previous(): LayerGui {
     return this._previous;
@@ -61,6 +21,8 @@ export class LayerGui {
     this._previous = value;
   }
 
+  private _next: LayerGui;
+
   get next(): LayerGui {
     return this._next;
   }
@@ -69,25 +31,7 @@ export class LayerGui {
     this._next = value;
   }
 
-  get id(): number {
-    return this._id;
-  }
-
-  get nodes(): Map<number, NeuralNodeGui> {
-    return this._nodes;
-  }
-
-  addNode(node: NeuralNodeGui): void {
-    this._nodes.set(node.id, node);
-  }
-
-  findNode(id: number): NeuralNodeGui {
-    return this._nodes.get(id);
-  }
-
-  removeNode(id: number): boolean {
-    return this._nodes.delete(id);
-  }
+  private _xPos: number;
 
   get xPos(): number {
     return this._xPos;
@@ -95,5 +39,47 @@ export class LayerGui {
 
   set xPos(value: number) {
     this._xPos = value;
+  }
+
+  get id(): number {
+    return this._id;
+  }
+
+  get nodes(): Map<number, NodeGui> {
+    return this._nodes;
+  }
+
+  drawNodes(context: CanvasRenderingContext2D) {
+    this.nodes.forEach(node => node.draw(context));
+  }
+
+  drawText(context: CanvasRenderingContext2D) {
+    this.nodes.forEach(node => node.drawText(context));
+  }
+
+  drawLines(context: CanvasRenderingContext2D) {
+    for (const [key, node] of this.nodes) {
+      for (const [linkKey, link] of node.outputLinks) {
+        link.draw(context);
+      }
+    }
+  }
+
+  drawLayer(context: CanvasRenderingContext2D) {
+    this.drawLines(context);
+    this.drawNodes(context);
+    this.drawText(context);
+  }
+
+  addNode(node: NodeGui): void {
+    this._nodes.set(node.id, node);
+  }
+
+  findNode(id: number): NodeGui {
+    return this._nodes.get(id);
+  }
+
+  removeNode(id: number): boolean {
+    return this._nodes.delete(id);
   }
 }

@@ -2,7 +2,7 @@ package en.ubb.networkconfiguration.persistence.domain.network.runtime;
 
 import en.ubb.networkconfiguration.persistence.domain.BaseEntity;
 import en.ubb.networkconfiguration.persistence.domain.network.enums.LayerType;
-import en.ubb.networkconfiguration.persistence.domain.network.offline.OfflineLayer;
+import en.ubb.networkconfiguration.persistence.domain.network.virtual.VirtualLayer;
 import lombok.*;
 import org.hibernate.validator.constraints.Range;
 import org.nd4j.linalg.activations.Activation;
@@ -40,7 +40,7 @@ public class Layer extends BaseEntity<Long> {
     private List<Node> nodes = new ArrayList<>();
 
     @OneToMany(mappedBy = "layer", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<OfflineLayer> offlineLayers = new ArrayList<>();
+    private List<VirtualLayer> virtualLayers = new ArrayList<>();
 
     @Column(name = "type", nullable = false)
     @Enumerated(EnumType.STRING)
@@ -53,14 +53,14 @@ public class Layer extends BaseEntity<Long> {
 
     @Builder(toBuilder = true)
     public Layer(Long id, @Range(min = 0) int nInputs, @Range(min = 1) int nNodes, @Range(min = 0) int nOutputs,
-                 Network network, List<Node> nodes, List<OfflineLayer> offlineLayers, LayerType type, Activation activation) {
+                 Network network, List<Node> nodes, List<VirtualLayer> virtualLayers, LayerType type, Activation activation) {
         super(id);
         this.nInputs = nInputs;
         this.nNodes = nNodes;
         this.nOutputs = nOutputs;
         this.network = network;
         this.nodes = nodes;
-        this.offlineLayers = offlineLayers;
+        this.virtualLayers = virtualLayers;
         this.type = type;
         this.activation = activation;
     }
