@@ -1,8 +1,5 @@
 import {NgModule} from '@angular/core';
 import {FileDashboardComponent} from './pages/file-dashboard/file-dashboard.component';
-import {CoreModule} from '../../core/core.module';
-import {MaterialModule} from '../material/material.module';
-import {ScrollingModule} from '@angular/cdk/scrolling';
 import {AuthenticationGuard} from '../../core/guards/authentication.guard';
 import {HTTP_INTERCEPTORS} from '@angular/common/http';
 import {HttpTokenInterceptor} from '../../core/interceptors/http-token.interceptor';
@@ -10,7 +7,8 @@ import {ErrorHandlerInterceptor} from '../../core/interceptors/error-handler.int
 import {FileManagementRoutingModule} from './file-management-routing.module';
 import {FileService} from '../../shared/services/file.service';
 import {FileUploadComponent} from './partial-components/file-upload/file-upload.component';
-import { FileLinkComponent } from './partial-components/file-link/file-link.component';
+import {FileLinkComponent} from './partial-components/file-link/file-link.component';
+import {SharedModule} from '../../shared/shared.module';
 
 @NgModule({
   declarations: [
@@ -19,9 +17,7 @@ import { FileLinkComponent } from './partial-components/file-link/file-link.comp
     FileLinkComponent
   ],
   imports: [
-    CoreModule,
-    MaterialModule,
-    ScrollingModule,
+    SharedModule,
     FileManagementRoutingModule
   ],
   providers: [

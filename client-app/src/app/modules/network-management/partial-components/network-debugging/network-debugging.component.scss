@@ -12,6 +12,13 @@
   z-index: -1;
 }
 
+.loading-dialog {
+  z-index: 1;
+  position: absolute;
+  top: 2%;
+  left: 2%;
+}
+
 .details-menu {
   width: 500px !important;
 }

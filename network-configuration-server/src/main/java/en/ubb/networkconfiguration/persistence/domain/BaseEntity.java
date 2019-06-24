@@ -17,7 +17,7 @@ import javax.persistence.MappedSuperclass;
 public class BaseEntity<T> {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE)
     protected T id;
 
 }

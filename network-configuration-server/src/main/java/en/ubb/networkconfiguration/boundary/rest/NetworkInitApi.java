@@ -14,6 +14,7 @@ import en.ubb.networkconfiguration.business.validation.exception.NetworkAccessBu
 import en.ubb.networkconfiguration.boundary.validation.validator.NetworkInitDtoValidator;
 import en.ubb.networkconfiguration.business.validation.exception.NotFoundBussExc;
 import en.ubb.networkconfiguration.persistence.domain.branch.NetworkBranch;
+import en.ubb.networkconfiguration.persistence.domain.network.setup.NetworkInitializer;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.validation.BindingResult;
@@ -80,6 +81,20 @@ public class NetworkInitApi {
         return this.networkInitService.getAll().stream()
                 .map(DtoMapper::toDto)
                 .collect(Collectors.toList());
+    }
+
+    @GetMapping("/names")
+    public List<String> getAllInitNames(){
+        return this.networkInitService.getAll().stream()
+                .map(NetworkInitializer::getName)
+                .collect(Collectors.toList());
+    }
+
+    @GetMapping("/withName/{name}")
+    public NetworkInitDto getByName(@NotNull @PathVariable String name) throws NotFoundException {
+        NetworkInitDto result = this.networkInitService.findByName(name).map(DtoMapper::toDto)
+                .orElseThrow(() -> new NotFoundException("Network initializer not found."));
+        return result;
     }
 
     @GetMapping("/{id}")

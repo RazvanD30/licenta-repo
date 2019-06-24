@@ -6,6 +6,8 @@ import {NodeGui} from '../../../../shared/models/network/gui/NodeGui';
 import {Status} from '../../../../shared/models/network/gui/Status';
 import {NetworkVisualDataService} from '../../../../shared/services/network-visual-data.service';
 import {VirtualNetworkDto} from '../../../../shared/models/network/virtual/VirtualNetworkDto';
+import {FormBuilder, FormGroup, Validators} from "@angular/forms";
+import {NetworkConfigureService} from "../../../../shared/services/network-configure.service";
 
 @Component({
   selector: 'app-network-debugging',
@@ -22,6 +24,8 @@ export class NetworkDebuggingComponent implements OnInit {
   // TODO MOVE THOSE
   public virtualNetworkDto: VirtualNetworkDto;
   x: number;
+  networkNames: string[] = [];
+  virtualNetworkFormGroup: FormGroup;
   private canvas: HTMLCanvasElement;
   private context: CanvasRenderingContext2D;
   private width: number;
@@ -39,7 +43,9 @@ export class NetworkDebuggingComponent implements OnInit {
   private FILL_SCREEN = false;
 
   constructor(private networkVisualService: NetworkVisualDataService,
+              private networkConfigService: NetworkConfigureService,
               private renderer: Renderer2,
+              private formBuilder: FormBuilder,
               public dialog: MatDialog,
               public cdRef: ChangeDetectorRef
   ) {
@@ -57,6 +63,19 @@ export class NetworkDebuggingComponent implements OnInit {
       networkId: null,
       nLayers: null
     };
+    this.networkConfigService.getNetworkNamesForUser(localStorage.getItem('username'))
+      .subscribe(names => {
+        console.log('got');
+        this.networkNames = names;
+      }, err => {
+        console.log(err);
+      }, () => {
+        console.log('done');
+      });
+    this.virtualNetworkFormGroup = this.formBuilder.group({
+      name: ['', [Validators.required, Validators.minLength(4)]],
+      networkName: ['', [Validators.required, Validators.minLength(4)]]
+    });
   }
 
 
@@ -113,21 +132,17 @@ export class NetworkDebuggingComponent implements OnInit {
       */
   }
 
-
-  load() {
-    this.networkVisualService.virtualNetwork = {
-      id: 12,
-      name: null,
-      networkName: null,
+  saveAndLoad() {
+    const dto: VirtualNetworkDto = {
+      id: null,
+      name: this.virtualNetworkFormGroup.value.name,
+      networkName: this.virtualNetworkFormGroup.value.networkName,
       networkId: null,
-      nLayers: 12
+      nLayers: null
     };
-    this.networkVisualService.getNextLayer();
-  }
-
-  createNetwork() {
-    this.networkVisualService.create(this.virtualNetworkDto).subscribe(virtualNetworkDto => {
+    this.networkVisualService.create(dto).subscribe(virtualNetworkDto => {
       this.networkVisualService.virtualNetwork = virtualNetworkDto;
+      this.networkVisualService.getNextLayer();
     });
   }
 
@@ -145,7 +160,7 @@ export class NetworkDebuggingComponent implements OnInit {
         y += this.DISTANCE_BETWEEN_POINTS_Y;
       });
       this.x += this.DISTANCE_BETWEEN_POINTS_X;
-      if(layerGui.previous != null) {
+      if (layerGui.previous != null) {
         layerGui.previous.drawLines(this.context);
       }
       layerGui.drawNodes(this.context);

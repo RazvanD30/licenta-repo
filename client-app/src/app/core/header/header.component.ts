@@ -91,6 +91,7 @@ export class HeaderComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.branchService.branchAdded.subscribe(() => this.loadBranchData());
     this.username = localStorage.getItem('username');
     if (this.isLoggedIn()) {
       this.loadBranchData();
@@ -123,8 +124,10 @@ export class HeaderComponent implements OnInit {
   }
 
   loadBranchData() {
+    console.log('loading');
     this.branchService.getAllForUser(this.username)
       .subscribe(branches => {
+        console.log('loaded ' + branches.length);
         this.branchService.getCurrentWorkingBranch(this.username)
           .subscribe(current => {
             if (!current) {

@@ -82,16 +82,27 @@ public class NetworkConfigureApi {
                 .collect(Collectors.toList());
     }
 
+    @GetMapping("names/withUser/{username}")
+    public List<String> getAllNetworkNamesForUser(@PathVariable String username) throws NotFoundException {
+        User user = this.userService.findByUsername(username)
+                .orElseThrow(() -> new NotFoundException("User not found"));
+        try {
+            return this.networkService.getAllForBranchID(user.getCurrentBranch().getId()).stream()
+                    .map(Network::getName)
+                    .collect(Collectors.toList());
+        } catch (NotFoundBussExc notFoundBussExc) {
+            throw new NotFoundException(notFoundBussExc);
+        }
+    }
+
     @GetMapping(value = "withUser/{username}")
     public List<NetworkDto> getAllForUser(@PathVariable String username) throws NotFoundException {
         User user = this.userService.findByUsername(username)
                 .orElseThrow(() -> new NotFoundException("User not found"));
         try {
-            List<NetworkDto> collect = this.networkService.getAllForBranchID(user.getCurrentBranch().getId()).stream()
+            return this.networkService.getAllForBranchID(user.getCurrentBranch().getId()).stream()
                     .map(DtoMapper::toDto)
                     .collect(Collectors.toList());
-            System.out.println(collect);
-            return collect;
         } catch (NotFoundBussExc notFoundBussExc) {
             throw new NotFoundException(notFoundBussExc);
         }

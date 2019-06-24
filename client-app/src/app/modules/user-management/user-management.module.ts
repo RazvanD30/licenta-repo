@@ -1,11 +1,11 @@
 import {NgModule} from '@angular/core';
 import {UserService} from '../../core/services/user.service';
-import {UsersTableComponent} from './partial-components/users-table/users-table.component';
+import {SharedModule} from '../../shared/shared.module';
 
 @NgModule({
   declarations: [],
   imports: [
-    UsersTableComponent
+    SharedModule
   ],
   providers: [
     UserService

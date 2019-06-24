@@ -4,9 +4,8 @@
 .action-container {
   position: absolute;
   width: 30%;
-  height: 10%;
   top: 5%;
-  left: 15%;
+  left: 5%;
   right: auto;
 }
 
@@ -81,6 +80,13 @@
   height: 16px;
   line-height: 16px;
   text-align: center;
+}
+
+.warn-text {
+  color: rgb(220, 53, 69);
+  font-family: Roboto,"Helvetica Neue",sans-serif;
+  font-weight: 500;
+  margin-left: 10px;
 }
 
 .invalid-layer {

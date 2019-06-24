@@ -47,19 +47,19 @@ public class VirtualNetworkServiceImpl implements VirtualNetworkService {
     @Override
     public VirtualNetwork init(Network network, String name) {
 
-        VirtualNetwork virtualNetwork = VirtualNetwork.builder()
-                        .name(name)
-                        .createDateTime(LocalDateTime.now())
-                        .network(network)
-                        .layers(new ArrayList<>())
-                        .build();
+        VirtualNetwork virtualNetwork = virtualNetworkRepo.save(VirtualNetwork.builder()
+                .name(name)
+                .createDateTime(LocalDateTime.now())
+                .network(network)
+                .layers(new ArrayList<>())
+                .build());
 
         network.getLayers().forEach(layer -> {
-            VirtualLayer virtualLayer = VirtualLayer.builder()
-                            .layer(layer)
-                            .virtualNetwork(virtualNetwork)
-                            .nodes(new ArrayList<>())
-                            .build();
+            VirtualLayer virtualLayer = virtualLayerRepo.save(VirtualLayer.builder()
+                    .layer(layer)
+                    .virtualNetwork(virtualNetwork)
+                    .nodes(new ArrayList<>())
+                    .build());
             virtualNetwork.addLayer(virtualLayer);
 
 
@@ -76,35 +76,46 @@ public class VirtualNetworkServiceImpl implements VirtualNetworkService {
                         .build();
                 virtualNodeRepo.save(virtualNode);
                 virtualLayer.addNode(virtualNode);
-
-                node.getOutputLinks().forEach(link -> {
-                    VirtualLink virtualLink = VirtualLink.builder()
-                                    .link(link)
-                                    .destinationNode(VirtualNode.builder().id(link.getDestination().getId()).build())
-                                    .build();
-                    virtualNode.addOutputLink(virtualLink);
-                });
-                node.getInputLinks().forEach(link -> {
-                    VirtualLink virtualLink = VirtualLink.builder()
-                                    .link(link)
-                                    .sourceNode(VirtualNode.builder().id(link.getSource().getId()).build())
-                                    .build();
-                    virtualNode.addInputLink(virtualLink);
-                });
-
             });
             position.hold(position.held() + 1);
         });
 
+        network.getLayers().forEach(layer -> {
+            layer.getNodes().forEach(node -> {
+                virtualNetwork.getLayers().forEach(virtualLayer -> {
+                    virtualLayer.getNodes().forEach(virtualNode -> {
+                        if (virtualNode.getNode().getId().equals(node.getId())) {
+                            node.getOutputLinks().forEach(link -> {
+                                VirtualLink virtualLink = VirtualLink.builder()
+                                        .link(link)
+                                        .destinationNode(VirtualNode.builder().id(link.getDestination().getId()).build())
+                                        .build();
+                                virtualNode.addOutputLink(virtualLink);
+                            });
 
-        for(int i = 1; i < virtualNetwork.getLayers().size(); i++){
+
+                            node.getInputLinks().forEach(link -> {
+                                VirtualLink virtualLink = VirtualLink.builder()
+                                        .link(link)
+                                        .sourceNode(VirtualNode.builder().id(link.getSource().getId()).build())
+                                        .build();
+                                virtualNode.addInputLink(virtualLink);
+                            });
+                        }
+                    });
+                });
+            });
+        });
+
+
+        for (int i = 1; i < virtualNetwork.getLayers().size(); i++) {
             VirtualLayer previousLayer = virtualNetwork.getLayers().get(i - 1);
             VirtualLayer currentLayer = virtualNetwork.getLayers().get(i);
 
             currentLayer.getNodes().forEach(node -> {
                 node.getInputsLinks().forEach(inputLink -> {
-                    for(VirtualNode prevN: previousLayer.getNodes()){
-                        if(prevN.getNode().getId().equals(inputLink.getSourceNode().getId())){
+                    for (VirtualNode prevN : previousLayer.getNodes()) {
+                        if (prevN.getNode().getId().equals(inputLink.getSourceNode().getId())) {
                             inputLink.setSourceNode(prevN);
                             break;
                         }
@@ -113,8 +124,8 @@ public class VirtualNetworkServiceImpl implements VirtualNetworkService {
             });
             previousLayer.getNodes().forEach(node -> {
                 node.getOutputLinks().forEach(outputLink -> {
-                    for(VirtualNode currN: currentLayer.getNodes()){
-                        if(currN.getNode().getId().equals(outputLink.getDestinationNode().getId())){
+                    for (VirtualNode currN : currentLayer.getNodes()) {
+                        if (currN.getNode().getId().equals(outputLink.getDestinationNode().getId())) {
                             outputLink.setDestinationNode(currN);
                             break;
                         }
@@ -145,7 +156,7 @@ public class VirtualNetworkServiceImpl implements VirtualNetworkService {
         VirtualNetwork virtualNetwork = this.findById(id)
                 .orElseThrow(() -> new NotFoundBussExc("Virtual network with id " + id + " not found"));
 
-        if(pos > virtualNetwork.getLayers().size() - 1){
+        if (pos > virtualNetwork.getLayers().size() - 1) {
             throw new NotFoundBussExc("Virtual layer at position " + pos + " not found");
         }
         return virtualNetwork.getLayers().get(pos);

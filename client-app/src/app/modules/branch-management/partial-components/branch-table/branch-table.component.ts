@@ -54,7 +54,10 @@ export class BranchTableComponent implements OnInit {
   }
 
   create() {
-    this.branchService.create(this.branch).subscribe(response => this.resetModel());
+    this.branchService.create(this.branch).subscribe(response => {
+      this.resetModel();
+      this.branchService.branchAdded.emit();
+    });
   }
 
   update() {

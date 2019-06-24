@@ -33,8 +33,16 @@ public class VirtualNetworkApi {
 
     @PostMapping
     public VirtualNetworkDto create(@RequestBody VirtualNetworkDto dto) throws NotFoundException {
-        Network network = this.networkService.findById(dto.getNetworkId())
-                .orElseThrow(() -> new NotFoundException("Network with id " + dto.getNetworkId() + " not found"));
+        Network network;
+        if(dto.getNetworkId() != null) {
+            network = this.networkService.findById(dto.getNetworkId())
+                    .orElseThrow(() -> new NotFoundException("Network with id " + dto.getNetworkId() + " not found"));
+        } else if(dto.getNetworkName() != null && !dto.getNetworkName().isEmpty()){
+            network = this.networkService.findByName(dto.getNetworkName())
+                    .orElseThrow(() -> new NotFoundException("Network with name " + dto.getNetworkName() + " not found"));
+        } else {
+            throw new NotFoundException("Given parameter does not have any unique field set.");
+        }
         return DtoMapper.toDto(virtualNetworkService.init(network,dto.getName()));
     }
 

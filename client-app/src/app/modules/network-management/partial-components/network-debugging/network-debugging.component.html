@@ -1,35 +1,64 @@
-
-
-
 <app-loading [loading]="loading"></app-loading>
 <div [hidden]="loading === null" class="debugging-container">
   <app-network-console></app-network-console>
-  <input [(ngModel)]="virtualNetworkDto.name" placeholder="Name">
-  <input [(ngModel)]="virtualNetworkDto.networkId" placeholder="Network id">
-  <button (click)="createNetwork()"> Create </button>
-  <button (click)="load()"> Load </button>
-  <canvas #canvas class="canvas"> </canvas>
+
+  <mat-card class="loading-dialog">
+    <form [formGroup]="virtualNetworkFormGroup">
+
+      <mat-form-field class="network-init-field">
+        <mat-label> Network name</mat-label>
+        <mat-select formControlName="networkName" placeholder="Select network name">
+          <mat-option *ngFor="let name of networkNames" [value]="name"> {{name}} </mat-option>
+        </mat-select>
+        <mat-error *ngIf="virtualNetworkFormGroup.controls.networkName.hasError('required')">
+          The network name is required
+        </mat-error>
+      </mat-form-field>
+
+      <mat-form-field class="network-init-field">
+        <input matInput type="text" placeholder="Virtual configuration name" formControlName="name" required>
+        <button mat-button *ngIf="virtualNetworkFormGroup.value.name" matSuffix mat-icon-button aria-label="Clear"
+                (click)="virtualNetworkFormGroup.controls['name'].reset()">
+          <mat-icon>close</mat-icon>
+        </button>
+        <mat-error *ngIf="virtualNetworkFormGroup.controls.name.hasError('minlength')">
+          The name of the virtual network configuration must have at least 4 characters
+        </mat-error>
+        <mat-error *ngIf="virtualNetworkFormGroup.controls.name.hasError('required')">
+          The name of the virtual network configuration is required
+        </mat-error>
+      </mat-form-field>
+
+      <button mat-button mat-raised-button (click)="saveAndLoad()"> Save and load </button>
+    </form>
+  </mat-card>
+
+  <canvas #canvas class="canvas"></canvas>
   <ul class="menu" #contextmenu>
-    <li class="menu-item" (click)="watchNode(selection)" *ngIf="selection?.status.isInput() === false && selection?.status.isIgnored() === true">
+    <li class="menu-item" (click)="watchNode(selection)"
+        *ngIf="selection?.status.isInput() === false && selection?.status.isIgnored() === true">
       <a class="menu-btn">
         <i class="fa fa-bell"></i>
         <span class="menu-text">Watch node</span>
       </a>
     </li>
-    <li class="menu-item" (click)="ignoreNode(selection)" *ngIf="selection?.status.isInput() === false && selection?.status.isUnderWatch() === true">
+    <li class="menu-item" (click)="ignoreNode(selection)"
+        *ngIf="selection?.status.isInput() === false && selection?.status.isUnderWatch() === true">
       <button type="button" class="menu-btn">
         <i class="fa fa-bell-slash"></i>
         <span class="menu-text">Ignore node</span>
       </button>
     </li>
     <li class="menu-separator"></li>
-    <li class="menu-item" (click)="addBreakpoint(selection)" *ngIf="selection?.status.isInput() === false && selection?.status.isBreakpoint() === false">
+    <li class="menu-item" (click)="addBreakpoint(selection)"
+        *ngIf="selection?.status.isInput() === false && selection?.status.isBreakpoint() === false">
       <button type="button" class="menu-btn">
         <i class="fa fa-lock"></i>
         <span class="menu-text">Add breakpoint</span>
       </button>
     </li>
-    <li class="menu-item" (click)="removeBreakpoint(selection)" *ngIf="selection?.status.isInput() === false && selection?.status.isBreakpoint() === true">
+    <li class="menu-item" (click)="removeBreakpoint(selection)"
+        *ngIf="selection?.status.isInput() === false && selection?.status.isBreakpoint() === true">
       <button type="button" class="menu-btn">
         <i class="fa fa-unlock"></i>
         <span class="menu-text">Remove breakpoint</span>

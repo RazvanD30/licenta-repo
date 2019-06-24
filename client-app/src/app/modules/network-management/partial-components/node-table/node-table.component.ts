@@ -1,10 +1,9 @@
 import {Component, EventEmitter, Input, OnChanges, OnInit, Output, ViewChild} from '@angular/core';
 import {NodeDto} from '../../../../shared/models/network/runtime/NodeDto';
 import {MatPaginator, MatSort, MatTableDataSource} from '@angular/material';
-import {NetworkDto} from '../../../../shared/models/network/runtime/NetworkDto';
 import {ActiveView} from '../../models/ActiveView';
 import {SelectedTableType} from '../../models/SelectedTableType';
-import {LayerDto} from "../../../../shared/models/network/runtime/LayerDto";
+import {LayerDto} from '../../../../shared/models/network/runtime/LayerDto';
 
 @Component({
   selector: 'app-node-table',
@@ -51,7 +50,7 @@ export class NodeTableComponent implements OnInit, OnChanges {
       ok = ok === true && this.compare(node.bias, this.filters.bias, this.filters.comparison.bias);
     }
     if (this.filters.nOutputLinks !== '') {
-      ok = ok === true && this.compare(node.links.length, this.filters.nOutputLinks, this.filters.comparison.nOutputLinks);
+      ok = ok === true && this.compare(node.outputLinks.length, this.filters.nOutputLinks, this.filters.comparison.nOutputLinks);
     }
     return ok;
   }

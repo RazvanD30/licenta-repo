@@ -6,6 +6,6 @@ import {LinkDto} from './LinkDto';
 export interface NodeDto {
   id: number;
   bias: number;
-  links: LinkDto[];
+  outputLinks: LinkDto[];
 }
 

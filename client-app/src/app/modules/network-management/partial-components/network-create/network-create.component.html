@@ -1,16 +1,32 @@
 
 
-
+<app-loading [loading]="waitingForResponse === true"></app-loading>
   <mat-card class="action-container">
-    <button mat-button mat-raised-button color="primary" (click)="saveNetwork()"> Save </button>
+    <button mat-button mat-raised-button (click)="saveNetwork()"
+            [disabled]="waitingForResponse === true"> Save </button>
+    <button mat-button mat-raised-button  (click)="resetForms(null)"
+            [disabled]="waitingForResponse === true"> Reset </button>
+    <span class="warn-text"> {{warnText}} </span>
   </mat-card>
 
   <mat-card class="left-container">
+
     <form [formGroup]="networkInitFormGroup">
+
+      <mat-form-field class="network-init-field">
+        <mat-label> Reused configuration </mat-label>
+        <mat-select formControlName="loadFromNetworkName" placeholder="Load from previous initialization">
+          <mat-option *ngFor="let name of networkInitNames" [value]="name"> {{name}} </mat-option>
+        </mat-select>
+      </mat-form-field>
+
+      <mat-divider></mat-divider>
+
       <mat-form-field class="network-init-field">
         <input matInput type="text" placeholder="Name" formControlName="name" required>
         <button mat-button *ngIf="networkInitFormGroup.value.name" matSuffix mat-icon-button aria-label="Clear"
-                (click)="networkInitFormGroup.controls['name'].reset()">
+                (click)="networkInitFormGroup.controls['name'].reset()"
+                [disabled]="waitingForResponse === true">
           <mat-icon>close</mat-icon>
         </button>
         <mat-error *ngIf="networkInitFormGroup.controls.name.hasError('minlength')">
@@ -26,7 +42,8 @@
       <mat-form-field class="half-width-continue">
         <input matInput type="number" placeholder="Seed" formControlName="seed" required>
         <button mat-button *ngIf="networkInitFormGroup.value.seed" matSuffix mat-icon-button aria-label="Clear"
-                (click)="networkInitFormGroup.controls['seed'].reset()">
+                (click)="networkInitFormGroup.controls['seed'].reset()"
+                [disabled]="waitingForResponse === true">
           <mat-icon>close</mat-icon>
         </button>
         <mat-error *ngIf="networkInitFormGroup.controls.seed.hasError('required')">
@@ -40,7 +57,8 @@
       <mat-form-field class="half-width-end">
         <input matInput type="number" placeholder="Learning Rate" formControlName="learningRate" required>
         <button mat-button *ngIf="networkInitFormGroup.value.learningRate" matSuffix mat-icon-button aria-label="Clear"
-                (click)="networkInitFormGroup.controls['learningRate'].reset()">
+                (click)="networkInitFormGroup.controls['learningRate'].reset()"
+                [disabled]="waitingForResponse === true">
           <mat-icon>close</mat-icon>
         </button>
         <mat-error *ngIf="networkInitFormGroup.controls.learningRate.hasError('required')">
@@ -59,7 +77,8 @@
       <mat-form-field class="half-width-continue">
         <input matInput type="number" placeholder="Batch Size" formControlName="batchSize" required>
         <button mat-button *ngIf="networkInitFormGroup.value.batchSize" matSuffix mat-icon-button aria-label="Clear"
-                (click)="networkInitFormGroup.controls['batchSize'].reset()">
+                (click)="networkInitFormGroup.controls['batchSize'].reset()"
+                [disabled]="waitingForResponse === true">
           <mat-icon>close</mat-icon>
         </button>
         <mat-error *ngIf="networkInitFormGroup.controls.batchSize.hasError('required')">
@@ -73,7 +92,8 @@
       <mat-form-field class="half-width-end">
         <input matInput type="number" placeholder="Epochs" formControlName="nEpochs" required>
         <button mat-button *ngIf="networkInitFormGroup.value.nEpochs" matSuffix mat-icon-button aria-label="Clear"
-                (click)="networkInitFormGroup.controls['nEpochs'].reset()">
+                (click)="networkInitFormGroup.controls['nEpochs'].reset()"
+                [disabled]="waitingForResponse === true">
           <mat-icon>close</mat-icon>
         </button>
         <mat-error *ngIf="networkInitFormGroup.controls.nEpochs.hasError('required')">
@@ -101,7 +121,8 @@
       <mat-form-field class="half-width-continue">
         <input matInput type="number" placeholder="Number of inputs" formControlName="nInputs" required>
         <button mat-button *ngIf="networkInitFormGroup.value.nInputs" matSuffix mat-icon-button aria-label="Clear"
-                (click)="networkInitFormGroup.controls['nInputs'].reset()">
+                (click)="networkInitFormGroup.controls['nInputs'].reset()"
+                [disabled]="waitingForResponse === true">
           <mat-icon>close</mat-icon>
         </button>
         <mat-error *ngIf="networkInitFormGroup.controls.nInputs.hasError('required')">
@@ -115,7 +136,8 @@
       <mat-form-field class="half-width-end">
         <input matInput type="number" placeholder="Number of outputs" formControlName="nOutputs" required>
         <button mat-button *ngIf="networkInitFormGroup.value.nOutputs" matSuffix mat-icon-button aria-label="Clear"
-                (click)="networkInitFormGroup.controls['nOutputs'].reset()">
+                (click)="networkInitFormGroup.controls['nOutputs'].reset()"
+                [disabled]="waitingForResponse === true">
           <mat-icon>close</mat-icon>
         </button>
         <mat-error *ngIf="networkInitFormGroup.controls.nOutputs.hasError('required')">
@@ -147,7 +169,8 @@
         <mat-label> Default neuron count for all hidden layers </mat-label>
           <input matInput type="number" placeholder="Select default neuron count for all hidden layers " formControlName="defaultNNeurons" required>
           <button mat-button *ngIf="networkInitFormGroup.value.defaultNNeurons" matSuffix mat-icon-button aria-label="Clear"
-                  (click)="networkInitFormGroup.controls['defaultNNeurons'].reset()">
+                  (click)="networkInitFormGroup.controls['defaultNNeurons'].reset()"
+                  [disabled]="waitingForResponse === true">
             <mat-icon>close</mat-icon>
           </button>
       </mat-form-field>
@@ -155,14 +178,14 @@
     </form>
   </mat-card>
 
-  <mat-card class="right-container">
+  <mat-card class="right-container" *ngIf="isResettingForms === false">
     <div  [className]="networkInitFormGroup.invalid === true ? 'container-title disabled' : 'container-title'">
       Layer configuration
     </div>
     <div class="container-action">
 
       <button class="size-16 add-button" mat-raised-button aria-label="Remove"
-              [disabled]="networkInitFormGroup.invalid === true"
+              [disabled]="networkInitFormGroup.invalid === true || waitingForResponse === true"
               (click)="addHiddenLayer()">
         <mat-icon color="primary" class="size-16">add</mat-icon>
         Add hidden layer
@@ -179,11 +202,11 @@
                            (afterCollapse)="markFormGroupForValidation(layerFormGroup)">
         <mat-expansion-panel-header>
           <mat-panel-title>
-            <div *ngIf="layerFormGroup.touched === true && layerFormGroup.valid === true" class="title-text valid-layer">
+            <div *ngIf="layerFormGroup.touched === true && layerFormGroup.invalid === false" class="title-text valid-layer">
             {{isInputLayer(i) === true ? 'Input Layer' : (
               (isOutputLayer(i) === true) ? 'Output Layer' : ('Hidden Layer #' + (i - 1)))}}
             </div>
-            <div *ngIf="layerFormGroup.touched === true && layerFormGroup.valid === false" class="title-text invalid-layer">
+            <div *ngIf="layerFormGroup.touched === true && layerFormGroup.invalid === true" class="title-text invalid-layer">
               {{(isInputLayer(i) === true ? 'Input Layer' : (
                 (isOutputLayer(i) === true) ? 'Output Layer' : ('Hidden Layer #' + (i - 1)))) + ' (INVALID)'}}
             </div>
@@ -196,7 +219,7 @@
               Remove
               <button class="size-16 remove-button" mat-button mat-icon-button aria-label="Remove"
                       (click)="removeLayer(i)"
-                      [disabled]="networkInitFormGroup.invalid === true">
+                      [disabled]="networkInitFormGroup.invalid === true || waitingForResponse === true">
                 <mat-icon color="warn" class="size-16">close</mat-icon>
               </button>
           </mat-panel-description>
@@ -211,7 +234,8 @@
           <mat-form-field class="third-width-continue">
             <input matInput type="number" [placeholder]="'Number of nodes' + (isBoundaryLayer(i) === true ? ' (auto-configured)' : '')" formControlName="nNodes" required>
             <button mat-button *ngIf="layerFormGroup.value.nNodes" matSuffix mat-icon-button aria-label="Clear"
-                    (click)="layerFormGroup.controls['nNodes'].reset()">
+                    (click)="layerFormGroup.controls['nNodes'].reset()"
+                    [disabled]="waitingForResponse === true">
               <mat-icon>close</mat-icon>
             </button>
             <mat-error *ngIf="layerFormGroup.controls.nNodes.hasError('required')">

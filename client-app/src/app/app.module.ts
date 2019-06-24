@@ -17,7 +17,7 @@ import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {LoaderComponent} from './shared/components/loader/loader.component';
 import {MDBBootstrapModule} from 'angular-bootstrap-md';
 import {JwtHelper} from 'angular2-jwt';
-import {BranchService} from './shared/services/branch.service';
+import {SharedModule} from './shared/shared.module';
 
 @NgModule({
   declarations: [
@@ -31,6 +31,7 @@ import {BranchService} from './shared/services/branch.service';
     MDBBootstrapModule.forRoot(),
     BrowserAnimationsModule,
     CoreModule,
+    SharedModule,
     AppRoutingModule // MUST BE AFTER EVERY LAZY LOADED MODULE
   ],
   providers: [
@@ -39,7 +40,6 @@ import {BranchService} from './shared/services/branch.service';
     UserService,
     AuthenticationService,
     JwtHelper,
-    BranchService,
 
     {provide: HTTP_INTERCEPTORS, useClass: HttpTokenInterceptor, multi: true},
     {provide: HTTP_INTERCEPTORS, useClass: ErrorHandlerInterceptor, multi: true},

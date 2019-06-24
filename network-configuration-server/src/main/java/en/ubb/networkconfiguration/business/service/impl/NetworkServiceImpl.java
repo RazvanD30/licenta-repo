@@ -193,14 +193,6 @@ public class NetworkServiceImpl implements NetworkService {
         this.saveProgress(network);
         lifecycleUpdateEventSource.accept(network, NetworkLifecycleState.INITIALIZED);
 
-        final List<Layer> layers = new ArrayList<>(network.getLayers());
-        network.setLayers(new ArrayList<>());
-        this.networkRepo.save(network);
-        layers.forEach(layer -> {
-            network.addLayer(layer);
-            this.networkRepo.save(network);
-        });
-
         return this.networkRepo.save(network);
     }
 

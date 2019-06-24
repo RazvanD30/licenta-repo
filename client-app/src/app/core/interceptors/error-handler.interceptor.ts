@@ -11,7 +11,7 @@ export class ErrorHandlerInterceptor implements HttpInterceptor {
   }
 
   intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
-    return next.handle(request).pipe(catchError(response => {
+    return next.handle(request).timeout(30000).pipe(catchError(response => {
       console.log(response);
       const err = response.error;
       console.log(err);

@@ -27,6 +27,12 @@ export class NetworkConfigureService {
     return this.http.get<NetworkDto>(APP_SETTINGS.URLS.NETWORK_MANAGEMENT.NETWORK_CONFIGURE.GET_BY_NAME + name);
   }
 
+  getNetworkNamesForUser(username: string): Observable<string[]> {
+    console.log('getting for user ' + username);
+    console.log(APP_SETTINGS.URLS.NETWORK_MANAGEMENT.NETWORK_CONFIGURE.GET_NAMES_FOR_USER + username);
+    return this.http.get<string[]>(APP_SETTINGS.URLS.NETWORK_MANAGEMENT.NETWORK_CONFIGURE.GET_NAMES_FOR_USER + username);
+  }
+
   delete(id: number): Observable<NetworkDto> {
     return this.http.delete<NetworkDto>(APP_SETTINGS.URLS.NETWORK_MANAGEMENT.NETWORK_CONFIGURE.DELETE_BY_ID + id);
   }

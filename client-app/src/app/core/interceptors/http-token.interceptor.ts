@@ -2,8 +2,9 @@ import {Injectable, Injector} from '@angular/core';
 import {HttpEvent, HttpHandler, HttpInterceptor, HttpRequest} from '@angular/common/http';
 import {Observable, throwError} from 'rxjs';
 import {AuthenticationService} from '../services/authentication.service';
-import {catchError, switchMap} from 'rxjs/operators';
+import {catchError, switchMap, timeout} from 'rxjs/operators';
 import {Router} from '@angular/router';
+import "rxjs-compat/add/operator/timeout";
 
 @Injectable()
 export class HttpTokenInterceptor implements HttpInterceptor {
@@ -30,6 +31,7 @@ export class HttpTokenInterceptor implements HttpInterceptor {
     }
 
     return this.inflightAuthRequest.pipe(
+      timeout(30000),
       switchMap((newToken: string) => {
         // unset request inflight
         this.inflightAuthRequest = null;
@@ -39,9 +41,8 @@ export class HttpTokenInterceptor implements HttpInterceptor {
           headers: request.headers.set('token', newToken ? newToken : '')
             .set('Authorization', 'Basic ' + btoa('fooClientIdPassword:secret'))
         });
-        console.log(authReq);
 
-        return next.handle(authReq);
+        return next.handle(authReq).timeout(30000);
       }),
       catchError(error => {
         // checks if a url is to an admin api or not
@@ -80,7 +81,7 @@ export class HttpTokenInterceptor implements HttpInterceptor {
               });
 
               // resend the request
-              return next.handle(authReqRepeat);
+              return next.handle(authReqRepeat).timeout(30000);
             })
           );
         } else {

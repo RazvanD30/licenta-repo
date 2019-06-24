@@ -10,19 +10,18 @@ import {NetworkDebuggingComponent} from './partial-components/network-debugging/
 import {NetworkConsoleComponent} from './pages/network-console/network-console.component';
 import {NetworkInitializationComponent} from './pages/network-initialization/network-initialization.component';
 import {UserService} from '../../core/services/user.service';
-import {CoreModule} from '../../core/core.module';
-import { NetworkTableComponent } from './partial-components/network-table/network-table.component';
-import {MaterialModule} from '../material/material.module';
-import {ScrollingModule} from '@angular/cdk/scrolling';
-import { NodeDetailsComponent } from './partial-components/node-details/node-details.component';
+import {NetworkTableComponent} from './partial-components/network-table/network-table.component';
+import {NodeDetailsComponent} from './partial-components/node-details/node-details.component';
 import {NetworkInitService} from '../../shared/services/network-init.service';
-import { LayerTableComponent } from './partial-components/layer-table/layer-table.component';
-import { LogsTableComponent } from './partial-components/logs-table/logs-table.component';
-import { GlobalTableComponent } from './partial-components/global-table/global-table.component';
-import { NetworkCreateComponent } from './partial-components/network-create/network-create.component';
-import { NetworkTablesComponent } from './pages/network-tables/network-tables.component';
-import { LinkTableComponent } from './partial-components/link-table/link-table.component';
-import { NodeTableComponent } from './partial-components/node-table/node-table.component';
+import {LayerTableComponent} from './partial-components/layer-table/layer-table.component';
+import {LogsTableComponent} from './partial-components/logs-table/logs-table.component';
+import {GlobalTableComponent} from './partial-components/global-table/global-table.component';
+import {NetworkCreateComponent} from './partial-components/network-create/network-create.component';
+import {NetworkTablesComponent} from './pages/network-tables/network-tables.component';
+import {LinkTableComponent} from './partial-components/link-table/link-table.component';
+import {NodeTableComponent} from './partial-components/node-table/node-table.component';
+import {SharedModule} from '../../shared/shared.module';
+
 @NgModule({
   declarations: [
     CytoscapeComponent,
@@ -42,9 +41,7 @@ import { NodeTableComponent } from './partial-components/node-table/node-table.c
     NodeTableComponent
   ],
   imports: [
-    CoreModule,
-    MaterialModule,
-    ScrollingModule,
+    SharedModule,
     NetworkManagementRoutingModule
   ],
   providers: [

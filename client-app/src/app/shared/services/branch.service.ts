@@ -11,6 +11,7 @@ export class BranchService {
 
 
   public branchChanged = new EventEmitter<string>();
+  public branchAdded = new EventEmitter<void>();
 
   constructor(private http: HttpClient) {
   }

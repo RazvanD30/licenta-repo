@@ -49,6 +49,8 @@ export const APP_SETTINGS = {
       NETWORK_INIT: {
         GET_ALL: NETWORK_INIT_URL,
         GET_BY_ID: NETWORK_INIT_URL + '/',
+        GET_ALL_NAMES: NETWORK_INIT_URL + '/names',
+        GET_BY_NAME: NETWORK_INIT_URL + '/withName/',
         POST_CREATE: NETWORK_INIT_URL,
         DELETE_BY_ID: NETWORK_INIT_URL + '/'
       },
@@ -57,6 +59,7 @@ export const APP_SETTINGS = {
         GET_ALL_FOR_USER: NETWORK_CONFIGURE_URL + '/withUser/',
         GET_BY_ID: NETWORK_CONFIGURE_URL + '/',
         GET_BY_NAME: NETWORK_CONFIGURE_URL + '/withName/',
+        GET_NAMES_FOR_USER: NETWORK_CONFIGURE_URL + '/names/withUser/',
         DELETE_BY_ID: NETWORK_CONFIGURE_URL + '/',
         PUT_UPDATE: NETWORK_CONFIGURE_URL,
         POST_LINK_FILE: NETWORK_CONFIGURE_URL + '/link',

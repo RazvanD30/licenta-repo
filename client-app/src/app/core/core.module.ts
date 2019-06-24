@@ -1,51 +1,26 @@
-import {NgModule} from '@angular/core';
-import {CommonModule} from '@angular/common';
-import {HeaderComponent} from './header/header.component';
-import {FooterComponent} from './footer/footer.component';
-import {FormsModule, ReactiveFormsModule} from '@angular/forms';
-import {FontAwesomeModule} from '@fortawesome/angular-fontawesome';
-import {AuthenticationComponent} from './authentication/authentication.component';
-import {LoginComponent} from './authentication/partial-components/login/login.component';
-import {RegisterComponent} from './authentication/partial-components/register/register.component';
-import {MaterialModule} from '../modules/material/material.module';
-import {FlexLayoutModule} from '@angular/flex-layout';
-import {HttpClientModule} from '@angular/common/http';
-import { LoadingComponent } from './loading/loading.component';
+import {NgModule, Optional, SkipSelf} from '@angular/core';
+import {BranchService} from '../shared/services/branch.service';
 
 @NgModule({
-  declarations: [
-    FooterComponent,
-    HeaderComponent,
-    LoginComponent,
-    RegisterComponent,
-    AuthenticationComponent,
-    LoadingComponent
-  ],
-  imports: [
-    CommonModule,
-    FormsModule,
-    ReactiveFormsModule,
-    MaterialModule,
-    FlexLayoutModule,
-    HttpClientModule,
-    FontAwesomeModule
-  ],
-  exports: [
-    HeaderComponent,
-    AuthenticationComponent,
-    LoadingComponent,
-    CommonModule,
-    FormsModule,
-    ReactiveFormsModule,
-    MaterialModule,
-    FlexLayoutModule,
-    HttpClientModule,
-    FontAwesomeModule,
-  ],
-  bootstrap: [
-    AuthenticationComponent,
-    LoadingComponent
+  declarations: [],
+  imports: [],
+  providers: [
+    BranchService
   ]
 })
 export class CoreModule {
+  constructor(@Optional() @SkipSelf() parentModule: CoreModule) {
+    if (parentModule) {
+      throw new Error(
+        'CoreModule is already loaded. Import it in the AppModule only');
+    }
+  }
+
+  /*static forRoot(): ModuleWithProviders {
+    return {
+      ngModule: CoreModule,
+      providers: [BranchService]
+    };
+  }
+  */
 }

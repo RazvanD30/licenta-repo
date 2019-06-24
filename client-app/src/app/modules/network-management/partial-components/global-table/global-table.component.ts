@@ -41,6 +41,7 @@ export class GlobalTableComponent implements OnInit {
   loadNetworks() {
     this.networkConfigureService.getAllForUser(localStorage.getItem('username')).subscribe(networks => {
       this.networks = networks;
+      console.log(networks);
       this.selectedView = {
         uniqueNameParam: 'None',
         dataParam: this.networks,
