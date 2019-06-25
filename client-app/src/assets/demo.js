@@ -4,9 +4,9 @@
   var width, height, canvas, ctx, points, target, animateHeader = true;
   var minConnectionsPerNode = 7; // was 5 before
   var numberOfPoints = 200;
-  var closestNeighbourDistance = 30000; // was 4000
-  var closeNeighbourDistance = 60000; // was 20000
-  var farNeighbourDistance = 80000; // was 40000
+  var closestNeighbourDistance = 40000; // was 4000
+  var closeNeighbourDistance = 70000; // was 20000
+  var farNeighbourDistance = 90000; // was 40000
   var radiusConstant = 6;
   var listenForMouse = false;
 

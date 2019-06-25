@@ -1,12 +1,5 @@
-<div style="margin-top: 10%">
-  <button (click)="loadAll()"> GET ALL </button>
-  <button (click)="remove()"> DELETE </button>
-  <ul *ngFor="let file of files">
-    <li>
-      ID {{file.id}}, NAME {{file.name}}, #LABELS {{file.nLabels}}
-      <a [href]="getDownloadLink(file.name)"> Download </a>
-    </li>
-  </ul>
-  <br>------------------------------------------------------------------------------
-  <app-file-upload></app-file-upload>
+<app-loading [loading]="extendedFiles == null"></app-loading>
+<div>
+  <app-file-table [extendedFiles]="extendedFiles"></app-file-table>
+  <app-file-upload (fileUploaded)="loadAll()"></app-file-upload>
 </div>

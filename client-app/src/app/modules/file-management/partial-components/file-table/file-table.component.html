@@ -1,0 +1,115 @@
+<div class="table-container">
+  <div class="mat-elevation-z8">
+    <mat-button-toggle-group name="fontStyle" aria-label="Font Style">
+      <button mat-raised-button (click)="resetFilters()">
+        <mat-icon>clear</mat-icon>
+        Reset filters
+      </button>
+    </mat-button-toggle-group>
+    <mat-tab-group>
+      <mat-tab label="Filter by..."></mat-tab>
+      <mat-tab>
+        <ng-template mat-tab-label>
+          <div *ngIf="filters.id === ''"> Id</div>
+          <div *ngIf="filters.id !== ''" style="color: red"> Id (edited)</div>
+        </ng-template>
+        <mat-form-field class="example-full-width">
+          <input [(ngModel)]="filters.id" matInput (keyup)="applyFilter($event.target.value,'id')"
+                 placeholder="Filter by id" type="number">
+        </mat-form-field>
+      </mat-tab>
+
+      <mat-tab>
+        <ng-template mat-tab-label>
+          <div *ngIf="filters.name === ''"> Name</div>
+          <div *ngIf="filters.name !== ''" style="color: red"> Name (edited)</div>
+        </ng-template>
+        <mat-form-field class="example-full-width">
+          <input [(ngModel)]="filters.name" matInput (keyup)="applyFilter($event.target.value,'name')"
+                 placeholder="Filter by name" type="text">
+        </mat-form-field>
+      </mat-tab>
+
+      <mat-tab>
+        <ng-template mat-tab-label>
+          <div *ngIf="filters.nLabels === ''"> #Labels</div>
+          <div *ngIf="filters.nLabels !== ''" style="color: red"> #Labels (edited)</div>
+        </ng-template>
+        <mat-form-field class="example-full-width">
+          <input [(ngModel)]="filters.nLabels" matInput (keyup)="applyFilter($event.target.value,'nLabels')"
+                 placeholder="Filter by nLabels" type="number">
+        </mat-form-field>
+      </mat-tab>
+
+    </mat-tab-group>
+
+
+    <table mat-table *ngIf="fileDataSource" [dataSource]="fileDataSource" class="mat-elevation-z8" matSort>
+
+      <ng-container matColumnDef="id">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>Id</th>
+        <td mat-cell *matCellDef="let extendedFile"> {{ extendedFile.dataFile.id }}</td>
+        <td mat-footer-cell *matFooterCellDef></td>
+      </ng-container>
+
+      <ng-container matColumnDef="name">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>Name</th>
+        <td mat-cell *matCellDef="let extendedFile"> {{ extendedFile.dataFile.name }}</td>
+        <td mat-footer-cell *matFooterCellDef></td>
+      </ng-container>
+
+      <ng-container matColumnDef="nLabels">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>#Labels</th>
+        <td mat-cell *matCellDef="let extendedFile"> {{ extendedFile.dataFile.nLabels }}</td>
+        <td mat-footer-cell *matFooterCellDef></td>
+      </ng-container>
+
+      <ng-container matColumnDef="networkTrain">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>Linked as train file</th>
+        <td mat-cell *matCellDef="let extendedFile">
+          <mat-form-field *ngIf="extendedFile.trainLinkWith != null">
+            <mat-select [(ngModel)]="extendedFile.trainLinkWith" multiple
+                        name="extendedFile.trainLinkWith"
+                        (selectionChange)="setTrainLinks(extendedFile,$event.value)">
+              <mat-option *ngFor="let name of networkNames" [value]="name" [disabled]="sendingData === true"> {{name}} </mat-option>
+            </mat-select>
+          </mat-form-field>
+        </td>
+        <td mat-footer-cell *matFooterCellDef></td>
+      </ng-container>
+
+      <ng-container matColumnDef="networkTest">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>Linked as test file</th>
+        <td mat-cell *matCellDef="let extendedFile">
+          <mat-form-field *ngIf="extendedFile.testLinkWith != null">
+            <mat-select [(ngModel)]="extendedFile.testLinkWith" multiple
+                        name="extendedFile.testLinkWith"
+                        (selectionChange)="setTestLinks(extendedFile,$event.value)">
+              <mat-option *ngFor="let name of networkNames" [value]="name" [disabled]="sendingData === true"> {{name}} </mat-option>
+            </mat-select>
+          </mat-form-field>
+        </td>
+        <td mat-footer-cell *matFooterCellDef></td>
+      </ng-container>
+
+      <ng-container matColumnDef="actions">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header disableClear> Actions</th>
+        <td mat-cell *matCellDef="let extendedFile">
+          <a [href]="getDownloadLink(extendedFile.dataFile.name)">
+            <fa-icon [icon]="faDownload"></fa-icon>
+          </a>
+          <a style="margin-left: 10px;">
+            <fa-icon [icon]="faLink"></fa-icon>
+          </a>
+        </td>
+        <td mat-footer-cell *matFooterCellDef></td>
+      </ng-container>
+
+      <tr mat-header-row class="custom-table-header" *matHeaderRowDef="displayedColumns"></tr>
+      <tr mat-row class="custom-table-row" *matRowDef="let row; columns: displayedColumns;"></tr>
+      <tr mat-footer-row *matFooterRowDef="displayedColumns" class="example-first-footer-row"></tr>
+
+    </table>
+    <mat-paginator [pageSizeOptions]="[50, 100]" showFirstLastButtons></mat-paginator>
+  </div>
+</div>

@@ -1,36 +1,62 @@
 <app-loading [loading]="loading"></app-loading>
-<div [hidden]="loading === null" class="debugging-container">
-  <app-network-console></app-network-console>
+<div class="debugging-container">
+  <mat-card class="loading-dialog" *ngIf="showForm === true">
+    <mat-card-header>
+      <mat-card-title> Welcome to network debugging</mat-card-title>
+      <mat-card-subtitle> Please choose a network and create or load an existing virtual network configuration
+      </mat-card-subtitle>
+    </mat-card-header>
+    <mat-card-content class="upload-content">
+      <form [formGroup]="virtualNetworkFormGroup">
 
-  <mat-card class="loading-dialog">
-    <form [formGroup]="virtualNetworkFormGroup">
+        <mat-form-field class="network-init-field">
+          <mat-label> Network name</mat-label>
+          <mat-select formControlName="networkName" placeholder="Select network name">
+            <mat-option *ngFor="let name of networkNames" [value]="name"> {{name}} </mat-option>
+          </mat-select>
+          <mat-error *ngIf="virtualNetworkFormGroup.controls.networkName.hasError('required')">
+            The network name is required
+          </mat-error>
+        </mat-form-field>
 
-      <mat-form-field class="network-init-field">
-        <mat-label> Network name</mat-label>
-        <mat-select formControlName="networkName" placeholder="Select network name">
-          <mat-option *ngFor="let name of networkNames" [value]="name"> {{name}} </mat-option>
-        </mat-select>
-        <mat-error *ngIf="virtualNetworkFormGroup.controls.networkName.hasError('required')">
-          The network name is required
-        </mat-error>
-      </mat-form-field>
+        <mat-form-field class="network-init-field">
+          <mat-label> Enter the name for a new virtual configuration </mat-label>
+          <input matInput type="text"  formControlName="name">
+          <button mat-button *ngIf="virtualNetworkFormGroup.value.name" matSuffix mat-icon-button aria-label="Clear"
+                  (click)="virtualNetworkFormGroup.controls['name'].reset()">
+            <mat-icon>close</mat-icon>
+          </button>
+          <mat-error *ngIf="virtualNetworkFormGroup.controls.name.hasError('minlength')">
+            The name of the virtual network configuration must have at least 4 characters
+          </mat-error>
+        </mat-form-field>
 
-      <mat-form-field class="network-init-field">
-        <input matInput type="text" placeholder="Virtual configuration name" formControlName="name" required>
-        <button mat-button *ngIf="virtualNetworkFormGroup.value.name" matSuffix mat-icon-button aria-label="Clear"
-                (click)="virtualNetworkFormGroup.controls['name'].reset()">
-          <mat-icon>close</mat-icon>
-        </button>
-        <mat-error *ngIf="virtualNetworkFormGroup.controls.name.hasError('minlength')">
-          The name of the virtual network configuration must have at least 4 characters
-        </mat-error>
-        <mat-error *ngIf="virtualNetworkFormGroup.controls.name.hasError('required')">
-          The name of the virtual network configuration is required
-        </mat-error>
-      </mat-form-field>
 
-      <button mat-button mat-raised-button (click)="saveAndLoad()"> Save and load </button>
-    </form>
+        <mat-form-field class="network-init-field">
+          <mat-label> {{virtualNetworks.length === 0 ? 'No virtual configurations created' : 'Choose existing virtual configurations' }}</mat-label>
+          <mat-select formControlName="existingVirtualNetwork"
+                      [disabled]="virtualNetworks.length === 0">
+            <mat-option *ngFor="let vn of virtualNetworks" [value]="vn"> {{vn.name}} </mat-option>
+          </mat-select>
+        </mat-form-field>
+        <div [className]="(virtualNetworkFormGroup.value.existingVirtualNetwork == null
+        && virtualNetworkFormGroup.value.name === '') ? 'transparent-info' : 'hide-info'">
+          This window will be hidden after loading. Press M to open it again.
+        </div>
+      </form>
+    </mat-card-content>
+    <mat-card-actions class="upload-content">
+      <button mat-button mat-raised-button class="action-button"
+              [disabled]="virtualNetworkFormGroup.value.existingVirtualNetwork == null"
+              (click)="loadExisting()">
+        Load
+      </button>
+      <button mat-button mat-raised-button class="action-button"
+              [disabled]="virtualNetworkFormGroup.value.name === ''"
+              (click)="saveAndLoad()">
+        Save and load
+      </button>
+    </mat-card-actions>
   </mat-card>
 
   <canvas #canvas class="canvas"></canvas>

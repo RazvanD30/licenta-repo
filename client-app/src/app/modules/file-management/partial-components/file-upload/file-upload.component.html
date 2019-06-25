@@ -1,15 +1,21 @@
+<mat-card class="upload-container">
+  <mat-card-header>
+    <mat-card-title> Upload a new file</mat-card-title>
+    <mat-card-subtitle> The file can be then used for training or testing any compatible netwokr</mat-card-subtitle>
+  </mat-card-header>
+  <mat-card-content class="upload-content">
+      <button type="button" mat-raised-button (click)="fileInput.click()">Choose file</button>
+      <input hidden (change)="selectFile($event)" #fileInput type="file" id="file">
+      {{(selectedFiles != null && selectedFiles.length > 0) ?
+      'You have selected \'' + selectedFiles.item(0).name + '\' for upload' : ''}}
+    <div class="labels-container">
 
-<div>
-  Labels <input [(ngModel)]="labels" >
-</div>
-<div *ngIf="currentFileUpload" class="progress">
-<div class="progress-bar progress-bar-info progress-bar-striped" role="progressbar" attr.aria-valuenow="{{progress.percentage}}"
-     aria-valuemin="0" aria-valuemax="100" [ngStyle]="{width:progress.percentage+'%'}">
-  {{progress.percentage}}%</div>
-</div>
-
-<label class="btn btn-default">
-  <input type="file" (change)="selectFile($event)">
-</label>
-
-<button class="btn btn-success" [disabled]="!selectedFiles" (click)="upload()">Upload</button>
+      Number of labels
+      <mat-slider class="example-margin" [max]="100" [min]="1" [(ngModel)]="labels"></mat-slider>
+      {{labels}}
+    </div>
+  </mat-card-content>
+  <mat-card-actions class="upload-content">
+    <button type="button" mat-raised-button [disabled]="!selectedFiles || !labels" (click)="upload()">Upload</button>
+  </mat-card-actions>
+</mat-card>

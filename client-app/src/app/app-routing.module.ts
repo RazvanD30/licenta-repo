@@ -26,6 +26,11 @@ const routes: Routes = [
     path: 'file-management',
     loadChildren: './modules/file-management/file-management.module#FileManagementModule',
     canLoad: [AuthenticationGuard]
+  },
+  {
+    path: 'job-management',
+    loadChildren: './modules/job-management/job-management.module#JobManagementModule',
+    canLoad: [AuthenticationGuard]
   }
 
 

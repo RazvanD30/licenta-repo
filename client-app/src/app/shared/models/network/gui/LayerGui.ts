@@ -57,12 +57,25 @@ export class LayerGui {
     this.nodes.forEach(node => node.drawText(context));
   }
 
-  drawLines(context: CanvasRenderingContext2D) {
+  drawOutputLinks(context: CanvasRenderingContext2D){
     for (const [key, node] of this.nodes) {
       for (const [linkKey, link] of node.outputLinks) {
         link.draw(context);
       }
     }
+  }
+
+  drawInputLinks(context: CanvasRenderingContext2D){
+    for (const [key, node] of this.nodes) {
+      for (const [linkKey, link] of node.inputLinks) {
+        link.draw(context);
+      }
+    }
+  }
+
+  drawLines(context: CanvasRenderingContext2D) {
+    this.drawOutputLinks(context);
+    this.drawInputLinks(context);
   }
 
   drawLayer(context: CanvasRenderingContext2D) {

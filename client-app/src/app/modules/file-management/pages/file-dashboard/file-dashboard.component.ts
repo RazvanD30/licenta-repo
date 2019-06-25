@@ -1,7 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {FileService} from '../../../../shared/services/file.service';
 import {DataFileDto} from '../../../../shared/models/file/DataFileDto';
-import {APP_SETTINGS} from '../../../../configs/app-settings.config';
+import {ExtendedDataFileDto} from '../../../../shared/models/file/ExtendedDataFileDto';
 
 @Component({
   selector: 'app-file-dashboard',
@@ -10,21 +10,22 @@ import {APP_SETTINGS} from '../../../../configs/app-settings.config';
 })
 export class FileDashboardComponent implements OnInit {
 
-  files: DataFileDto[];
+  extendedFiles: ExtendedDataFileDto[];
   currentFile: DataFileDto;
 
-
-  getDownloadLink(fileName: string): string {
-    return APP_SETTINGS.URLS.FILE_MANAGEMENT.GET_DOWNLOAD_FILE_BY_NAME + fileName;
+  constructor(private fileService: FileService) {
   }
 
-  constructor(private fileService: FileService) { }
-
   ngOnInit() {
+    this.loadAll();
   }
 
   loadAll() {
-    this.fileService.getAll().subscribe(resp => this.files = resp);
+    this.fileService.getAll().subscribe(resp => {
+      this.extendedFiles = resp.map(file => {
+        return {dataFile: file, trainLinkWith: null, testLinkWith: null};
+      });
+    });
   }
 
   remove() {

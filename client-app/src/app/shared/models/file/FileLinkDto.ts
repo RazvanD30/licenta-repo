@@ -1,7 +1,7 @@
 import {FileType} from '../network/shared/FileType';
 
 export interface FileLinkDto {
-  networkId: number;
+  networkName: string;
   fileName: string;
   fileType: FileType;
 }

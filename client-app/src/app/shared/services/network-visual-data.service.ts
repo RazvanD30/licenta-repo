@@ -14,17 +14,17 @@ import {Pos} from '../models/network/gui/Pos';
   providedIn: 'root'
 })
 export class NetworkVisualDataService {
-
   public layerAdded = new EventEmitter<LayerGui>();
+  public doneLoading = new EventEmitter();
   public pos: number;
-  public virtualNetwork: VirtualNetworkDto;
   public layers: LayerGui[];
-
 
   constructor(private http: HttpClient) {
     this.pos = 0;
     this.layers = [];
   }
+
+  private _virtualNetwork: VirtualNetworkDto;
 
 
   redoLinks(previousLayer: LayerGui, currentLayer: LayerGui) {
@@ -43,10 +43,10 @@ export class NetworkVisualDataService {
 
   getNextLayer() {
     const status = new Status(StatusInternal.IGNORE);
-    if (this.virtualNetwork == null) {
+    if (this._virtualNetwork == null) {
       return;
     }
-    this.getLayerAtPos(this.virtualNetwork.id, this.pos).subscribe(layerDto => {
+    this.getLayerAtPos(this._virtualNetwork.id, this.pos).subscribe(layerDto => {
       const layerGui = new LayerGui(layerDto.id);
       layerDto.nodes.forEach(nodeDto => {
         const nodeGui = new NodeGui(nodeDto.id, nodeDto.bias, status.fromInternal(nodeDto.status), layerGui);
@@ -72,8 +72,10 @@ export class NetworkVisualDataService {
         this.redoLinks(this.layers[this.pos - 2], this.layers[this.pos - 1]);
       }
       this.layerAdded.emit(layerGui);
-      if (this.pos < this.virtualNetwork.nLayers) {
+      if (this.pos < this._virtualNetwork.nLayers) {
         this.getNextLayer();
+      } else {
+        this.doneLoading.emit();
       }
     });
   }
@@ -111,6 +113,11 @@ export class NetworkVisualDataService {
     (APP_SETTINGS.URLS.NETWORK_MANAGEMENT.NETWORK_VIRTUAL_SIMULATION.GET_ALL_FOR_NETWORK_ID + networkId);
   }
 
+  getAllForNetworkName(name: string): Observable<VirtualNetworkDto[]> {
+    return this.http.get<VirtualNetworkDto[]>
+    (APP_SETTINGS.URLS.NETWORK_MANAGEMENT.NETWORK_VIRTUAL_SIMULATION.GET_ALL_FOR_NETWORK_NAME + name);
+  }
+
   getLayerAtPos(virtualNetworkId: number, pos: number): Observable<VirtualLayerDto> {
     return this.http.post<VirtualLayerDto>
     (APP_SETTINGS.URLS.NETWORK_MANAGEMENT.NETWORK_VIRTUAL_SIMULATION.GET_LAYER_BY_VIRTUAL_ID_AT_POS + virtualNetworkId, pos);
@@ -136,5 +143,15 @@ export class NetworkVisualDataService {
 
   private getDistanceForPoints(pos1: Pos, pos2: Pos): number {
     return Math.sqrt(Math.pow(pos2.x - pos1.x, 2) + Math.pow(pos2.y - pos1.y, 2));
+  }
+
+  get virtualNetwork(): VirtualNetworkDto {
+    return this._virtualNetwork;
+  }
+
+  set virtualNetwork(value: VirtualNetworkDto) {
+    this.pos = 0;
+    this.layers = [];
+    this._virtualNetwork = value;
   }
 }

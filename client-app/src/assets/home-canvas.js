@@ -90,8 +90,8 @@
   }
 
   async function initPos() {
-    target.x = width / 2;
-    target.y = height / 2;
+    target.x = width / 2 - 30;
+    target.y = height / 2 - 30;
   }
 
   function animate() {

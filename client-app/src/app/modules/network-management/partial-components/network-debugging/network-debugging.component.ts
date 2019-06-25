@@ -6,8 +6,8 @@ import {NodeGui} from '../../../../shared/models/network/gui/NodeGui';
 import {Status} from '../../../../shared/models/network/gui/Status';
 import {NetworkVisualDataService} from '../../../../shared/services/network-visual-data.service';
 import {VirtualNetworkDto} from '../../../../shared/models/network/virtual/VirtualNetworkDto';
-import {FormBuilder, FormGroup, Validators} from "@angular/forms";
-import {NetworkConfigureService} from "../../../../shared/services/network-configure.service";
+import {FormBuilder, FormGroup, Validators} from '@angular/forms';
+import {NetworkConfigureService} from '../../../../shared/services/network-configure.service';
 
 @Component({
   selector: 'app-network-debugging',
@@ -19,12 +19,14 @@ export class NetworkDebuggingComponent implements OnInit {
   @ViewChild('canvas') canvasRef: ElementRef;
   @ViewChild('contextmenu') contextMenu: ElementRef;
   public showMenu = false;
+  public showForm = true;
   public selection: NodeGui;
-  public loading: boolean;
+  public loading = false;
   // TODO MOVE THOSE
   public virtualNetworkDto: VirtualNetworkDto;
   x: number;
   networkNames: string[] = [];
+  virtualNetworks: VirtualNetworkDto[] = [];
   virtualNetworkFormGroup: FormGroup;
   private canvas: HTMLCanvasElement;
   private context: CanvasRenderingContext2D;
@@ -53,7 +55,6 @@ export class NetworkDebuggingComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.loading = true;
     this.initCanvas();
     this.watchLayerToDraw();
     this.virtualNetworkDto = {
@@ -74,8 +75,21 @@ export class NetworkDebuggingComponent implements OnInit {
       });
     this.virtualNetworkFormGroup = this.formBuilder.group({
       name: ['', [Validators.required, Validators.minLength(4)]],
-      networkName: ['', [Validators.required, Validators.minLength(4)]]
+      networkName: ['', [Validators.minLength(4)]],
+      existingVirtualNetwork: [null, []]
     });
+    this.virtualNetworkFormGroup.controls.networkName.valueChanges.subscribe(networkName => {
+      this.networkVisualService.getAllForNetworkName(networkName).subscribe(virtualNetworks =>
+        this.virtualNetworks = virtualNetworks
+      );
+    });
+  }
+
+  @HostListener('document:keydown', ['$event'])
+  onMouseMove(event) {
+    if (event.key === 'm' || event.key === 'M') {
+      this.showForm = !this.showForm;
+    }
   }
 
 
@@ -88,9 +102,9 @@ export class NetworkDebuggingComponent implements OnInit {
     this.canvas.addEventListener('click', this.hideContextMenu.bind(this), false);
     this.canvas.addEventListener('contextmenu', this.showContextMenu.bind(this), false);
     this.context = this.canvas.getContext('2d');
-    this.context.clearRect(0, 0, this.width, this.height);
-    this.canvas.width = this.width;
+    this.canvas.width = this.width * 3;
     this.canvas.height = 3000;
+    this.context.clearRect(0, 0, this.canvas.width, this.canvas.height);
   }
 
 
@@ -140,7 +154,13 @@ export class NetworkDebuggingComponent implements OnInit {
       networkId: null,
       nLayers: null
     };
+    this.loading = true;
+    const subscriber = this.networkVisualService.doneLoading.subscribe(done => {
+      subscriber.unsubscribe();
+      this.loading = false;
+    });
     this.networkVisualService.create(dto).subscribe(virtualNetworkDto => {
+      this.showForm = false;
       this.networkVisualService.virtualNetwork = virtualNetworkDto;
       this.networkVisualService.getNextLayer();
     });
@@ -201,7 +221,7 @@ export class NetworkDebuggingComponent implements OnInit {
     node.status = Status.UNDER_WATCH;
     const start = node.layer.previous !== null ? node.layer.previous.xPos : node.layer.xPos;
     const end = node.layer.next !== null ? node.layer.next.xPos : node.layer.xPos;
-    this.context.clearRect(start, 0, end - start, this.height);
+    this.context.clearRect(start, 0, end - start, this.canvas.height);
 
     /* TODO
     this.networkDebugService.networkConnections.forEach(c => {
@@ -213,15 +233,19 @@ export class NetworkDebuggingComponent implements OnInit {
     });
     */
 
-    node.layer.drawLayer(this.context);
+    node.layer.drawLines(this.context);
     if (node.layer.previous !== null) {
+      node.layer.previous.drawOutputLinks(this.context);
       node.layer.previous.drawNodes(this.context);
       node.layer.previous.drawText(this.context);
     }
     if (node.layer.next !== null) {
+      node.layer.next.drawInputLinks(this.context);
       node.layer.next.drawNodes(this.context);
-      node.layer.next.drawNodes(this.context);
+      node.layer.next.drawText(this.context);
     }
+    node.layer.drawNodes(this.context);
+    node.layer.drawText(this.context);
   }
 
   addBreakpoint(node: NodeGui) {
@@ -229,11 +253,18 @@ export class NetworkDebuggingComponent implements OnInit {
     node.status = Status.BREAKPOINT;
     const start = node.layer.previous !== null ? node.layer.previous.xPos : node.layer.xPos;
     const end = node.layer.next !== null ? node.layer.next.xPos : node.layer.xPos;
-    this.context.clearRect(start, 0, end - start, this.height);
+    this.context.clearRect(start, 0, end - start, this.canvas.height);
 
     if (node.layer.next !== null) {
       node.layer.next.nodes.forEach(n => {
         n.status = n.status !== Status.BREAKPOINT ? Status.WAIT : Status.BREAKPOINT;
+        if (n.status === Status.BREAKPOINT) {
+          n.inputLinks.forEach(inputLink => {
+            if (inputLink.source.status === Status.BREAKPOINT) {
+              inputLink.status = Status.WAIT;
+            }
+          });
+        }
       });
     }
 
@@ -247,15 +278,19 @@ export class NetworkDebuggingComponent implements OnInit {
     });
     */
 
-    node.layer.drawLayer(this.context);
+    node.layer.drawLines(this.context);
     if (node.layer.previous !== null) {
+      node.layer.previous.drawOutputLinks(this.context);
       node.layer.previous.drawNodes(this.context);
       node.layer.previous.drawText(this.context);
     }
     if (node.layer.next !== null) {
+      node.layer.next.drawInputLinks(this.context);
       node.layer.next.drawNodes(this.context);
-      node.layer.next.drawNodes(this.context);
+      node.layer.next.drawText(this.context);
     }
+    node.layer.drawNodes(this.context);
+    node.layer.drawText(this.context);
   }
 
   removeBreakpoint(node: NodeGui) {
@@ -284,7 +319,7 @@ export class NetworkDebuggingComponent implements OnInit {
 
     const start = node.layer.previous !== null ? node.layer.previous.xPos : node.layer.xPos;
     const end = node.layer.next !== null ? node.layer.next.xPos : node.layer.xPos;
-    this.context.clearRect(start, 0, end - start, this.height);
+    this.context.clearRect(start, 0, end - start, this.canvas.height);
 
     /* TODO
     this.networkDebugService.networkConnections.forEach(c => {
@@ -296,15 +331,19 @@ export class NetworkDebuggingComponent implements OnInit {
     });
     */
 
-    node.layer.drawLayer(this.context);
+    node.layer.drawLines(this.context);
     if (node.layer.previous !== null) {
+      node.layer.previous.drawOutputLinks(this.context);
       node.layer.previous.drawNodes(this.context);
       node.layer.previous.drawText(this.context);
     }
     if (node.layer.next !== null) {
+      node.layer.next.drawInputLinks(this.context);
       node.layer.next.drawNodes(this.context);
-      node.layer.next.drawNodes(this.context);
+      node.layer.next.drawText(this.context);
     }
+    node.layer.drawNodes(this.context);
+    node.layer.drawText(this.context);
 
   }
 
@@ -313,7 +352,7 @@ export class NetworkDebuggingComponent implements OnInit {
     node.status = Status.IGNORED;
     const start = node.layer.previous !== null ? node.layer.previous.xPos : node.layer.xPos;
     const end = node.layer.next !== null ? node.layer.next.xPos : node.layer.xPos;
-    this.context.clearRect(start, 0, end - start, this.height);
+    this.context.clearRect(start, 0, end - start, this.canvas.height);
 
     /* TODO
     this.networkDebugService.networkConnections.forEach(c => {
@@ -325,15 +364,19 @@ export class NetworkDebuggingComponent implements OnInit {
     });
     */
 
-    node.layer.drawLayer(this.context);
+    node.layer.drawLines(this.context);
     if (node.layer.previous !== null) {
+      node.layer.previous.drawOutputLinks(this.context);
       node.layer.previous.drawNodes(this.context);
       node.layer.previous.drawText(this.context);
     }
     if (node.layer.next !== null) {
+      node.layer.next.drawInputLinks(this.context);
       node.layer.next.drawNodes(this.context);
-      node.layer.next.drawNodes(this.context);
+      node.layer.next.drawText(this.context);
     }
+    node.layer.drawNodes(this.context);
+    node.layer.drawText(this.context);
   }
 
   showContextMenu(event) {
@@ -372,4 +415,14 @@ export class NetworkDebuggingComponent implements OnInit {
     }
   }
 
+  loadExisting() {
+    this.loading = true;
+    const subscriber = this.networkVisualService.doneLoading.subscribe(done => {
+      subscriber.unsubscribe();
+      this.loading = false;
+    });
+    this.networkVisualService.virtualNetwork = this.virtualNetworkFormGroup.value.existingVirtualNetwork;
+    this.showForm = false;
+    this.networkVisualService.getNextLayer();
+  }
 }

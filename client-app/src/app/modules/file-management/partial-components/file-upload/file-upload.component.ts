@@ -1,6 +1,5 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, EventEmitter, OnInit, Output} from '@angular/core';
 import {FileService} from '../../../../shared/services/file.service';
-import {HttpEventType, HttpResponse} from '@angular/common/http';
 
 @Component({
   selector: 'app-file-upload',
@@ -9,9 +8,10 @@ import {HttpEventType, HttpResponse} from '@angular/common/http';
 })
 export class FileUploadComponent implements OnInit {
 
+  @Output() fileUploaded = new EventEmitter();
   selectedFiles: FileList;
   currentFileUpload: File;
-  labels: number;
+  labels = 1;
   progress: { percentage: number } = {percentage: 0};
 
   constructor(private fileService: FileService) {
@@ -21,7 +21,17 @@ export class FileUploadComponent implements OnInit {
   }
 
   selectFile(event) {
-    this.selectedFiles = event.target.files;
+    const inputNode: any = document.querySelector('#file');
+
+    if (typeof (FileReader) !== 'undefined') {
+      const reader = new FileReader();
+
+      reader.onload = (e: any) => {
+        this.selectedFiles = event.target.files;
+      };
+
+      reader.readAsArrayBuffer(inputNode.files[0]);
+    }
   }
 
   upload() {
@@ -33,9 +43,10 @@ export class FileUploadComponent implements OnInit {
     const formData = new FormData();
     formData.append('file', this.currentFileUpload);
     formData.append('nLabels', this.labels + '');
-
+    this.selectedFiles = null;
+    this.labels = 1;
     this.fileService.add(formData).subscribe(event => {
-
+      this.fileUploaded.emit();
     });
 
     this.selectedFiles = undefined;

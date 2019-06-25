@@ -7,6 +7,34 @@
   font-family: Futura, "Trebuchet MS", Arial, sans-serif;
 }
 
+.hide-info {
+  font-size: inherit;
+  font-weight: 600;
+  line-height: 1.125;
+  font-family: Roboto,"Helvetica Neue",sans-serif;
+  color: darkred;
+
+}
+
+.transparent-info {
+  font-size: inherit;
+  font-weight: 600;
+  line-height: 1.125;
+  font-family: Roboto,"Helvetica Neue",sans-serif;
+  color: transparent
+}
+
+.upload-content {
+  margin-left: 16px;
+}
+
+.network-init-field {
+  display: block;
+  width: 100%;
+  margin-bottom: 30px;
+}
+
+
 .canvas {
   display: inline-block;
   z-index: -1;
@@ -17,6 +45,10 @@
   position: absolute;
   top: 2%;
   left: 2%;
+}
+
+.action-button {
+  margin-left: 20px;
 }
 
 .details-menu {
