@@ -105,15 +105,9 @@ export class HeaderComponent implements OnInit {
           {text: 'NETWORK DEBUG', href: '/network-management/debug', icon: faBug}
         ]
       },
-      {
-        text: 'BRANCH MANAGEMENT', multiple: true, icon: faCodeBranch, choices: [
-          {text: 'BRANCH DASHBOARD', href: '/branch-management/dashboard'},
-          {text: 'CREATE BRANCH', href: '', icon: faPlusSquare},
-          {text: 'UPDATE BRANCH', href: ''}
-        ]
-      },
+      {text: 'BRANCH MANAGEMENT', multiple: false, icon: faCodeBranch, href: '/branch-management/dashboard'},
       {text: 'FILE MANAGEMENT', multiple: false, icon: faFileCsv, href: '/file-management/dashboard'},
-      {text: 'JOB MANAGEMENT', multiple: false, icon: faCalendarAlt, href: ''}
+      {text: 'JOB MANAGEMENT', multiple: false, icon: faCalendarAlt, href: '/job-management/dashboard'}
     ];
     if (this.isLoggedIn()) {
       this.links.push({text: 'LOGOUT', multiple: false, href: '/logout', icon: faSignInAlt});

@@ -38,9 +38,11 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.io.*;
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Optional;
 
@@ -112,9 +114,11 @@ public class NetworkServiceImpl implements NetworkService {
                 }).orElseThrow(() -> new NotFoundBussExc("Network with id " + id + " not found"));
     }
 
-    private Network getInitialNetwork(NetworkInitializer initializer) {
+    @Transactional
+    public Network getInitialNetwork(NetworkInitializer initializer) {
         Network network = new Network().toBuilder()
                 .name(initializer.getName())
+                .isTraining(false)
                 .batchSize(initializer.getBatchSize())
                 .nEpochs(initializer.getNEpochs())
                 .nInputs(initializer.getNInputs())
@@ -164,6 +168,7 @@ public class NetworkServiceImpl implements NetworkService {
     }
 
     @Override
+    @Transactional
     public Network create(long branchId, NetworkInitializer initializer) throws NetworkAccessBussExc, NotFoundBussExc {
 
         NetworkBranch persistedBranch = branchRepo.findById(branchId)
@@ -193,6 +198,7 @@ public class NetworkServiceImpl implements NetworkService {
         this.saveProgress(network);
         lifecycleUpdateEventSource.accept(network, NetworkLifecycleState.INITIALIZED);
 
+
         return this.networkRepo.save(network);
     }
 
@@ -219,7 +225,8 @@ public class NetworkServiceImpl implements NetworkService {
     @Override
     public NetworkEval run(Network network, DataFile trainFile, DataFile testFile) throws FileAccessBussExc {
         try {
-
+            network.setTraining(true);
+            this.networkRepo.save(network);
             NetworkEval previous = null;
             List<NetworkTrainLog> trainLogsSorted = this.networkTrainLogService.getAllSorted(network.getId());
             if(!trainLogsSorted.isEmpty()){
@@ -296,6 +303,8 @@ public class NetworkServiceImpl implements NetworkService {
 
             network.addNetworkTrainLog(networkTrainLog);
             lifecycleUpdateEventSource.accept(network, NetworkLifecycleState.STOPPED);
+            network.setTraining(false);
+            networkRepo.save(network);
             return networkEval;
         } catch (IOException | InterruptedException ex) {
             lifecycleUpdateEventSource.accept(network, NetworkLifecycleState.FAILED);
@@ -305,6 +314,7 @@ public class NetworkServiceImpl implements NetworkService {
 
     }
 
+    @Transactional
     @Override
     public void saveProgress(Network network) throws NetworkAccessBussExc {
         MultiLayerNetwork model = network.getModel();
@@ -337,9 +347,26 @@ public class NetworkServiceImpl implements NetworkService {
                     for (int linkC = 0; linkC < previousLayer.getNOutputs(); linkC++) {
                         Link link = node.getOutputLinks().get(linkC);
                         link.setWeight(weights[nodeP][linkC]);
+                        Node source = link.getSource();
+                        Node destination = link.getDestination();
+                        link.setSource(null);
+                        link.setDestination(null);
+                        node.getOutputLinks().set(linkC,linkRepo.save(link));
+                        node.getOutputLinks().get(linkC).setSource(source);
+                        node.getOutputLinks().get(linkC).setDestination(destination);
                     }
                 }
 
+            }
+
+            for (int layerC = 0; layerC < network.getLayers().size(); layerC++) {
+                Layer currentLayer = network.getLayers().get(layerC);
+                for (int nodeC = 0; nodeC < currentLayer.getNNodes(); nodeC++) {
+                    Node node = currentLayer.getNodes().get(nodeC);
+                    node.setLayer(null);
+                    currentLayer.getNodes().set(nodeC,nodeRepo.save(node));
+                    currentLayer.getNodes().get(nodeC).setLayer(currentLayer);
+                }
             }
         } catch (IOException ex) {
             throw new NetworkAccessBussExc("Could not save the model state. " + ex.getMessage());

@@ -193,13 +193,21 @@ public class DtoMapper {
                 .build();
     }
 
+    public static FileLinkDto toDto(NetworkFile networkFile) {
+        return FileLinkDto.builder()
+                .networkName(networkFile.getNetwork().getName())
+                .fileName(networkFile.getDataFile().getName())
+                .fileType(networkFile.getType())
+                .build();
+    }
+
 
     public static List<FileLinkDto> toDtos(DataFile dataFile) {
         return dataFile.getNetworks().stream()
                 .map(fileNetwork -> FileLinkDto.builder()
                         .fileName(dataFile.getName())
                         .fileType(fileNetwork.getType())
-                        .networkId(fileNetwork.getNetwork().getId())
+                        .networkName(fileNetwork.getNetwork().getName())
                         .build())
                 .collect(Collectors.toList());
     }

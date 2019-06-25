@@ -15,7 +15,6 @@ import java.util.stream.Collectors;
 @Getter
 @Setter
 @NoArgsConstructor
-@EqualsAndHashCode(callSuper = true)
 @Entity
 @Table(name = "layers")
 public class Layer extends BaseEntity<Long> {

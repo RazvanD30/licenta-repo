@@ -13,7 +13,6 @@ import java.util.stream.Collectors;
 @Getter
 @Setter
 @NoArgsConstructor
-@EqualsAndHashCode(callSuper = true)
 @Entity
 @Table(name = "nodes")
 public class Node extends BaseEntity<Long> {

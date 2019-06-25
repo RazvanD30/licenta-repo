@@ -11,7 +11,6 @@ import java.util.List;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-@EqualsAndHashCode(callSuper = true)
 @Entity
 @Table(name = "network_connections",
         uniqueConstraints = @UniqueConstraint(columnNames = {"source_id", "destination_id"}))

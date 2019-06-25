@@ -22,7 +22,6 @@ import java.util.stream.Collectors;
 @Getter
 @Setter
 @NoArgsConstructor
-@EqualsAndHashCode(callSuper = true)
 @Entity
 @Table(name = "networks")
 public class Network extends BaseEntity<Long> {
@@ -34,6 +33,9 @@ public class Network extends BaseEntity<Long> {
     @Column(name = "updated_datetime")
     @UpdateTimestamp
     private LocalDateTime updateDateTime;
+
+    @Column(name = "is_training")
+    private boolean isTraining;
 
     @Column(name = "name", nullable = false, length = 64, unique = true)
     @NotEmpty
@@ -68,7 +70,7 @@ public class Network extends BaseEntity<Long> {
     @Transient
     private MultiLayerNetwork model;
 
-    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL) //TODO , cascade = CascadeType.ALL)
     @JoinColumn(name = "state_id")
     private NetworkState state;
 
@@ -94,7 +96,7 @@ public class Network extends BaseEntity<Long> {
                    @Range(min = 1) int batchSize, @Range(min = 1) int nEpochs, @Range(min = 1) int nInputs,
                    @Range(min = 1) int nOutputs, MultiLayerNetwork model, NetworkState state, List<Layer> layers,
                    List<VirtualNetwork> virtualNetworks, List<NetworkFile> files, List<NetworkTrainLog> networkTrainLogs,
-                   NetworkBranch branch, Long originId) {
+                   NetworkBranch branch, Long originId, boolean isTraining) {
         super(id);
         this.createDateTime = createDateTime;
         this.updateDateTime = updateDateTime;
@@ -113,6 +115,7 @@ public class Network extends BaseEntity<Long> {
         this.networkTrainLogs = networkTrainLogs;
         this.branch = branch;
         this.originId = originId;
+        this.isTraining = isTraining;
     }
 
     /**
@@ -136,6 +139,7 @@ public class Network extends BaseEntity<Long> {
         this.state.getNetworks().add(this);
         network.getFiles().forEach(networkFile -> this.addFile(networkFile.getDataFile(), networkFile.getType()));
         this.networkTrainLogs = network.getNetworkTrainLogs();
+        this.isTraining = false;
         this.setLayers(network.getLayers().stream()
                 .map(layer -> {
                     layer = new Layer(layer);

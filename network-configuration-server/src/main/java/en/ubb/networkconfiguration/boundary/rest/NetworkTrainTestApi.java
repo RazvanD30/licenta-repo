@@ -43,16 +43,19 @@ public class NetworkTrainTestApi {
 
     @PostMapping("/run/{id}")
     public NetworkEvalDto run(@NotNull @PathVariable long id,
-                      @Validated @NotNull @RequestBody RunConfigDto runConfigDto) throws NotFoundException, FileAccessException {
+                      @Validated @NotNull @RequestBody RunConfigDto runConfigDto) throws NotFoundException, FileAccessException, NetworkAccessException {
 
         Network network = this.networkService.findById(id)
                 .orElseThrow(() -> new NotFoundException("Network not found."));
+        if(network.isTraining()){
+            throw new NetworkAccessException("Network is currently training");
+        }
         try {
 
-            DataFile trainFile = this.fileService.findFile(runConfigDto.getTrainFileId())
+            DataFile trainFile = this.fileService.findFile(runConfigDto.getTrainFileName())
                     .orElseThrow(() -> new NotFoundException("Train file not found."));
 
-            DataFile testFile = this.fileService.findFile(runConfigDto.getTestFileId())
+            DataFile testFile = this.fileService.findFile(runConfigDto.getTestFileName())
                     .orElseThrow(() -> new NotFoundException("Test file not found."));
 
             if(!containsFile(network,trainFile,FileType.TRAIN)){
@@ -69,7 +72,7 @@ public class NetworkTrainTestApi {
     }
 
     @PostMapping("/save-progress/{id}")
-    public void saveProgress(@NotNull @RequestBody Long id) throws NotFoundException, NetworkAccessException {
+    public void saveProgress(@NotNull @PathVariable long id) throws NotFoundException, NetworkAccessException {
 
         Network network = this.networkService.findById(id)
                 .orElseThrow(() -> new NotFoundException("Network not found."));

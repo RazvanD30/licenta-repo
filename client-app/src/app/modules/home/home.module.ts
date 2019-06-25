@@ -1,23 +1,17 @@
 import {NgModule} from '@angular/core';
-import {CommonModule} from '@angular/common';
 import {HomeComponent} from './pages/home/home.component';
 import {HomeRoutingModule} from './home-routing.module';
 import {AuthenticationGuard} from '../../core/guards/authentication.guard';
 import {NetworkDebugService} from '../../core/services/network-debug';
-import {ButtonsModule, CardsFreeModule, WavesModule} from 'angular-bootstrap-md';
-import {FontAwesomeModule} from '@fortawesome/angular-fontawesome';
+import {SharedModule} from '../../shared/shared.module';
 
 @NgModule({
   declarations: [
     HomeComponent
   ],
   imports: [
-    CommonModule,
     HomeRoutingModule,
-    CardsFreeModule,
-    WavesModule,
-    ButtonsModule,
-    FontAwesomeModule
+    SharedModule
   ],
   providers: [
     NetworkDebugService,

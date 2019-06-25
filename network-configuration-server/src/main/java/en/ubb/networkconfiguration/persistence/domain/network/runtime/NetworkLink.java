@@ -9,7 +9,6 @@ import javax.persistence.*;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-@EqualsAndHashCode(callSuper = true)
 @Entity
 @Table(name = "network_links",
         uniqueConstraints = @UniqueConstraint(columnNames = {"source_id", "destination_id"}))

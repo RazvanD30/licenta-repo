@@ -1,12 +1,12 @@
 package en.ubb.networkconfiguration.business.service.impl;
 
 import en.ubb.networkconfiguration.business.service.FileService;
-import en.ubb.networkconfiguration.business.validation.exception.BusinessException;
 import en.ubb.networkconfiguration.business.validation.exception.FileAccessBussExc;
 import en.ubb.networkconfiguration.business.validation.exception.NotFoundBussExc;
 import en.ubb.networkconfiguration.persistence.dao.DataFileRepo;
 import en.ubb.networkconfiguration.persistence.dao.NetworkRepo;
 import en.ubb.networkconfiguration.persistence.dao.specification.DataFileSpec;
+import en.ubb.networkconfiguration.persistence.dao.specification.NetworkSpec;
 import en.ubb.networkconfiguration.persistence.domain.network.enums.FileType;
 import en.ubb.networkconfiguration.persistence.domain.network.runtime.DataFile;
 import en.ubb.networkconfiguration.persistence.domain.network.runtime.Network;
@@ -14,6 +14,7 @@ import en.ubb.networkconfiguration.persistence.domain.network.runtime.NetworkFil
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.StringUtils;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -65,41 +66,32 @@ public class FileServiceImpl implements FileService {
         return dataFileRepo.save(dataFile);
     }
 
+
+    @Transactional
     @Override
-    public Network linkFile(long networkID, String fileName, FileType fileType) throws NotFoundBussExc, FileAccessBussExc {
+    public void saveLinks(String fileName, List<String> networkNames, FileType type) throws NotFoundBussExc {
 
         DataFile dataFile = this.findFile(fileName)
-                .orElseThrow(() -> new FileAccessBussExc("File with name " + fileName + " not found"));
+                .orElseThrow(() -> new NotFoundBussExc("File not found"));
 
-        return this.networkRepo.findById(networkID).map(persistedNetwork -> {
-            persistedNetwork.addFile(dataFile, fileType);
-            return this.networkRepo.save(persistedNetwork);
-        }).orElseThrow(() -> new NotFoundBussExc("Network with id " + networkID + " not found"));
-    }
+        List<NetworkFile> networks = new ArrayList<>(dataFile.getNetworks());
 
-    @Override
-    public Network linkFile(long networkId, long dataFileId, FileType fileType) throws NotFoundBussExc {
+        networks.forEach(networkFile -> {
+            if (networkFile.getType().equals(type)) {
+                Network network = networkFile.getNetwork();
+                network.removeFile(dataFile);
+                this.networkRepo.save(network);
+                this.dataFileRepo.save(dataFile);
+            }
+        });
 
-        DataFile persistedDataFile = this.findFile(dataFileId)
-                .orElseThrow(() -> new NotFoundBussExc("Datafile with id " + dataFileId + " not found"));
-
-        return this.networkRepo.findById(networkId).map(persistedNetwork -> {
-            persistedNetwork.addFile(persistedDataFile, fileType);
-            return this.networkRepo.save(persistedNetwork);
-        }).orElseThrow(() -> new NotFoundBussExc("Network with id " + networkId + " not found"));
-    }
-
-    @Override
-    public Network unlinkFile(long networkID, String fileName) throws NotFoundBussExc {
-
-        final Network persistedNetwork = this.networkRepo.findById(networkID)
-                .orElseThrow(() -> new NotFoundBussExc("Network with id " + networkID + " not found"));
-
-        final DataFile persistedDataFile = this.findFile(fileName)
-                .orElseThrow(() -> new NotFoundBussExc("File with name " + fileName + " not found"));
-
-        persistedNetwork.removeFile(persistedDataFile);
-        return this.networkRepo.save(persistedNetwork);
+        List<NetworkFile> networkFiles = new ArrayList<>();
+        for (String networkName : networkNames) {
+            Network network = this.networkRepo.findOne(Specification.where(NetworkSpec.hasName(networkName)))
+                    .orElseThrow(() -> new NotFoundBussExc("Network with name " + networkName + " not found"));
+            network.addFile(dataFile, type);
+            this.networkRepo.save(network);
+        }
     }
 
     @Override

@@ -11,8 +11,8 @@ import lombok.*;
 @Setter
 public class FileLinkDto {
 
-    @JsonProperty("networkId")
-    private long networkId;
+    @JsonProperty("networkName")
+    private String networkName;
 
     @JsonProperty("fileName")
     private String fileName;

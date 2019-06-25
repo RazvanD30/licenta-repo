@@ -77,7 +77,7 @@
   // animation
   async function initAnimation() {
     animate();
-    await delay(2000);
+    await delay(500);
     for (var i in points) {
       shiftPoint(points[i]);
     }

@@ -147,6 +147,8 @@ export class NetworkDebuggingComponent implements OnInit {
   }
 
   saveAndLoad() {
+    this.x = this.MARGIN_LEFT;
+    this.context.clearRect(0, 0, this.canvas.width, this.canvas.height);
     const dto: VirtualNetworkDto = {
       id: null,
       name: this.virtualNetworkFormGroup.value.name,
@@ -416,6 +418,8 @@ export class NetworkDebuggingComponent implements OnInit {
   }
 
   loadExisting() {
+    this.x = this.MARGIN_LEFT;
+    this.context.clearRect(0, 0, this.canvas.width, this.canvas.height);
     this.loading = true;
     const subscriber = this.networkVisualService.doneLoading.subscribe(done => {
       subscriber.unsubscribe();

@@ -4,6 +4,7 @@ package en.ubb.networkconfiguration.boundary.rest;
 import en.ubb.networkconfiguration.boundary.dto.file.FileLinkDto;
 import en.ubb.networkconfiguration.boundary.dto.network.runtime.NetworkDto;
 import en.ubb.networkconfiguration.boundary.util.DtoMapper;
+import en.ubb.networkconfiguration.boundary.validation.exception.BoundaryException;
 import en.ubb.networkconfiguration.boundary.validation.exception.FileAccessException;
 import en.ubb.networkconfiguration.boundary.validation.exception.NotFoundException;
 import en.ubb.networkconfiguration.boundary.validation.validator.NetworkDtoValidator;
@@ -18,9 +19,11 @@ import en.ubb.networkconfiguration.business.validation.exception.NotFoundBussExc
 import en.ubb.networkconfiguration.persistence.domain.authentication.User;
 import en.ubb.networkconfiguration.persistence.domain.branch.NetworkBranch;
 import en.ubb.networkconfiguration.persistence.domain.network.enums.BranchType;
+import en.ubb.networkconfiguration.persistence.domain.network.enums.FileType;
 import en.ubb.networkconfiguration.persistence.domain.network.enums.LayerType;
 import en.ubb.networkconfiguration.persistence.domain.network.runtime.DataFile;
 import en.ubb.networkconfiguration.persistence.domain.network.runtime.Network;
+import en.ubb.networkconfiguration.persistence.domain.network.runtime.NetworkFile;
 import en.ubb.networkconfiguration.persistence.domain.network.setup.LayerInitializer;
 import en.ubb.networkconfiguration.persistence.domain.network.setup.NetworkInitializer;
 import org.nd4j.linalg.activations.Activation;
@@ -35,6 +38,7 @@ import javax.validation.constraints.NotNull;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 @RestController
@@ -143,26 +147,18 @@ public class NetworkConfigureApi {
         }
     }
 
-    @PostMapping("/link")
-    public void linkFile(@RequestBody FileLinkDto dto) throws NotFoundException, FileAccessException {
-        try{
-            this.fileService.linkFile(dto.getNetworkId(),dto.getFileName(),dto.getFileType());
-        } catch (NotFoundBussExc notFoundBussExc) {
-            throw new NotFoundException(notFoundBussExc);
-        } catch (FileAccessBussExc fileAccessBussExc) {
-            throw new FileAccessException(fileAccessBussExc);
-        }
+    @GetMapping("/link/{networkName}")
+    public List<FileLinkDto> getLinks(@PathVariable String networkName) throws NotFoundException {
+        return this.networkService.findByName(networkName)
+                .orElseThrow(() -> new NotFoundException("Network with name " + networkName + " not found"))
+                .getFiles().stream()
+                .map(networkFile -> FileLinkDto.builder()
+                        .fileName(networkFile.getDataFile().getName())
+                        .fileType(networkFile.getType())
+                        .networkName(networkFile.getNetwork().getName())
+                        .build())
+                .collect(Collectors.toList());
     }
-
-    @PostMapping("/unlink")
-    public void unlinkFile(@RequestBody FileLinkDto dto) throws NotFoundException {
-        try{
-            this.fileService.unlinkFile(dto.getNetworkId(),dto.getFileName());
-        } catch (NotFoundBussExc notFoundBussExc) {
-            throw new NotFoundException(notFoundBussExc);
-        }
-    }
-
 
     //TODO REMOVE BELOW
 

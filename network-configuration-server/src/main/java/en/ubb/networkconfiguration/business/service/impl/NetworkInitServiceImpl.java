@@ -42,12 +42,10 @@ public class NetworkInitServiceImpl implements NetworkInitService {
         if(this.findByName(networkInitializer.getName()).isPresent()){
             throw new DuplicateBussExc("A network initializer with name " + networkInitializer.getName() + " already exists.");
         }
-        networkInitializer.getLayers().forEach(layer -> layer.setNetwork(networkInitializer));
-        NetworkInitializer result = networkInitRepo.save(networkInitializer);
-
-        NetworkInitializer networkInitializer1 = networkInitRepo.findById(result.getId()).get();
-
-        return result;
+        networkInitializer.getLayers().forEach(layer -> {
+            layer.setNetwork(networkInitializer);
+        });
+        return networkInitRepo.save(networkInitializer);
 
     }
 

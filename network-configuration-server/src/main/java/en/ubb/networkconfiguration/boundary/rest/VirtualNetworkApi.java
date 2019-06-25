@@ -46,6 +46,17 @@ public class VirtualNetworkApi {
         return DtoMapper.toDto(virtualNetworkService.init(network,dto.getName()));
     }
 
+    @GetMapping("/withNetworkName/{name}")
+    public List<VirtualNetworkDto> getAllForNetworkName(@PathVariable String name) throws NotFoundException {
+        Network network = this.networkService.findByName(name)
+                .orElseThrow(() -> new NotFoundException("Network with name " + name + " not found"));
+        return network.getVirtualNetworks().stream()
+                .map(DtoMapper::toDto)
+                .collect(Collectors.toList());
+    }
+
+
+
     @PostMapping("/{virtualNetworkId}")
     public VirtualLayerDto getLayerAtPos(@PathVariable long virtualNetworkId, @RequestBody int pos) throws NotFoundException {
         try {
