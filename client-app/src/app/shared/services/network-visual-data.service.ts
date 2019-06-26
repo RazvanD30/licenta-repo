@@ -9,12 +9,15 @@ import {NodeGui} from '../models/network/gui/NodeGui';
 import {Status, StatusInternal} from '../models/network/gui/Status';
 import {LinkGui} from '../models/network/gui/LinkGui';
 import {Pos} from '../models/network/gui/Pos';
+import {LayerType} from '../models/network/shared/LayerType';
+import {Activation} from '../models/network/shared/Activation';
 
 @Injectable({
   providedIn: 'root'
 })
 export class NetworkVisualDataService {
   public layerAdded = new EventEmitter<LayerGui>();
+  public gotInputs = new EventEmitter<number>();
   public doneLoading = new EventEmitter();
   public pos: number;
   public layers: LayerGui[];
@@ -26,6 +29,15 @@ export class NetworkVisualDataService {
 
   private _virtualNetwork: VirtualNetworkDto;
 
+  get virtualNetwork(): VirtualNetworkDto {
+    return this._virtualNetwork;
+  }
+
+  set virtualNetwork(value: VirtualNetworkDto) {
+    this.pos = 0;
+    this.layers = [];
+    this._virtualNetwork = value;
+  }
 
   redoLinks(previousLayer: LayerGui, currentLayer: LayerGui) {
     for (const [key1, prevNode] of previousLayer.nodes) {
@@ -40,14 +52,16 @@ export class NetworkVisualDataService {
     }
   }
 
-
   getNextLayer() {
     const status = new Status(StatusInternal.IGNORE);
     if (this._virtualNetwork == null) {
       return;
     }
     this.getLayerAtPos(this._virtualNetwork.id, this.pos).subscribe(layerDto => {
-      const layerGui = new LayerGui(layerDto.id);
+      if (layerDto.type === LayerType.INPUT) {
+        this.gotInputs.emit(layerDto.nodes.length);
+      }
+      const layerGui = new LayerGui(layerDto.id, layerDto.activation);
       layerDto.nodes.forEach(nodeDto => {
         const nodeGui = new NodeGui(nodeDto.id, nodeDto.bias, status.fromInternal(nodeDto.status), layerGui);
         layerGui.addNode(nodeGui);
@@ -123,9 +137,90 @@ export class NetworkVisualDataService {
     (APP_SETTINGS.URLS.NETWORK_MANAGEMENT.NETWORK_VIRTUAL_SIMULATION.GET_LAYER_BY_VIRTUAL_ID_AT_POS + virtualNetworkId, pos);
   }
 
+  applySoftmax(layer: LayerGui) {
+
+    layer.nodes.forEach(node => node.value = this.getX(node));
+    let max = 0.0;
+    let sum = 0.0;
+    layer.nodes.forEach(node => {
+      if (node.value >= max) {
+        max = node.value;
+      }
+    });
+    layer.nodes.forEach(node => {
+      node.value = Math.exp(node.value - max);
+      sum += node.value;
+    });
+    layer.nodes.forEach(node => {
+      node.value /= sum;
+    });
+  }
+
+  applyActivation(targetLayer: LayerGui) {
+    if (targetLayer.activation === Activation.SOFTMAX) {
+      this.applySoftmax(targetLayer);
+    } else {
+      targetLayer.nodes.forEach(targetNode => {
+        targetNode.value = this.applyActivationForNode(targetNode);
+      });
+    }
+  }
+
+  getX(targetNode: NodeGui) {
+    let x = targetNode.bias;
+    targetNode.inputLinks.forEach(link => {
+      x += link.source.value * link.weight;
+    });
+    return x;
+  }
+
+  applyActivationForNode(targetNode: NodeGui) {
+    const x = this.getX(targetNode);
+    let DEFAULT_ALPHA;
+    let OUTOFF;
+    switch (targetNode.layer.activation) {
+      case Activation.CUBE:
+        return Math.pow(x, 3);
+      case Activation.ELU:
+        DEFAULT_ALPHA = 1.0;
+        return x < 0 ? DEFAULT_ALPHA * (Math.exp(x) - 1.0) : x;
+      case Activation.HARDSIGMOID:
+        return Math.min(1, Math.max(0, 0.2 * x + 0.5));
+      case Activation.HARDTANH:
+        return x < 1 ? 1 : (x < -1 ? -1 : x);
+      case Activation.IDENTITY:
+        return x;
+      case Activation.LEAKYRELU:
+        DEFAULT_ALPHA = 0.01;
+        return Math.max(0, x) + DEFAULT_ALPHA * Math.min(0, x);
+      case Activation.RATIONALTANH:
+        return 1.7189 * Math.tanh(2 * x / 3);
+      case Activation.RECTIFIEDTANH:
+        return Math.max(0, Math.tanh(x));
+      case Activation.RELU:
+        return Math.max(0, x);
+      case Activation.RELU6:
+        OUTOFF = 0.0;
+        return Math.min(Math.max(x, 0), 6);
+      case Activation.SWISH:
+        return x / (1 + Math.exp(-x));
+      case Activation.SIGMOID:
+        return 1 / (1 + Math.exp(-x));
+      case Activation.SOFTPLUS:
+        return Math.log(1 + Math.exp(x));
+      case Activation.TANH:
+        const expPlusX = Math.exp(x);
+        const expMinusX = Math.exp(-x);
+        return (expPlusX - expMinusX) / (expPlusX + expMinusX);
+      case Activation.THRESHOLDEDRELU:
+        DEFAULT_ALPHA = 1.0;
+        return x > DEFAULT_ALPHA ? x : 0;
+    }
+  }
+
   private findLayerForPosX(posX: number): LayerGui {
     for (const layer of this.layers) {
-      const distance = this.getDistanceForAxis(layer.xPos, posX);
+      const distance = this.getDistanceForAxis(layer.pos.x, posX);
       if (this.isDistanceAcceptable(distance)) {
         return layer;
       }
@@ -143,15 +238,5 @@ export class NetworkVisualDataService {
 
   private getDistanceForPoints(pos1: Pos, pos2: Pos): number {
     return Math.sqrt(Math.pow(pos2.x - pos1.x, 2) + Math.pow(pos2.y - pos1.y, 2));
-  }
-
-  get virtualNetwork(): VirtualNetworkDto {
-    return this._virtualNetwork;
-  }
-
-  set virtualNetwork(value: VirtualNetworkDto) {
-    this.pos = 0;
-    this.layers = [];
-    this._virtualNetwork = value;
   }
 }

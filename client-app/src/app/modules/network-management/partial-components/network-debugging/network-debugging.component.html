@@ -1,4 +1,23 @@
 <app-loading [loading]="loading"></app-loading>
+
+<div class="input-container">
+  <div *ngFor="let input of inputs" class="input-field">
+    <mat-form-field>
+      <input matInput type="number" [(ngModel)]="input.value">
+    </mat-form-field>
+  </div>
+</div>
+
+<div class="breakpoint-value-container">
+  <div *ngFor="let v of getCurrentValues()" class="value-field">
+    <mat-form-field>
+      <input matInput type="number" [(ngModel)]="v" disabled>
+    </mat-form-field>
+  </div>
+</div>
+
+<button *ngIf="loading === false && inputs.length > 0" class="step-into-button" mat-raised-button (click)="stepInto()"> Step into </button>
+
 <div class="debugging-container">
   <mat-card class="loading-dialog" *ngIf="showForm === true">
     <mat-card-header>

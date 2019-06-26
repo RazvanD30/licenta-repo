@@ -79,9 +79,10 @@ public class FileServiceImpl implements FileService {
         networks.forEach(networkFile -> {
             if (networkFile.getType().equals(type)) {
                 Network network = networkFile.getNetwork();
-                network.removeFile(dataFile);
-                this.networkRepo.save(network);
-                this.dataFileRepo.save(dataFile);
+                if (network != null) {
+                    network.removeFile(dataFile, type);
+                    this.networkRepo.save(network);
+                }
             }
         });
 

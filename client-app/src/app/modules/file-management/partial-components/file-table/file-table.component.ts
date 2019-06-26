@@ -1,4 +1,4 @@
-import {Component, EventEmitter, Input, OnChanges, OnInit, ViewChild} from '@angular/core';
+import {ChangeDetectorRef, Component, EventEmitter, Input, OnChanges, OnInit, ViewChild} from '@angular/core';
 import {MatPaginator, MatSort, MatTableDataSource} from '@angular/material';
 import {APP_SETTINGS} from '../../../../configs/app-settings.config';
 import {faDownload, faLink} from '@fortawesome/free-solid-svg-icons';
@@ -28,7 +28,8 @@ export class FileTableComponent implements OnInit, OnChanges {
   dataSent = new EventEmitter();
 
   constructor(private networkService: NetworkConfigureService,
-              private fileService: FileService) {
+              private fileService: FileService,
+              private cd: ChangeDetectorRef) {
   }
 
   ngOnChanges(changes): void {
@@ -125,6 +126,7 @@ export class FileTableComponent implements OnInit, OnChanges {
   setTrainLinks(extendedFile: ExtendedDataFileDto, networkNames: string[]) {
     if (this.sendingData === false) {
       this.sendingData = true;
+      this.cd.markForCheck();
       this.fileService.setTrainLinks(extendedFile.dataFile.name, networkNames)
         .subscribe(linkDtos => {
           extendedFile.trainLinkWith = [];
@@ -140,6 +142,7 @@ export class FileTableComponent implements OnInit, OnChanges {
 
     if (this.sendingData === false) {
       this.sendingData = true;
+      this.cd.markForCheck();
       const loadSubscriber = this.fileService.setTestLinks(extendedFile.dataFile.name, networkNames)
         .subscribe(linkDtos => {
           loadSubscriber.unsubscribe();

@@ -1,11 +1,16 @@
 import {NodeGui} from './NodeGui';
+import {Pos} from './Pos';
+import {Activation} from '../shared/Activation';
 
 export class LayerGui {
   private readonly _id: number;
   private readonly _nodes: Map<number, NodeGui>;
+  pos: Pos;
+  activation: Activation;
 
-  constructor(id: number) {
+  constructor(id: number, activation: Activation) {
     this._id = id;
+    this.activation = activation;
     this._nodes = new Map<number, NodeGui>();
     this._previous = null;
     this._next = null;
@@ -57,7 +62,7 @@ export class LayerGui {
     this.nodes.forEach(node => node.drawText(context));
   }
 
-  drawOutputLinks(context: CanvasRenderingContext2D){
+  drawOutputLinks(context: CanvasRenderingContext2D) {
     for (const [key, node] of this.nodes) {
       for (const [linkKey, link] of node.outputLinks) {
         link.draw(context);
@@ -65,7 +70,7 @@ export class LayerGui {
     }
   }
 
-  drawInputLinks(context: CanvasRenderingContext2D){
+  drawInputLinks(context: CanvasRenderingContext2D) {
     for (const [key, node] of this.nodes) {
       for (const [linkKey, link] of node.inputLinks) {
         link.draw(context);
@@ -82,6 +87,22 @@ export class LayerGui {
     this.drawLines(context);
     this.drawNodes(context);
     this.drawText(context);
+  }
+
+  drawHeader(context: CanvasRenderingContext2D) {
+    context.globalCompositeOperation = 'source-over';
+    context.beginPath();
+    context.font = 'bold 20px Futura';
+    context.fillStyle = 'rgba(46, 49, 49, 1)';
+    context.fillText('Layer', this.pos.x, this.pos.y);
+    context.closePath();
+
+    context.globalCompositeOperation = 'source-over';
+    context.beginPath();
+    context.font = 'bold 20px Futura';
+    context.fillStyle = 'rgba(46, 49, 49, 1)';
+    context.fillText( '' + this.id, this.pos.x, this.pos.y + 25);
+    context.closePath();
   }
 
   addNode(node: NodeGui): void {

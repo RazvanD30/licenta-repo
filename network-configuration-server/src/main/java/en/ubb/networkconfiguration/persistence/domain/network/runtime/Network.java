@@ -203,18 +203,20 @@ public class Network extends BaseEntity<Long> {
         dataFile.getNetworks().add(networkFile);
     }
 
-    public boolean removeFile(DataFile dataFile) {
+    public boolean removeFile(DataFile dataFile, FileType type) {
+        boolean result = false;
         for (Iterator<NetworkFile> iterator = this.files.iterator(); iterator.hasNext(); ) {
             NetworkFile networkFile = iterator.next();
-            if (networkFile.getNetwork().equals(this) && networkFile.getDataFile().equals(dataFile)) {
+            if (networkFile.getType().equals(type)
+                    && networkFile.getNetwork().equals(this) && networkFile.getDataFile().equals(dataFile)) {
                 iterator.remove();
                 networkFile.getDataFile().getNetworks().remove(networkFile);
                 networkFile.setNetwork(null);
                 networkFile.setDataFile(null);
-                return true;
+                result = true;
             }
         }
-        return false;
+        return result;
     }
 
     public boolean updateFile(DataFile dataFile, FileType type) {

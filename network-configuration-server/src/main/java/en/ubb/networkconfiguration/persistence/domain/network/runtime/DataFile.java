@@ -30,7 +30,7 @@ public class DataFile extends BaseEntity<Long> {
     @Range(min = 1)
     private int nLabels;
 
-    @OneToMany(mappedBy = "dataFile", cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(mappedBy = "dataFile")
     private List<NetworkFile> networks = new ArrayList<>();
 
     @Builder(toBuilder = true)

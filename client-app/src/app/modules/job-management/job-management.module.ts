@@ -1,13 +1,14 @@
-import { NgModule } from '@angular/core';
-import { CommonModule } from '@angular/common';
-import { JobTableComponent } from './pages/job-table/job-table.component';
-import {JobManagementRoutingModule} from "./job-management-routing.module";
+import {NgModule} from '@angular/core';
+import {JobTableComponent} from './pages/job-table/job-table.component';
+import {JobManagementRoutingModule} from './job-management-routing.module';
+import {SharedModule} from '../../shared/shared.module';
 
 @NgModule({
   declarations: [JobTableComponent],
   imports: [
-    CommonModule,
+    SharedModule,
     JobManagementRoutingModule
   ]
 })
-export class JobManagementModule { }
+export class JobManagementModule {
+}

@@ -5,8 +5,8 @@
   var minConnectionsPerNode = 7; // was 5 before
   var numberOfPoints = 200;
   var closestNeighbourDistance = 40000; // was 4000
-  var closeNeighbourDistance = 70000; // was 20000
-  var farNeighbourDistance = 90000; // was 40000
+  var closeNeighbourDistance = 80000; // was 20000
+  var farNeighbourDistance = 110000; // was 40000
   var radiusConstant = 6;
   var listenForMouse = false;
 
@@ -103,9 +103,9 @@
   function resize() {
     width = window.innerWidth < 1920 ? window.innerWidth : 1920;
     height = window.innerHeight < 1080 ? window.innerHeight : 1080;
-    closestNeighbourDistance  = 15.6 * width;
-    closeNeighbourDistance = 31.3 * width;
-    farNeighbourDistance = 41.7 * width;
+    closestNeighbourDistance  = (closestNeighbourDistance / 1080) * width;
+    closeNeighbourDistance = (closeNeighbourDistance / 1080) * width;
+    farNeighbourDistance = (farNeighbourDistance / 1080) * width;
     canvas.width = width;
     canvas.height = height;
     initCircles();
@@ -148,6 +148,12 @@
     await delay(300);
     target.x = width / 2;
     target.y = height / 2;
+    for(var i = 0; i < 3; i++) {
+      await delay(1000);
+      closestNeighbourDistance *= 1.15; // was 4000
+      closeNeighbourDistance *= 1.15; // was 20000
+      farNeighbourDistance *= 1.15; // was 40000
+    }
   }
 
   function animate() {
@@ -158,20 +164,20 @@
 
         if (Math.abs(getDistance(target, points[i])) < closestNeighbourDistance) {
 
-          points[i].active = 0.4;
-          points[i].circle.active = 0.8;
+          points[i].active = 0.5;
+          points[i].circle.active = 1;
 
         } else if (Math.abs(getDistance(target, points[i])) < closeNeighbourDistance) {
 
-          points[i].active = 0.2;
-          points[i].circle.active = 0.4;
+          points[i].active = 0.25;
+          points[i].circle.active = 0.5;
         } else if (Math.abs(getDistance(target, points[i])) < farNeighbourDistance) {
 
-          points[i].active = 0.05;
-          points[i].circle.active = 0.1;
+          points[i].active = 0.04;
+          points[i].circle.active = 0.15;
         } else {
-          points[i].active = points[i].active > 0.005 ? 0.997 * points[i].active : 0;
-          points[i].circle.active = points[i].circle.active > 0.01 ? 0.997 * points[i].circle.active : 0;
+          points[i].active = points[i].active > 0.01 ? 0.997 * points[i].active : 0;
+          points[i].circle.active = points[i].circle.active > 0.02 ? 0.997 * points[i].circle.active : 0;
         }
 
 
@@ -202,10 +208,12 @@
 
 
       var middleXOfLine = (p.x + p.closest[i].x) / 2;
+      var min = Math.min(p.active,p.closest[i].active);
+      ctx.lineWidth = 1.1;
       if (middleXOfLine < canvas.width / 2) {
-        ctx.strokeStyle = 'rgba(255, 255, 255,' + p.active + ')';
+        ctx.strokeStyle = 'rgba(255, 255, 255,' +  min + ')';
       } else {
-        ctx.strokeStyle = 'rgba(0, 0, 0,' + p.active + ')';
+        ctx.strokeStyle = 'rgba(0, 0, 0,' + min + ')';
       }
 
       ctx.stroke();

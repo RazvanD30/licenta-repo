@@ -4,6 +4,8 @@ import {APP_SETTINGS} from '../../configs/app-settings.config';
 import {Observable} from 'rxjs';
 import {NetworkDto} from '../models/network/runtime/NetworkDto';
 import {FileLinkDto} from '../models/file/FileLinkDto';
+import {RunConfigDto} from "../models/network/traintest/RunConfigDto";
+import {NetworkEvalDto} from "../models/network/traintest/NetworkEvalDto";
 
 @Injectable({
   providedIn: 'root'
@@ -35,6 +37,10 @@ export class NetworkConfigureService {
 
   delete(id: number): Observable<NetworkDto> {
     return this.http.delete<NetworkDto>(APP_SETTINGS.URLS.NETWORK_MANAGEMENT.NETWORK_CONFIGURE.DELETE_BY_ID + id);
+  }
+
+  trainAndEvaluate(networkId: number, config: RunConfigDto): Observable<NetworkEvalDto> {
+    return this.http.post<NetworkEvalDto>(APP_SETTINGS.URLS.NETWORK_MANAGEMENT.NETWORK_TRAIN_TEST.POST_RUN + networkId, config);
   }
 
   getAllLinks(networkName: string): Observable<FileLinkDto[]> {

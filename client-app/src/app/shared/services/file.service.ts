@@ -3,7 +3,7 @@ import {HttpClient} from '@angular/common/http';
 import {Observable} from 'rxjs';
 import {DataFileDto} from '../models/file/DataFileDto';
 import {APP_SETTINGS} from '../../configs/app-settings.config';
-import {RunConfigDto} from '../models/branch/RunConfigDto';
+import {RunConfigDto} from '../models/network/traintest/RunConfigDto';
 import {FileLinkDto} from '../models/file/FileLinkDto';
 
 @Injectable({

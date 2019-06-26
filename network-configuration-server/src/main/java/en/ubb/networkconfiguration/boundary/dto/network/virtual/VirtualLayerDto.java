@@ -3,6 +3,7 @@ package en.ubb.networkconfiguration.boundary.dto.network.virtual;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import en.ubb.networkconfiguration.persistence.domain.network.enums.LayerType;
 import lombok.*;
+import org.nd4j.linalg.activations.Activation;
 
 import java.util.List;
 
@@ -21,4 +22,7 @@ public class VirtualLayerDto {
 
     @JsonProperty("nodes")
     private List<VirtualNodeDto> nodes;
+
+    @JsonProperty("activation")
+    private Activation activation;
 }

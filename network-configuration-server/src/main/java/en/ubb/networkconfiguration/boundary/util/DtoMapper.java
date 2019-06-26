@@ -330,6 +330,7 @@ public class DtoMapper {
         return VirtualLayerDto.builder()
                 .id(virtualLayer.getId())
                 .type(virtualLayer.getLayer().getType())
+                .activation(virtualLayer.getLayer().getActivation())
                 .nodes(virtualLayer.getNodes().stream()
                         .map(DtoMapper::toDto)
                         .collect(Collectors.toList()))

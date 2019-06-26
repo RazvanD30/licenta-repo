@@ -3,10 +3,9 @@ import {NodeGui} from './NodeGui';
 
 export class LinkGui {
 
-  private readonly _id: number;
-
   sourceId: number;
   destinationId: number;
+  private readonly _id: number;
 
   constructor(id: number, weight: number, status: Status, source: NodeGui, destination: NodeGui) {
     this._id = id;
@@ -86,7 +85,7 @@ export class LinkGui {
         color = 'rgba(255,0,0,1)';
         break;
       case Status.IGNORED:
-        context.lineWidth = (this.weight * 2 + 1);
+        context.lineWidth = Math.pow(Math.round(this.weight * 200) / 100, 2) + 0.5;
         color = 'rgba(43, 116, 124,' + (this.weight / 3) + ')';
         break;
       case Status.INPUT:

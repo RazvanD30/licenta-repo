@@ -13,6 +13,7 @@ export class NodeGui {
   private _pos: Pos;
   public static readonly RADIUS = 10;
   private _layer: LayerGui;
+  public value: number;
 
   public constructor(id: number, bias: number, status: Status, layer: LayerGui) {
     this._id = id;
@@ -33,7 +34,7 @@ export class NodeGui {
         innerColor = 'rgb(228, 132, 72)';
         break;
       case Status.IGNORED:
-        innerColor = 'rgb(58, 182, 196)';
+        innerColor = 'rgb(0, 77, 77)';
         break;
       case Status.BREAKPOINT:
         innerColor = 'rgb(230, 75, 75)';
@@ -48,12 +49,12 @@ export class NodeGui {
     context.globalCompositeOperation = 'source-over';
     context.beginPath();
     context.arc(this.pos.x, this.pos.y, NodeGui.RADIUS, 0, 2 * Math.PI, false);
-    context.fillStyle = 'rgba(46, 49, 49, 1)';
+    context.fillStyle = 'rgb(0, 0, 0)';
     context.fill();
     context.closePath();
 
     context.beginPath();
-    context.arc(this.pos.x, this.pos.y, NodeGui.RADIUS * 0.4, 0, 2 * Math.PI, false);
+    context.arc(this.pos.x, this.pos.y, NodeGui.RADIUS * 0.85, 0, 2 * Math.PI, false);
     context.fillStyle = innerColor;
     context.fill();
     context.closePath();
@@ -62,7 +63,7 @@ export class NodeGui {
   public drawText(context: CanvasRenderingContext2D): void {
     context.globalCompositeOperation = 'source-over';
     context.beginPath();
-    context.font = '20px Futura';
+    context.font = 'bold 20px Futura';
     context.fillStyle = 'rgba(46, 49, 49, 1)';
     context.fillText('' + this.id, this.pos.x + NodeGui.RADIUS * 1.1, this.pos.y);
     context.closePath();

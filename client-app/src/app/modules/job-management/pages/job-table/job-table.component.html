@@ -1,3 +1,263 @@
-<p>
-  job-table works!
-</p>
+
+<div class="table-container">
+  <div class="mat-elevation-z8">
+    <mat-button-toggle-group name="fontStyle" aria-label="Font Style">
+      <button mat-raised-button color="warn" (click)="resetFilters()">
+        <mat-icon>clear</mat-icon>
+        Reset filters
+      </button>
+    </mat-button-toggle-group>
+    <mat-tab-group>
+      <mat-tab label="Filter by..."></mat-tab>
+      <mat-tab>
+        <ng-template mat-tab-label>
+          <div *ngIf="filters.name === ''"> Name</div>
+          <div *ngIf="filters.name !== ''" style="color: red"> Name (edited)</div>
+        </ng-template>
+        <mat-form-field class="example-full-width">
+          <input [(ngModel)]="filters.name" matInput (keyup)="applyFilter($event.target.value,'name')"
+                 placeholder="Filter by name">
+        </mat-form-field>
+      </mat-tab>
+
+      <mat-tab>
+        <ng-template mat-tab-label>
+          <div *ngIf="filters.seed === ''"> Seed</div>
+          <div *ngIf="filters.seed !== ''" style="color: red"> Seed (edited)</div>
+        </ng-template>
+        <mat-form-field class="example-full-width">
+          <mat-select placeholder="Operation type" [(ngModel)]="filters.comparison.seed">
+            <mat-option value="gt">Greater than</mat-option>
+            <mat-option value="lt">Less than</mat-option>
+            <mat-option value="eq">Equal to</mat-option>
+            <mat-option value="nq">Different from</mat-option>
+          </mat-select>
+        </mat-form-field>
+        <mat-form-field class="example-full-width" [hidden]="!filters.comparison.seed">
+          <input [(ngModel)]="filters.seed" matInput (keyup)="applyFilter($event.target.value,'seed')"
+                 placeholder="Filter by seed" type="number">
+        </mat-form-field>
+      </mat-tab>
+
+      <mat-tab>
+        <ng-template mat-tab-label>
+          <div *ngIf="filters.learningRate === ''"> Learning Rate</div>
+          <div *ngIf="filters.learningRate !== ''" style="color: red"> Learning Rate (edited)</div>
+        </ng-template>
+        <mat-form-field class="example-full-width">
+          <mat-select placeholder="Operation type" [(ngModel)]="filters.comparison.learningRate">
+            <mat-option value="gt">Greater than</mat-option>
+            <mat-option value="lt">Less than</mat-option>
+            <mat-option value="eq">Equal to</mat-option>
+            <mat-option value="nq">Different from</mat-option>
+          </mat-select>
+        </mat-form-field>
+        <mat-form-field class="example-full-width" [hidden]="!filters.comparison.learningRate">
+          <input [(ngModel)]="filters.learningRate" matInput (keyup)="applyFilter($event.target.value,'learningRate')"
+                 placeholder="Filter by learning rate" type="number">
+        </mat-form-field>
+      </mat-tab>
+
+      <mat-tab>
+        <ng-template mat-tab-label>
+          <div *ngIf="filters.batchSize === ''"> Batch Size</div>
+          <div *ngIf="filters.batchSize !== ''" style="color: red"> Batch Size (edited)</div>
+        </ng-template>
+        <mat-form-field class="example-full-width">
+          <mat-select placeholder="Operation type" [(ngModel)]="filters.comparison.batchSize">
+            <mat-option value="gt">Greater than</mat-option>
+            <mat-option value="lt">Less than</mat-option>
+            <mat-option value="eq">Equal to</mat-option>
+            <mat-option value="nq">Different from</mat-option>
+          </mat-select>
+        </mat-form-field>
+        <mat-form-field class="example-full-width" [hidden]="!filters.comparison.batchSize">
+          <input [(ngModel)]="filters.batchSize" matInput (keyup)="applyFilter($event.target.value,'batchSize')"
+                 placeholder="Filter by batch size" type="number">
+        </mat-form-field>
+      </mat-tab>
+
+      <mat-tab>
+        <ng-template mat-tab-label>
+          <div *ngIf="filters.nEpochs === ''"> #Epochs</div>
+          <div *ngIf="filters.nEpochs !== ''" style="color: red"> #Epochs (edited)</div>
+        </ng-template>
+        <mat-form-field class="example-full-width">
+          <mat-select placeholder="Operation type" [(ngModel)]="filters.comparison.nEpochs">
+            <mat-option value="gt">Greater than</mat-option>
+            <mat-option value="lt">Less than</mat-option>
+            <mat-option value="eq">Equal to</mat-option>
+            <mat-option value="nq">Different from</mat-option>
+          </mat-select>
+        </mat-form-field>
+        <mat-form-field class="example-full-width" [hidden]="!filters.comparison.nEpochs">
+          <input [(ngModel)]="filters.nEpochs" matInput (keyup)="applyFilter($event.target.value,'nEpochs')"
+                 placeholder="Filter by #Epochs" type="number">
+        </mat-form-field>
+      </mat-tab>
+
+      <mat-tab>
+        <ng-template mat-tab-label>
+          <div *ngIf="filters.nInputs === ''"> #Inputs</div>
+          <div *ngIf="filters.nInputs !== ''" style="color: red"> #Inputs (edited)</div>
+        </ng-template>
+        <mat-form-field class="example-full-width">
+          <mat-select placeholder="Operation type" [(ngModel)]="filters.comparison.nInputs">
+            <mat-option value="gt">Greater than</mat-option>
+            <mat-option value="lt">Less than</mat-option>
+            <mat-option value="eq">Equal to</mat-option>
+            <mat-option value="nq">Different from</mat-option>
+          </mat-select>
+        </mat-form-field>
+        <mat-form-field class="example-full-width" [hidden]="!filters.comparison.nInputs">
+          <input [(ngModel)]="filters.nInputs" matInput (keyup)="applyFilter($event.target.value,'nInputs')"
+                 placeholder="Filter by #Inputs" type="number">
+        </mat-form-field>
+      </mat-tab>
+
+      <mat-tab>
+        <ng-template mat-tab-label>
+          <div *ngIf="filters.nOutputs === ''"> #Outputs</div>
+          <div *ngIf="filters.nOutputs !== ''" style="color: red"> #Outputs (edited)</div>
+        </ng-template>
+        <mat-form-field class="example-full-width">
+          <mat-select placeholder="Operation type" [(ngModel)]="filters.comparison.nOutputs">
+            <mat-option value="gt">Greater than</mat-option>
+            <mat-option value="lt">Less than</mat-option>
+            <mat-option value="eq">Equal to</mat-option>
+            <mat-option value="nq">Different from</mat-option>
+          </mat-select>
+        </mat-form-field>
+        <mat-form-field class="example-full-width" [hidden]="!filters.comparison.nOutputs">
+          <input [(ngModel)]="filters.nOutputs" matInput (keyup)="applyFilter($event.target.value,'nOutputs')"
+                 placeholder="Filter by #Outputs" type="number">
+        </mat-form-field>
+      </mat-tab>
+
+      <mat-tab>
+        <ng-template mat-tab-label>
+          <div *ngIf="filters.nLayers === ''"> #Layers</div>
+          <div *ngIf="filters.nLayers !== ''" style="color: red"> #Layers (edited)</div>
+        </ng-template>
+        <mat-form-field class="example-full-width">
+          <mat-select placeholder="Operation type" [(ngModel)]="filters.comparison.nLayers">
+            <mat-option value="gt">Greater than</mat-option>
+            <mat-option value="lt">Less than</mat-option>
+            <mat-option value="eq">Equal to</mat-option>
+            <mat-option value="nq">Different from</mat-option>
+          </mat-select>
+        </mat-form-field>
+        <mat-form-field class="example-full-width" [hidden]="!filters.comparison.nLayers">
+          <input [(ngModel)]="filters.nLayers" matInput (keyup)="applyFilter($event.target.value,'nLayers')"
+                 placeholder="Filter by #Layers" type="number">
+        </mat-form-field>
+      </mat-tab>
+
+    </mat-tab-group>
+
+
+    <table mat-table *ngIf="networkDataSource" [dataSource]="networkDataSource" class="mat-elevation-z8" matSort>
+
+      <ng-container matColumnDef="id">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>Id</th>
+        <td mat-cell *matCellDef="let network"> {{ network.id }}</td>
+        <td mat-footer-cell *matFooterCellDef></td>
+      </ng-container>
+
+      <ng-container matColumnDef="name">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>Name</th>
+        <td mat-cell *matCellDef="let network"> {{ network.name }}</td>
+        <td mat-footer-cell *matFooterCellDef></td>
+      </ng-container>
+
+      <ng-container matColumnDef="seed">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>Seed</th>
+        <td mat-cell *matCellDef="let network"> {{ network.seed }}</td>
+        <td mat-footer-cell *matFooterCellDef></td>
+      </ng-container>
+
+      <ng-container matColumnDef="learningRate">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>Learning Rate</th>
+        <td mat-cell *matCellDef="let network"> {{ network.learningRate }}</td>
+        <td mat-footer-cell *matFooterCellDef></td>
+      </ng-container>
+
+      <ng-container matColumnDef="batchSize">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>Batch Size</th>
+        <td mat-cell *matCellDef="let network"> {{ network.batchSize }}</td>
+        <td mat-footer-cell *matFooterCellDef></td>
+      </ng-container>
+
+      <ng-container matColumnDef="nEpochs">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>#Epochs</th>
+        <td mat-cell *matCellDef="let network"> {{ network.nEpochs }}</td>
+        <td mat-footer-cell *matFooterCellDef></td>
+      </ng-container>
+
+      <ng-container matColumnDef="nInputs">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>#Inputs</th>
+        <td mat-cell *matCellDef="let network"> {{ network.nInputs }}</td>
+        <td mat-footer-cell *matFooterCellDef></td>
+      </ng-container>
+
+      <ng-container matColumnDef="nOutputs">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>#Outputs</th>
+        <td mat-cell *matCellDef="let network"> {{ network.nOutputs }}</td>
+        <td mat-footer-cell *matFooterCellDef></td>
+      </ng-container>
+
+      <ng-container matColumnDef="nLayers">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header disableClear>#Layers</th>
+        <td mat-cell *matCellDef="let network">
+          {{network.layers.length}}
+        </td>
+        <td mat-footer-cell *matFooterCellDef></td>
+      </ng-container>
+
+      <ng-container matColumnDef="trainFile">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>Train File</th>
+        <td mat-cell *matCellDef="let network">
+          <mat-form-field>
+            <mat-select [(ngModel)]="network.trainFileName"
+                        name="network.trainFileName">
+              <mat-option *ngFor="let name of network.trainFileNames" [value]="name"> {{name}} </mat-option>
+            </mat-select>
+          </mat-form-field>
+        </td>
+        <td mat-footer-cell *matFooterCellDef></td>
+      </ng-container>
+
+      <ng-container matColumnDef="testFile">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>Test File</th>
+        <td mat-cell *matCellDef="let network">
+          <mat-form-field>
+            <mat-select [(ngModel)]="network.testFileName"
+                        name="network.testFileName">
+              <mat-option *ngFor="let name of network.testFileNames" [value]="name"> {{name}} </mat-option>
+            </mat-select>
+          </mat-form-field>
+        </td>
+        <td mat-footer-cell *matFooterCellDef></td>
+      </ng-container>
+
+      <ng-container matColumnDef="actions">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header disableClear>Actions</th>
+        <td mat-cell *matCellDef="let network">
+          <button mat-button mat-raised-button (click)="trainAndTest(network)"
+                  [disabled]="network.trainFileName == null || network.testFileName == null">
+            <mat-icon>play_arrow</mat-icon>
+            Train and evaluate
+          </button>
+        </td>
+        <td mat-footer-cell *matFooterCellDef></td>
+      </ng-container>
+
+      <tr mat-header-row class="custom-table-header" *matHeaderRowDef="displayedColumns"></tr>
+      <tr mat-row class="custom-table-row" *matRowDef="let row; columns: displayedColumns;"></tr>
+      <tr mat-footer-row *matFooterRowDef="displayedColumns" class="example-first-footer-row"></tr>
+
+    </table>
+    <mat-paginator [pageSizeOptions]="[50, 100]" showFirstLastButtons></mat-paginator>
+  </div>
+</div>
+
