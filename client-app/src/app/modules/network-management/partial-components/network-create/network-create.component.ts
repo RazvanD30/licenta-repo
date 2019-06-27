@@ -7,7 +7,7 @@ import {BranchService} from '../../../../shared/services/branch.service';
 import {BranchDto} from '../../../../shared/models/branch/BranchDto';
 import {FormBuilder, FormControl, FormGroup, Validators} from '@angular/forms';
 import {MatSnackBar} from '@angular/material';
-import {LayerInitDto} from "../../../../shared/models/network/init/LayerInitDto";
+import {LayerInitDto} from '../../../../shared/models/network/init/LayerInitDto';
 
 @Component({
   selector: 'app-network-create',
@@ -16,7 +16,6 @@ import {LayerInitDto} from "../../../../shared/models/network/init/LayerInitDto"
 })
 export class NetworkCreateComponent implements OnInit {
 
-  networkInits: NetworkInitDto[] = [];
   activationTypes = ActivationParser.names();
   layerTypes = LayerTypeParser.names();
   hiddenLayerTypes: string[] = [];
@@ -100,11 +99,16 @@ export class NetworkCreateComponent implements OnInit {
 
   saveNetwork() {
     this.markFormGroupForValidation(this.networkInitFormGroup);
-    const invalidFgs = this.layerFormGroups.reduce((n, fg) => {
+
+    let hasErrors = false;
+    for (const fg of this.layerFormGroups) {
       this.markFormGroupForValidation(fg);
-      return fg.invalid === true ? 1 : 0;
-    }, 0);
-    if (this.networkInitFormGroup.invalid === true || invalidFgs > 0) {
+      if (fg.invalid === true) {
+        hasErrors = true;
+        break;
+      }
+    }
+    if (this.networkInitFormGroup.invalid === true || hasErrors === true) {
       this.warnText = 'Saving is not possible due to invalid fields in the form';
       return;
     }
@@ -141,7 +145,7 @@ export class NetworkCreateComponent implements OnInit {
         this.enableAllForms();
         this.snackBar.open('Network saved', 'Dismiss');
         this.networkInitService.getAllNames().subscribe(names => this.networkInitNames = names);
-      }, error => {
+      }, () => {
         this.waitingForResponse = false;
         this.enableAllForms();
         this.snackBar.open('Error encountered while saving the network. Operation failed.', 'Dismiss');
@@ -171,7 +175,6 @@ export class NetworkCreateComponent implements OnInit {
   }
 
   markFormGroupForValidation(formGroup: FormGroup) {
-    console.log(formGroup);
     formGroup.markAsTouched();
     Object.keys(formGroup.controls).forEach(field => {
       const control = formGroup.get(field);
@@ -182,11 +185,6 @@ export class NetworkCreateComponent implements OnInit {
       }
     });
   }
-
-  loadAll() {
-    this.networkInitService.getAll().subscribe(resp => this.networkInits = resp);
-  }
-
 
   signalNodeChangesForLayersWithNodes(nNodes: number) {
     this.layerFormGroups.forEach((fg, index) => {
@@ -228,8 +226,10 @@ export class NetworkCreateComponent implements OnInit {
     }
     const idx = this.layerFormGroups.length - 1;
     this.layerFormGroups.splice(idx, 0, hiddenLayer);
+    this.configureOutputNodes(idx - 1);
     this.configureInputNodes(idx);
     this.configureOutputNodes(idx);
+    this.configureInputNodes(idx + 1);
     this.layerFormGroups[idx].controls.nNodes.valueChanges.subscribe(val => {
       this.signalNodeChangesForLayersWithNodes(val);
     });
@@ -265,7 +265,7 @@ export class NetworkCreateComponent implements OnInit {
         activation: [modelInput.activation, [Validators.required]]
       });
     }
-    inputLayer.controls.nNodes.valueChanges.subscribe(val => {
+    inputLayer.controls.nNodes.valueChanges.subscribe(() => {
       if (inputLayer.controls.nNodes.valid === true) {
         this.signalNodeChange(0);
       }
@@ -290,7 +290,7 @@ export class NetworkCreateComponent implements OnInit {
         activation: [modelOutput.activation, [Validators.required]]
       });
     }
-    outputLayer.controls.nNodes.valueChanges.subscribe(val => {
+    outputLayer.controls.nNodes.valueChanges.subscribe(() => {
       if (outputLayer.controls.nNodes.valid === true) {
         this.signalNodeChange(0);
       }
@@ -391,7 +391,6 @@ export class NetworkCreateComponent implements OnInit {
   loadFromConfig(name: string) {
     this.networkInitService.getByName(name)
       .subscribe(networkInit => {
-        console.log(networkInit);
         this.resetForms(networkInit);
       });
   }

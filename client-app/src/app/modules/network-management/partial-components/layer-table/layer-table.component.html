@@ -1,24 +1,17 @@
-
 <div class="table-container">
   <div class="mat-elevation-z8">
-    <mat-button-toggle-group name="fontStyle" aria-label="Font Style">
-      <button mat-raised-button color="warn" (click)="resetFilters()">
-        <mat-icon>clear</mat-icon>
-        Reset filters
-      </button>
-      <button mat-raised-button color="primary" (click)="save()">
-        <mat-icon>save</mat-icon>
-        Save modifications
-      </button>
-    </mat-button-toggle-group>
-    <mat-tab-group>
-      
-      <mat-tab label="Filter by..."></mat-tab>
+    <mat-tab-group (selectedTabChange)="matTabSelectionChange($event)">
+      <mat-tab>
+        <ng-template mat-tab-label>
+          <mat-icon inline>clear</mat-icon>
+          <span style="margin-left: 5px;">Reset filters</span>
+        </ng-template>
+      </mat-tab>
 
       <mat-tab>
         <ng-template mat-tab-label>
           <div *ngIf="filters.nInputs === ''"> #Inputs</div>
-          <div *ngIf="filters.nInputs !== ''" style="color: red"> #Inputs (edited)</div>
+          <div *ngIf="filters.nInputs !== ''" class="label-edited"> #Inputs (edited)</div>
         </ng-template>
         <mat-form-field class="example-full-width">
           <mat-select placeholder="Operation type" [(ngModel)]="filters.comparison.nInputs">
@@ -37,7 +30,7 @@
       <mat-tab>
         <ng-template mat-tab-label>
           <div *ngIf="filters.nOutputs === ''"> #Outputs</div>
-          <div *ngIf="filters.nOutputs !== ''" style="color: red"> #Outputs (edited)</div>
+          <div *ngIf="filters.nOutputs !== ''" class="label-edited"> #Outputs (edited)</div>
         </ng-template>
         <mat-form-field class="example-full-width">
           <mat-select placeholder="Operation type" [(ngModel)]="filters.comparison.nOutputs">
@@ -52,11 +45,11 @@
                  placeholder="Filter by #Outputs" type="number">
         </mat-form-field>
       </mat-tab>
-      
+
       <mat-tab>
         <ng-template mat-tab-label>
           <div *ngIf="filters.nNodes === ''"> #Nodes</div>
-          <div *ngIf="filters.nNodes !== ''" style="color: red"> #Nodes (edited)</div>
+          <div *ngIf="filters.nNodes !== ''" class="label-edited"> #Nodes (edited)</div>
         </ng-template>
         <mat-form-field class="example-full-width">
           <mat-select placeholder="Operation type" [(ngModel)]="filters.comparison.nNodes">
@@ -75,7 +68,7 @@
       <mat-tab>
         <ng-template mat-tab-label>
           <div *ngIf="filters.type === ''"> LayerDto type</div>
-          <div *ngIf="filters.type !== ''" style="color: red"> LayerDto type (edited)</div>
+          <div *ngIf="filters.type !== ''" class="label-edited"> LayerDto type (edited)</div>
         </ng-template>
         <mat-form-field class="example-full-width">
           <input [(ngModel)]="filters.type" matInput (keyup)="applyFilter($event.target.value,'layer')"
@@ -86,7 +79,7 @@
       <mat-tab>
         <ng-template mat-tab-label>
           <div *ngIf="filters.activation === ''"> Activation</div>
-          <div *ngIf="filters.activation !== ''" style="color: red"> Activation (edited)</div>
+          <div *ngIf="filters.activation !== ''" class="label-edited"> Activation (edited)</div>
         </ng-template>
         <mat-form-field class="example-full-width">
           <input [(ngModel)]="filters.activation" matInput (keyup)="applyFilter($event.target.value,'activation')"

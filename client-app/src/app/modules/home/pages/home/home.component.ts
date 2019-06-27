@@ -1,7 +1,5 @@
-import {AfterViewInit, Component, ElementRef, HostListener, Inject, OnInit, Renderer2, ViewChild} from '@angular/core';
+import {AfterViewInit, Component, Inject, OnInit, Renderer2} from '@angular/core';
 
-import {faCoffee} from '@fortawesome/free-solid-svg-icons';
-import {ActivatedRoute, Router} from '@angular/router';
 import {DOCUMENT} from '@angular/common';
 
 
@@ -12,13 +10,10 @@ import {DOCUMENT} from '@angular/common';
 })
 export class HomeComponent implements OnInit, AfterViewInit {
   title = 'app';
-  faCoffee = faCoffee;
 
   constructor(
     @Inject(DOCUMENT) private document,
-    private renderer: Renderer2,
-    private route: ActivatedRoute,
-    private router: Router) {
+    private renderer: Renderer2) {
   }
 
 

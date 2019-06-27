@@ -12,6 +12,9 @@ zuul:
     file-management:
       path: /file-management/**
       url: http://localhost:8811/file-management
+    user-management:
+      path: /user-management/**
+      url: http://localhost:8811/user-management
     oauth:
       path: /authentication/**
       url: http://localhost:8804/spring-security-oauth-server

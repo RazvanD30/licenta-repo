@@ -29,7 +29,7 @@ public class Node extends BaseEntity<Long> {
     @OneToMany(mappedBy = "node", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<VirtualNode> virtualNodes = new ArrayList<>();
 
-    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "layer_id")
     private Layer layer;
 
@@ -45,13 +45,6 @@ public class Node extends BaseEntity<Long> {
 
     public Node(Node node){
         this.bias = node.getBias();
-        this.setOutputLinks(node.getOutputLinks().stream()
-                .map(link -> {
-                    link = new Link(link);
-                    link.setSource(this);
-                    return link;
-                })
-                .collect(Collectors.toList()));
     }
 
 

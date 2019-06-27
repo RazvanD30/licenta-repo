@@ -1,0 +1,79 @@
+@import "~src/assets/scss/colors";
+
+.app-body {
+  background-color: $color-background-2 !important;
+}
+
+/deep/ .mat-select-panel {
+  background-color: $color-container !important;
+}
+
+/deep/ .mat-option-text {
+  color: $color-title;
+}
+
+/deep/ .mat-primary .mat-pseudo-checkbox-checked {
+  background-color: $color-title-2;
+}
+
+/deep/ .mat-tab-label {
+  color: $color-text-inverse;
+}
+
+/deep/ table.mat-table, /deep/ .mat-paginator, /deep/ tr.custom-table-header th,
+/deep/ td.mat-cell, /deep/ .mat-select-value-text {
+  background-color: $color-container;
+  color: $color-text;
+}
+
+/deep/ tr.custom-table-header th {
+  background-color: $color-container !important;
+  color: $color-warn !important;
+  font-size: 16px;
+}
+
+/deep/ .mat-form-field-appearance-legacy .mat-form-field-label {
+  color: $color-text;
+}
+
+
+/deep/ .mat-card {
+  background-color: $color-container !important;;
+  color: $color-text !important;
+
+  .mat-card-title {
+    color: $color-warn;
+  }
+
+  .mat-card-subtitle {
+    color: $color-text;
+  }
+}
+
+/deep/ .container-title {
+  color: $color-warn;
+}
+
+/deep/ .table-container {
+  background-color: $color-container-inverse !important;
+  color: $color-text-inverse !important;
+
+  /deep/ .mat-form-field-appearance-legacy .mat-form-field-label {
+    color: $color-text-inverse !important;
+  }
+
+  a {
+    color: $color-container-2 !important;
+  }
+
+  .mat-tab-group /deep/ .mat-select-value-text {
+    background-color: $color-container-inverse !important;
+    color: $color-text-inverse !important;
+  }
+
+  .label-edited {
+    color: $color-warn;
+  }
+}
+
+

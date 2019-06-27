@@ -1,70 +1,92 @@
-import { Component, OnInit } from '@angular/core';
-import {BranchService} from '../../../../shared/services/branch.service';
+import {Component, Input, OnChanges, OnInit, SimpleChanges, ViewChild} from '@angular/core';
 import {BranchDto} from '../../../../shared/models/branch/BranchDto';
-import {BranchType} from '../../../../shared/models/branch/BranchType';
+import {MatPaginator, MatSort, MatTabChangeEvent, MatTableDataSource} from '@angular/material';
 
 @Component({
   selector: 'app-branch-table',
   templateUrl: './branch-table.component.html',
   styleUrls: ['./branch-table.component.scss']
 })
-export class BranchTableComponent implements OnInit {
+export class BranchTableComponent implements OnInit, OnChanges {
 
-  types: BranchType[] = [ BranchType.TEST, BranchType.QA, BranchType.PROD ];
-  branch: BranchDto;
-  branches: BranchDto[] = [];
-  username: string = localStorage.getItem('username');
+  @Input() branches: BranchDto[];
 
+  displayedColumns: string[];
+  branchDataSource: MatTableDataSource<BranchDto>;
+  @ViewChild(MatPaginator) paginator: MatPaginator;
+  @ViewChild(MatSort) sort: MatSort;
+  filters;
 
-  constructor(private branchService: BranchService) { }
+  constructor() {
+  }
 
-  resetModel() {
-    this.branch = {
-      id: null,
-      sourceId: null,
-      name: null,
-      type: null,
-      owner: {
-        id: null,
-        username: this.username,
-        role: null
-      },
-      networks: [],
-      contributors: [],
-      created: null,
-      updated: null
-    };
+  ngOnChanges(changes: SimpleChanges): void {
+    if (this.branchDataSource != null) {
+      this.branchDataSource.data = this.branches;
+    }
   }
 
   ngOnInit() {
-    this.resetModel();
-    this.loadForUser();
+    this.branchDataSource = new MatTableDataSource(this.branches);
+    this.branchDataSource.paginator = this.paginator;
+    this.branchDataSource.sortingDataAccessor = (branch: BranchDto, property: string) => {
+      switch (property) {
+        default:
+          return branch[property];
+      }
+    };
+    this.branchDataSource.filterPredicate = (branch: BranchDto, filters: string) => this.filterPredicate(branch);
+    this.branchDataSource.sort = this.sort;
+    this.resetFilters();
+    this.displayedColumns = ['id', 'name', 'type', 'ownerName', 'created', 'updated', 'actions'];
+
   }
 
-  loadForUser() {
-    this.branchService.getAllForUser(this.username).subscribe(data => this.branches = data);
+  resetFilters() {
+    this.filters = {
+      id: '',
+      name: '',
+      type: '',
+      ownerName: '',
+    };
+    this.applyFilter('', null);
   }
 
-  loadForContributor() {
-    this.branchService.getAllForContributor(this.username).subscribe(data => this.branches = data);
+  applyFilter(filterValue: string, filterColumn: string) {
+
+    if (filterValue === null || filterColumn === null) {
+      this.branchDataSource.filter = 'a';
+    } else {
+      this.filters[filterColumn] = filterValue;
+      this.branchDataSource.filter = 'a' + filterValue.trim().toLowerCase();
+    }
+
+    if (this.branchDataSource.paginator) {
+      this.branchDataSource.paginator.firstPage();
+    }
   }
 
-  loadForOwner() {
-    this.branchService.getAllForOwner(this.username).subscribe(data => this.branches = data);
+  filterPredicate(branch: BranchDto): boolean {
+    let ok = true;
+    if (this.filters.id !== '') {
+      ok = ok === true && branch.id + '' === this.filters.id;
+    }
+    if (this.filters.name !== '') {
+      ok = ok === true && branch.name.toLocaleLowerCase().includes(this.filters.name.toLocaleLowerCase());
+    }
+    if (this.filters.type !== '') {
+      ok = ok === true && branch.type + '' === this.filters.type;
+    }
+    if (this.filters.ownerName !== '') {
+      ok = ok === true && branch.owner.username.toLocaleLowerCase().includes(this.filters.ownerName.toLocaleLowerCase());
+    }
+    return ok;
   }
 
-  create() {
-    this.branchService.create(this.branch).subscribe(response => {
-      this.resetModel();
-      this.branchService.branchAdded.emit();
-    });
+  matTabSelectionChange($event: MatTabChangeEvent) {
+    if ($event.index === 0) {
+      this.resetFilters();
+    }
   }
 
-  update() {
-    this.branchService.update(this.branch).subscribe(response => this.resetModel());
-  }
-
-  remove() {
-    this.branchService.delete(this.branch.id).subscribe(response => this.resetModel());
-  }
 }

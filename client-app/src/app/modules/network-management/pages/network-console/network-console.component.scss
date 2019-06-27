@@ -135,34 +135,43 @@ textarea {
   padding: 10px;
   box-sizing: border-box;
   background-color: black;
+
   .output {
     width: 100%;
     font-size: 12px;
     color: #cccccc;
+
     span {
       line-height: 20px;
     }
+
     span.grey {
       color: #cccccc;
     }
+
     span.green {
       color: #2ecc71;
     }
+
     span.red {
       color: #e74c3c;
     }
+
     span.blue {
       color: #3498db;
     }
+
     pre {
       font-size: 9px;
       animation: glitch 0.2s linear infinite;
       animation-play-state: paused;
+
       &:hover {
         animation-play-state: running;
       }
     }
   }
+
   .action {
     width: 100%;
     font-size: 14px;
@@ -174,6 +183,7 @@ textarea {
       float: left;
       color: white;
     }
+
     textarea {
       overflow: hidden;
       width: calc(100% - 20px);
@@ -183,6 +193,7 @@ textarea {
       color: white;
       padding: 0;
       margin: 0;
+
       &:focus {
         outline: none;
       }
@@ -200,6 +211,7 @@ span.seperator {
   position: relative;
   width: 300px;
   height: 50px;
+
   &:after {
     content: '';
     display: block;
@@ -211,16 +223,19 @@ span.seperator {
     background-color: white;
     animation: ball 6s linear infinite;
   }
+
   b {
     display: inline-block;
     position: absolute;
     top: 50%;
     margin-top: -7px;
     transform: translateY(0);
+
     &.left {
       left: -10px;
       animation: raketes 5s ease-in-out infinite;
     }
+
     &.right {
       right: -10px;
       animation: raketes 5s ease-in-out 0.5s infinite;

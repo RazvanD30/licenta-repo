@@ -36,7 +36,7 @@ public class NetworkBranch extends BaseEntity<Long> {
     @Column(name = "source_id")
     private Long sourceId;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     @JoinColumn(name = "owner_id")
     private User owner;
 
@@ -51,7 +51,7 @@ public class NetworkBranch extends BaseEntity<Long> {
     @UpdateTimestamp
     private LocalDateTime updateDateTime;
 
-    @ManyToMany
+    @ManyToMany(cascade = CascadeType.ALL)
     @JoinTable(
             name = "branches_users",
             joinColumns = @JoinColumn(name = "branch_id"),

@@ -25,6 +25,8 @@ public interface NetworkService {
 
     Network deleteById(long id) throws NotFoundBussExc;
 
+    Network duplicate(Network source);
+
     Network create(long branchId, NetworkInitializer initializer) throws NetworkAccessBussExc, NotFoundBussExc;
 
     Network update(Network updatedNetwork) throws NotFoundBussExc;

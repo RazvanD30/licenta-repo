@@ -1,6 +1,5 @@
 import {Component, OnInit} from '@angular/core';
 import {FileService} from '../../../../shared/services/file.service';
-import {DataFileDto} from '../../../../shared/models/file/DataFileDto';
 import {ExtendedDataFileDto} from '../../../../shared/models/file/ExtendedDataFileDto';
 
 @Component({
@@ -11,7 +10,6 @@ import {ExtendedDataFileDto} from '../../../../shared/models/file/ExtendedDataFi
 export class FileDashboardComponent implements OnInit {
 
   extendedFiles: ExtendedDataFileDto[];
-  currentFile: DataFileDto;
 
   constructor(private fileService: FileService) {
   }
@@ -26,8 +24,5 @@ export class FileDashboardComponent implements OnInit {
         return {dataFile: file, trainLinkWith: null, testLinkWith: null};
       });
     });
-  }
-
-  remove() {
   }
 }

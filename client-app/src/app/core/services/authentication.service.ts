@@ -39,6 +39,7 @@ export class AuthenticationService {
           localStorage.setItem('refreshToken', newRefreshToken);
           localStorage.setItem('token', token);
 
+          console.log('requested refresh token' + JSON.stringify(token));
           return token;
         })
       );
@@ -75,7 +76,6 @@ export class AuthenticationService {
         Authorization: 'Basic ' + btoa('fooClientIdPassword:secret')
       })
     };
-    console.log(APP_SETTINGS.URLS.AUTHENTICATION.TOKEN_REQUEST);
     return this.http.post(APP_SETTINGS.URLS.AUTHENTICATION.TOKEN_REQUEST, params, httpOptions);
   }
 

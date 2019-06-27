@@ -13,10 +13,11 @@ import en.ubb.networkconfiguration.persistence.domain.network.runtime.Network;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import javax.validation.constraints.NotNull;
 import java.time.LocalDateTime;
-import java.util.Iterator;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -37,14 +38,15 @@ public class BranchServiceImpl implements BranchService {
     }
 
     @Override
+    @Transactional
     public NetworkBranch assign(String branchName, String username) throws NotFoundBussExc, ForbiddenAccessBussExc {
         User user = userService.findByUsername(username)
                 .orElseThrow(() -> new NotFoundBussExc("User not found"));
         NetworkBranch networkBranch = this.findByName(branchName)
                 .orElseThrow(() -> new NotFoundBussExc("Branch with name " + branchName + " not found"));
-        if(!networkBranch.getOwner().getUsername().equals(username)){
-            if(networkBranch.getContributors().stream()
-                    .noneMatch(c -> c.getUsername().equals(username))){
+        if (!networkBranch.getOwner().getUsername().equals(username)) {
+            if (networkBranch.getContributors().stream()
+                    .noneMatch(c -> c.getUsername().equals(username))) {
                 throw new ForbiddenAccessBussExc("You are not a contributor or the owner of this branch");
             }
         }
@@ -53,13 +55,22 @@ public class BranchServiceImpl implements BranchService {
     }
 
     @Override
+    @Transactional
     public NetworkBranch create(NetworkBranch newBranch, NetworkBranch origin) throws NotFoundBussExc {
 
         if (origin != null) {
-            origin.getNetworks().forEach(network -> newBranch.addNetwork(new Network(network)));
+            origin.getNetworks().forEach(network -> {
+                newBranch.addNetwork(networkService.duplicate(network));
+            });
             newBranch.setSourceId(origin.getSourceId());
         }
 
+        List<User> contributors = new ArrayList<>();
+        for (User contributor : newBranch.getContributors()) {
+            contributors.add(this.userService.findByUsername(contributor.getUsername())
+                    .orElseThrow(() -> new NotFoundBussExc("Owner not registered")));
+        }
+        newBranch.setContributors(contributors);
         newBranch.setOwner(this.userService.findByUsername(newBranch.getOwner().getUsername())
                 .orElseThrow(() -> new NotFoundBussExc("Owner not registered")));
 
@@ -70,18 +81,19 @@ public class BranchServiceImpl implements BranchService {
     }
 
     @Override
+    @Transactional
     public NetworkBranch pull(long toId, long fromId) throws NotFoundBussExc {
         NetworkBranch to = branchRepo.findById(toId)
                 .orElseThrow(() -> new NotFoundBussExc("Destination network with id " + toId + " not found"));
         NetworkBranch from = branchRepo.findById(fromId)
                 .orElseThrow(() -> new NotFoundBussExc("Origin network with id " + fromId + " not found"));
-        solveConflicts(to,from);
+        solveConflicts(to, from);
         to.setUpdateDateTime(LocalDateTime.now());
         return branchRepo.save(to);
     }
 
 
-    private boolean shareCommonOrigin(Network originN, Network sourceN){
+    private boolean shareCommonOrigin(Network originN, Network sourceN) {
         return originN.getOriginId() != null && sourceN.getOriginId() != null && sourceN.getOriginId().equals(originN.getOriginId())
                 || (sourceN.getOriginId() != null && sourceN.getOriginId().equals(originN.getId()))
                 || (originN.getOriginId() != null && sourceN.getId().equals(originN.getOriginId()));
@@ -89,13 +101,13 @@ public class BranchServiceImpl implements BranchService {
 
 
     public void solveConflicts(NetworkBranch to, NetworkBranch from) {
-        for (int i = 0; i < from.getNetworks().size(); i++){
+        for (int i = 0; i < from.getNetworks().size(); i++) {
             Network sourceN = from.getNetworks().get(i);
             boolean shouldAdd = true;
             for (int j = 0; j < to.getNetworks().size(); j++) {
                 Network originN = to.getNetworks().get(j);
-                if (shareCommonOrigin(originN,sourceN)) {
-                    if(originN.getUpdateDateTime().isBefore(sourceN.getUpdateDateTime())) {
+                if (shareCommonOrigin(originN, sourceN)) {
+                    if (originN.getUpdateDateTime().isBefore(sourceN.getUpdateDateTime())) {
                         to.removeNetwork(originN);
                     } else {
                         shouldAdd = false;
@@ -103,7 +115,7 @@ public class BranchServiceImpl implements BranchService {
                     break;
                 }
             }
-            if(shouldAdd)
+            if (shouldAdd)
                 to.addNetwork(sourceN);
         }
     }

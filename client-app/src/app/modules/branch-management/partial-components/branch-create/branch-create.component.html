@@ -1,0 +1,50 @@
+<mat-card class="upload-container">
+  <mat-card-header>
+    <mat-card-title> Create a new branch</mat-card-title>
+    <mat-card-subtitle> You can choose to create an empty branch or pull from an existing one</mat-card-subtitle>
+  </mat-card-header>
+  <mat-card-content class="upload-content">
+    <form [formGroup]="branchFormGroup">
+      <mat-form-field class="branch-field">
+        <mat-label>Name</mat-label>
+        <input matInput type="text" formControlName="name">
+        <button mat-button *ngIf="branchFormGroup.value.name" matSuffix mat-icon-button aria-label="Clear"
+                (click)="branchFormGroup.controls['name'].reset()">
+          <mat-icon>close</mat-icon>
+        </button>
+        <mat-error *ngIf="branchFormGroup.controls['name'].hasError('required')">
+          The name of the branch is required
+        </mat-error>
+      </mat-form-field>
+
+      <mat-form-field class="branch-field">
+        <mat-label> Type</mat-label>
+        <mat-select formControlName="type">
+          <mat-option *ngFor="let type of types" [value]="type"> {{type}} </mat-option>
+        </mat-select>
+        <mat-error *ngIf="branchFormGroup.controls['type'].hasError('required')">
+          The type of the branch is required
+        </mat-error>
+      </mat-form-field>
+
+      <mat-form-field class="branch-field">
+        <mat-label> Contributors</mat-label>
+        <mat-select formControlName="contributors" multiple>
+          <mat-option *ngFor="let user of users" [value]="user"> {{user.username}} </mat-option>
+        </mat-select>
+      </mat-form-field>
+
+      <mat-form-field class="branch-field">
+        <mat-label> Pull content from</mat-label>
+        <mat-select formControlName="sourceId">
+          <mat-option *ngFor="let branch of branches" [value]="branch.id"> {{branch.name}} </mat-option>
+        </mat-select>
+      </mat-form-field>
+    </form>
+  </mat-card-content>
+  <mat-card-actions class="upload-content">
+    <button type="button" mat-raised-button [disabled]="branchFormGroup.invalid === true" (click)="create()">Create
+    </button>
+  </mat-card-actions>
+</mat-card>
+

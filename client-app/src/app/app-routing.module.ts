@@ -1,5 +1,5 @@
 import {NgModule} from '@angular/core';
-import {Routes, RouterModule} from '@angular/router';
+import {RouterModule, Routes} from '@angular/router';
 
 import {LoaderComponent} from './shared/components/loader/loader.component';
 import {AuthenticationGuard} from './core/guards/authentication.guard';
@@ -31,11 +31,8 @@ const routes: Routes = [
     path: 'job-management',
     loadChildren: './modules/job-management/job-management.module#JobManagementModule',
     canLoad: [AuthenticationGuard]
-  }
-
-
-  // otherwise redirect to home
-  // {path: '**', redirectTo: ''}
+  },
+  {path: '**', loadChildren: './modules/home/home.module#HomeModule', canLoad: [AuthenticationGuard], pathMatch: 'full'}
 ];
 
 @NgModule({

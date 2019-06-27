@@ -3,7 +3,6 @@ import {NgModule} from '@angular/core';
 import {HomeComponent} from './pages/home/home.component';
 
 const routes: Routes = [
-  // {path: '', redirectTo: 'home', canActivate: [AuthenticationGuard], pathMatch: 'full'},
   {path: '', component: HomeComponent, pathMatch: 'full'},
 ];
 

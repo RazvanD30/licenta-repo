@@ -1,7 +1,6 @@
 import {NgModule} from '@angular/core';
 import {NetworkManagementRoutingModule} from './network-management-routing.module';
 import {AuthenticationGuard} from '../../core/guards/authentication.guard';
-import {CytoscapeComponent} from '../../shared/components/cytoscape/cytoscape.component';
 import {NetworkSpecialRoutineComponent} from './partial-components/network-special-routine/network-special-routine.component';
 import {HTTP_INTERCEPTORS} from '@angular/common/http';
 import {HttpTokenInterceptor} from '../../core/interceptors/http-token.interceptor';
@@ -24,7 +23,6 @@ import {SharedModule} from '../../shared/shared.module';
 
 @NgModule({
   declarations: [
-    CytoscapeComponent,
     NetworkSpecialRoutineComponent,
     NetworkDebuggingComponent,
     NetworkConsoleComponent,
@@ -47,12 +45,9 @@ import {SharedModule} from '../../shared/shared.module';
   providers: [
     UserService,
     NetworkInitService,
-
     AuthenticationGuard,
     {provide: HTTP_INTERCEPTORS, useClass: HttpTokenInterceptor, multi: true},
     {provide: HTTP_INTERCEPTORS, useClass: ErrorHandlerInterceptor, multi: true}
-
-    // mock backend
   ],
   entryComponents: [
     NetworkSpecialRoutineComponent,

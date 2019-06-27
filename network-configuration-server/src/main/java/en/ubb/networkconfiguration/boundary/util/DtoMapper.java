@@ -29,6 +29,7 @@ import en.ubb.networkconfiguration.persistence.domain.network.virtual.VirtualNet
 import en.ubb.networkconfiguration.persistence.domain.network.virtual.VirtualNode;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -282,6 +283,7 @@ public class DtoMapper {
                 .createDateTime(dto.getCreateDateTime())
                 .updateDateTime(dto.getUpdateDateTime())
                 .owner(fromPublicDto(dto.getOwner()))
+                .networks(new ArrayList<>())
                 .contributors(dto.getContributors().stream()
                         .map(DtoMapper::fromPublicDto)
                         .collect(Collectors.toList())
@@ -292,6 +294,7 @@ public class DtoMapper {
         return BranchDto.builder()
                 .id(branch.getId())
                 .name(branch.getName())
+                .type(branch.getType())
                 .createDateTime(branch.getCreateDateTime())
                 .updateDateTime(branch.getUpdateDateTime())
                 .owner(toPublicDto(branch.getOwner()))

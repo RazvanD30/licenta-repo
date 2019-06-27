@@ -1,0 +1,7 @@
+<app-branch-table class="left-container"
+                  [branches]="branches">
+</app-branch-table>
+<app-branch-create class="right-container"
+                   [branches]="branches" [users]="users"
+                   (branchCreated)="create($event)">
+</app-branch-create>

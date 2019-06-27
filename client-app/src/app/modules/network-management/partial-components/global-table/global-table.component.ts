@@ -1,9 +1,8 @@
-import {Component, OnInit, Renderer2} from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {NetworkDto} from '../../../../shared/models/network/runtime/NetworkDto';
 import {faTimes} from '@fortawesome/free-solid-svg-icons';
 import {ActiveView} from '../../models/ActiveView';
 import {NetworkInitService} from '../../../../shared/services/network-init.service';
-import {MatDialog} from '@angular/material';
 import {SelectedTableType} from '../../models/SelectedTableType';
 import {NetworkConfigureService} from '../../../../shared/services/network-configure.service';
 import {NetworkLogService} from '../../../../shared/services/network-log.service';
@@ -32,7 +31,7 @@ export class GlobalTableComponent implements OnInit {
 
   ngOnInit() {
     this.loadNetworks();
-    this.branchService.branchChanged.subscribe(change => {
+    this.branchService.branchChanged.subscribe(() => {
       this.doneLoading = false;
       this.loadNetworks();
     });
@@ -41,7 +40,6 @@ export class GlobalTableComponent implements OnInit {
   loadNetworks() {
     this.networkConfigureService.getAllForUser(localStorage.getItem('username')).subscribe(networks => {
       this.networks = networks;
-      console.log(networks);
       this.selectedView = {
         uniqueNameParam: 'None',
         dataParam: this.networks,

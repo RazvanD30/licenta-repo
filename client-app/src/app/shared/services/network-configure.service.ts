@@ -4,8 +4,8 @@ import {APP_SETTINGS} from '../../configs/app-settings.config';
 import {Observable} from 'rxjs';
 import {NetworkDto} from '../models/network/runtime/NetworkDto';
 import {FileLinkDto} from '../models/file/FileLinkDto';
-import {RunConfigDto} from "../models/network/traintest/RunConfigDto";
-import {NetworkEvalDto} from "../models/network/traintest/NetworkEvalDto";
+import {RunConfigDto} from '../models/network/traintest/RunConfigDto';
+import {NetworkEvalDto} from '../models/network/traintest/NetworkEvalDto';
 
 @Injectable({
   providedIn: 'root'

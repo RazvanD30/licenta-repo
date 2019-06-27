@@ -1,6 +1,6 @@
 import {Component, EventEmitter, Input, OnChanges, OnInit, Output, ViewChild} from '@angular/core';
 import {NodeDto} from '../../../../shared/models/network/runtime/NodeDto';
-import {MatPaginator, MatSort, MatTableDataSource} from '@angular/material';
+import {MatPaginator, MatSort, MatTabChangeEvent, MatTableDataSource} from '@angular/material';
 import {ActiveView} from '../../models/ActiveView';
 import {SelectedTableType} from '../../models/SelectedTableType';
 import {LayerDto} from '../../../../shared/models/network/runtime/LayerDto';
@@ -21,6 +21,19 @@ export class NodeTableComponent implements OnInit, OnChanges {
   @Output() linkView = new EventEmitter();
 
   constructor() {
+  }
+
+  static compare(cell: number, expected: number, operation: string) {
+    switch (operation) {
+      case 'lt':
+        return cell < expected;
+      case 'gt':
+        return cell > expected;
+      case 'eq':
+        return cell === expected;
+      case 'nq':
+        return cell !== expected;
+    }
   }
 
   ngOnChanges(changes): void {
@@ -47,10 +60,11 @@ export class NodeTableComponent implements OnInit, OnChanges {
   filterPredicate(node: NodeDto): boolean {
     let ok = true;
     if (this.filters.bias !== '') {
-      ok = ok === true && this.compare(node.bias, this.filters.bias, this.filters.comparison.bias);
+      ok = ok === true && NodeTableComponent.compare(node.bias, this.filters.bias, this.filters.comparison.bias);
     }
     if (this.filters.nOutputLinks !== '') {
-      ok = ok === true && this.compare(node.outputLinks.length, this.filters.nOutputLinks, this.filters.comparison.nOutputLinks);
+      ok = ok === true && NodeTableComponent
+        .compare(node.outputLinks.length, this.filters.nOutputLinks, this.filters.comparison.nOutputLinks);
     }
     return ok;
   }
@@ -67,19 +81,6 @@ export class NodeTableComponent implements OnInit, OnChanges {
     this.applyFilter('', null);
   }
 
-  compare(cell: number, expected: number, operation: string) {
-    switch (operation) {
-      case 'lt':
-        return cell < expected;
-      case 'gt':
-        return cell > expected;
-      case 'eq':
-        return cell === expected;
-      case 'nq':
-        return cell !== expected;
-    }
-  }
-
   applyFilter(filterValue: string, filterColumn: string) {
 
     if (filterValue === null || filterColumn === null) {
@@ -94,10 +95,6 @@ export class NodeTableComponent implements OnInit, OnChanges {
     }
   }
 
-  save() {
-
-  }
-
   onContextMenuActionLinkView(item: NodeDto) {
     const newView: ActiveView = {
       uniqueNameParam: item.id + '',
@@ -105,5 +102,11 @@ export class NodeTableComponent implements OnInit, OnChanges {
       tableType: SelectedTableType.LINK_TABLE
     };
     this.linkView.emit(newView);
+  }
+
+  matTabSelectionChange($event: MatTabChangeEvent) {
+    if ($event.index === 0) {
+      this.resetFilters();
+    }
   }
 }

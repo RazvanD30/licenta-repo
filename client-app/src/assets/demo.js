@@ -19,6 +19,7 @@
   function initCircles() {
     width = window.innerWidth < 1920 ? window.innerWidth : 1920;
     height = window.innerHeight < 1080 ? window.innerHeight : 1080;
+    numberOfPoints = (200 / 1920) * width;
     target = {x: -1, y: -1};
 
     canvas = document.getElementById('demo-canvas');

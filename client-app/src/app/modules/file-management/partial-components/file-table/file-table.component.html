@@ -1,17 +1,16 @@
 <div class="table-container">
   <div class="mat-elevation-z8">
-    <mat-button-toggle-group name="fontStyle" aria-label="Font Style">
-      <button mat-raised-button (click)="resetFilters()">
-        <mat-icon>clear</mat-icon>
-        Reset filters
-      </button>
-    </mat-button-toggle-group>
-    <mat-tab-group>
-      <mat-tab label="Filter by..."></mat-tab>
+    <mat-tab-group (selectedTabChange)="matTabSelectionChange($event)">
+      <mat-tab>
+        <ng-template mat-tab-label>
+          <mat-icon inline>clear</mat-icon>
+          <span style="margin-left: 5px;">Reset filters</span>
+        </ng-template>
+      </mat-tab>
       <mat-tab>
         <ng-template mat-tab-label>
           <div *ngIf="filters.id === ''"> Id</div>
-          <div *ngIf="filters.id !== ''" style="color: red"> Id (edited)</div>
+          <div *ngIf="filters.id !== ''" class="label-edited"> Id (edited)</div>
         </ng-template>
         <mat-form-field class="example-full-width">
           <input [(ngModel)]="filters.id" matInput (keyup)="applyFilter($event.target.value,'id')"
@@ -22,7 +21,7 @@
       <mat-tab>
         <ng-template mat-tab-label>
           <div *ngIf="filters.name === ''"> Name</div>
-          <div *ngIf="filters.name !== ''" style="color: red"> Name (edited)</div>
+          <div *ngIf="filters.name !== ''" class="label-edited"> Name (edited)</div>
         </ng-template>
         <mat-form-field class="example-full-width">
           <input [(ngModel)]="filters.name" matInput (keyup)="applyFilter($event.target.value,'name')"
@@ -33,7 +32,7 @@
       <mat-tab>
         <ng-template mat-tab-label>
           <div *ngIf="filters.nLabels === ''"> #Labels</div>
-          <div *ngIf="filters.nLabels !== ''" style="color: red"> #Labels (edited)</div>
+          <div *ngIf="filters.nLabels !== ''" class="label-edited"> #Labels (edited)</div>
         </ng-template>
         <mat-form-field class="example-full-width">
           <input [(ngModel)]="filters.nLabels" matInput (keyup)="applyFilter($event.target.value,'nLabels')"
@@ -71,7 +70,8 @@
             <mat-select [(ngModel)]="extendedFile.trainLinkWith" multiple
                         name="extendedFile.trainLinkWith"
                         (selectionChange)="setTrainLinks(extendedFile,$event.value)">
-              <mat-option *ngFor="let name of networkNames" [value]="name" [disabled]="sendingData === true"> {{name}} </mat-option>
+              <mat-option *ngFor="let name of networkNames" [value]="name"
+                          [disabled]="sendingData === true"> {{name}} </mat-option>
             </mat-select>
           </mat-form-field>
         </td>
@@ -85,7 +85,8 @@
             <mat-select [(ngModel)]="extendedFile.testLinkWith" multiple
                         name="extendedFile.testLinkWith"
                         (selectionChange)="setTestLinks(extendedFile,$event.value)">
-              <mat-option *ngFor="let name of networkNames" [value]="name" [disabled]="sendingData === true"> {{name}} </mat-option>
+              <mat-option *ngFor="let name of networkNames" [value]="name"
+                          [disabled]="sendingData === true"> {{name}} </mat-option>
             </mat-select>
           </mat-form-field>
         </td>

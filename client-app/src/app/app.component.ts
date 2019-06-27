@@ -12,7 +12,6 @@ export class AppComponent implements AfterViewInit {
 
   constructor(private router: Router) {
     this.loading = true;
-    console.log('loading');
   }
 
 
@@ -20,13 +19,11 @@ export class AppComponent implements AfterViewInit {
     this.router.events.subscribe((event) => {
       if (event instanceof NavigationStart) {
         this.loading = true;
-        console.log('loading');
       } else if (
         event instanceof NavigationEnd ||
         event instanceof NavigationCancel
       ) {
         this.loading = false;
-        console.log('stopped loading');
       }
     });
   }

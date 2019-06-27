@@ -1,11 +1,12 @@
-import {ChangeDetectorRef, Component, EventEmitter, Input, OnChanges, OnInit, ViewChild} from '@angular/core';
-import {MatPaginator, MatSort, MatTableDataSource} from '@angular/material';
+import {ChangeDetectorRef, Component, Input, OnChanges, OnInit, ViewChild} from '@angular/core';
+import {MatPaginator, MatSort, MatTabChangeEvent, MatTableDataSource} from '@angular/material';
 import {APP_SETTINGS} from '../../../../configs/app-settings.config';
 import {faDownload, faLink} from '@fortawesome/free-solid-svg-icons';
 import {NetworkConfigureService} from '../../../../shared/services/network-configure.service';
 import {FileService} from '../../../../shared/services/file.service';
 import {ExtendedDataFileDto} from '../../../../shared/models/file/ExtendedDataFileDto';
 import {FileType} from '../../../../shared/models/network/shared/FileType';
+import {BranchService} from '../../../../shared/services/branch.service';
 
 @Component({
   selector: 'app-file-table',
@@ -17,7 +18,6 @@ export class FileTableComponent implements OnInit, OnChanges {
   public faDownload = faDownload;
   public faLink = faLink;
   @Input() extendedFiles: ExtendedDataFileDto[];
-
   displayedColumns: string[];
   fileDataSource: MatTableDataSource<ExtendedDataFileDto>;
   @ViewChild(MatPaginator) paginator: MatPaginator;
@@ -25,9 +25,9 @@ export class FileTableComponent implements OnInit, OnChanges {
   filters;
   networkNames: string[];
   sendingData = false;
-  dataSent = new EventEmitter();
 
   constructor(private networkService: NetworkConfigureService,
+              private branchService: BranchService,
               private fileService: FileService,
               private cd: ChangeDetectorRef) {
   }
@@ -60,13 +60,18 @@ export class FileTableComponent implements OnInit, OnChanges {
     }
   }
 
-  ngOnInit() {
+  loadNetworks() {
     this.networkService.getNetworkNamesForUser(localStorage.getItem('username'))
       .subscribe(names => {
         this.networkNames = names;
         this.loadLinks();
       });
+  }
 
+  ngOnInit() {
+
+    this.loadNetworks();
+    this.branchService.branchChanged.subscribe(() => this.loadNetworks());
     this.fileDataSource = new MatTableDataSource(this.extendedFiles);
     this.fileDataSource.paginator = this.paginator;
     this.fileDataSource.sortingDataAccessor = (file: ExtendedDataFileDto, property: string) => {
@@ -152,6 +157,12 @@ export class FileTableComponent implements OnInit, OnChanges {
           });
           this.sendingData = false;
         });
+    }
+  }
+
+  matTabSelectionChange($event: MatTabChangeEvent) {
+    if ($event.index === 0) {
+      this.resetFilters();
     }
   }
 }

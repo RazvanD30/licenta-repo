@@ -1,4 +1,4 @@
-import {AfterViewInit, ChangeDetectorRef, Component, Inject, Input, OnInit} from '@angular/core';
+import {AfterViewInit, ChangeDetectorRef, Component, Inject, OnInit} from '@angular/core';
 import {faDirections, faInfo, faWeightHanging} from '@fortawesome/free-solid-svg-icons';
 import {MAT_DIALOG_DATA, MatDialogRef} from '@angular/material';
 import {NodeGui} from '../../../../shared/models/network/gui/NodeGui';
@@ -41,18 +41,18 @@ export class NodeDetailsComponent implements OnInit, AfterViewInit {
     this.cdRef.detectChanges();
   }
 
-  private getNeighours(): NodeGui[] {
-    const result = [];
-    this.data.inputLinks.forEach(conn => result.push(conn.source));
-    this.data.inputLinks.forEach(conn => result.push(conn.destination));
-    return result;
-  }
-
   public getInputLinks(): LinkGui[] {
     return Array.from(this.data.inputLinks.values());
   }
 
   public getOutputLinks(): LinkGui[] {
     return Array.from(this.data.outputLinks.values());
+  }
+
+  private getNeighours(): NodeGui[] {
+    const result = [];
+    this.data.inputLinks.forEach(conn => result.push(conn.source));
+    this.data.inputLinks.forEach(conn => result.push(conn.destination));
+    return result;
   }
 }

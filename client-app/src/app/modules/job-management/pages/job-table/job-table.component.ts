@@ -1,11 +1,11 @@
 import {ChangeDetectorRef, Component, OnInit, ViewChild} from '@angular/core';
 import {NetworkDto} from '../../../../shared/models/network/runtime/NetworkDto';
-import {MatMenuTrigger, MatPaginator, MatSort, MatTableDataSource} from '@angular/material';
-import {faList} from '@fortawesome/free-solid-svg-icons';
+import {MatMenuTrigger, MatPaginator, MatSort, MatTabChangeEvent, MatTableDataSource} from '@angular/material';
 import {NetworkConfigureService} from '../../../../shared/services/network-configure.service';
 import {NetworkDtoWithTestTrain} from '../../../../shared/models/network/runtime/NetworkDtoWithTestTrain';
 import {FileType} from '../../../../shared/models/network/shared/FileType';
-import {RunConfigDto} from "../../../../shared/models/network/traintest/RunConfigDto";
+import {RunConfigDto} from '../../../../shared/models/network/traintest/RunConfigDto';
+import {BranchService} from '../../../../shared/services/branch.service';
 
 @Component({
   selector: 'app-job-table',
@@ -18,34 +18,34 @@ export class JobTableComponent implements OnInit {
   displayedColumns: string[];
   networkDataSource: MatTableDataSource<NetworkDtoWithTestTrain>;
   filters;
-  faList = faList;
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
 
   @ViewChild(MatMenuTrigger) contextMenu: MatMenuTrigger;
 
   constructor(private networkService: NetworkConfigureService,
+              private branchService: BranchService,
               private changeDetectorRefs: ChangeDetectorRef) {
   }
 
+  static compare(cell: number, expected: number, operation: string) {
+    switch (operation) {
+      case 'lt':
+        return cell < expected;
+      case 'gt':
+        return cell > expected;
+      case 'eq':
+        return cell === expected;
+      case 'nq':
+        return cell !== expected;
+    }
+  }
 
-  ngOnInit() {
-    this.networks = [];
-    this.networkDataSource = new MatTableDataSource(this.networks);
-    this.networkDataSource.paginator = this.paginator;
-    this.networkDataSource.sortingDataAccessor = (network: NetworkDto, property: string) => {
-      switch (property) {
-        case 'nLayers':
-          return network.layers.length;
-        default:
-          return network[property];
-      }
-    };
-    this.networkDataSource.filterPredicate = (network: NetworkDto, filters: string) => this.filterPredicate(network);
-    this.networkDataSource.sort = this.sort;
-    this.resetFilters();
-    this.displayedColumns = ['id', 'name', 'seed', 'learningRate', 'batchSize', 'nEpochs', 'nInputs', 'nOutputs', 'nLayers', 'trainFile', 'testFile', 'actions'];
+  loadData() {
     this.networkService.getAllForUser(localStorage.getItem('username')).subscribe(networks => {
+      this.networks = [];
+      this.networkDataSource.connect().next(this.networks);
+
       networks.forEach(network => {
         this.networkService.getAllLinks(network.name).subscribe(fileLinkDtos => {
           const trainFileNames: string[] = [];
@@ -74,23 +74,30 @@ export class JobTableComponent implements OnInit {
           });
           this.networkDataSource.connect().next(this.networks);
           this.changeDetectorRefs.detectChanges();
-          console.log(this.networks);
         });
       });
     });
   }
 
-  compare(cell: number, expected: number, operation: string) {
-    switch (operation) {
-      case 'lt':
-        return cell < expected;
-      case 'gt':
-        return cell > expected;
-      case 'eq':
-        return cell === expected;
-      case 'nq':
-        return cell !== expected;
-    }
+  ngOnInit() {
+    this.networks = [];
+    this.networkDataSource = new MatTableDataSource(this.networks);
+    this.networkDataSource.paginator = this.paginator;
+    this.networkDataSource.sortingDataAccessor = (network: NetworkDto, property: string) => {
+      switch (property) {
+        case 'nLayers':
+          return network.layers.length;
+        default:
+          return network[property];
+      }
+    };
+    this.networkDataSource.filterPredicate = (network: NetworkDto, filters: string) => this.filterPredicate(network);
+    this.networkDataSource.sort = this.sort;
+    this.resetFilters();
+    this.displayedColumns = ['id', 'name', 'seed', 'learningRate', 'batchSize', 'nEpochs',
+      'nInputs', 'nOutputs', 'nLayers', 'trainFile', 'testFile', 'actions'];
+    this.loadData();
+    this.branchService.branchChanged.subscribe(() => this.loadData());
   }
 
   filterPredicate(network: NetworkDto): boolean {
@@ -99,25 +106,25 @@ export class JobTableComponent implements OnInit {
       ok = ok === true && network.name.toLowerCase().includes(this.filters.name.toLowerCase());
     }
     if (this.filters.seed !== '') {
-      ok = ok === true && this.compare(network.seed, this.filters.seed, this.filters.comparison.seed);
+      ok = ok === true && JobTableComponent.compare(network.seed, this.filters.seed, this.filters.comparison.seed);
     }
     if (this.filters.learningRate !== '') {
-      ok = ok === true && this.compare(network.learningRate, this.filters.learningRate, this.filters.comparison.learningRate);
+      ok = ok === true && JobTableComponent.compare(network.learningRate, this.filters.learningRate, this.filters.comparison.learningRate);
     }
     if (this.filters.batchSize !== '') {
-      ok = ok === true && this.compare(network.batchSize, this.filters.batchSize, this.filters.comparison.batchSize);
+      ok = ok === true && JobTableComponent.compare(network.batchSize, this.filters.batchSize, this.filters.comparison.batchSize);
     }
     if (this.filters.nEpochs !== '') {
-      ok = ok === true && this.compare(network.nEpochs, this.filters.nEpochs, this.filters.comparison.nEpochs);
+      ok = ok === true && JobTableComponent.compare(network.nEpochs, this.filters.nEpochs, this.filters.comparison.nEpochs);
     }
     if (this.filters.nInputs !== '') {
-      ok = ok === true && this.compare(network.nInputs, this.filters.nInputs, this.filters.comparison.nInputs);
+      ok = ok === true && JobTableComponent.compare(network.nInputs, this.filters.nInputs, this.filters.comparison.nInputs);
     }
     if (this.filters.nOutputs !== '') {
-      ok = ok === true && this.compare(network.nOutputs, this.filters.nOutputs, this.filters.comparison.nOutputs);
+      ok = ok === true && JobTableComponent.compare(network.nOutputs, this.filters.nOutputs, this.filters.comparison.nOutputs);
     }
     if (this.filters.nLayers !== '') {
-      ok = ok === true && this.compare(network.layers.length, this.filters.nLayers, this.filters.comparison.nLayers);
+      ok = ok === true && JobTableComponent.compare(network.layers.length, this.filters.nLayers, this.filters.comparison.nLayers);
     }
     return ok;
   }
@@ -168,7 +175,13 @@ export class JobTableComponent implements OnInit {
       testFileName: network.testFileName
     };
     this.networkService.trainAndEvaluate(network.id, runConfig).subscribe(resp => {
-      console.log(resp);
+      console.log(resp); // TODO
     });
+  }
+
+  matTabSelectionChange($event: MatTabChangeEvent) {
+    if ($event.index === 0) {
+      this.resetFilters();
+    }
   }
 }

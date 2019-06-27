@@ -1,22 +1,17 @@
-
 <div class="table-container">
   <div class="mat-elevation-z8">
-    <mat-button-toggle-group name="fontStyle" aria-label="Font Style">
-      <button mat-raised-button color="warn" (click)="resetFilters()">
-        <mat-icon>clear</mat-icon>
-        Reset filters
-      </button>
-      <button mat-raised-button color="primary" (click)="save()">
-        <mat-icon>save</mat-icon>
-        Save modifications
-      </button>
-    </mat-button-toggle-group>
-    <mat-tab-group>
-      <mat-tab label="Filter by..."></mat-tab>
+    <mat-tab-group (selectedTabChange)="matTabSelectionChange($event)">
       <mat-tab>
         <ng-template mat-tab-label>
-          <div *ngIf="filters.bias === ''"> Bias </div>
-          <div *ngIf="filters.bias !== ''" style="color: red"> Bias (edited)</div>
+          <mat-icon inline>clear</mat-icon>
+          <span style="margin-left: 5px;">Reset filters</span>
+        </ng-template>
+      </mat-tab>
+
+      <mat-tab>
+        <ng-template mat-tab-label>
+          <div *ngIf="filters.bias === ''"> Bias</div>
+          <div *ngIf="filters.bias !== ''" class="label-edited"> Bias (edited)</div>
         </ng-template>
         <mat-form-field class="example-full-width">
           <mat-select placeholder="Operation type" [(ngModel)]="filters.comparison.bias">
@@ -35,7 +30,7 @@
       <mat-tab>
         <ng-template mat-tab-label>
           <div *ngIf="filters.nOutputLinks === ''"> #Output Links</div>
-          <div *ngIf="filters.nOutputLinks !== ''" style="color: red"> #Output Links (edited)</div>
+          <div *ngIf="filters.nOutputLinks !== ''" class="label-edited"> #Output Links (edited)</div>
         </ng-template>
         <mat-form-field class="example-full-width">
           <mat-select placeholder="Operation type" [(ngModel)]="filters.comparison.nOutputLinks">
@@ -50,7 +45,6 @@
                  placeholder="Filter by the number of output links" type="number">
         </mat-form-field>
       </mat-tab>
-
 
 
     </mat-tab-group>

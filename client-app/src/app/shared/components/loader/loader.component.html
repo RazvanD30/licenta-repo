@@ -29,8 +29,8 @@
               </div>
             </div>
             <div *ngIf="operation.done === false">
-                <mat-card class="loading-label"> {{operation.description}}</mat-card>
-                <mat-card class="loading-label">	&nbsp; {{ getStatusText(operation) }}</mat-card>
+              <mat-card class="loading-label"> {{operation.description}}</mat-card>
+              <mat-card class="loading-label"> &nbsp; {{ getStatusText(operation) }}</mat-card>
             </div>
             <mat-card class="loading-label" *ngIf="operation.done === true"> Done</mat-card>
           </div>

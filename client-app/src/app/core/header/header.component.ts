@@ -118,10 +118,8 @@ export class HeaderComponent implements OnInit {
   }
 
   loadBranchData() {
-    console.log('loading');
     this.branchService.getAllForUser(this.username)
       .subscribe(branches => {
-        console.log('loaded ' + branches.length);
         this.branchService.getCurrentWorkingBranch(this.username)
           .subscribe(current => {
             if (!current) {

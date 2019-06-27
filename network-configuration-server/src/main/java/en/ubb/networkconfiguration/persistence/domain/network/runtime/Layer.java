@@ -31,7 +31,7 @@ public class Layer extends BaseEntity<Long> {
     @Range(min = 0)
     private int nOutputs;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.PERSIST)
     @JoinColumn(name = "network_id")
     private Network network;
 

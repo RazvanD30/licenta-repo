@@ -16,7 +16,4 @@ export class UserService {
     return this.http.get<PublicUserDto[]>(APP_SETTINGS.URLS.USER_MANAGEMENT.GET_ALL);
   }
 
-  getById(id: number): Observable<PublicUserDto> {
-    return this.http.get<PublicUserDto>(APP_SETTINGS.URLS.USER_MANAGEMENT.GET_BY_ID + id);
-  }
 }

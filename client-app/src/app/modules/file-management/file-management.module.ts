@@ -7,15 +7,13 @@ import {ErrorHandlerInterceptor} from '../../core/interceptors/error-handler.int
 import {FileManagementRoutingModule} from './file-management-routing.module';
 import {FileService} from '../../shared/services/file.service';
 import {FileUploadComponent} from './partial-components/file-upload/file-upload.component';
-import {FileLinkComponent} from './partial-components/file-link/file-link.component';
 import {SharedModule} from '../../shared/shared.module';
-import { FileTableComponent } from './partial-components/file-table/file-table.component';
+import {FileTableComponent} from './partial-components/file-table/file-table.component';
 
 @NgModule({
   declarations: [
     FileDashboardComponent,
     FileUploadComponent,
-    FileLinkComponent,
     FileTableComponent
   ],
   imports: [

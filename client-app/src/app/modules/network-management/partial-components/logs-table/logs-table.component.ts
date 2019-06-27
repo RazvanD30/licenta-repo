@@ -1,7 +1,7 @@
 import {Component, Input, OnInit, ViewChild} from '@angular/core';
-import {MatPaginator, MatSort, MatTableDataSource} from '@angular/material';
+import {MatPaginator, MatSort, MatTabChangeEvent, MatTableDataSource} from '@angular/material';
 import {NetworkTrainLogDto} from '../../../../shared/models/network/log/NetworkTrainLogDto';
-import {NetworkDto} from "../../../../shared/models/network/runtime/NetworkDto";
+import {NetworkDto} from '../../../../shared/models/network/runtime/NetworkDto';
 
 @Component({
   selector: 'app-logs-table',
@@ -13,15 +13,25 @@ export class LogsTableComponent implements OnInit {
   @Input() logs: NetworkTrainLogDto[];
   @Input() network: NetworkDto;
   displayedColumns: string[];
-  editable: boolean;
   logDataSource: MatTableDataSource<NetworkTrainLogDto>;
   filters;
-  gradeErrorMatcher;
-  fc;
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
 
   constructor() {
+  }
+
+  static compare(cell: any, expected: any, operation: string) {
+    switch (operation) {
+      case 'lt':
+        return cell < expected;
+      case 'gt':
+        return cell > expected;
+      case 'eq':
+        return cell === expected;
+      case 'nq':
+        return cell !== expected;
+    }
   }
 
   ngOnInit() {
@@ -52,76 +62,36 @@ export class LogsTableComponent implements OnInit {
     };
     this.logDataSource.filterPredicate = (log: NetworkTrainLogDto, filters: string) => this.filterPredicate(log);
     this.logDataSource.sort = this.sort;
-
     this.resetFilters();
     this.displayedColumns = ['createDateTime', 'accuracy', 'precision', 'recall', 'f1Score', 'iterations'];
-    this.editable = true;
-    this.fc = [];
-    this.resetFormControl();
-
   }
-
-
-  compare(cell: any, expected: any, operation: string) {
-    switch (operation) {
-      case 'lt':
-        return cell < expected;
-      case 'gt':
-        return cell > expected;
-      case 'eq':
-        return cell === expected;
-      case 'nq':
-        return cell !== expected;
-    }
-    this.filters = {
-      createDateTime: '',
-      accuracy: '',
-      precision: '',
-      recall: '',
-      f1Score: '',
-      iterations: '',
-      comparison: {
-        createDateTime: '',
-        accuracy: '',
-        precision: '',
-        recall: '',
-        f1Score: '',
-        iterations: ''
-      },
-    };
-  }
-
 
   filterPredicate(log: NetworkTrainLogDto): boolean {
     let ok = true;
     if (this.filters.createDateTime !== '') {
       const d1 = new Date(log.createDateTime);
       const d2 = new Date(this.filters.createDateTime);
-      ok = ok === true && this.compare(d1, d2, this.filters.comparison.createDateTime);
+      ok = ok === true && LogsTableComponent.compare(d1, d2, this.filters.comparison.createDateTime);
     }
     if (this.filters.accuracy !== '') {
-      ok = ok === true && this.compare(log.accuracy, this.filters.accuracy, this.filters.comparison.accuracy);
+      ok = ok === true && LogsTableComponent.compare(log.accuracy, this.filters.accuracy, this.filters.comparison.accuracy);
     }
     if (this.filters.precision !== '') {
-      ok = ok === true && this.compare(log.precision, this.filters.precision, this.filters.comparison.precision);
+      ok = ok === true && LogsTableComponent.compare(log.precision, this.filters.precision, this.filters.comparison.precision);
     }
     if (this.filters.recall !== '') {
-      ok = ok === true && this.compare(log.recall, this.filters.recall, this.filters.comparison.recall);
+      ok = ok === true && LogsTableComponent.compare(log.recall, this.filters.recall, this.filters.comparison.recall);
     }
     if (this.filters.f1Score !== '') {
-      ok = ok === true && this.compare(log.f1Score, this.filters.f1Score, this.filters.comparison.f1Score);
+      ok = ok === true && LogsTableComponent.compare(log.f1Score, this.filters.f1Score, this.filters.comparison.f1Score);
     }
     if (this.filters.iterations !== '') {
-      ok = ok === true && this.compare(log.networkIterationLogs.length, this.filters.iterations, this.filters.comparison.iterations);
+      ok = ok === true && LogsTableComponent
+        .compare(log.networkIterationLogs.length, this.filters.iterations, this.filters.comparison.iterations);
     }
     return ok;
   }
 
-
-  resetFormControl() {
-    // this.fc = this.gradeFormControls;
-    // this.gradeFormControls.forEach(f => this.fc.push(new FormControl(f.value)));
-  }
 
   applyFilter(filterValue: string, filterColumn: string) {
 
@@ -157,18 +127,10 @@ export class LogsTableComponent implements OnInit {
     this.applyFilter('', null);
   }
 
-  getAveragePresence(): number {
-    return 5;
+  matTabSelectionChange($event: MatTabChangeEvent) {
+    if ($event.index === 0) {
+      this.resetFilters();
+    }
   }
-
-  getAverageGrade(): number {
-    return 10;
-
-  }
-
-  save() {
-
-  }
-
 
 }

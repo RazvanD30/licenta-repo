@@ -1,4 +1,4 @@
-import {AfterViewInit, Component, Input, OnInit, ViewChild} from '@angular/core';
+import {Component, Input, OnInit, ViewChild} from '@angular/core';
 
 import {Operation} from './Operation';
 import {map, share} from 'rxjs/operators';
@@ -20,7 +20,6 @@ export class LoaderComponent implements OnInit {
   private currentTime: any;
 
   constructor() {
-    console.log('loaded loader');
   }
 
   ngOnInit() {
@@ -50,11 +49,6 @@ export class LoaderComponent implements OnInit {
       done: false
     };
     this.operations = [op1, op2, op3];
-  }
-
-  updateOperation(newOperation: Operation): void {
-    const index: number = this.operations.findIndex(operation => operation.id === newOperation.id);
-    this.operations[index] = newOperation;
   }
 
   getRemainingMinutes(operation: Operation): number {

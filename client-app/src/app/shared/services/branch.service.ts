@@ -61,4 +61,9 @@ export class BranchService {
     return this.http.get<BranchDto>(APP_SETTINGS.URLS.BRANCH_MANAGEMENT.GET_WORKING_BRANCH + username);
   }
 
+  pull(destinationId: number, sourceId: number): Observable<void> {
+    return this.http.get<void>(APP_SETTINGS.URLS.BRANCH_MANAGEMENT.GET_PULL_DESTINATION_SOURCE
+      + destinationId + '/' + sourceId);
+  }
+
 }

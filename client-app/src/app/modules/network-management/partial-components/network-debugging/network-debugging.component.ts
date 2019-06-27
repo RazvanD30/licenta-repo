@@ -8,7 +8,8 @@ import {NetworkVisualDataService} from '../../../../shared/services/network-visu
 import {VirtualNetworkDto} from '../../../../shared/models/network/virtual/VirtualNetworkDto';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {NetworkConfigureService} from '../../../../shared/services/network-configure.service';
-import {LayerGui} from "../../../../shared/models/network/gui/LayerGui";
+import {LayerGui} from '../../../../shared/models/network/gui/LayerGui';
+import {BranchService} from '../../../../shared/services/branch.service';
 
 @Component({
   selector: 'app-network-debugging',
@@ -23,7 +24,6 @@ export class NetworkDebuggingComponent implements OnInit {
   public showForm = true;
   public selection: NodeGui;
   public loading = false;
-  // TODO MOVE THOSE
   public virtualNetworkDto: VirtualNetworkDto;
   x: number;
   networkNames: string[] = [];
@@ -38,23 +38,27 @@ export class NetworkDebuggingComponent implements OnInit {
   private offsetX: number;
   private offsetY: number;
   private MARGIN_LEFT = 200;
-  private MARGIN_RIGHT = 70; // generally you want to take into account the targetNode radius for this
   private MARGIN_TOP_HEADER = 30;
   private MARGIN_TOP = this.MARGIN_TOP_HEADER + 60;
-  private MARGIN_BOTTOM = 40; // generally you want to take into account the targetNode radius for this
-  private NODE_RADIUS = NodeGui.RADIUS; // 15;
   private DISTANCE_BETWEEN_POINTS_X = 100; // 100;
   private DISTANCE_BETWEEN_POINTS_Y = 50; // 50;
-  private NETWORK_OFFSET_TOP_INCREMENT = this.DISTANCE_BETWEEN_POINTS_Y;
-  private FILL_SCREEN = false;
 
   constructor(private networkVisualService: NetworkVisualDataService,
               private networkConfigService: NetworkConfigureService,
+              private branchService: BranchService,
               private renderer: Renderer2,
               private formBuilder: FormBuilder,
               public dialog: MatDialog
   ) {
 
+  }
+
+  loadModels() {
+    this.networkConfigService.getNetworkNamesForUser(localStorage.getItem('username'))
+      .subscribe(names => this.networkNames = names);
+    if (this.virtualNetworkFormGroup != null) {
+      this.virtualNetworkFormGroup.reset();
+    }
   }
 
   ngOnInit() {
@@ -67,15 +71,9 @@ export class NetworkDebuggingComponent implements OnInit {
       networkId: null,
       nLayers: null
     };
-    this.networkConfigService.getNetworkNamesForUser(localStorage.getItem('username'))
-      .subscribe(names => {
-        console.log('got');
-        this.networkNames = names;
-      }, err => {
-        console.log(err);
-      }, () => {
-        console.log('done');
-      });
+    this.loadModels();
+    this.branchService.branchChanged.subscribe(() => this.loadModels());
+
     this.virtualNetworkFormGroup = this.formBuilder.group({
       name: ['', [Validators.required, Validators.minLength(4)]],
       networkName: ['', [Validators.minLength(4)]],
@@ -118,38 +116,11 @@ export class NetworkDebuggingComponent implements OnInit {
 
   @HostListener('window:resize', ['$event'])
   onResize(event) {
-    if (this.FILL_SCREEN === true) {
-      this.context.clearRect(0, 0, this.width, this.height);
-      this.width = window.innerWidth;
-      this.height = window.innerHeight;
-      this.offsetX = this.canvas.offsetLeft;
-      this.offsetY = this.canvas.offsetTop;
-      // TODO this.initPoints();
-    }
+
   }
 
   getNodeByMousePos(pos: Pos): NodeGui {
     return this.networkVisualService.findNodeForPos(pos);
-  }
-
-  getDistance(pos1: Pos, pos2: Pos): number {
-    return Math.sqrt(Math.pow(pos2.x - pos1.x, 2) + Math.pow(pos2.y - pos1.y, 2));
-  }
-
-  recomputeDistancesToFill() {
-    /*
-    let maxNodesPerLayer = 0;
-
-    this.networkDebugService.layers.forEach(layer => {
-      const nodesPerLayer = layer.nodes.size;
-      if (nodesPerLayer > maxNodesPerLayer) {
-        maxNodesPerLayer = nodesPerLayer;
-      }
-    });
-    this.DISTANCE_BETWEEN_POINTS_Y = (this.height - this.MARGIN_TOP - this.MARGIN_BOTTOM - this.NODE_RADIUS) / (maxNodesPerLayer - 1);
-    this.DISTANCE_BETWEEN_POINTS_X = (this.width - this.MARGIN_LEFT - this.MARGIN_RIGHT - this.NODE_RADIUS) /
-      (this.networkDebugService.layers.size - 1);
-      */
   }
 
   saveAndLoad() {
@@ -163,7 +134,7 @@ export class NetworkDebuggingComponent implements OnInit {
       nLayers: null
     };
     this.loading = true;
-    const subscriber = this.networkVisualService.doneLoading.subscribe(done => {
+    const subscriber = this.networkVisualService.doneLoading.subscribe(() => {
       subscriber.unsubscribe();
       this.loading = false;
     });
@@ -179,9 +150,6 @@ export class NetworkDebuggingComponent implements OnInit {
   }
 
   watchLayerToDraw() {
-    if (this.FILL_SCREEN === true) {
-      this.recomputeDistancesToFill();
-    }
     this.x = this.MARGIN_LEFT;
 
     this.networkVisualService.layerAdded.subscribe(layerGui => {
@@ -223,7 +191,7 @@ export class NetworkDebuggingComponent implements OnInit {
   }
 
   openDetailsDialog(): void {
-    const dialogRef = this.dialog.open(NodeDetailsComponent, {
+    this.dialog.open(NodeDetailsComponent, {
       width: '1900px',
       data: this.selection
     });
@@ -235,16 +203,6 @@ export class NetworkDebuggingComponent implements OnInit {
     const start = node.layer.previous !== null ? node.layer.previous.pos.x : node.layer.pos.x;
     const end = node.layer.next !== null ? node.layer.next.pos.x : node.layer.pos.x;
     this.context.clearRect(start, this.MARGIN_TOP, end - start, this.canvas.height);
-
-    /* TODO
-    this.networkDebugService.networkConnections.forEach(c => {
-      c.draw(this.context);
-      c.source.draw(this.context);
-      c.source.drawText(this.context);
-      c.destination.draw(this.context);
-      c.destination.drawText(this.context);
-    });
-    */
 
     if (node.layer.previous !== null) {
       node.layer.previous.drawOutputLinks(this.context);
@@ -280,16 +238,6 @@ export class NetworkDebuggingComponent implements OnInit {
       });
     }
 
-    /* TODO
-    this.networkDebugService.networkConnections.forEach(c => {
-      c.draw(this.context);
-      c.source.draw(this.context);
-      c.source.drawText(this.context);
-      c.destination.draw(this.context);
-      c.destination.drawText(this.context);
-    });
-    */
-
     if (node.layer.previous !== null) {
       node.layer.previous.drawOutputLinks(this.context);
       node.layer.previous.drawNodes(this.context);
@@ -309,14 +257,14 @@ export class NetworkDebuggingComponent implements OnInit {
     if (node.layer.previous !== null) {
       node.layer.previous.nodes.forEach(n => {
         if (n.status === Status.BREAKPOINT) {
-          node.status = Status.WAIT; // todo make more efficient, i.e. return when found
+          node.status = Status.WAIT;
         }
       });
     }
     let hasAnotherBreakpoint = false;
     node.layer.nodes.forEach(n => {
       if (n.status === Status.BREAKPOINT) {
-        hasAnotherBreakpoint = true; // todo make more efficient, i.e. return when found
+        hasAnotherBreakpoint = true;
       }
     });
     if (hasAnotherBreakpoint === false && node.layer.next !== null) {
@@ -330,16 +278,6 @@ export class NetworkDebuggingComponent implements OnInit {
     const start = node.layer.previous !== null ? node.layer.previous.pos.x : node.layer.pos.x;
     const end = node.layer.next !== null ? node.layer.next.pos.x : node.layer.pos.x;
     this.context.clearRect(start, this.MARGIN_TOP, end - start, this.canvas.height);
-
-    /* TODO
-    this.networkDebugService.networkConnections.forEach(c => {
-      c.draw(this.context);
-      c.source.draw(this.context);
-      c.source.drawText(this.context);
-      c.destination.draw(this.context);
-      c.destination.drawText(this.context);
-    });
-    */
 
     if (node.layer.previous !== null) {
       node.layer.previous.drawOutputLinks(this.context);
@@ -362,16 +300,6 @@ export class NetworkDebuggingComponent implements OnInit {
     const end = node.layer.next !== null ? node.layer.next.pos.x : node.layer.pos.x;
     this.context.clearRect(start, this.MARGIN_TOP, end - start, this.canvas.height);
 
-    /* TODO
-    this.networkDebugService.networkConnections.forEach(c => {
-      c.draw(this.context);
-      c.source.draw(this.context);
-      c.source.drawText(this.context);
-      c.destination.draw(this.context);
-      c.destination.drawText(this.context);
-    });
-    */
-
     if (node.layer.previous !== null) {
       node.layer.previous.drawOutputLinks(this.context);
       node.layer.previous.drawNodes(this.context);
@@ -393,19 +321,9 @@ export class NetworkDebuggingComponent implements OnInit {
       const x = event.layerX - this.offsetX;
       const y = event.layerY - this.offsetY;
 
-      let displayAtX = event.layerX;
-      let displayAtY = event.layerY;
+      const displayAtX = event.layerX;
+      const displayAtY = event.layerY;
 
-
-      if (this.FILL_SCREEN === true) {
-        if (displayAtY + 300 > this.height) {
-          displayAtY = this.height - 300;
-        }
-        if (displayAtX + 400 > this.width) {
-          displayAtX = this.width - 400;
-        }
-
-      }
       const pos: Pos = new Pos(x, y);
       const node: NodeGui = this.getNodeByMousePos(pos);
       if (node != null) {
@@ -425,7 +343,7 @@ export class NetworkDebuggingComponent implements OnInit {
     this.x = this.MARGIN_LEFT;
     this.context.clearRect(0, 0, this.canvas.width, this.canvas.height);
     this.loading = true;
-    const subscriber = this.networkVisualService.doneLoading.subscribe(done => {
+    const subscriber = this.networkVisualService.doneLoading.subscribe(() => {
       subscriber.unsubscribe();
       this.loading = false;
     });
@@ -450,7 +368,6 @@ export class NetworkDebuggingComponent implements OnInit {
   stepInto() {
     if (this.currentLayer == null) {
       let i = 0;
-      console.log(this.inputs);
       this.networkVisualService.layers[0].nodes.forEach(node => {
         node.value = this.inputs[i].value;
         i++;
@@ -460,7 +377,6 @@ export class NetworkDebuggingComponent implements OnInit {
       this.networkVisualService.applyActivation(this.currentLayer.next);
       this.currentLayer = this.currentLayer.next;
     }
-    console.log(this.currentLayer.nodes);
   }
 
 }

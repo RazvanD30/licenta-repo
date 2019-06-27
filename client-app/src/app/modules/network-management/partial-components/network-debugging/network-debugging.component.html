@@ -16,7 +16,9 @@
   </div>
 </div>
 
-<button *ngIf="loading === false && inputs.length > 0" class="step-into-button" mat-raised-button (click)="stepInto()"> Step into </button>
+<button *ngIf="loading === false && inputs.length > 0" class="step-into-button" mat-raised-button (click)="stepInto()">
+  Step into
+</button>
 
 <div class="debugging-container">
   <mat-card class="loading-dialog" *ngIf="showForm === true">
@@ -39,8 +41,8 @@
         </mat-form-field>
 
         <mat-form-field class="network-init-field">
-          <mat-label> Enter the name for a new virtual configuration </mat-label>
-          <input matInput type="text"  formControlName="name">
+          <mat-label> Enter the name for a new virtual configuration</mat-label>
+          <input matInput type="text" formControlName="name">
           <button mat-button *ngIf="virtualNetworkFormGroup.value.name" matSuffix mat-icon-button aria-label="Clear"
                   (click)="virtualNetworkFormGroup.controls['name'].reset()">
             <mat-icon>close</mat-icon>

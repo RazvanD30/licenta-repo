@@ -1,13 +1,13 @@
 <mat-card class="upload-container">
   <mat-card-header>
     <mat-card-title> Upload a new file</mat-card-title>
-    <mat-card-subtitle> The file can be then used for training or testing any compatible netwokr</mat-card-subtitle>
+    <mat-card-subtitle> The file can be then used for training or testing any compatible network</mat-card-subtitle>
   </mat-card-header>
   <mat-card-content class="upload-content">
-      <button type="button" mat-raised-button (click)="fileInput.click()">Choose file</button>
-      <input hidden (change)="selectFile($event)" #fileInput type="file" id="file">
-      {{(selectedFiles != null && selectedFiles.length > 0) ?
-      'You have selected \'' + selectedFiles.item(0).name + '\' for upload' : ''}}
+    <button type="button" mat-raised-button (click)="fileInput.click()">Choose file</button>
+    <input hidden (change)="selectFile($event)" #fileInput type="file" id="file">
+    {{(selectedFiles != null && selectedFiles.length > 0) ?
+    'You have selected \'' + selectedFiles.item(0).name + '\' for upload' : ''}}
     <div class="labels-container">
 
       Number of labels

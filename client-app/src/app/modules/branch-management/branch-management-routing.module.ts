@@ -1,9 +1,9 @@
 import {RouterModule, Routes} from '@angular/router';
 import {NgModule} from '@angular/core';
-import {BranchTableComponent} from './partial-components/branch-table/branch-table.component';
+import {BranchDashboardComponent} from './pages/branch-dashboard/branch-dashboard.component';
 
 const routes: Routes = [
-  {path: 'dashboard', component: BranchTableComponent},
+  {path: 'dashboard', component: BranchDashboardComponent},
 ];
 
 @NgModule({

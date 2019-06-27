@@ -1,5 +1,4 @@
 import {NgModule} from '@angular/core';
-import {CoreModule} from '../../core/core.module';
 import {BranchManagementRoutingModule} from './branch-management-routing.module';
 import {AuthenticationGuard} from '../../core/guards/authentication.guard';
 import {HTTP_INTERCEPTORS} from '@angular/common/http';
@@ -7,10 +6,14 @@ import {HttpTokenInterceptor} from '../../core/interceptors/http-token.intercept
 import {ErrorHandlerInterceptor} from '../../core/interceptors/error-handler.interceptor';
 import {BranchTableComponent} from './partial-components/branch-table/branch-table.component';
 import {SharedModule} from '../../shared/shared.module';
+import {BranchCreateComponent} from './partial-components/branch-create/branch-create.component';
+import {BranchDashboardComponent} from './pages/branch-dashboard/branch-dashboard.component';
 
 @NgModule({
   declarations: [
-    BranchTableComponent
+    BranchTableComponent,
+    BranchCreateComponent,
+    BranchDashboardComponent
   ],
   imports: [
     SharedModule,

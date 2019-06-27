@@ -1,6 +1,5 @@
 package en.ubb.networkconfiguration.boundary.rest;
 
-import en.ubb.networkconfiguration.boundary.dto.authentication.PublicUserDto;
 import en.ubb.networkconfiguration.boundary.dto.branch.BranchDto;
 import en.ubb.networkconfiguration.boundary.util.DtoMapper;
 import en.ubb.networkconfiguration.boundary.validation.exception.ForbiddenAccessException;
@@ -17,7 +16,6 @@ import org.springframework.web.bind.annotation.*;
 import javax.validation.constraints.NotNull;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 import java.util.stream.Collectors;
 
 @RestController
@@ -36,21 +34,15 @@ public class BranchApi {
 
     @PostMapping
     public BranchDto create(@RequestBody BranchDto dto) throws NotFoundException {
-        if(dto.getSourceId() == null) {
-            try {
-                NetworkBranch networkBranch = DtoMapper.fromDto(dto);
-                networkBranch.setCurrentUsers(new ArrayList<>());
-                return DtoMapper.toDto(this.branchService.create(networkBranch,null));
-            } catch (NotFoundBussExc notFoundBussExc) {
-                throw new NotFoundException(notFoundBussExc);
-            }
-        }
-
-        NetworkBranch source = this.branchService.findById(dto.getSourceId())
-                .orElseThrow(() -> new NotFoundException("Source branch with id " + dto.getSourceId() + " does not exist"));
-
         try {
-            return DtoMapper.toDto(this.branchService.create(DtoMapper.fromDto(dto),source));
+            NetworkBranch networkBranch = DtoMapper.fromDto(dto);
+            networkBranch.setCurrentUsers(new ArrayList<>());
+            if (dto.getSourceId() != null) {
+                NetworkBranch source = this.branchService.findById(dto.getSourceId())
+                        .orElseThrow(() -> new NotFoundException("Source branch with id " + dto.getSourceId() + " does not exist"));
+                return DtoMapper.toDto(this.branchService.create(networkBranch, source));
+            }
+            return DtoMapper.toDto(this.branchService.create(networkBranch, null));
         } catch (NotFoundBussExc notFoundBussExc) {
             throw new NotFoundException(notFoundBussExc);
         }
@@ -59,11 +51,20 @@ public class BranchApi {
     @PostMapping("/workingBranch/{branchName}")
     public void assign(@PathVariable String branchName, @RequestBody String username) throws NotFoundException, ForbiddenAccessException {
         try {
-            this.branchService.assign(branchName,username);
+            this.branchService.assign(branchName, username);
         } catch (NotFoundBussExc notFoundBussExc) {
             throw new NotFoundException(notFoundBussExc);
         } catch (ForbiddenAccessBussExc forbiddenAccessBussExc) {
             throw new ForbiddenAccessException(forbiddenAccessBussExc);
+        }
+    }
+
+    @GetMapping("/pull/{destinationId}/{sourceId}")
+    public void pull(@PathVariable long destinationId, @PathVariable long sourceId) throws NotFoundException {
+        try {
+            this.branchService.pull(destinationId, sourceId);
+        } catch (NotFoundBussExc notFoundBussExc) {
+            throw new NotFoundException(notFoundBussExc);
         }
     }
 
@@ -78,7 +79,7 @@ public class BranchApi {
     @PutMapping
     public BranchDto update(@RequestBody BranchDto dto) throws NotFoundException {
         try {
-            return DtoMapper.toDto(this.branchService.update(dto.getId(),DtoMapper.fromDto(dto)));
+            return DtoMapper.toDto(this.branchService.update(dto.getId(), DtoMapper.fromDto(dto)));
         } catch (NotFoundBussExc notFoundBussExc) {
             throw new NotFoundException(notFoundBussExc);
         }
@@ -90,8 +91,8 @@ public class BranchApi {
             BranchDto result = DtoMapper.toDto(this.branchService.findById(id)
                     .orElseThrow(() -> new NotFoundException("Branch with it " + id + "not found")));
 
-           this.branchService.delete(id);
-           return result;
+            this.branchService.delete(id);
+            return result;
         } catch (NotFoundBussExc notFoundBussExc) {
             throw new NotFoundException(notFoundBussExc);
         }

@@ -1,5 +1,5 @@
 import {Component, EventEmitter, Input, OnChanges, OnInit, Output, ViewChild} from '@angular/core';
-import {MatPaginator, MatSort, MatTableDataSource} from '@angular/material';
+import {MatPaginator, MatSort, MatTabChangeEvent, MatTableDataSource} from '@angular/material';
 import {LayerDto} from '../../../../shared/models/network/runtime/LayerDto';
 import {ActiveView} from '../../models/ActiveView';
 import {SelectedTableType} from '../../models/SelectedTableType';
@@ -21,6 +21,19 @@ export class LayerTableComponent implements OnInit, OnChanges {
   @Output() nodeView = new EventEmitter();
 
   constructor() {
+  }
+
+  static compare(cell: number, expected: number, operation: string) {
+    switch (operation) {
+      case 'lt':
+        return cell < expected;
+      case 'gt':
+        return cell > expected;
+      case 'eq':
+        return cell === expected;
+      case 'nq':
+        return cell !== expected;
+    }
   }
 
   ngOnChanges(changes): void {
@@ -59,30 +72,16 @@ export class LayerTableComponent implements OnInit, OnChanges {
 
   }
 
-
-  compare(cell: number, expected: number, operation: string) {
-    switch (operation) {
-      case 'lt':
-        return cell < expected;
-      case 'gt':
-        return cell > expected;
-      case 'eq':
-        return cell === expected;
-      case 'nq':
-        return cell !== expected;
-    }
-  }
-
   filterPredicate(layer: LayerDto): boolean {
     let ok = true;
     if (this.filters.nInputs !== '') {
-      ok = ok === true && this.compare(layer.nInputs, this.filters.nInputs, this.filters.comparison.nInputs);
+      ok = ok === true && LayerTableComponent.compare(layer.nInputs, this.filters.nInputs, this.filters.comparison.nInputs);
     }
     if (this.filters.nOutputs !== '') {
-      ok = ok === true && this.compare(layer.nOutputs, this.filters.nOutputs, this.filters.comparison.nOutputs);
+      ok = ok === true && LayerTableComponent.compare(layer.nOutputs, this.filters.nOutputs, this.filters.comparison.nOutputs);
     }
     if (this.filters.nNodes !== '') {
-      ok = ok === true && this.compare(layer.nNodes, this.filters.nNodes, this.filters.comparison.nNodes);
+      ok = ok === true && LayerTableComponent.compare(layer.nNodes, this.filters.nNodes, this.filters.comparison.nNodes);
     }
     if (this.filters.type !== '') {
       ok = ok === true && layer.type.toString().toLowerCase().includes(this.filters.type.toLowerCase());
@@ -137,5 +136,10 @@ export class LayerTableComponent implements OnInit, OnChanges {
     this.nodeView.emit(newView);
   }
 
+  matTabSelectionChange($event: MatTabChangeEvent) {
+    if ($event.index === 0) {
+      this.resetFilters();
+    }
+  }
 
 }

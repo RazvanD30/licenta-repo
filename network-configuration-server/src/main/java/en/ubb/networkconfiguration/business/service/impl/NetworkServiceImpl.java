@@ -41,10 +41,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.io.*;
-import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 
 @Slf4j
 @Service
@@ -150,14 +147,14 @@ public class NetworkServiceImpl implements NetworkService {
             }
         }
 
-        for(int i = 0; i < network.getLayers().size() - 1; i ++){
+        for (int i = 0; i < network.getLayers().size() - 1; i++) {
             Layer currentLayer = network.getLayers().get(i);
             Layer nextLayer = network.getLayers().get(i + 1);
 
-            for(int j = 0; j < currentLayer.getNodes().size(); j++){
+            for (int j = 0; j < currentLayer.getNodes().size(); j++) {
                 Node node = currentLayer.getNodes().get(j);
 
-                for(int k = 0; k < node.getOutputLinks().size(); k++){
+                for (int k = 0; k < node.getOutputLinks().size(); k++) {
                     Link link = node.getOutputLinks().get(k);
                     nextLayer.getNodes().get(k).addInputLink(link);
                 }
@@ -165,6 +162,94 @@ public class NetworkServiceImpl implements NetworkService {
         }
 
         return network;
+    }
+
+
+    private String getUniqueName(String networkName, int count) {
+        String name = count == 0 ? networkName + "_COPY" : networkName + "_COPY" + count;
+        if (this.findByName(name).isPresent())
+            return getUniqueName(networkName, ++count);
+        return name;
+    }
+
+    @Override
+    public Network duplicate(Network source) {
+        Network newNetwork = new Network(source);
+        newNetwork.setName(this.getUniqueName(source.getName(),0));
+        source.getLayers().forEach(layer -> {
+            Layer newLayer = new Layer().toBuilder()
+                    .activation(layer.getActivation())
+                    .nInputs(layer.getNInputs())
+                    .nOutputs(layer.getNOutputs())
+                    .nNodes(layer.getNNodes())
+                    .type(layer.getType())
+                    .build();
+            newNetwork.addLayer(newLayer);
+        });
+
+        Map<Long, List<Link>> inputLinksMap = new HashMap<>();
+        for (int i = 0; i < newNetwork.getLayers().size(); i++) {
+            Layer sourceLayer = source.getLayers().get(i);
+            Layer newLayer = newNetwork.getLayers().get(i);
+            sourceLayer.getNodes().forEach(sourceNode -> {
+                Node newNode = new Node(sourceNode);
+                sourceNode.getOutputLinks().forEach(sourceOutputLink -> {
+                    Link newLink = new Link(sourceOutputLink);
+                    Long destinationId = sourceOutputLink.getDestination().getId();
+                    List<Link> values = inputLinksMap.get(destinationId);
+                    if (values != null) {
+                        values.add(newLink);
+                    } else {
+                        List<Link> list = new ArrayList<>();
+                        list.add(newLink);
+                        inputLinksMap.put(destinationId, list);
+                    }
+                    newNode.addOutputLink(newLink);
+                });
+                newNode.setId(sourceNode.getId()); //TEMPORALLY, REVERTED AT @REVERT
+                newLayer.addNode(newNode);
+            });
+        }
+
+        newNetwork.getLayers().forEach(newLayer -> {
+            for(int nc = 0; nc < newLayer.getNodes().size(); nc++){
+                Node newNode = newLayer.getNodes().get(nc);
+                List<Link> inputLinks = inputLinksMap.get(newNode.getId());
+                if (inputLinks != null) {
+                    inputLinks.forEach(newNode::addInputLink);
+                }
+                newNode.setId(null); // @REVERT
+            }
+        });
+
+        for(int lc = 0; lc < newNetwork.getLayers().size(); lc++){
+            Layer layer = newNetwork.getLayers().get(lc);
+            for(int nc = 0; nc < layer.getNodes().size(); nc++){
+                Node node = layer.getNodes().get(nc);
+                for(int lkc = 0; lkc < node.getOutputLinks().size(); lkc++){
+                    Link link = node.getOutputLinks().get(lkc);
+                    Node tmpSource = link.getSource();
+                    Node tmpDestination = link.getDestination();
+                    link.setSource(null);
+                    link.setDestination(null);
+                    Link persistedLink = linkRepo.save(link);
+                    persistedLink.setSource(tmpSource);
+                    persistedLink.setDestination(tmpDestination);
+                    node.getOutputLinks().set(lkc,persistedLink);
+                }
+            }
+        }
+
+        for(int lc = 0; lc < newNetwork.getLayers().size(); lc++) {
+            Layer layer = newNetwork.getLayers().get(lc);
+            for (int nc = 0; nc < layer.getNodes().size(); nc++) {
+                Node node = layer.getNodes().get(nc);
+                layer.getNodes().set(nc,nodeRepo.save(node));
+            }
+            newNetwork.getLayers().set(lc,layerRepo.save(layer));
+        }
+
+        return this.networkRepo.save(newNetwork);
     }
 
     @Override
@@ -229,7 +314,7 @@ public class NetworkServiceImpl implements NetworkService {
             this.networkRepo.save(network);
             NetworkEval previous = null;
             List<NetworkTrainLog> trainLogsSorted = this.networkTrainLogService.getAllSorted(network.getId());
-            if(!trainLogsSorted.isEmpty()){
+            if (!trainLogsSorted.isEmpty()) {
                 NetworkTrainLog last = trainLogsSorted.get(0);
                 previous = NetworkEval.builder()
                         .accuracy(last.getAccuracy())
@@ -244,8 +329,8 @@ public class NetworkServiceImpl implements NetworkService {
 
             File trainTempFile = new File(trainFile.getName());
             File testTempFile = new File(testFile.getName());
-            FileUtils.writeByteArrayToFile(trainTempFile,trainFile.getData());
-            FileUtils.writeByteArrayToFile(testTempFile,testFile.getData());
+            FileUtils.writeByteArrayToFile(trainTempFile, trainFile.getData());
+            FileUtils.writeByteArrayToFile(testTempFile, testFile.getData());
 
             RecordReader rr = new CSVRecordReader();
             rr.initialize(new FileSplit(trainTempFile));
@@ -351,7 +436,7 @@ public class NetworkServiceImpl implements NetworkService {
                         Node destination = link.getDestination();
                         link.setSource(null);
                         link.setDestination(null);
-                        node.getOutputLinks().set(linkC,linkRepo.save(link));
+                        node.getOutputLinks().set(linkC, linkRepo.save(link));
                         node.getOutputLinks().get(linkC).setSource(source);
                         node.getOutputLinks().get(linkC).setDestination(destination);
                     }
@@ -364,10 +449,16 @@ public class NetworkServiceImpl implements NetworkService {
                 for (int nodeC = 0; nodeC < currentLayer.getNNodes(); nodeC++) {
                     Node node = currentLayer.getNodes().get(nodeC);
                     node.setLayer(null);
-                    currentLayer.getNodes().set(nodeC,nodeRepo.save(node));
+                    currentLayer.getNodes().set(nodeC, nodeRepo.save(node));
                     currentLayer.getNodes().get(nodeC).setLayer(currentLayer);
                 }
             }
+            for (int layerC = 0; layerC < network.getLayers().size(); layerC++) {
+                Layer currentLayer = layerRepo.save(network.getLayers().get(layerC));
+                network.getLayers().set(layerC,currentLayer);
+            }
+
+
         } catch (IOException ex) {
             throw new NetworkAccessBussExc("Could not save the model state. " + ex.getMessage());
         }

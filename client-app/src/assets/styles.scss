@@ -12,7 +12,14 @@ body {
   height: 100%;
 }
 
+html {
+  background-color: $color-background-2 !important;
+}
+
 .container-app {
   //background-color: $color-light-grey;
 }
 a { cursor: pointer }
+
+
+

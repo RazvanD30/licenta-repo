@@ -74,8 +74,7 @@ public class VirtualNetworkServiceImpl implements VirtualNetworkService {
                         .inputsLinks(new ArrayList<>())
                         .outputLinks(new ArrayList<>())
                         .build();
-                virtualNodeRepo.save(virtualNode);
-                virtualLayer.addNode(virtualNode);
+                virtualLayer.addNode(virtualNodeRepo.save(virtualNode));
             });
             position.hold(position.held() + 1);
         });
@@ -133,7 +132,6 @@ public class VirtualNetworkServiceImpl implements VirtualNetworkService {
                 });
             });
         }
-
 
         return virtualNetworkRepo.save(virtualNetwork);
     }

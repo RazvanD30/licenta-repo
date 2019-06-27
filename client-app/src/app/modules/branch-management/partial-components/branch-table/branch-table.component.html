@@ -1,28 +1,120 @@
+<div class="table-container">
+  <div class="mat-elevation-z8">
+    <mat-tab-group (selectedTabChange)="matTabSelectionChange($event)">
+      <mat-tab>
+        <ng-template mat-tab-label>
+          <mat-icon inline>clear</mat-icon>
+          <span style="margin-left: 5px;">Reset filters</span>
+        </ng-template>
+      </mat-tab>
 
-<div style="margin-top: 10%">
-<button (click)="loadForUser()"> GET FOR USER </button>
-<button (click)="loadForContributor()"> GET FOR CONTRIBUTOR </button>
-<button (click)="loadForOwner()"> GET FOR OWNER </button>
-<button (click)="create()"> CREATE </button>
-<button (click)="update()"> UPDATE </button>
-<button (click)="remove()"> DELETE </button>
-<ul *ngFor="let branch of branches">
-  <li>
-  ID {{branch.id}}, NAME {{branch.name}}, TYPE {{branch.type}}, OWNER {{branch.owner.username}},
-    #CONTRIBUTORS {{branch.contributors.length}}, CREATED {{branch.created}}, UPDATED {{branch.updated}}, SOURCE {{branch.sourceId}}
-  </li>
-</ul>
-<br>------------------------------------------------------------------------------
-<p>NAME </p><input [(ngModel)]="branch.name" >
+      <mat-tab>
+        <ng-template mat-tab-label>
+          <div *ngIf="filters.id === ''"> Id</div>
+          <div *ngIf="filters.id !== ''" class="label-edited"> Id (edited)</div>
+        </ng-template>
+        <mat-form-field class="example-full-width">
+          <input [(ngModel)]="filters.id" matInput (keyup)="applyFilter($event.target.value,'id')"
+                 placeholder="Filter by id" type="number">
+        </mat-form-field>
+      </mat-tab>
 
-<p>TYPE </p>
-  <mat-select [(value)]="branch.type">
-    <mat-option *ngFor="let type of types" [value]="type"> {{type}} </mat-option>
-  </mat-select>
-<p>OWNER </p><input [(ngModel)]="branch.owner.username" >
-<p>SOURCE ID </p><input [(ngModel)]="branch.sourceId" >
-<br>--------------------------------------------------------------------------------
-<br>UPDATE_and_DELETE
-<p>ID </p><input [(ngModel)]="branch.id" >
+      <mat-tab>
+        <ng-template mat-tab-label>
+          <div *ngIf="filters.name === ''"> Name</div>
+          <div *ngIf="filters.name !== ''" class="label-edited"> Name (edited)</div>
+        </ng-template>
+        <mat-form-field class="example-full-width">
+          <input [(ngModel)]="filters.name" matInput (keyup)="applyFilter($event.target.value,'name')"
+                 placeholder="Filter by name" type="text">
+        </mat-form-field>
+      </mat-tab>
 
+      <mat-tab>
+        <ng-template mat-tab-label>
+          <div *ngIf="filters.type === ''"> Type</div>
+          <div *ngIf="filters.type !== ''" class="label-edited"> Type (edited)</div>
+        </ng-template>
+        <mat-form-field class="example-full-width">
+          <input [(ngModel)]="filters.type" matInput (keyup)="applyFilter($event.target.value,'type')"
+                 placeholder="Filter by type" type="text">
+        </mat-form-field>
+      </mat-tab>
+
+      <mat-tab>
+        <ng-template mat-tab-label>
+          <div *ngIf="filters.ownerName === ''"> Owner</div>
+          <div *ngIf="filters.ownerName !== ''" class="label-edited"> Owner (edited)</div>
+        </ng-template>
+        <mat-form-field class="example-full-width">
+          <input [(ngModel)]="filters.ownerName" matInput (keyup)="applyFilter($event.target.value,'ownerName')"
+                 placeholder="Filter by owner username" type="text">
+        </mat-form-field>
+      </mat-tab>
+
+
+    </mat-tab-group>
+
+
+    <table mat-table *ngIf="branchDataSource" [dataSource]="branchDataSource" class="mat-elevation-z8" matSort>
+
+      <ng-container matColumnDef="id">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>Id</th>
+        <td mat-cell *matCellDef="let branch"> {{ branch.id }}</td>
+        <td mat-footer-cell *matFooterCellDef></td>
+      </ng-container>
+
+      <ng-container matColumnDef="name">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>Name</th>
+        <td mat-cell *matCellDef="let branch"> {{ branch.name }}</td>
+        <td mat-footer-cell *matFooterCellDef></td>
+      </ng-container>
+
+      <ng-container matColumnDef="type">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>Type</th>
+        <td mat-cell *matCellDef="let branch"> {{ branch.type }}</td>
+        <td mat-footer-cell *matFooterCellDef></td>
+      </ng-container>
+
+      <ng-container matColumnDef="ownerName">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>Owner</th>
+        <td mat-cell *matCellDef="let branch"> {{ branch.owner.username }}</td>
+        <td mat-footer-cell *matFooterCellDef></td>
+      </ng-container>
+
+      <ng-container matColumnDef="created">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>Created</th>
+        <td mat-cell *matCellDef="let branch"> {{ branch.created }}</td>
+        <td mat-footer-cell *matFooterCellDef></td>
+      </ng-container>
+
+      <ng-container matColumnDef="updated">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>Updated</th>
+        <td mat-cell *matCellDef="let branch"> {{ branch.updated }}</td>
+        <td mat-footer-cell *matFooterCellDef></td>
+      </ng-container>
+
+      <ng-container matColumnDef="actions">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>Actions</th>
+        <td mat-cell *matCellDef="let branch"> N/A</td>
+        <td mat-footer-cell *matFooterCellDef></td>
+      </ng-container>
+
+      <tr mat-header-row class="custom-table-header" *matHeaderRowDef="displayedColumns"></tr>
+      <tr mat-row class="custom-table-row" *matRowDef="let row; columns: displayedColumns;"></tr>
+      <tr mat-footer-row *matFooterRowDef="displayedColumns" class="example-first-footer-row"></tr>
+
+    </table>
+    <mat-paginator [pageSizeOptions]="[50, 100]" showFirstLastButtons></mat-paginator>
+  </div>
 </div>
+
+
+
+
+
+
+
+
+
+

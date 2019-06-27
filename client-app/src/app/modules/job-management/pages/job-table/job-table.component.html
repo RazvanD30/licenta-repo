@@ -1,18 +1,16 @@
-
 <div class="table-container">
   <div class="mat-elevation-z8">
-    <mat-button-toggle-group name="fontStyle" aria-label="Font Style">
-      <button mat-raised-button color="warn" (click)="resetFilters()">
-        <mat-icon>clear</mat-icon>
-        Reset filters
-      </button>
-    </mat-button-toggle-group>
-    <mat-tab-group>
-      <mat-tab label="Filter by..."></mat-tab>
+    <mat-tab-group (selectedTabChange)="matTabSelectionChange($event)">
+      <mat-tab>
+        <ng-template mat-tab-label>
+          <mat-icon inline>clear</mat-icon>
+          <span style="margin-left: 5px;">Reset filters</span>
+        </ng-template>
+      </mat-tab>
       <mat-tab>
         <ng-template mat-tab-label>
           <div *ngIf="filters.name === ''"> Name</div>
-          <div *ngIf="filters.name !== ''" style="color: red"> Name (edited)</div>
+          <div *ngIf="filters.name !== ''" class="label-edited"> Name (edited)</div>
         </ng-template>
         <mat-form-field class="example-full-width">
           <input [(ngModel)]="filters.name" matInput (keyup)="applyFilter($event.target.value,'name')"
@@ -23,7 +21,7 @@
       <mat-tab>
         <ng-template mat-tab-label>
           <div *ngIf="filters.seed === ''"> Seed</div>
-          <div *ngIf="filters.seed !== ''" style="color: red"> Seed (edited)</div>
+          <div *ngIf="filters.seed !== ''" class="label-edited"> Seed (edited)</div>
         </ng-template>
         <mat-form-field class="example-full-width">
           <mat-select placeholder="Operation type" [(ngModel)]="filters.comparison.seed">
@@ -42,7 +40,7 @@
       <mat-tab>
         <ng-template mat-tab-label>
           <div *ngIf="filters.learningRate === ''"> Learning Rate</div>
-          <div *ngIf="filters.learningRate !== ''" style="color: red"> Learning Rate (edited)</div>
+          <div *ngIf="filters.learningRate !== ''" class="label-edited"> Learning Rate (edited)</div>
         </ng-template>
         <mat-form-field class="example-full-width">
           <mat-select placeholder="Operation type" [(ngModel)]="filters.comparison.learningRate">
@@ -61,7 +59,7 @@
       <mat-tab>
         <ng-template mat-tab-label>
           <div *ngIf="filters.batchSize === ''"> Batch Size</div>
-          <div *ngIf="filters.batchSize !== ''" style="color: red"> Batch Size (edited)</div>
+          <div *ngIf="filters.batchSize !== ''" class="label-edited"> Batch Size (edited)</div>
         </ng-template>
         <mat-form-field class="example-full-width">
           <mat-select placeholder="Operation type" [(ngModel)]="filters.comparison.batchSize">
@@ -80,7 +78,7 @@
       <mat-tab>
         <ng-template mat-tab-label>
           <div *ngIf="filters.nEpochs === ''"> #Epochs</div>
-          <div *ngIf="filters.nEpochs !== ''" style="color: red"> #Epochs (edited)</div>
+          <div *ngIf="filters.nEpochs !== ''" class="label-edited"> #Epochs (edited)</div>
         </ng-template>
         <mat-form-field class="example-full-width">
           <mat-select placeholder="Operation type" [(ngModel)]="filters.comparison.nEpochs">
@@ -99,7 +97,7 @@
       <mat-tab>
         <ng-template mat-tab-label>
           <div *ngIf="filters.nInputs === ''"> #Inputs</div>
-          <div *ngIf="filters.nInputs !== ''" style="color: red"> #Inputs (edited)</div>
+          <div *ngIf="filters.nInputs !== ''" class="label-edited"> #Inputs (edited)</div>
         </ng-template>
         <mat-form-field class="example-full-width">
           <mat-select placeholder="Operation type" [(ngModel)]="filters.comparison.nInputs">
@@ -118,7 +116,7 @@
       <mat-tab>
         <ng-template mat-tab-label>
           <div *ngIf="filters.nOutputs === ''"> #Outputs</div>
-          <div *ngIf="filters.nOutputs !== ''" style="color: red"> #Outputs (edited)</div>
+          <div *ngIf="filters.nOutputs !== ''" class="label-edited"> #Outputs (edited)</div>
         </ng-template>
         <mat-form-field class="example-full-width">
           <mat-select placeholder="Operation type" [(ngModel)]="filters.comparison.nOutputs">
@@ -137,7 +135,7 @@
       <mat-tab>
         <ng-template mat-tab-label>
           <div *ngIf="filters.nLayers === ''"> #Layers</div>
-          <div *ngIf="filters.nLayers !== ''" style="color: red"> #Layers (edited)</div>
+          <div *ngIf="filters.nLayers !== ''" class="label-edited"> #Layers (edited)</div>
         </ng-template>
         <mat-form-field class="example-full-width">
           <mat-select placeholder="Operation type" [(ngModel)]="filters.comparison.nLayers">
@@ -217,9 +215,14 @@
       <ng-container matColumnDef="trainFile">
         <th mat-header-cell *matHeaderCellDef mat-sort-header>Train File</th>
         <td mat-cell *matCellDef="let network">
-          <mat-form-field>
+          <mat-form-field
+            [matTooltip]="network.trainFileNames.length === 0 ?
+            'No train files linked to this network. Please link them from the File Management module.' :
+            'This file will be used in the training process of the network. More files can be added from the File Management module.'">
             <mat-select [(ngModel)]="network.trainFileName"
-                        name="network.trainFileName">
+                        name="network.trainFileName"
+                        [disabled]="network.trainFileNames.length === 0"
+            >
               <mat-option *ngFor="let name of network.trainFileNames" [value]="name"> {{name}} </mat-option>
             </mat-select>
           </mat-form-field>
@@ -230,9 +233,14 @@
       <ng-container matColumnDef="testFile">
         <th mat-header-cell *matHeaderCellDef mat-sort-header>Test File</th>
         <td mat-cell *matCellDef="let network">
-          <mat-form-field>
+          <mat-form-field
+            [matTooltip]="network.testFileNames.length === 0 ?
+            'No test files linked to this network. Please link them from the File Management module.' :
+            'This file will be used in the evaluation process of the network. More files can be added from the File Management module.'">
             <mat-select [(ngModel)]="network.testFileName"
-                        name="network.testFileName">
+                        name="network.testFileName"
+                        [disabled]="network.testFileNames.length === 0"
+            >
               <mat-option *ngFor="let name of network.testFileNames" [value]="name"> {{name}} </mat-option>
             </mat-select>
           </mat-form-field>

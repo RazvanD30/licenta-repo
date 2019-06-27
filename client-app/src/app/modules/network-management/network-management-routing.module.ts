@@ -5,7 +5,6 @@ import {NetworkInitializationComponent} from './pages/network-initialization/net
 import {NetworkTablesComponent} from './pages/network-tables/network-tables.component';
 
 const routes: Routes = [
-  // {path: '', redirectTo: 'home', canActivate: [AuthenticationGuard], pathMatch: 'full'},
   {path: 'debug', component: NetworkDebuggingComponent},
   {path: 'init', component: NetworkInitializationComponent},
   {path: 'config', component: NetworkTablesComponent}

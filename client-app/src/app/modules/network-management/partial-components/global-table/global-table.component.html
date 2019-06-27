@@ -10,21 +10,21 @@
       </ng-container>
 
       <ng-container *ngIf="isLayerTable(selected) === true">
-        <mat-button-toggle (click)="setCurrentSelection(selected)" [value]="selected" >
+        <mat-button-toggle (click)="setCurrentSelection(selected)" [value]="selected">
           Layers for Network {{selected.uniqueNameParam }}
           <fa-icon [icon]="faTimes" (click)="removeSelection(selected)"></fa-icon>
         </mat-button-toggle>
       </ng-container>
 
       <ng-container *ngIf="isLogTable(selected) === true">
-        <mat-button-toggle (click)="setCurrentSelection(selected)" [value]="selected" >
+        <mat-button-toggle (click)="setCurrentSelection(selected)" [value]="selected">
           Logs for Network {{selected.uniqueNameParam }}
           <fa-icon [icon]="faTimes" (click)="removeSelection(selected)"></fa-icon>
         </mat-button-toggle>
       </ng-container>
 
       <ng-container *ngIf="isNodeTable(selected) === true">
-        <mat-button-toggle (click)="setCurrentSelection(selected)" [value]="selected" >
+        <mat-button-toggle (click)="setCurrentSelection(selected)" [value]="selected">
           Nodes for Layer {{selected.uniqueNameParam }}
           <fa-icon [icon]="faTimes" (click)="removeSelection(selected)"></fa-icon>
         </mat-button-toggle>
@@ -36,9 +36,11 @@
 
   <div class="tables-container" *ngIf="doneLoading != null">
 
-    <app-network-table *ngIf="isNetworkTable(selectedView) === true" [networks]="selectedView.dataParam" (onLayersView)="addView($event)" ></app-network-table>
-    <app-layer-table *ngIf="isLayerTable(selectedView) === true" [network]="selectedView.dataParam" (nodeView)="addView($event)"></app-layer-table>
-    <app-logs-table *ngIf="isLogTable(selectedView) === true" [network]="selectedView.dataParam"> </app-logs-table>
+    <app-network-table *ngIf="isNetworkTable(selectedView) === true" [networks]="selectedView.dataParam"
+                       (selectLayer)="addView($event)"></app-network-table>
+    <app-layer-table *ngIf="isLayerTable(selectedView) === true" [network]="selectedView.dataParam"
+                     (nodeView)="addView($event)"></app-layer-table>
+    <app-logs-table *ngIf="isLogTable(selectedView) === true" [network]="selectedView.dataParam"></app-logs-table>
     <app-node-table *ngIf="isNodeTable(selectedView) === true" [layer]="selectedView.dataParam"></app-node-table>
   </div>
 

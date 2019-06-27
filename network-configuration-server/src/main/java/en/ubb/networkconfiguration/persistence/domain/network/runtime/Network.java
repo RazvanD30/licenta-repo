@@ -125,9 +125,9 @@ public class Network extends BaseEntity<Long> {
      */
     public Network(Network network) {
         this.originId = network.getId();
-        this.createDateTime = network.getCreateDateTime();
+        this.createDateTime = LocalDateTime.now();
         this.updateDateTime = network.getUpdateDateTime();
-        this.name = network.getName();
+        this.name = network.getName() + "_COPY";
         this.seed = network.getSeed();
         this.learningRate = network.getLearningRate();
         this.batchSize = network.getBatchSize();
@@ -138,15 +138,7 @@ public class Network extends BaseEntity<Long> {
         this.state = new NetworkState(network.getState());
         this.state.getNetworks().add(this);
         network.getFiles().forEach(networkFile -> this.addFile(networkFile.getDataFile(), networkFile.getType()));
-        this.networkTrainLogs = network.getNetworkTrainLogs();
         this.isTraining = false;
-        this.setLayers(network.getLayers().stream()
-                .map(layer -> {
-                    layer = new Layer(layer);
-                    layer.setNetwork(this);
-                    return layer;
-                })
-                .collect(Collectors.toList()));
     }
 
     public MultiLayerNetwork getModel() {

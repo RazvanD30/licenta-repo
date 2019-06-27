@@ -9,6 +9,7 @@ const NETWORK_CONFIGURE_URL = NETWORK_MANAGEMENT_URL + '/configure';
 const NETWORK_TRAIN_TEST_URL = NETWORK_MANAGEMENT_URL + '/train-test';
 const NETWORK_LOG_URL = NETWORK_MANAGEMENT_URL + '/log';
 const NETWORK_SIMULATION_URL = NETWORK_MANAGEMENT_URL + '/virtual-simulation';
+const USER_MANAGEMENT_URL = BASE_URL + '/user-management';
 
 export const APP_SETTINGS = {
   URLS: {
@@ -29,7 +30,8 @@ export const APP_SETTINGS = {
       POST_CREATE: BRANCH_MANAGEMENT_URL,
       POST_ASSIGN_WORKING_BRANCH: BRANCH_MANAGEMENT_URL + '/workingBranch/',
       PUT_UPDATE: BRANCH_MANAGEMENT_URL,
-      DELETE_DELETE: BRANCH_MANAGEMENT_URL + '/'
+      DELETE_DELETE: BRANCH_MANAGEMENT_URL + '/',
+      GET_PULL_DESTINATION_SOURCE: BRANCH_MANAGEMENT_URL + '/'
     },
     FILE_MANAGEMENT: {
       GET_ALL: FILE_MANAGEMENT_URL,
@@ -43,10 +45,7 @@ export const APP_SETTINGS = {
       POST_SET_TEST_LINKS: FILE_MANAGEMENT_URL + '/links/test/'
     },
     USER_MANAGEMENT: {
-      GET_ALL: 'http://localhost:8080/users',
-      GET_BY_ID: 'http://localhost:8080/users/',
-      UPDATE: 'http://localhost:8080/users/',
-      DELETE: 'http://localhost:8080/users/'
+      GET_ALL: USER_MANAGEMENT_URL,
     },
     NETWORK_MANAGEMENT: {
       NETWORK_INIT: {
@@ -81,25 +80,6 @@ export const APP_SETTINGS = {
         GET_LAYER_BY_VIRTUAL_ID_AT_POS: NETWORK_SIMULATION_URL + '/'
       }
     },
-
-    NETWORK_RUN: {
-      GET_ALL: 'http://localhost:8803/network-configuration/networks',
-      GET_BY_ID: 'http://localhost:8080/network-initialization/networks/',
-      DELETE_BY_ID: 'http://localhost:8080/network-initialization/networks/',
-      UPDATE: 'http://localhost:8080/network-initialization/networks',
-      RUN_BY_ID: 'http://localhost:8080/network-initialization/networks/run/',
-      SAVE_PROGRESS_BY_ID: 'http://localhost:8080/network-initialization/networks/save-progress/'
-    },
-    NETWORK_DEBUG: {
-      GET_ALL: 'http://localhost:8080/network-initialization/networks',
-      GET_CONNECTIONS: 'http://localhost:8080/network/connections',
-      GET_BY_ID: '',
-      UPDATE: '',
-      DELETE: ''
-    },
-    NETWORK_LOGS: {
-      GET_ALL_SORTED_BY_NET_ID: 'http://localhost:8080/network-initialization/logs/'
-    }
   }
 };
 
