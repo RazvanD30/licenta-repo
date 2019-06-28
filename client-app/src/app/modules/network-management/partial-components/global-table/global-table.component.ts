@@ -16,7 +16,7 @@ import {BranchService} from '../../../../shared/services/branch.service';
 export class GlobalTableComponent implements OnInit {
 
 
-  networks: NetworkDto[];
+  networks: NetworkDto[] = [];
   faTimes = faTimes;
 
   activeViews: ActiveView[] = [];

@@ -14,7 +14,7 @@ public class NetworkAccessException extends BoundaryException {
     }
 
     public NetworkAccessException(Throwable cause) {
-        super(cause);
+        super(cause.getMessage());
     }
 
     public NetworkAccessException(String message, Throwable cause, boolean enableSuppression, boolean writableStackTrace) {

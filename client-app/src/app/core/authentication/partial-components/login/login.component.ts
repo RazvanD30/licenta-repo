@@ -3,7 +3,8 @@ import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {AuthenticationService} from '../../../services/authentication.service';
 import {first} from 'rxjs/operators';
 import {MatSnackBar} from '@angular/material';
-import {Router} from "@angular/router";
+import {Router} from '@angular/router';
+import {BranchService} from '../../../../shared/services/branch.service';
 
 
 @Component({
@@ -19,6 +20,7 @@ export class LoginComponent implements OnInit {
   constructor(
     private formBuilder: FormBuilder,
     private authenticationService: AuthenticationService,
+    private branchService: BranchService,
     private snackBar: MatSnackBar,
     private router: Router
   ) {
@@ -40,11 +42,13 @@ export class LoginComponent implements OnInit {
           localStorage.setItem('username', this.form.value.username);
           this.clearData();
           this.authenticationService.saveToken(data);
-          this.snackBar.open('Login successful.', 'Dismiss');
+          this.authenticationService.loggedIn.emit();
+          this.snackBar.open('Login successful.', 'Dismiss', {duration: 4000});
+          this.branchService.branchAdded.emit();
           this.submitEmitter.emit();
         },
         error => {
-          this.snackBar.open('Invalid credentials', 'Dismiss');
+          this.snackBar.open('Invalid credentials', 'Dismiss', {duration: 4000});
         });
 
   }

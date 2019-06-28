@@ -18,6 +18,7 @@ import org.springframework.transaction.annotation.Transactional;
 import javax.validation.constraints.NotNull;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Optional;
 
@@ -58,13 +59,6 @@ public class BranchServiceImpl implements BranchService {
     @Transactional
     public NetworkBranch create(NetworkBranch newBranch, NetworkBranch origin) throws NotFoundBussExc {
 
-        if (origin != null) {
-            origin.getNetworks().forEach(network -> {
-                newBranch.addNetwork(networkService.duplicate(network));
-            });
-            newBranch.setSourceId(origin.getSourceId());
-        }
-
         List<User> contributors = new ArrayList<>();
         for (User contributor : newBranch.getContributors()) {
             contributors.add(this.userService.findByUsername(contributor.getUsername())
@@ -77,7 +71,17 @@ public class BranchServiceImpl implements BranchService {
         newBranch.setCreateDateTime(LocalDateTime.now());
         newBranch.setUpdateDateTime(LocalDateTime.now());
 
-        return branchRepo.save(newBranch);
+        NetworkBranch persistedBranch = branchRepo.save(newBranch);
+
+        List<Network> duplicates = new ArrayList<>();
+        if (origin != null) {
+            newBranch.setSourceId(origin.getSourceId());
+            origin.getNetworks().forEach(network -> {
+                duplicates.add(networkService.duplicate(network));
+            });
+        }
+        duplicates.forEach(persistedBranch::addNetwork);
+        return branchRepo.save(persistedBranch);
     }
 
     @Override
@@ -116,7 +120,7 @@ public class BranchServiceImpl implements BranchService {
                 }
             }
             if (shouldAdd)
-                to.addNetwork(sourceN);
+                to.addNetwork(this.networkService.duplicate(sourceN));
         }
     }
 
@@ -141,8 +145,14 @@ public class BranchServiceImpl implements BranchService {
             networkBranch.setOwner(owner);
         }
 
-        if (newBranch.getContributors() != null && !newBranch.getContributors().isEmpty()) {
-            networkBranch.getContributors().forEach(networkBranch::removeContributor);
+        if (networkBranch.getContributors() != null) {
+            Iterator<User> iterator = networkBranch.getContributors().iterator();
+            while (iterator.hasNext()) {
+                iterator.next();
+                iterator.remove();
+            }
+        }
+        if (newBranch.getContributors() != null) {
             for (User contrib : newBranch.getContributors()) {
                 networkBranch.addContributor(userService.findByUsername(contrib.getUsername())
                         .orElseThrow(() -> new NotFoundBussExc("Contributor with username " + contrib.getUsername() + " not found"))

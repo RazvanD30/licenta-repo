@@ -107,7 +107,6 @@ public class Network extends BaseEntity<Long> {
         this.nEpochs = nEpochs;
         this.nInputs = nInputs;
         this.nOutputs = nOutputs;
-        this.model = model;
         this.state = state;
         this.layers = layers;
         this.virtualNetworks = virtualNetworks;
@@ -124,7 +123,8 @@ public class Network extends BaseEntity<Long> {
      * @param network the network from which to copy the fields recursively.
      */
     public Network(Network network) {
-        this.originId = network.getId();
+        this.id = null;
+        this.branch = null;
         this.createDateTime = LocalDateTime.now();
         this.updateDateTime = network.getUpdateDateTime();
         this.name = network.getName() + "_COPY";

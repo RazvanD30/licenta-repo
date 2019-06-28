@@ -108,7 +108,7 @@
 
     <mat-form-field class="network-init-field">
       <mat-label> Branch</mat-label>
-      <mat-select formControlName="branchId" placeholder="Select branch">
+      <mat-select formControlName="branchId" placeholder="Select branch" required>
         <mat-option *ngFor="let branch of availableBranches" [value]="branch.id"> {{branch.name}} </mat-option>
       </mat-select>
       <mat-error *ngIf="networkInitFormGroup.controls.branchId.hasError('required')">
@@ -159,7 +159,7 @@
     </mat-form-field>
 
     <mat-form-field class="half-width-end">
-      <mat-label> Default activation function</mat-label>
+      <mat-label> Default activation </mat-label>
       <mat-select formControlName="defaultActivation" placeholder="Select default activation function">
         <mat-option *ngFor="let activation of activationTypes" [value]="activation"> {{activation}} </mat-option>
       </mat-select>
@@ -168,7 +168,7 @@
     <mat-form-field class="network-init-field">
       <mat-label> Default neuron count for all hidden layers</mat-label>
       <input matInput type="number" placeholder="Select default neuron count for all hidden layers "
-             formControlName="defaultNNeurons" required>
+             formControlName="defaultNNeurons">
       <button mat-button *ngIf="networkInitFormGroup.value.defaultNNeurons" matSuffix mat-icon-button aria-label="Clear"
               (click)="networkInitFormGroup.controls['defaultNNeurons'].reset()"
               [disabled]="waitingForResponse === true">

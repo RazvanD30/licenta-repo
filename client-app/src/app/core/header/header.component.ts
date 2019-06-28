@@ -115,27 +115,50 @@ export class HeaderComponent implements OnInit {
       this.links.push({text: 'AUTHENTICATION', multiple: false, href: '/authenticate', icon: faSignInAlt});
     }
 
+    this.authenticationService.loggedIn.subscribe(() => {
+      this.loadBranchData();
+      const link = this.links.find(l => l.text === 'AUTHENTICATION');
+      if (link != null) {
+        link.text = 'LOGOUT';
+        link.href = '/logout';
+      }
+    });
   }
 
   loadBranchData() {
-    this.branchService.getAllForUser(this.username)
-      .subscribe(branches => {
-        this.branchService.getCurrentWorkingBranch(this.username)
-          .subscribe(current => {
-            if (!current) {
-              this.availableBranches = branches;
-            } else {
-              this.availableBranches = branches.filter(branch => {
-                return branch.name !== current.name;
-              });
-              this.currentBranch = current;
-            }
-          });
-      });
+    this.username = localStorage.getItem('username');
+    if (this.username != null) {
+      this.branchService.getAllForUser(this.username)
+        .subscribe(branches => {
+          this.branchService.getCurrentWorkingBranch(this.username)
+            .subscribe(current => {
+              if (current == null) {
+                this.availableBranches = branches;
+                this.currentBranch = current;
+              } else {
+                this.availableBranches = branches.filter(branch => {
+                  return branch.name !== current.name;
+                });
+                this.currentBranch = current;
+              }
+            });
+        });
+    }
+  }
+
+  delay(ms: number) {
+    return new Promise(resolve => setTimeout(resolve, ms));
   }
 
   logout() {
     this.authenticationService.logout();
+    this.closeDelayed();
+  }
+
+
+  async closeDelayed() {
+    await this.delay(1000);
+    this.isOpen = false;
   }
 
   openClose(event) {

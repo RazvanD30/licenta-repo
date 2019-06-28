@@ -14,7 +14,7 @@ public class NetworkValidationException extends BoundaryException{
     }
 
     public NetworkValidationException(Throwable cause) {
-        super(cause);
+        super(cause.getMessage());
     }
 
     public NetworkValidationException(String message, Throwable cause, boolean enableSuppression, boolean writableStackTrace) {

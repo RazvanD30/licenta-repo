@@ -1,31 +1,56 @@
-import {AfterViewInit, Component} from '@angular/core';
-import {NavigationCancel, NavigationEnd, NavigationStart, Router} from '@angular/router';
+import {Component} from '@angular/core';
+import {
+  NavigationCancel,
+  NavigationEnd,
+  NavigationError,
+  NavigationStart,
+  RouteConfigLoadEnd,
+  RouteConfigLoadStart,
+  Router,
+  RouterEvent
+} from '@angular/router';
 
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.scss']
 })
-export class AppComponent implements AfterViewInit {
+export class AppComponent {
 
-  public loading = false;
+  public isShowingRouteLoadIndicator: boolean;
 
-  constructor(private router: Router) {
-    this.loading = true;
-  }
+  constructor(router: Router) {
 
+    this.isShowingRouteLoadIndicator = false;
+    let asyncLoadCount = 0;
+    let navigationCount = 0;
+    router.events.subscribe(
+      (event: RouterEvent): void => {
 
-  ngAfterViewInit(): void {
-    this.router.events.subscribe((event) => {
-      if (event instanceof NavigationStart) {
-        this.loading = true;
-      } else if (
-        event instanceof NavigationEnd ||
-        event instanceof NavigationCancel
-      ) {
-        this.loading = false;
+        if (event instanceof RouteConfigLoadStart) {
+
+          asyncLoadCount++;
+
+        } else if (event instanceof RouteConfigLoadEnd) {
+
+          asyncLoadCount--;
+
+        } else if (event instanceof NavigationStart) {
+
+          navigationCount++;
+
+        } else if (
+          (event instanceof NavigationEnd) ||
+          (event instanceof NavigationError) ||
+          (event instanceof NavigationCancel)
+        ) {
+
+          navigationCount--;
+
+        }
+        this.isShowingRouteLoadIndicator = !!(navigationCount && asyncLoadCount);
+
       }
-    });
+    );
   }
-
 }

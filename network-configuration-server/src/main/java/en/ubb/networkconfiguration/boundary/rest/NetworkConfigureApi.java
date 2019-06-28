@@ -7,6 +7,7 @@ import en.ubb.networkconfiguration.boundary.util.DtoMapper;
 import en.ubb.networkconfiguration.boundary.validation.exception.BoundaryException;
 import en.ubb.networkconfiguration.boundary.validation.exception.FileAccessException;
 import en.ubb.networkconfiguration.boundary.validation.exception.NotFoundException;
+import en.ubb.networkconfiguration.boundary.validation.exception.ValidationException;
 import en.ubb.networkconfiguration.boundary.validation.validator.NetworkDtoValidator;
 import en.ubb.networkconfiguration.boundary.validation.validator.RunConfigDtoValidator;
 import en.ubb.networkconfiguration.business.service.BranchService;
@@ -103,6 +104,10 @@ public class NetworkConfigureApi {
     public List<NetworkDto> getAllForUser(@PathVariable String username) throws NotFoundException {
         User user = this.userService.findByUsername(username)
                 .orElseThrow(() -> new NotFoundException("User not found"));
+        if(user.getCurrentBranch() == null || user.getCurrentBranch().getId() == null){
+            return new ArrayList<>();
+        }
+
         try {
             return this.networkService.getAllForBranchID(user.getCurrentBranch().getId()).stream()
                     .map(DtoMapper::toDto)

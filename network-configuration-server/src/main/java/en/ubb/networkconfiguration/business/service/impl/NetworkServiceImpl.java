@@ -1,6 +1,5 @@
 package en.ubb.networkconfiguration.business.service.impl;
 
-import en.ubb.networkconfiguration.business.aspect.cache.CCachable;
 import en.ubb.networkconfiguration.business.listener.LifecycleUpdateEventSource;
 import en.ubb.networkconfiguration.business.listener.NetworkLifecycleState;
 import en.ubb.networkconfiguration.business.listener.ScoreIterationLogListener;
@@ -14,6 +13,7 @@ import en.ubb.networkconfiguration.business.validation.exception.NotFoundBussExc
 import en.ubb.networkconfiguration.persistence.dao.*;
 import en.ubb.networkconfiguration.persistence.dao.specification.NetworkSpec;
 import en.ubb.networkconfiguration.persistence.domain.branch.NetworkBranch;
+import en.ubb.networkconfiguration.persistence.domain.network.enums.LayerType;
 import en.ubb.networkconfiguration.persistence.domain.network.runtime.*;
 import en.ubb.networkconfiguration.persistence.domain.network.setup.NetworkInitializer;
 import lombok.extern.slf4j.Slf4j;
@@ -26,13 +26,16 @@ import org.deeplearning4j.datasets.datavec.RecordReaderDataSetIterator;
 import org.deeplearning4j.eval.Evaluation;
 import org.deeplearning4j.nn.conf.MultiLayerConfiguration;
 import org.deeplearning4j.nn.conf.NeuralNetConfiguration;
+import org.deeplearning4j.nn.conf.layers.OutputLayer;
 import org.deeplearning4j.nn.multilayer.MultiLayerNetwork;
 import org.deeplearning4j.nn.weights.WeightInit;
 import org.deeplearning4j.util.ModelSerializer;
+import org.nd4j.linalg.activations.Activation;
 import org.nd4j.linalg.api.ndarray.INDArray;
 import org.nd4j.linalg.dataset.api.DataSet;
 import org.nd4j.linalg.dataset.api.iterator.DataSetIterator;
 import org.nd4j.linalg.learning.config.Nesterovs;
+import org.nd4j.linalg.lossfunctions.LossFunctions;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -91,7 +94,6 @@ public class NetworkServiceImpl implements NetworkService {
                 .getNetworks();
     }
 
-    @CCachable
     @Override
     public Optional<Network> findById(long id) {
         return networkRepo.findById(id);
@@ -166,16 +168,33 @@ public class NetworkServiceImpl implements NetworkService {
 
 
     private String getUniqueName(String networkName, int count) {
-        String name = count == 0 ? networkName + "_COPY" : networkName + "_COPY" + count;
+        String name = (count == 0) ? (networkName + "_COPY") : (networkName + "_COPY" + count);
         if (this.findByName(name).isPresent())
             return getUniqueName(networkName, ++count);
         return name;
     }
 
+    private Long getOriginId(Network source) {
+        while (source.getOriginId() != null) {
+            Optional<Network> optional = this.findById(source.getOriginId());
+            if (!optional.isPresent()) {
+                break;
+            } else {
+                source = optional.get();
+            }
+        }
+        return source.getId();
+    }
+
+
     @Override
     public Network duplicate(Network source) {
         Network newNetwork = new Network(source);
-        newNetwork.setName(this.getUniqueName(source.getName(),0));
+        newNetwork.setOriginId(this.getOriginId(source));
+        String uniqueName = this.getUniqueName(source.getName(), 0);
+
+        newNetwork.setName(uniqueName);
+
         source.getLayers().forEach(layer -> {
             Layer newLayer = new Layer().toBuilder()
                     .activation(layer.getActivation())
@@ -212,7 +231,7 @@ public class NetworkServiceImpl implements NetworkService {
         }
 
         newNetwork.getLayers().forEach(newLayer -> {
-            for(int nc = 0; nc < newLayer.getNodes().size(); nc++){
+            for (int nc = 0; nc < newLayer.getNodes().size(); nc++) {
                 Node newNode = newLayer.getNodes().get(nc);
                 List<Link> inputLinks = inputLinksMap.get(newNode.getId());
                 if (inputLinks != null) {
@@ -222,11 +241,11 @@ public class NetworkServiceImpl implements NetworkService {
             }
         });
 
-        for(int lc = 0; lc < newNetwork.getLayers().size(); lc++){
+        for (int lc = 0; lc < newNetwork.getLayers().size(); lc++) {
             Layer layer = newNetwork.getLayers().get(lc);
-            for(int nc = 0; nc < layer.getNodes().size(); nc++){
+            for (int nc = 0; nc < layer.getNodes().size(); nc++) {
                 Node node = layer.getNodes().get(nc);
-                for(int lkc = 0; lkc < node.getOutputLinks().size(); lkc++){
+                for (int lkc = 0; lkc < node.getOutputLinks().size(); lkc++) {
                     Link link = node.getOutputLinks().get(lkc);
                     Node tmpSource = link.getSource();
                     Node tmpDestination = link.getDestination();
@@ -235,21 +254,23 @@ public class NetworkServiceImpl implements NetworkService {
                     Link persistedLink = linkRepo.save(link);
                     persistedLink.setSource(tmpSource);
                     persistedLink.setDestination(tmpDestination);
-                    node.getOutputLinks().set(lkc,persistedLink);
+                    node.getOutputLinks().set(lkc, persistedLink);
                 }
             }
         }
 
-        for(int lc = 0; lc < newNetwork.getLayers().size(); lc++) {
+        for (int lc = 0; lc < newNetwork.getLayers().size(); lc++) {
             Layer layer = newNetwork.getLayers().get(lc);
             for (int nc = 0; nc < layer.getNodes().size(); nc++) {
                 Node node = layer.getNodes().get(nc);
-                layer.getNodes().set(nc,nodeRepo.save(node));
+                layer.getNodes().set(nc, nodeRepo.save(node));
             }
-            newNetwork.getLayers().set(lc,layerRepo.save(layer));
+            Network temp = layer.getNetwork();
+            layer.setNetwork(null);
+            newNetwork.getLayers().set(lc, layerRepo.save(layer));
+            layer.setNetwork(temp);
         }
-
-        return this.networkRepo.save(newNetwork);
+        return newNetwork;
     }
 
     @Override
@@ -268,13 +289,23 @@ public class NetworkServiceImpl implements NetworkService {
                 .updater(new Nesterovs(network.getLearningRate(), 0.9))
                 .list();
 
-        network.getLayers().forEach(layer -> LayerUtil.getBuilderForType(layer.getType())
-                .ifPresent(layerBuilder ->
-                        networkBuilder.layer(layerBuilder
-                                .nIn(layer.getNInputs())
-                                .nOut(layer.getNNodes())
-                                .activation(layer.getActivation())
-                                .build())));
+        network.getLayers().forEach(layer -> {
+            if (layer.getType().equals(LayerType.OUTPUT) && !layer.getActivation().equals(Activation.SOFTMAX)) {
+                networkBuilder.layer(new OutputLayer.Builder(LossFunctions.LossFunction.MSE)
+                        .activation(layer.getActivation())
+                        .nIn(layer.getNInputs())
+                        .nOut(layer.getNNodes())
+                        .build());
+            } else {
+                LayerUtil.getBuilderForType(layer.getType())
+                        .ifPresent(layerBuilder ->
+                                networkBuilder.layer(layerBuilder
+                                        .nIn(layer.getNInputs())
+                                        .nOut(layer.getNNodes())
+                                        .activation(layer.getActivation())
+                                        .build()));
+            }
+        });
         MultiLayerConfiguration conf = networkBuilder.build();
         MultiLayerNetwork model = new MultiLayerNetwork(conf);
         model.init();
@@ -308,7 +339,7 @@ public class NetworkServiceImpl implements NetworkService {
     }
 
     @Override
-    public NetworkEval run(Network network, DataFile trainFile, DataFile testFile) throws FileAccessBussExc {
+    public NetworkEval run(Network network, DataFile trainFile, DataFile testFile) throws FileAccessBussExc, NetworkAccessBussExc {
         try {
             network.setTraining(true);
             this.networkRepo.save(network);
@@ -390,6 +421,7 @@ public class NetworkServiceImpl implements NetworkService {
             lifecycleUpdateEventSource.accept(network, NetworkLifecycleState.STOPPED);
             network.setTraining(false);
             networkRepo.save(network);
+            this.saveProgress(network);
             return networkEval;
         } catch (IOException | InterruptedException ex) {
             lifecycleUpdateEventSource.accept(network, NetworkLifecycleState.FAILED);
@@ -455,7 +487,7 @@ public class NetworkServiceImpl implements NetworkService {
             }
             for (int layerC = 0; layerC < network.getLayers().size(); layerC++) {
                 Layer currentLayer = layerRepo.save(network.getLayers().get(layerC));
-                network.getLayers().set(layerC,currentLayer);
+                network.getLayers().set(layerC, currentLayer);
             }
 
 

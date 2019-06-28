@@ -1,6 +1,7 @@
 <div class="app-body">
   <app-header></app-header>
-    <mat-progress-bar *ngIf="loading === true" mode="indeterminate"></mat-progress-bar>
   <router-outlet></router-outlet>
 </div>
 
+<app-loading [loading]="isShowingRouteLoadIndicator">
+</app-loading>

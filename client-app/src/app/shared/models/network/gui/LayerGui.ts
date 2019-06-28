@@ -1,19 +1,27 @@
 import {NodeGui} from './NodeGui';
 import {Pos} from './Pos';
 import {Activation} from '../shared/Activation';
+import {Status} from './Status';
+import {LayerType} from '../shared/LayerType';
 
 export class LayerGui {
   private readonly _id: number;
   private readonly _nodes: Map<number, NodeGui>;
   pos: Pos;
   activation: Activation;
+  status: Status;
+  type: LayerType;
+  debuggable: boolean;
 
-  constructor(id: number, activation: Activation) {
+  constructor(id: number, activation: Activation, type: LayerType) {
+    this.status = Status.IGNORED;
     this._id = id;
     this.activation = activation;
     this._nodes = new Map<number, NodeGui>();
     this._previous = null;
     this._next = null;
+    this.type = type;
+    this.debuggable = false;
   }
 
   private _previous: LayerGui;

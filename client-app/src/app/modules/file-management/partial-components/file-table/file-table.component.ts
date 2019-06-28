@@ -139,6 +139,20 @@ export class FileTableComponent implements OnInit, OnChanges {
             extendedFile.trainLinkWith.push(linkDto.networkName);
           });
           this.sendingData = false;
+        }, () => {
+          this.sendingData = false;
+          this.fileService.getLinksByName(extendedFile.dataFile.name)
+            .subscribe(linkDtos => {
+              extendedFile.testLinkWith = [];
+              extendedFile.trainLinkWith = [];
+              linkDtos.forEach(linkDto => {
+                if (linkDto.fileType === FileType.TEST) {
+                  extendedFile.testLinkWith.push(linkDto.networkName);
+                } else if (linkDto.fileType === FileType.TRAIN) {
+                  extendedFile.trainLinkWith.push(linkDto.networkName);
+                }
+              });
+            });
         });
     }
   }
@@ -156,6 +170,20 @@ export class FileTableComponent implements OnInit, OnChanges {
             extendedFile.testLinkWith.push(linkDto.networkName);
           });
           this.sendingData = false;
+        }, () => {
+          this.sendingData = false;
+          this.fileService.getLinksByName(extendedFile.dataFile.name)
+            .subscribe(linkDtos => {
+              extendedFile.testLinkWith = [];
+              extendedFile.trainLinkWith = [];
+              linkDtos.forEach(linkDto => {
+                if (linkDto.fileType === FileType.TEST) {
+                  extendedFile.testLinkWith.push(linkDto.networkName);
+                } else if (linkDto.fileType === FileType.TRAIN) {
+                  extendedFile.trainLinkWith.push(linkDto.networkName);
+                }
+              });
+            });
         });
     }
   }

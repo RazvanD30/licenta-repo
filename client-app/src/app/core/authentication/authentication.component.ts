@@ -119,13 +119,19 @@ export class AuthenticationComponent implements OnInit, AfterViewInit {
     }
   }
 
-  redirectToLogin(event: Event) {
+  delay(ms: number) {
+    return new Promise( resolve => setTimeout(resolve, ms) );
+  }
+
+  async redirectToLogin(event: Event) {
     this.hideRegister();
+    await this.delay(250);
+    this.expandLogin();
   }
 
   redirectToHome(event: Event) {
     this.hideLogin();
-    return this.router.navigateByUrl(this.returnUrl);
+    this.router.navigateByUrl(this.returnUrl);
   }
 
   loadScript(src: any) {

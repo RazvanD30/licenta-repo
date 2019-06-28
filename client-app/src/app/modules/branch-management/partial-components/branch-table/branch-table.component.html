@@ -52,6 +52,17 @@
         </mat-form-field>
       </mat-tab>
 
+      <mat-tab>
+        <ng-template mat-tab-label>
+          <div *ngIf="filters.contributor === ''"> Contributor</div>
+          <div *ngIf="filters.contributor !== ''" class="label-edited"> Contributor (edited)</div>
+        </ng-template>
+        <mat-form-field class="example-full-width">
+          <input [(ngModel)]="filters.contributor" matInput (keyup)="applyFilter($event.target.value,'contributor')"
+                 placeholder="Filter by contributor username" type="text">
+        </mat-form-field>
+      </mat-tab>
+
 
     </mat-tab-group>
 
@@ -66,13 +77,27 @@
 
       <ng-container matColumnDef="name">
         <th mat-header-cell *matHeaderCellDef mat-sort-header>Name</th>
-        <td mat-cell *matCellDef="let branch"> {{ branch.name }}</td>
+        <td mat-cell *matCellDef="let branch">
+          <mat-form-field>
+          <input matInput
+                 [disabled]="updating === true"
+                 [(ngModel)]="branch.name">
+          </mat-form-field>
+        </td>
         <td mat-footer-cell *matFooterCellDef></td>
       </ng-container>
 
       <ng-container matColumnDef="type">
         <th mat-header-cell *matHeaderCellDef mat-sort-header>Type</th>
-        <td mat-cell *matCellDef="let branch"> {{ branch.type }}</td>
+        <td mat-cell *matCellDef="let branch">
+          <mat-form-field>
+            <mat-label> Type </mat-label>
+            <mat-select [disabled]="updating === true"
+                        [(ngModel)]="branch.type">
+              <mat-option *ngFor="let type of types" [value]="type"> {{type}} </mat-option>
+            </mat-select>
+          </mat-form-field>
+        </td>
         <td mat-footer-cell *matFooterCellDef></td>
       </ng-container>
 
@@ -82,21 +107,60 @@
         <td mat-footer-cell *matFooterCellDef></td>
       </ng-container>
 
+      <ng-container matColumnDef="contributors">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>Contributors</th>
+        <td mat-cell *matCellDef="let branch">
+          <mat-form-field matTooltip="These users will be able to perform operations on the networks within this branch.">
+            <mat-label> Contributors</mat-label>
+            <mat-select [disabled]="updating === true"
+                        [(ngModel)]="branch.contributors" multiple
+                        [compareWith]="compareUsers">
+              <mat-option
+                [matTooltip]="(user.username === loggedUsername) ? 'You can not remove yourself. Contact the owner.' : ''"
+                [disabled]="user.username === loggedUsername" *ngFor="let user of getPossibleContributors(branch)" [value]="user">
+                {{user.username}}
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
+        </td>
+        <td mat-footer-cell *matFooterCellDef></td>
+      </ng-container>
+
+
       <ng-container matColumnDef="created">
         <th mat-header-cell *matHeaderCellDef mat-sort-header>Created</th>
-        <td mat-cell *matCellDef="let branch"> {{ branch.created }}</td>
+        <td mat-cell *matCellDef="let branch"> {{ branch.created | localdatetime }}</td>
         <td mat-footer-cell *matFooterCellDef></td>
       </ng-container>
 
       <ng-container matColumnDef="updated">
         <th mat-header-cell *matHeaderCellDef mat-sort-header>Updated</th>
-        <td mat-cell *matCellDef="let branch"> {{ branch.updated }}</td>
+        <td mat-cell *matCellDef="let branch"> {{ branch.updated | localdatetime }}</td>
         <td mat-footer-cell *matFooterCellDef></td>
       </ng-container>
 
       <ng-container matColumnDef="actions">
         <th mat-header-cell *matHeaderCellDef mat-sort-header>Actions</th>
-        <td mat-cell *matCellDef="let branch"> N/A</td>
+        <td mat-cell *matCellDef="let branch">
+          <button style="display: inline-block" mat-button mat-raised-button
+                  (click)="updateBranch(branch)"
+                  [disabled]="updating === true"
+          > Update </button>
+          <button style="display: inline-block" mat-button mat-raised-button
+                  #menuTrigger="matMenuTrigger"
+                  [matMenuTriggerFor]="menu"
+                  (click)="menuTrigger.openMenu()"
+                  [disabled]="updating === true">
+            Pull content from
+          </button>
+          <mat-menu #menu="matMenu">
+            <div *ngFor="let sourceBranch of branches">
+              <button mat-menu-item *ngIf="branch.id !== sourceBranch.id" (click)="pull(branch,sourceBranch)">
+                {{sourceBranch.name}}
+              </button>
+            </div>
+          </mat-menu>
+        </td>
         <td mat-footer-cell *matFooterCellDef></td>
       </ng-container>
 

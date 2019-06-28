@@ -16,7 +16,7 @@ export const APP_SETTINGS = {
     AUTHENTICATION: {
       TOKEN_REQUEST: AUTHORIZATION_SERVICE_URL + '/oauth/token', // AUTHORIZATION_SERVICE_URL + '/oauth/token/',
       LOGIN: 'http://localhost:8803/authentication/requestTokens',
-      REGISTER: 'http://localhost:8080/authentication/register',
+      REGISTER: AUTHORIZATION_SERVICE_URL + '/register',
       LOGOUT: 'http://localhost:8080/authentication/logout',
       GET_TOKEN: 'http://localhost:8804/spring-security-oauth-server/oauth/token'
     },
@@ -31,7 +31,7 @@ export const APP_SETTINGS = {
       POST_ASSIGN_WORKING_BRANCH: BRANCH_MANAGEMENT_URL + '/workingBranch/',
       PUT_UPDATE: BRANCH_MANAGEMENT_URL,
       DELETE_DELETE: BRANCH_MANAGEMENT_URL + '/',
-      GET_PULL_DESTINATION_SOURCE: BRANCH_MANAGEMENT_URL + '/'
+      GET_PULL_DESTINATION_SOURCE: BRANCH_MANAGEMENT_URL + '/pull/'
     },
     FILE_MANAGEMENT: {
       GET_ALL: FILE_MANAGEMENT_URL,
@@ -45,7 +45,7 @@ export const APP_SETTINGS = {
       POST_SET_TEST_LINKS: FILE_MANAGEMENT_URL + '/links/test/'
     },
     USER_MANAGEMENT: {
-      GET_ALL: USER_MANAGEMENT_URL,
+      GET_ALL: USER_MANAGEMENT_URL
     },
     NETWORK_MANAGEMENT: {
       NETWORK_INIT: {

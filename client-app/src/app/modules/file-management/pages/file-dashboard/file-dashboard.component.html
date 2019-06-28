@@ -1,5 +1,4 @@
 <app-loading [loading]="extendedFiles == null"></app-loading>
-<div>
-  <app-file-table [extendedFiles]="extendedFiles"></app-file-table>
-  <app-file-upload (fileUploaded)="loadAll()"></app-file-upload>
-</div>
+<app-file-table class="file-table" [extendedFiles]="extendedFiles"></app-file-table>
+<app-file-upload class="file-upload" (fileUploaded)="loadAll()"></app-file-upload>
+

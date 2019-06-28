@@ -7,7 +7,7 @@
     <form [formGroup]="branchFormGroup">
       <mat-form-field class="branch-field">
         <mat-label>Name</mat-label>
-        <input matInput type="text" formControlName="name">
+        <input matInput type="text" formControlName="name" required>
         <button mat-button *ngIf="branchFormGroup.value.name" matSuffix mat-icon-button aria-label="Clear"
                 (click)="branchFormGroup.controls['name'].reset()">
           <mat-icon>close</mat-icon>
@@ -19,7 +19,7 @@
 
       <mat-form-field class="branch-field">
         <mat-label> Type</mat-label>
-        <mat-select formControlName="type">
+        <mat-select formControlName="type" required>
           <mat-option *ngFor="let type of types" [value]="type"> {{type}} </mat-option>
         </mat-select>
         <mat-error *ngIf="branchFormGroup.controls['type'].hasError('required')">
@@ -30,7 +30,7 @@
       <mat-form-field class="branch-field">
         <mat-label> Contributors</mat-label>
         <mat-select formControlName="contributors" multiple>
-          <mat-option *ngFor="let user of users" [value]="user"> {{user.username}} </mat-option>
+          <mat-option *ngFor="let user of getUsers()" [value]="user"> {{user.username}} </mat-option>
         </mat-select>
       </mat-form-field>
 

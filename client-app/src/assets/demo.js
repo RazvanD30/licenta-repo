@@ -115,7 +115,7 @@
 
   // animation
   function initAnimation() {
-    animate();
+    requestAnimationFrame(animate);
     for (var i in points) {
       shiftPoint(points[i]);
     }
@@ -126,6 +126,8 @@
       target.x = newX;
     }, 10);
   }
+
+
 
   async function initStartingAnim() {
 
@@ -139,11 +141,11 @@
     await delay(300);
 
     while (i < width + 400) {
-      await delay(40);
+      await delay(80);
       target.y = constHeight1;
       target.x = i;
       i += 50;
-      await delay(40);
+      await delay(80);
       target.y = constHeight2;
     }
     await delay(300);

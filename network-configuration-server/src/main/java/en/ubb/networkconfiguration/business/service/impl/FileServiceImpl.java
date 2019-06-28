@@ -1,5 +1,6 @@
 package en.ubb.networkconfiguration.business.service.impl;
 
+import com.sun.javafx.binding.StringFormatter;
 import en.ubb.networkconfiguration.business.service.FileService;
 import en.ubb.networkconfiguration.business.validation.exception.FileAccessBussExc;
 import en.ubb.networkconfiguration.business.validation.exception.NotFoundBussExc;
@@ -18,6 +19,7 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.StringUtils;
 import org.springframework.web.multipart.MultipartFile;
 
+import javax.validation.ValidationException;
 import javax.validation.constraints.NotNull;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -85,11 +87,15 @@ public class FileServiceImpl implements FileService {
                 }
             }
         });
-
-        List<NetworkFile> networkFiles = new ArrayList<>();
+        
         for (String networkName : networkNames) {
             Network network = this.networkRepo.findOne(Specification.where(NetworkSpec.hasName(networkName)))
                     .orElseThrow(() -> new NotFoundBussExc("Network with name " + networkName + " not found"));
+            if(network.getNInputs() != dataFile.getNLabels()){
+                throw new ValidationException("Incompatible files: Network " + network.getName() + " has "
+                        + network.getNInputs() + " inputs and the file " + dataFile.getName()
+                        + " has " + dataFile.getNLabels() + " labels");
+            }
             network.addFile(dataFile, type);
             this.networkRepo.save(network);
         }

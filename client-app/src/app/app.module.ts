@@ -2,8 +2,6 @@ import {NgModule} from '@angular/core';
 
 import {AppRoutingModule} from './app-routing.module';
 import {AppComponent} from './app.component';
-import {CapitalizePipe} from './shared/pipes/capitalize.pipe';
-import {SafePipe} from './shared/pipes/safe.pipe';
 import {CoreModule} from './core/core.module';
 import {AlertComponent} from './shared/components/alert/alert.component';
 import {AuthenticationGuard} from './core/guards/authentication.guard';
@@ -18,12 +16,11 @@ import {LoaderComponent} from './shared/components/loader/loader.component';
 import {MDBBootstrapModule} from 'angular-bootstrap-md';
 import {JwtHelper} from 'angular2-jwt';
 import {SharedModule} from './shared/shared.module';
+import {CustomPreloader} from './shared/config/custom-preloader';
 
 @NgModule({
   declarations: [
     AppComponent,
-    CapitalizePipe,
-    SafePipe,
     AlertComponent,
     LoaderComponent
   ],
@@ -36,6 +33,7 @@ import {SharedModule} from './shared/shared.module';
   ],
   providers: [
     AuthenticationGuard,
+    CustomPreloader,
     AlertService,
     UserService,
     AuthenticationService,

@@ -14,7 +14,7 @@ public class IllegalArgumentException extends BoundaryException {
     }
 
     public IllegalArgumentException(Throwable cause) {
-        super(cause);
+        super(cause.getMessage());
     }
 
     public IllegalArgumentException(String message, Throwable cause, boolean enableSuppression, boolean writableStackTrace) {

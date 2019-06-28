@@ -14,7 +14,7 @@ public class NotFoundException extends BoundaryException {
     }
 
     public NotFoundException(Throwable cause) {
-        super(cause);
+        super(cause.getMessage());
     }
 
     public NotFoundException(String message, Throwable cause, boolean enableSuppression, boolean writableStackTrace) {

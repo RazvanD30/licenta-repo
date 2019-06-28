@@ -3,6 +3,7 @@ import {Observable} from 'rxjs';
 import {APP_SETTINGS} from '../../configs/app-settings.config';
 import {HttpClient} from '@angular/common/http';
 import {NetworkTrainLogDto} from '../models/network/log/NetworkTrainLogDto';
+import {TIMEOUT} from '../config/timeout-config';
 
 @Injectable({
   providedIn: 'root'
@@ -13,6 +14,7 @@ export class NetworkLogService {
   }
 
   getAllForNetworkId(networkId: number): Observable<NetworkTrainLogDto> {
-    return this.http.get<NetworkTrainLogDto>(APP_SETTINGS.URLS.NETWORK_MANAGEMENT.NETWORK_LOG.GET_ALL_FOR_NETWORK_ID + networkId);
+    return this.http.get<NetworkTrainLogDto>(APP_SETTINGS.URLS.NETWORK_MANAGEMENT.NETWORK_LOG.GET_ALL_FOR_NETWORK_ID + networkId)
+      .timeout(TIMEOUT);
   }
 }

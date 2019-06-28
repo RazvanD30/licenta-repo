@@ -14,7 +14,7 @@ public class FileAccessException extends BoundaryException {
     }
 
     public FileAccessException(Throwable cause) {
-        super(cause);
+        super(cause.getMessage());
     }
 
     public FileAccessException(String message, Throwable cause, boolean enableSuppression, boolean writableStackTrace) {

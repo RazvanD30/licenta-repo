@@ -31,6 +31,7 @@ public class NetworkState extends BaseEntity<Long> {
     }
 
     public NetworkState(NetworkState networkState){
+        this.id = null;
         this.descriptor = networkState.getDescriptor();
     }
 

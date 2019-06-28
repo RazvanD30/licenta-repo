@@ -14,7 +14,7 @@ public class NetworkNotFoundException extends NotFoundException {
     }
 
     public NetworkNotFoundException(Throwable cause) {
-        super(cause);
+        super(cause.getMessage());
     }
 
     public NetworkNotFoundException(String message, Throwable cause, boolean enableSuppression, boolean writableStackTrace) {

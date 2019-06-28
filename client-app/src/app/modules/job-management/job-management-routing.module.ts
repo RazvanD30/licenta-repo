@@ -1,9 +1,9 @@
 import {RouterModule, Routes} from '@angular/router';
 import {NgModule} from '@angular/core';
-import {JobTableComponent} from './pages/job-table/job-table.component';
+import {JobDashboardComponent} from './pages/job-dashboard/job-dashboard.component';
 
 const routes: Routes = [
-  {path: 'dashboard', component: JobTableComponent},
+  {path: 'dashboard', component: JobDashboardComponent},
 ];
 
 @NgModule({

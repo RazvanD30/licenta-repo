@@ -11,6 +11,7 @@ import {LinkGui} from '../models/network/gui/LinkGui';
 import {Pos} from '../models/network/gui/Pos';
 import {LayerType} from '../models/network/shared/LayerType';
 import {Activation} from '../models/network/shared/Activation';
+import {TIMEOUT} from '../config/timeout-config';
 
 @Injectable({
   providedIn: 'root'
@@ -61,7 +62,7 @@ export class NetworkVisualDataService {
       if (layerDto.type === LayerType.INPUT) {
         this.gotInputs.emit(layerDto.nodes.length);
       }
-      const layerGui = new LayerGui(layerDto.id, layerDto.activation);
+      const layerGui = new LayerGui(layerDto.id, layerDto.activation, layerDto.type);
       layerDto.nodes.forEach(nodeDto => {
         const nodeGui = new NodeGui(nodeDto.id, nodeDto.bias, status.fromInternal(nodeDto.status), layerGui);
         layerGui.addNode(nodeGui);
@@ -81,14 +82,12 @@ export class NetworkVisualDataService {
       this.layers.push(layerGui);
       this.pos++;
       if (this.pos > 1) {
+        this.redoLinks(this.layers[this.pos - 2], this.layers[this.pos - 1]);
         this.layers[this.pos - 2].next = this.layers[this.pos - 1];
         this.layers[this.pos - 1].previous = this.layers[this.pos - 2];
-        this.redoLinks(this.layers[this.pos - 2], this.layers[this.pos - 1]);
       }
       this.layerAdded.emit(layerGui);
-      if (this.pos < this._virtualNetwork.nLayers) {
-        this.getNextLayer();
-      } else {
+      if (this.pos >= this._virtualNetwork.nLayers) {
         this.doneLoading.emit();
       }
     });
@@ -119,26 +118,27 @@ export class NetworkVisualDataService {
   }
 
   create(dto: VirtualNetworkDto): Observable<VirtualNetworkDto> {
-    return this.http.post<VirtualNetworkDto>(APP_SETTINGS.URLS.NETWORK_MANAGEMENT.NETWORK_VIRTUAL_SIMULATION.POST_CREATE, dto);
+    return this.http.post<VirtualNetworkDto>(APP_SETTINGS.URLS.NETWORK_MANAGEMENT.NETWORK_VIRTUAL_SIMULATION.POST_CREATE, dto)
+      .timeout(TIMEOUT);
   }
 
   getAllForNetworkId(networkId: number): Observable<VirtualNetworkDto[]> {
     return this.http.get<VirtualNetworkDto[]>
-    (APP_SETTINGS.URLS.NETWORK_MANAGEMENT.NETWORK_VIRTUAL_SIMULATION.GET_ALL_FOR_NETWORK_ID + networkId);
+    (APP_SETTINGS.URLS.NETWORK_MANAGEMENT.NETWORK_VIRTUAL_SIMULATION.GET_ALL_FOR_NETWORK_ID + networkId).timeout(TIMEOUT);
   }
 
   getAllForNetworkName(name: string): Observable<VirtualNetworkDto[]> {
     return this.http.get<VirtualNetworkDto[]>
-    (APP_SETTINGS.URLS.NETWORK_MANAGEMENT.NETWORK_VIRTUAL_SIMULATION.GET_ALL_FOR_NETWORK_NAME + name);
+    (APP_SETTINGS.URLS.NETWORK_MANAGEMENT.NETWORK_VIRTUAL_SIMULATION.GET_ALL_FOR_NETWORK_NAME + name).timeout(TIMEOUT);
   }
 
   getLayerAtPos(virtualNetworkId: number, pos: number): Observable<VirtualLayerDto> {
     return this.http.post<VirtualLayerDto>
-    (APP_SETTINGS.URLS.NETWORK_MANAGEMENT.NETWORK_VIRTUAL_SIMULATION.GET_LAYER_BY_VIRTUAL_ID_AT_POS + virtualNetworkId, pos);
+    (APP_SETTINGS.URLS.NETWORK_MANAGEMENT.NETWORK_VIRTUAL_SIMULATION.GET_LAYER_BY_VIRTUAL_ID_AT_POS + virtualNetworkId, pos)
+      .timeout(TIMEOUT);
   }
 
   applySoftmax(layer: LayerGui) {
-
     layer.nodes.forEach(node => node.value = this.getX(node));
     let max = 0.0;
     let sum = 0.0;
@@ -151,9 +151,15 @@ export class NetworkVisualDataService {
       node.value = Math.exp(node.value - max);
       sum += node.value;
     });
-    layer.nodes.forEach(node => {
-      node.value /= sum;
-    });
+    if (sum === 0) {
+      layer.nodes.forEach(node => {
+        node.value = 100 / layer.nodes.size;
+      });
+    } else {
+      layer.nodes.forEach(node => {
+        node.value /= sum;
+      });
+    }
   }
 
   applyActivation(targetLayer: LayerGui) {
@@ -161,7 +167,11 @@ export class NetworkVisualDataService {
       this.applySoftmax(targetLayer);
     } else {
       targetLayer.nodes.forEach(targetNode => {
-        targetNode.value = this.applyActivationForNode(targetNode);
+        let value = this.applyActivationForNode(targetNode);
+        if (Math.abs(value) > Number.MAX_VALUE) {
+          value = Number.MAX_VALUE;
+        }
+        targetNode.value = value;
       });
     }
   }

@@ -12,6 +12,10 @@ import {LoadingComponent} from '../core/loading/loading.component';
 import {FooterComponent} from '../core/footer/footer.component';
 import {LoginComponent} from '../core/authentication/partial-components/login/login.component';
 import {RegisterComponent} from '../core/authentication/partial-components/register/register.component';
+import {RouterModule} from '@angular/router';
+import { LocaldatetimePipe } from './pipes/localdatetime.pipe';
+import {CapitalizePipe} from "./pipes/capitalize.pipe";
+import {SafePipe} from "./pipes/safe.pipe";
 
 @NgModule({
   declarations: [
@@ -20,8 +24,13 @@ import {RegisterComponent} from '../core/authentication/partial-components/regis
     LoginComponent,
     RegisterComponent,
     AuthenticationComponent,
-    LoadingComponent],
+    LoadingComponent,
+    LocaldatetimePipe,
+    CapitalizePipe,
+    SafePipe
+  ],
   imports: [
+    RouterModule,
     CommonModule,
     FormsModule,
     ReactiveFormsModule,
@@ -42,7 +51,10 @@ import {RegisterComponent} from '../core/authentication/partial-components/regis
     FlexLayoutModule,
     HttpClientModule,
     ScrollingModule,
-    FontAwesomeModule
+    FontAwesomeModule,
+    LocaldatetimePipe,
+    CapitalizePipe,
+    SafePipe
   ],
   bootstrap: [
     AuthenticationComponent,

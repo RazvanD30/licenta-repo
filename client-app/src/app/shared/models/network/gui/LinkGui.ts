@@ -85,7 +85,7 @@ export class LinkGui {
         color = 'rgba(255,0,0,1)';
         break;
       case Status.IGNORED:
-        context.lineWidth = Math.pow(Math.round(this.weight * 200) / 100, 2) + 0.5;
+        context.lineWidth = Math.pow(Math.round(Math.abs(this.weight) * 200) / 100, 2) + 0.5;
         color = 'rgba(43, 116, 124,' + (this.weight / 3) + ')';
         break;
       case Status.INPUT:

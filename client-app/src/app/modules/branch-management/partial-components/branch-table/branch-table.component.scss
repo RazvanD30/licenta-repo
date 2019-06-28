@@ -5,3 +5,33 @@
 table {
   width: 100%;
 }
+
+@mixin mat-table-columns($columns)
+{
+  .mat-column-
+  {
+    @each $colName, $props in $columns {
+
+      $width: map-get($props, 'width');
+
+      &#{$colName}
+      {
+        flex: $width;
+        min-width: $width;
+
+        @if map-has-key($props, 'color')
+        {
+          color: map-get($props, 'color');
+        }
+      }
+    }
+  }
+}
+
+@include mat-table-columns((
+
+  name: (width: 200px),
+  contributors: (width: 200px),
+  actions: (width: 280px)
+
+));

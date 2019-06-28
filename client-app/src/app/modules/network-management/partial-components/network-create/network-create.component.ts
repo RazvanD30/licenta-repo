@@ -139,23 +139,17 @@ export class NetworkCreateComponent implements OnInit {
     this.disableAllForms();
     this.waitingForResponse = true;
 
-    const subscriber = this.networkInitService.create(networkInit)
+    this.networkInitService.create(networkInit)
       .subscribe(() => {
         this.waitingForResponse = false;
         this.enableAllForms();
-        this.snackBar.open('Network saved', 'Dismiss');
+        this.snackBar.open('Network saved', 'Dismiss', {duration: 4000});
         this.networkInitService.getAllNames().subscribe(names => this.networkInitNames = names);
-      }, () => {
+      }, err => {
+        console.log(err);
         this.waitingForResponse = false;
         this.enableAllForms();
-        this.snackBar.open('Error encountered while saving the network. Operation failed.', 'Dismiss');
       });
-    setTimeout(() => {
-      subscriber.unsubscribe();
-      this.waitingForResponse = false;
-      this.enableAllForms();
-      this.snackBar.open('Operation took too long. Please check in the configuration module if the network was saved.', 'Dismiss');
-    }, 120000);
   }
 
   disableAllForms() {

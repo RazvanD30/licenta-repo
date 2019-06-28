@@ -1,13 +1,17 @@
-import {Injectable} from '@angular/core';
+import {EventEmitter, Injectable} from '@angular/core';
 import {HttpClient, HttpHeaders, HttpParams} from '@angular/common/http';
 import {APP_SETTINGS} from '../../configs/app-settings.config';
 import {Observable, of} from 'rxjs';
 import {map, share} from 'rxjs/operators';
 import {JwtHelper} from 'angular2-jwt';
-import {Router} from "@angular/router";
+import {Router} from '@angular/router';
+import {PrivateUserDto} from '../../shared/models/authentication/PrivateUserDto';
+import {PublicUserDto} from '../../shared/models/authentication/PublicUserDto';
 
 @Injectable()
 export class AuthenticationService {
+
+  public loggedIn = new EventEmitter();
 
   constructor(private http: HttpClient,
               private decoder: JwtHelper,
@@ -94,6 +98,10 @@ export class AuthenticationService {
     localStorage.removeItem('branch');
     localStorage.removeItem('username');
     this.router.navigateByUrl('/authenticate');
+  }
+
+  register(privateUserDto: PrivateUserDto): Observable<PublicUserDto> {
+    return this.http.post<PublicUserDto>(APP_SETTINGS.URLS.AUTHENTICATION.REGISTER, privateUserDto);
   }
 
 }

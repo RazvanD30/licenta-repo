@@ -14,6 +14,6 @@ public class DuplicateException extends BoundaryException {
     }
 
     public DuplicateException(Throwable cause) {
-        super(cause);
+        super(cause.getMessage());
     }
 }

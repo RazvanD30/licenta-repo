@@ -15,6 +15,7 @@ export class BranchCreateComponent implements OnInit {
   branch: BranchDto;
   @Input() branches: BranchDto[];
   @Input() users: PublicUserDto[];
+  @Input() loggedUsername: string;
   branchFormGroup: FormGroup;
   @Output() branchCreated = new EventEmitter<BranchDto>();
 
@@ -39,7 +40,7 @@ export class BranchCreateComponent implements OnInit {
     this.branchFormGroup = this.formBuilder.group({
       name: ['', [Validators.required]],
       type: ['', [Validators.required]],
-      contributors: [[], [Validators.required]],
+      contributors: [[], []],
       sourceId: [null]
     });
   }
@@ -48,6 +49,9 @@ export class BranchCreateComponent implements OnInit {
     this.resetModel();
   }
 
+  getUsers() {
+    return this.users.filter(u => u.username !== this.loggedUsername);
+  }
 
   create() {
     this.branchCreated.emit({

@@ -68,6 +68,8 @@ public class NetworkTrainTestApi {
             return new NetworkEvalDto(this.networkService.run(network, trainFile, testFile));
         } catch (FileAccessBussExc ex) {
             throw new FileAccessException("Could not access the given files.");
+        } catch (NetworkAccessBussExc networkAccessBussExc) {
+            throw new NetworkAccessException(networkAccessBussExc);
         }
     }
 

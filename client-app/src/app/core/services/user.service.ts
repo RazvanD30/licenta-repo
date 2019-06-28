@@ -15,5 +15,4 @@ export class UserService {
   getAll(): Observable<PublicUserDto[]> {
     return this.http.get<PublicUserDto[]>(APP_SETTINGS.URLS.USER_MANAGEMENT.GET_ALL);
   }
-
 }

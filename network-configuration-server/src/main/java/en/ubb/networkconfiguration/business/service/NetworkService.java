@@ -31,7 +31,7 @@ public interface NetworkService {
 
     Network update(Network updatedNetwork) throws NotFoundBussExc;
 
-    NetworkEval run(Network network, DataFile trainFile, DataFile testFile) throws FileAccessBussExc;
+    NetworkEval run(Network network, DataFile trainFile, DataFile testFile) throws FileAccessBussExc, NetworkAccessBussExc;
 
     void saveProgress(Network network) throws NetworkAccessBussExc;
 

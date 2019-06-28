@@ -1,4 +1,4 @@
-import {Component, ElementRef, HostListener, OnInit, Renderer2, ViewChild} from '@angular/core';
+import {Component, ElementRef, HostListener, Inject, OnInit, Renderer2, ViewChild} from '@angular/core';
 import {MatDialog} from '@angular/material';
 import {NodeDetailsComponent} from '../node-details/node-details.component';
 import {Pos} from '../../../../shared/models/network/gui/Pos';
@@ -10,6 +10,8 @@ import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {NetworkConfigureService} from '../../../../shared/services/network-configure.service';
 import {LayerGui} from '../../../../shared/models/network/gui/LayerGui';
 import {BranchService} from '../../../../shared/services/branch.service';
+import {DOCUMENT} from '@angular/common';
+import {LayerType} from '../../../../shared/models/network/shared/LayerType';
 
 @Component({
   selector: 'app-network-debugging',
@@ -19,7 +21,9 @@ import {BranchService} from '../../../../shared/services/branch.service';
 export class NetworkDebuggingComponent implements OnInit {
 
   @ViewChild('canvas') canvasRef: ElementRef;
+  @ViewChild('buffer') bufferRef: ElementRef;
   @ViewChild('contextmenu') contextMenu: ElementRef;
+  @ViewChild('breakpointValuesContainer', {read: ElementRef}) breakpointValuesContainer: ElementRef;
   public showMenu = false;
   public showForm = true;
   public selection: NodeGui;
@@ -31,7 +35,10 @@ export class NetworkDebuggingComponent implements OnInit {
   virtualNetworkFormGroup: FormGroup;
   inputs: any[] = [];
   currentLayer: LayerGui;
+  doneDebugging = false;
+  maxY = 0;
   private canvas: HTMLCanvasElement;
+  private buffer: HTMLCanvasElement;
   private context: CanvasRenderingContext2D;
   private width: number;
   private height: number;
@@ -48,7 +55,8 @@ export class NetworkDebuggingComponent implements OnInit {
               private branchService: BranchService,
               private renderer: Renderer2,
               private formBuilder: FormBuilder,
-              public dialog: MatDialog
+              public dialog: MatDialog,
+              @Inject(DOCUMENT) private doc: Document
   ) {
 
   }
@@ -80,9 +88,11 @@ export class NetworkDebuggingComponent implements OnInit {
       existingVirtualNetwork: [null, []]
     });
     this.virtualNetworkFormGroup.controls.networkName.valueChanges.subscribe(networkName => {
-      this.networkVisualService.getAllForNetworkName(networkName).subscribe(virtualNetworks =>
-        this.virtualNetworks = virtualNetworks
-      );
+      if (networkName != null) {
+        this.networkVisualService.getAllForNetworkName(networkName).subscribe(virtualNetworks =>
+          this.virtualNetworks = virtualNetworks
+        );
+      }
     });
   }
 
@@ -104,13 +114,14 @@ export class NetworkDebuggingComponent implements OnInit {
     this.width = window.innerWidth;
     this.height = window.innerHeight;
     this.canvas = (this.canvasRef.nativeElement as HTMLCanvasElement);
+    this.buffer = (this.bufferRef.nativeElement as HTMLCanvasElement);
     this.offsetX = this.canvas.offsetLeft;
     this.offsetY = this.canvas.offsetTop;
     this.canvas.addEventListener('click', this.hideContextMenu.bind(this), false);
     this.canvas.addEventListener('contextmenu', this.showContextMenu.bind(this), false);
     this.context = this.canvas.getContext('2d');
-    this.canvas.width = this.width * 6;
-    this.canvas.height = 3000;
+    this.canvas.width = this.width * 2;
+    this.canvas.height = this.height * 0.9;
     this.context.clearRect(0, 0, this.canvas.width, this.canvas.height);
   }
 
@@ -149,24 +160,56 @@ export class NetworkDebuggingComponent implements OnInit {
     });
   }
 
+
+  drawLayer(layerGui: LayerGui) {
+    let y = this.MARGIN_TOP;
+    layerGui.pos = new Pos(this.x, this.MARGIN_TOP_HEADER);
+    layerGui.drawHeader(this.context);
+    layerGui.nodes.forEach(node => {
+      node.pos = new Pos(this.x, y);
+      if (y > this.maxY) {
+        this.maxY = y;
+      }
+      y += this.DISTANCE_BETWEEN_POINTS_Y;
+      if (y > this.canvas.height * 0.9) {
+        this.buffer.width = this.canvas.width;
+        this.buffer.height = this.canvas.height * 1.3;
+        this.buffer.getContext('2d').drawImage(this.canvas, 0, 0);
+        this.canvas.height = this.canvas.height * 1.3;
+        this.canvas.getContext('2d').drawImage(this.buffer, 0, 0);
+      }
+    });
+    this.x += this.DISTANCE_BETWEEN_POINTS_X;
+    if (this.x > this.canvas.width * 0.9) {
+      this.buffer.width = this.canvas.width * 2;
+      this.buffer.height = this.canvas.height;
+      this.buffer.getContext('2d').drawImage(this.canvas, 0, 0);
+      this.canvas.width *= 2;
+      this.canvas.getContext('2d').drawImage(this.buffer, 0, 0);
+    }
+    if (layerGui.previous != null) {
+      layerGui.drawInputLinks(this.context);
+      layerGui.previous.drawNodes(this.context);
+    }
+    layerGui.drawNodes(this.context);
+    layerGui.drawText(this.context);
+    if (this.loading === true) {
+      requestAnimationFrame(this.networkVisualService.getNextLayer.bind(this.networkVisualService));
+    } else {
+      this.buffer.width = layerGui.pos.x + 300;
+      this.buffer.height = this.maxY + 100;
+      this.buffer.getContext('2d').drawImage(this.canvas, 0, 0);
+      this.canvas.width = layerGui.pos.x + 300;
+      this.canvas.height = this.maxY + NodeGui.RADIUS * 2;
+      this.canvas.getContext('2d').drawImage(this.buffer, 0, 0);
+    }
+  }
+
   watchLayerToDraw() {
     this.x = this.MARGIN_LEFT;
 
     this.networkVisualService.layerAdded.subscribe(layerGui => {
-      let y = this.MARGIN_TOP;
-      layerGui.pos = new Pos(this.x, this.MARGIN_TOP_HEADER);
-      layerGui.drawHeader(this.context);
-      layerGui.nodes.forEach(node => {
-        node.pos = new Pos(this.x, y);
-        y += this.DISTANCE_BETWEEN_POINTS_Y;
-      });
-      this.x += this.DISTANCE_BETWEEN_POINTS_X;
-      if (layerGui.previous != null) {
-        layerGui.drawInputLinks(this.context);
-        layerGui.previous.drawNodes(this.context);
-      }
-      layerGui.drawNodes(this.context);
-      layerGui.drawText(this.context);
+      requestAnimationFrame(this.drawLayer.bind(this, layerGui));
     });
   }
 
@@ -221,6 +264,10 @@ export class NetworkDebuggingComponent implements OnInit {
   addBreakpoint(node: NodeGui) {
     this.hideContextMenu(null);
     node.status = Status.BREAKPOINT;
+    if (node.layer.next != null) {
+      node.layer.next.status = Status.WAIT;
+    }
+
     const start = node.layer.previous !== null ? node.layer.previous.pos.x : node.layer.pos.x;
     const end = node.layer.next !== null ? node.layer.next.pos.x : node.layer.pos.x;
     this.context.clearRect(start, this.MARGIN_TOP, end - start, this.canvas.height);
@@ -254,6 +301,7 @@ export class NetworkDebuggingComponent implements OnInit {
   removeBreakpoint(node: NodeGui) {
     this.hideContextMenu(null);
     node.status = Status.IGNORED;
+
     if (node.layer.previous !== null) {
       node.layer.previous.nodes.forEach(n => {
         if (n.status === Status.BREAKPOINT) {
@@ -273,6 +321,9 @@ export class NetworkDebuggingComponent implements OnInit {
           n.status = Status.IGNORED;
         }
       });
+    }
+    if (node.layer.next != null && hasAnotherBreakpoint === false) {
+      node.layer.next.status = Status.IGNORED;
     }
 
     const start = node.layer.previous !== null ? node.layer.previous.pos.x : node.layer.pos.x;
@@ -366,16 +417,32 @@ export class NetworkDebuggingComponent implements OnInit {
   }
 
   stepInto() {
-    if (this.currentLayer == null) {
+    if (this.currentLayer == null || this.doneDebugging === true) {
       let i = 0;
+      this.doneDebugging = false;
       this.networkVisualService.layers[0].nodes.forEach(node => {
         node.value = this.inputs[i].value;
         i++;
       });
       this.currentLayer = this.networkVisualService.layers[0];
+      this.stepInto();
     } else if (this.currentLayer.next != null) {
       this.networkVisualService.applyActivation(this.currentLayer.next);
       this.currentLayer = this.currentLayer.next;
+      if ((this.currentLayer != null && this.currentLayer.status === Status.WAIT)
+        || this.currentLayer.type === LayerType.OUTPUT) {
+        this.renderer.setStyle(this.breakpointValuesContainer.nativeElement, 'left', (this.currentLayer.pos.x + 80) + 'px');
+        if (this.currentLayer.type === LayerType.OUTPUT) {
+          this.doneDebugging = true;
+        }
+        return;
+      }
+      this.stepInto();
+    } else {
+      this.renderer.setStyle(this.breakpointValuesContainer.nativeElement, 'left', (this.currentLayer.pos.x + 80) + 'px');
+      if (this.currentLayer.type === LayerType.OUTPUT) {
+        this.doneDebugging = true;
+      }
     }
   }
 

@@ -15,6 +15,7 @@ import en.ubb.networkconfiguration.persistence.domain.network.virtual.VirtualNod
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -44,6 +45,7 @@ public class VirtualNetworkServiceImpl implements VirtualNetworkService {
         this.networkRepo = networkRepo;
     }
 
+    @Transactional
     @Override
     public VirtualNetwork init(Network network, String name) {
 

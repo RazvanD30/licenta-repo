@@ -14,7 +14,7 @@ public class ForbiddenAccessException extends BoundaryException {
     }
 
     public ForbiddenAccessException(Throwable cause) {
-        super(cause);
+        super(cause.getMessage());
     }
 
     public ForbiddenAccessException(String message, Throwable cause, boolean enableSuppression, boolean writableStackTrace) {
